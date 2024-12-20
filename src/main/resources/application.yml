@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: dobby-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      auto-commit: false
+      pool-name: dobby-db-pool
+      minimum-idle: 10
+      maximum-pool-size: 30
+      connection-timeout: 60000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
