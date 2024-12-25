@@ -3,7 +3,7 @@ package com.dobby.backend.presentation.api.config.exception
 import com.dobby.backend.presentation.api.dto.apiPayload.code.BaseErrorCode
 import com.dobby.backend.presentation.api.dto.apiPayload.code.ErrorReasonDto
 
-open class GeneralExcpetion(
+open class GeneralException(
     private val code: BaseErrorCode
 ) : RuntimeException() {
 
