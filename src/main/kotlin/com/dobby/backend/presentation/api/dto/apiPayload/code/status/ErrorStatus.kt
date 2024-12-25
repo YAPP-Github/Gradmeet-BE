@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.dto.apiPayload.code.status
 
 import com.dobby.backend.presentation.api.dto.apiPayload.code.BaseErrorCode
-import com.dobby.backend.presentation.api.dto.apiPayload.code.ErrorReasonDto
+import com.dobby.backend.presentation.api.dto.apiPayload.code.ReasonDto
 import org.springframework.http.HttpStatus
 
 enum class ErrorStatus(
@@ -15,16 +15,18 @@ enum class ErrorStatus(
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "COMMON401", "인증이 필요합니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "COMMON403", "금지된 요청입니다."),;
 
-    override fun getReason(): ErrorReasonDto {
-        return ErrorReasonDto(
-            message = message,
-            code = code
-        )
-    }
-    override fun getReasonHttpStatus(): ErrorReasonDto {
-        return ErrorReasonDto(
+    override fun getReason(): ReasonDto {
+        return ReasonDto(
             message = message,
             code = code,
+            isSuccess = false
+        )
+    }
+    override fun getReasonHttpStatus(): ReasonDto {
+        return ReasonDto(
+            message = message,
+            code = code,
+            isSuccess = false,
             httpStatus = httpStatus
         )
     }
