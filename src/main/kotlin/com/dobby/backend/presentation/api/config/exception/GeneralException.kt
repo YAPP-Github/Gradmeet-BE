@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.config.exception
 
-import com.dobby.backend.presentation.api.dto.apiPayload.code.BaseErrorCode
-import com.dobby.backend.presentation.api.dto.apiPayload.code.ErrorReasonDto
+import com.dobby.backend.presentation.api.dto.payload.code.BaseErrorCode
+import com.dobby.backend.presentation.api.dto.payload.code.ErrorReasonDto
 
 open class GeneralException(
     private val code: BaseErrorCode

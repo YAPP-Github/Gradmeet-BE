@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.apiPayload.code.status
+package com.dobby.backend.presentation.api.dto.payload.code.status
 
 enum class SuccessStatus(
     val code : String,

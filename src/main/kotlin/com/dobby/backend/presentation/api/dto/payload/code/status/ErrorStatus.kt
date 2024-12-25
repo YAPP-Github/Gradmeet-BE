@@ -1,7 +1,7 @@
-package com.dobby.backend.presentation.api.dto.apiPayload.code.status
+package com.dobby.backend.presentation.api.dto.payload.code.status
 
-import com.dobby.backend.presentation.api.dto.apiPayload.code.BaseErrorCode
-import com.dobby.backend.presentation.api.dto.apiPayload.code.ReasonDto
+import com.dobby.backend.presentation.api.dto.payload.code.BaseErrorCode
+import com.dobby.backend.presentation.api.dto.payload.code.ReasonDto
 import org.springframework.http.HttpStatus
 
 enum class ErrorStatus(

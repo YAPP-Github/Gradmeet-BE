@@ -1,6 +1,6 @@
-package com.dobby.backend.presentation.api.dto.apiPayload
+package com.dobby.backend.presentation.api.dto.payload
 
-import com.dobby.backend.presentation.api.dto.apiPayload.code.status.SuccessStatus
+import com.dobby.backend.presentation.api.dto.payload.code.status.SuccessStatus
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
