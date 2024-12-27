@@ -71,9 +71,9 @@ class JWTTokenProvider(
         return claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw RuntimeException()
     }
 
-    private fun generateAccessTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.accessExpiration * 1000)
+    private fun generateAccessTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.expiration.access * 1000)
 
-    private fun generateRefreshTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.refreshExpiration * 1000)
+    private fun generateRefreshTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.expiration.refresh * 1000)
 
     companion object {
         const val MEMBER_ID_CLAIM_KEY = "member_id"

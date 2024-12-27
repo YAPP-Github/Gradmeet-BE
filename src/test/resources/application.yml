@@ -17,7 +17,7 @@ spring:
 
 app:
   token:
-    secretKey: testtesttestteyyysttestteyyystte
+    secret_key: testtesttestteyyysttestteyyystte
     expiration:
-      access: 3600
-      refresh: 86400
+      access: 86400
+      refresh: 604800

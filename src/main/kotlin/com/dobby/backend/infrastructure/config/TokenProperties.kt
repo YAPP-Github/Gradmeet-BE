@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "app.token")
 data class TokenProperties(
     var secretKey: String = "",
-    var accessExpiration: Long = 0,
-    var refreshExpiration: Long = 0,
-)
+    var expiration: Expiration = Expiration()
+) {
+    data class Expiration(
+        var access: Long = 0,
+        var refresh: Long = 0
+    )
+}
