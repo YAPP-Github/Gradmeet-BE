@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.configuration
+package com.dobby.backend.infrastructure.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
