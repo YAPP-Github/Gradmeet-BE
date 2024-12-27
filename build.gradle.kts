@@ -31,13 +31,27 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
+	runtimeOnly("com.h2database:h2")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	val jjwtVersion = "0.12.5"
+	implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+
+	val koTestVersion = "5.8.1"
+	testImplementation("io.kotest:kotest-runner-junit5-jvm:$koTestVersion")
+	testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
+	testImplementation("io.kotest:kotest-property:$koTestVersion")
+	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
 }
 
 kotlin {
