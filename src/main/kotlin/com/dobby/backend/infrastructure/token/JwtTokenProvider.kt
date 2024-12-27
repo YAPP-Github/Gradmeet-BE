@@ -23,27 +23,34 @@ class JWTTokenProvider(
         .build()
 
     fun generateAccessToken(authentication: Authentication): String {
-        return Jwts.builder()
-            .header()
-            .add(TOKEN_TYPE_HEADER_KEY, ACCESS_TOKEN_TYPE_VALUE)
-            .and()
-            .claims()
-            .add(MEMBER_ID_CLAIM_KEY, authentication.name)
-            .and()
-            .expiration(generateAccessTokenExpiration())
-            .encryptWith(signKey, Jwts.ENC.A128CBC_HS256)
-            .compact()
+        return generateToken(
+            tokenType = ACCESS_TOKEN_TYPE_VALUE,
+            authentication = authentication,
+            expirationDate = generateAccessTokenExpiration()
+        )
     }
 
     fun generateRefreshToken(authentication: Authentication): String {
+        return generateToken(
+            tokenType = REFRESH_TOKEN_TYPE_VALUE,
+            authentication = authentication,
+            expirationDate = generateAccessTokenExpiration()
+        )
+    }
+
+    private fun generateToken(
+        tokenType: String,
+        authentication: Authentication,
+        expirationDate: Date
+    ): String {
+
         return Jwts.builder()
-            .header()
-            .add(TOKEN_TYPE_HEADER_KEY, REFRESH_TOKEN_TYPE_VALUE)
+            .header().add(TOKEN_TYPE_HEADER_KEY, tokenType)
             .and()
             .claims()
             .add(MEMBER_ID_CLAIM_KEY, authentication.name)
             .and()
-            .expiration(generateRefreshTokenExpiration())
+            .expiration(expirationDate)
             .encryptWith(signKey, Jwts.ENC.A128CBC_HS256)
             .compact()
     }
