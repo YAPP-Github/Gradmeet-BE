@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity
+package com.dobby.backend.infrastructure.database.entity.common
 
 import jakarta.persistence.MappedSuperclass
 import org.springframework.data.annotation.CreatedDate
