@@ -13,7 +13,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
 @Component
-class JWTTokenProvider(
+class JwtTokenProvider(
     private val tokenProperties: TokenProperties
 ) {
     private final val signKey: SecretKey = SecretKeySpec(tokenProperties.secretKey.toByteArray(), "AES")

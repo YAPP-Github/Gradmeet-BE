@@ -25,6 +25,11 @@ enum class ErrorCode(
     INVALID_TOKEN_TYPE("AU0004", "Invalid token type", HttpStatus.UNAUTHORIZED),
 
     /**
+     * Authorization error codes
+     */
+    PERMISSION_DENIED("AZ0001", "Permission denied", HttpStatus.FORBIDDEN),
+
+    /**
      * Member error codes
      */
     MEMBER_NOT_FOUND("ME0001", "Member not found", HttpStatus.NOT_FOUND),
