@@ -14,7 +14,7 @@ import kotlin.test.assertNotNull
 class JwtTokenProviderTest : BehaviorSpec() {
 
     @Autowired
-    lateinit var jwtTokenProvider: JWTTokenProvider
+    lateinit var jwtTokenProvider: JwtTokenProvider
 
     init {
         given("회원 정보가 주어지고") {
