@@ -45,11 +45,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonar --info
-        continue-on-error: true # 빌드 실패하더라도 이후 아티팩트 업로드가 실행되도록 설정
-
-      - name: Upload problems report as artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sonar-problems-report
-          path: build/reports/problems/problems-report.html
