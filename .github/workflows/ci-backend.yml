@@ -45,3 +45,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonar --info
+
+      - name: Upload problems report as artifact
+        if: success()  # 성공적으로 빌드된 경우에만 실행
+        uses: actions/upload-artifact@v3
+        with:
+          name: sonar-problems-report
+          path: build/reports/problems/problems-report.html
