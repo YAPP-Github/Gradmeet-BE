@@ -1,9 +1,9 @@
 package com.dobby.backend.infrastructure.database.entity
 
-import com.dobby.backend.infrastructure.database.entity.common.AuditingEntity
+import AuditingEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -27,7 +27,7 @@ open class Member (
     @Enumerated(EnumType.STRING)
     var status: MemberStatus = MemberStatus.HOLD,
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = true)
     @Enumerated(EnumType.STRING)
     val role: RoleType,
 
