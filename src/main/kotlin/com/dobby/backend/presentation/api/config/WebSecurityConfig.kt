@@ -4,6 +4,7 @@ import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.exception.UnauthorizedException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.config.filter.JwtAuthenticationFilter
+import com.dobby.backend.presentation.api.config.handler.OauthSuccessHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig {
+class WebSecurityConfig(private val oauthSuccessHandler: OauthSuccessHandler) {
     @Bean
     @Order(0)
     fun securityFilterChain(
@@ -57,7 +58,11 @@ class WebSecurityConfig {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
+            it.requestMatchers("/v1/auth/oauth2/**").permitAll() //oauth 엔드포인트 허용
             it.anyRequest().permitAll()
+        }
+        .oauth2Login {
+            it.successHandler(oauthSuccessHandler)
         }
         .build()
 }

@@ -5,3 +5,4 @@ open class MemberException(
 ) : DomainException(errorCode)
 
 class MemberNotFoundException : MemberException(ErrorCode.MEMBER_NOT_FOUND)
+class AlreadyMemberException: MemberException(ErrorCode.SIGNUP_ALREADY_MEMBER)
