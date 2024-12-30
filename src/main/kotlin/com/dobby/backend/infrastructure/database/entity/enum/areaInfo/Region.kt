@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
+package com.dobby.backend.infrastructure.database.entity.enum.areaInfo
 
 enum class Region(val displayName: String) {
     SEOUL("서울"),
@@ -20,8 +20,9 @@ enum class Region(val displayName: String) {
     JEJU("제주");
 
     companion object {
+        private val displayNameMap = values().associateBy(Region::displayName)
         fun fromDisplayName(name : String): Region? {
-            return entries.find { it.displayName == name }
+            return displayNameMap[name]
         }
     }
 }

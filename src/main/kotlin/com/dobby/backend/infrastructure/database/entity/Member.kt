@@ -1,14 +1,16 @@
 package com.dobby.backend.infrastructure.database.entity
 
 import com.dobby.backend.infrastructure.database.entity.common.AuditingEntity
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import jakarta.persistence.*
 import java.time.LocalDate
 
-@Entity(name = "members")
+@Entity(name = "member")
 @Inheritance(strategy = InheritanceType.JOINED)
-abstract class MemberEntity (
+@DiscriminatorColumn(name = "role_type")
+open class Member (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,6 +23,10 @@ abstract class MemberEntity (
     @Enumerated(EnumType.STRING)
     val provider : ProviderType,
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var status: MemberStatus = MemberStatus.HOLD,
+
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     val role: RoleType,
@@ -32,5 +38,5 @@ abstract class MemberEntity (
     val name : String,
 
     @Column(name = "birth_date", nullable = false)
-    val birthDate : LocalDate
+    val birthDate : LocalDate,
 ) : AuditingEntity()
