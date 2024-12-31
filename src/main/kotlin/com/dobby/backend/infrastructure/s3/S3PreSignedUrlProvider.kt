@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidInputException
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
-import com.dobby.backend.domain.gateway.S3Gateway
 import com.dobby.backend.util.generateULID
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
