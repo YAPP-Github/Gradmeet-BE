@@ -1,13 +1,11 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.domain.exception.AlreadyMemberException
 import com.dobby.backend.domain.exception.MemberNotFoundException
 import com.dobby.backend.infrastructure.database.entity.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.OauthUserDto
-import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
 import com.dobby.backend.util.AuthenticationUtils
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
