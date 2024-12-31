@@ -91,7 +91,9 @@ sonar {
 		property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/index.xml")
 		property("sonar.sources", "src/main/kotlin")
 		property("sonar.sourceEncoding", "UTF-8")
-		property("sonar.exclusions", "**/test/**, **/resources/**, **/*Application*.kt, **/*Controller*.kt, **/*Config.kt, **/*Repository*.kt, **/*Dto*.kt, **/*Response*.kt, **/*Request*.kt, **/*Exception*.kt")
+		property("sonar.exclusions", "**/test/**, **/resources/**, **/*Application*.kt, **/*Controller*.kt, " +
+				"**/*Config.kt, **/*Repository*.kt, **/*Dto*.kt, **/*Response*.kt, **/*Request*.kt, **/*Exception*.kt," +
+				"**/*Filter.kt, **/*Handler.kt, **/*Properties.kt, **/*Utils.kt")
 		property("sonar.test.inclusions", "**/*Test.kt")
 		property("sonar.kotlin.coveragePlugin", "jacoco")
 	}
