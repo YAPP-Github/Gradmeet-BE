@@ -38,6 +38,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
+	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
