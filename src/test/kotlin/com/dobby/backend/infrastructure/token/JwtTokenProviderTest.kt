@@ -6,11 +6,13 @@ import io.kotest.core.spec.style.BehaviorSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.test.context.ActiveProfiles
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 @SpringBootTest
+@ActiveProfiles("test")
 class JwtTokenProviderTest : BehaviorSpec() {
 
     @Autowired
