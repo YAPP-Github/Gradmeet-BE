@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.dobby.backend.domain.dto.PreSignedUrlResponse
+import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.domain.gateway.S3Gateway
 import com.dobby.backend.util.generateULID
 import lombok.extern.slf4j.Slf4j
