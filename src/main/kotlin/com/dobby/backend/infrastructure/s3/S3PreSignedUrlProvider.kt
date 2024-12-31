@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
+import com.dobby.backend.domain.exception.InvalidInputException
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.domain.gateway.S3Gateway
 import com.dobby.backend.util.generateULID
@@ -52,7 +53,11 @@ class S3PreSignedUrlProvider(
     }
 
     private fun generateUniqueImageName(fileName: String): String {
-        val ext = fileName.substring(fileName.lastIndexOf("."))
+        val lastDotIndex = fileName.lastIndexOf(".")
+        if (lastDotIndex == -1 || lastDotIndex == fileName.length - 1) {
+            throw InvalidInputException()
+        }
+        val ext = fileName.substring(lastDotIndex)
         return "${generateULID()}$ext"
     }
 }
