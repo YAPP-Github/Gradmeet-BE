@@ -54,6 +54,4 @@ class Participant (
     role = RoleType.PARTICIPANT,
     name = name,
     birthDate = birthDate
-) {
-}
-
+)

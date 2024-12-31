@@ -14,7 +14,7 @@ open class Member (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    val id: Long? = 0L,
+    val id: Long,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)
     val oauthEmail : String,
@@ -27,16 +27,16 @@ open class Member (
     @Enumerated(EnumType.STRING)
     var status: MemberStatus = MemberStatus.HOLD,
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = true)
     @Enumerated(EnumType.STRING)
-    val role: RoleType? = null,
+    val role: RoleType?,
 
     @Column(name = "contact_email", length = 100, nullable = true)
-    val contactEmail : String? = null,
+    val contactEmail : String?,
 
     @Column(name = "name", length = 10, nullable = true)
-    val name : String? = null,
+    val name : String?,
 
     @Column(name = "birth_date", nullable = true)
-    val birthDate : LocalDate? = null,
+    val birthDate : LocalDate?,
 ) : AuditingEntity()
