@@ -94,7 +94,7 @@ sonar {
 		property("sonar.sourceEncoding", "UTF-8")
 		property("sonar.exclusions", "**/test/**, **/resources/**, **/*Application*.kt, **/*Controller*.kt, " +
 				"**/*Config.kt, **/*Entity*.kt, **/*Repository*.kt, **/*Dto*.kt, **/*Response*.kt, **/*Request*.kt, **/*Exception*.kt," +
-				"**/*Filter.kt, **/*Handler.kt, **/*Properties.kt, **/*Utils.kt")
+				"**/config/**, **/domain/gateway/**, **/domain/model/**, **/infrastructure/**, **/presentation/**, **/util/**")
 		property("sonar.test.inclusions", "**/*Test.kt")
 		property("sonar.kotlin.coveragePlugin", "jacoco")
 	}

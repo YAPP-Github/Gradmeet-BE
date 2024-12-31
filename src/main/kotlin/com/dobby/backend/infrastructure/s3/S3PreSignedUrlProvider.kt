@@ -10,21 +10,19 @@ import com.dobby.backend.domain.exception.InvalidInputException
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.domain.gateway.S3Gateway
 import com.dobby.backend.util.generateULID
-import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 
-@Slf4j
 @Component
 class S3PreSignedUrlProvider(
     private val amazonS3Client: AmazonS3,
-) : S3Gateway {
+) {
 
     @Value("\${cloud.aws.s3.bucket}")
     lateinit var bucket: String
 
-    override fun getPreSignedUrl(fileName: String): PreSignedUrlResponse {
+    fun getPreSignedUrl(fileName: String): PreSignedUrlResponse {
         val generatePreSignedUrlRequest = getGenerateImagePreSignedUrlRequest(fileName)
         return PreSignedUrlResponse(generatePreSignedUrl(generatePreSignedUrlRequest))
     }
