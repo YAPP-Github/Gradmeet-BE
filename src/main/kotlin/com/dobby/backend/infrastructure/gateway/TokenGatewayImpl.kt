@@ -26,6 +26,22 @@ class TokenGatewayImpl(
         return tokenProvider.generateRefreshToken(authentication)
     }
 
+    override fun generateAccessTokenForTestMember(memberId: Long): String {
+        val authentication = UsernamePasswordAuthenticationToken(
+            memberId,
+            null,
+        )
+        return tokenProvider.generateAccessToken(authentication)
+    }
+
+    override fun generateRefreshTokenForTestMember(memberId: Long): String {
+        val authentication = UsernamePasswordAuthenticationToken(
+            memberId,
+            null,
+        )
+        return tokenProvider.generateRefreshToken(authentication)
+    }
+
     override fun extractMemberIdFromRefreshToken(token: String): String {
         return tokenProvider.getMemberIdFromRefreshToken(token)
     }
