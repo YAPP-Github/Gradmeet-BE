@@ -3,12 +3,12 @@ package com.dobby.backend.infrastructure.token
 import com.dobby.backend.domain.exception.AuthenticationTokenNotValidException
 import com.dobby.backend.domain.model.Member
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 
 @SpringBootTest
 class JwtTokenProviderTest : BehaviorSpec() {
@@ -25,7 +25,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
                 val jwtToken = jwtTokenProvider.generateAccessToken(authentication)
 
                 then("JWT 토큰이 생성된다") {
-                    assertNotNull(jwtToken)
+                    jwtToken shouldNotBe null
                 }
             }
         }
@@ -40,8 +40,8 @@ class JwtTokenProviderTest : BehaviorSpec() {
                 val extractedMemberId = parsedAuthentication.principal
 
                 then("파싱된 멤버의 ID는 원래 멤버의 ID와 같아야 한다") {
-                    assertNotNull(extractedMemberId)
-                    assertEquals(member.memberId.toString(), extractedMemberId)
+                    extractedMemberId shouldNotBe null
+                    extractedMemberId shouldBe member.memberId.toString()
                 }
             }
         }
