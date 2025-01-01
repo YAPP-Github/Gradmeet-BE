@@ -20,10 +20,14 @@ object OauthUserMapper {
 
     fun toTempMember(dto: OauthUserDto): Member {
         return Member(
+            id = 0L,
             oauthEmail= dto.email,
             name= dto.name,
             provider = dto.provider,
-            status = MemberStatus.HOLD
+            status = MemberStatus.HOLD,
+            role = null,
+            contactEmail = null,
+            birthDate = null
         )
     }
 }

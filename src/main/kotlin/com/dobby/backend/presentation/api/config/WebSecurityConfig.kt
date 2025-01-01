@@ -18,7 +18,9 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig(private val oauthSuccessHandler: OauthSuccessHandler) {
+class WebSecurityConfig(
+    private val oauthSuccessHandler: OauthSuccessHandler,
+) {
     @Bean
     @Order(0)
     fun securityFilterChain(
@@ -50,7 +52,11 @@ class WebSecurityConfig(private val oauthSuccessHandler: OauthSuccessHandler) {
 
     @Bean
     @Order(1)
-    fun authSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
+    fun authSecurityFilterChain(
+        httpSecurity: HttpSecurity,
+        jwtTokenProvider: JwtTokenProvider,
+        handlerExceptionResolver: HandlerExceptionResolver
+    ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/auth/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
@@ -58,11 +64,24 @@ class WebSecurityConfig(private val oauthSuccessHandler: OauthSuccessHandler) {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/v1/auth/oauth2/**").permitAll() //oauth 엔드포인트 허용
-            it.anyRequest().permitAll()
-        }
-        .oauth2Login {
-            it.successHandler(oauthSuccessHandler)
+            println("[DEBUG] authSecurityFilterChain triggered")
+            it.requestMatchers("/v1/auth/oauth/**").permitAll()
+            it.anyRequest().authenticated()
         }
         .build()
+
+    @Bean
+    @Order(2)
+    fun swaggerSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
+        .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
+        .csrf { it.disable() }
+        .cors(Customizer.withDefaults())
+        .authorizeHttpRequests {
+            it.requestMatchers(
+                "/swagger-ui/**",
+                "/v3/api-docs/**"
+            ).permitAll()
+        }
+        .build()
+
 }

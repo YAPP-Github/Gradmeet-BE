@@ -24,11 +24,22 @@ spring:
       client:
         registration:
           google:
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+            authorization-grant-type: authorization_code
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
               - email
               - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+springdoc:
+  swagger-ui:
+    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
+
 app:
   token:
     secretKey: ${JWT_SECRET_KEY}

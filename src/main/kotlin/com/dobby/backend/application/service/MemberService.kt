@@ -6,7 +6,6 @@ import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.OauthUserDto
-import com.dobby.backend.util.AuthenticationUtils
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -16,10 +15,9 @@ class MemberService(
     private val jwtTokenProvider: JwtTokenProvider
 ) {
     @Transactional
-    fun login(oauthUserDto: OauthUserDto): String{
+    fun login(oauthUserDto: OauthUserDto): Member{
         val member= memberRepository.findByOauthEmailAndStatus(oauthUserDto.email, MemberStatus.ACTIVE)
             ?: throw MemberNotFoundException()
-        val authentication = AuthenticationUtils.createAuthentication(member)
-        return jwtTokenProvider.generateAccessToken(authentication)
+        return member
     }
 }

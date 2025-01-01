@@ -1,15 +1,12 @@
 package com.dobby.backend.presentation.api.config.handler
 
-import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.domain.exception.OAuth2AuthenticationException
-import com.dobby.backend.domain.exception.OAuth2ProviderNotSupportedException
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.Authentication
-import org.springframework.security.oauth2.core.user.OAuth2User
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
 
@@ -22,21 +19,27 @@ class OauthSuccessHandler (
     override fun onAuthenticationSuccess(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authentication: Authentication?
+        authentication: Authentication
     ) {
-        val oauthUser = authentication?.principal as? OAuth2User
-            ?: throw OAuth2AuthenticationException()
-        val registrationId = request.getParameter("registrationId")
+        println("[DEBUG] OauthSuccessHandler TRIGGERED!") // 로그 추가
+        println("[DEBUG] Authentication class: ${authentication::class.java}")
+        println("[DEBUG] Authentication details: ${authentication.details}")
+        println("[DEBUG] Authentication principal: ${authentication.principal}")
+
+        val oauth2Token = authentication as? OAuth2AuthenticationToken
             ?: throw OAuth2AuthenticationException()
 
-        val provider = when(registrationId.lowercase()) {
-            "google" -> ProviderType.GOOGLE
-            "naver" -> ProviderType.NAVER
-            else -> throw OAuth2ProviderNotSupportedException()
-        }
+        val principal = oauth2Token.principal
+        val attributes = principal.attributes
 
-        val oauthUserDto = OauthUserMapper.toDto(oauthUser, provider)
-        val member = memberService.login(oauthUserDto)
+        val email = attributes["email"] as? String ?: throw IllegalStateException("Email not found")
+        val name = attributes["name"] as? String ?: throw IllegalStateException("Name not found")
+
+//        val oauthUserDto = OauthUserDto(email = email, name = name, provider = ProviderType.GOOGLE)
+//        val member = memberService.login(oauthUserDto)
+//
+//        val newAuthentication = AuthenticationUtils.createAuthentication(member)
+//        SecurityContextHolder.getContext().authentication = newAuthentication
 
         val jwtToken = jwtTokenProvider.generateAccessToken(authentication)
 

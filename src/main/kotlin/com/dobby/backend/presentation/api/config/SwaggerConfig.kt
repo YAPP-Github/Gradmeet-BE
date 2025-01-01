@@ -6,8 +6,7 @@ import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.annotations.servers.Server
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.security.SecurityRequirement
-import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.security.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -28,7 +27,33 @@ class SwaggerConfig {
     @Bean
     fun openAPI(): OpenAPI = OpenAPI()
         .addSecurityItem(SecurityRequirement().addList("JWT 토큰"))
+        .addSecurityItem(SecurityRequirement().addList("Google OAuth2 토큰"))
         .components(
-            Components().addSecuritySchemes("JWT 토큰",
-            SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("Bearer").bearerFormat("JWT")))
+            Components()
+                .addSecuritySchemes(
+                    "JWT 토큰",
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("Bearer")
+                        .bearerFormat("JWT")
+                )
+                .addSecuritySchemes(
+                    "Google OAuth2 토큰",
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.OAUTH2)
+                        .flows(
+                            OAuthFlows()
+                                .authorizationCode(
+                                    OAuthFlow()
+                                        .authorizationUrl("https://accounts.google.com/o/oauth2/auth")
+                                        .tokenUrl("https://oauth2.googleapis.com/token")
+                                        .scopes(
+                                            Scopes()
+                                                .addString("email", "Access your email address")
+                                                .addString("profile", "Access your profile information")
+                                        )
+                                )
+                        )
+                )
+        )
 }

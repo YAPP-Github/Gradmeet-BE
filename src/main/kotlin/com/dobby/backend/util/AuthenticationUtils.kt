@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 object AuthenticationUtils {
     fun createAuthentication(member: Member): Authentication {
         return UsernamePasswordAuthenticationToken(
-            member.id.toString(),
+            member,
             null,
             emptyList()
         ) as Authentication
