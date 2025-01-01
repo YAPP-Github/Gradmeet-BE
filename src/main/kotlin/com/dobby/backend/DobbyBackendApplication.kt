@@ -1,5 +1,6 @@
 package com.dobby.backend
 
+<<<<<<< HEAD
 
 import com.dobby.backend.domain.usecase.UseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -8,6 +9,13 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.FilterType
 =======
+=======
+import com.dobby.backend.domain.usecase.UseCase
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
+>>>>>>> ce9b9a9 (feat: add @ComponentScan to include UseCase beans in application context)
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.cloud.openfeign.EnableFeignClients

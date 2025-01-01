@@ -2,14 +2,16 @@ package com.dobby.backend.domain.usecase
 
 import com.dobby.backend.domain.gateway.TokenGateway
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 class GenerateTestToken(
     private val tokenGateway: TokenGateway
 ) : UseCase<GenerateTestToken.Input, GenerateTestToken.Output> {
 =======
 import org.springframework.stereotype.Component
+=======
+>>>>>>> ce9b9a9 (feat: add @ComponentScan to include UseCase beans in application context)
 
-@Component
 class GenerateTestToken(
     private val tokenGateway: TokenGateway
 ) : UseCase<GenerateTestToken.Input,
