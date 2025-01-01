@@ -1,13 +1,10 @@
 package com.dobby.backend.domain.usecase
 
 import com.dobby.backend.domain.gateway.TokenGateway
-import org.springframework.stereotype.Component
 
-@Component
 class GenerateTestToken(
     private val tokenGateway: TokenGateway
-) : UseCase<GenerateTestToken.Input,
-        GenerateTestToken.Output> {
+) : UseCase<GenerateTestToken.Input, GenerateTestToken.Output> {
     data class Input(
         val memberId: Long
     )
