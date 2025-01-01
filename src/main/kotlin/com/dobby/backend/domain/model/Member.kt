@@ -1,19 +1,18 @@
 package com.dobby.backend.domain.model
 
-import com.dobby.backend.util.generateULID
-
 data class Member(
-    val memberId: String,
+    val memberId: Long,
     val name: String,
     val email: String,
 ) {
 
     companion object {
         fun newMember(
+            memberId: Long,
             name: String,
             email: String,
         ) = Member(
-            memberId = generateULID(),
+            memberId = memberId,
             name = name,
             email = email,
         )
