@@ -18,7 +18,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
 
     init {
         given("회원 정보가 주어지고") {
-            val member = Member(memberId = "1", email = "dlawotn3@naver.com", name = "dobby")
+            val member = Member(memberId = 1, email = "dlawotn3@naver.com", name = "dobby")
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
 
             `when`("해당 인증 정보로 JWT 토큰을 생성하면") {
@@ -31,17 +31,17 @@ class JwtTokenProviderTest : BehaviorSpec() {
         }
 
         given("유효한 JWT 토큰이 주어지고") {
-            val member = Member(memberId = "1", email = "dlawotn3@naver.com", name = "dobby")
+            val member = Member(memberId = 1, email = "dlawotn3@naver.com", name = "dobby")
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
             val validToken = jwtTokenProvider.generateAccessToken(authentication)
 
             `when`("해당 토큰을 파싱하면") {
                 val parsedAuthentication = jwtTokenProvider.parseAuthentication(validToken)
-                val extractedMemberId = parsedAuthentication.principal as String
+                val extractedMemberId = parsedAuthentication.principal
 
                 then("파싱된 멤버의 ID는 원래 멤버의 ID와 같아야 한다") {
                     assertNotNull(extractedMemberId)
-                    assertEquals(member.memberId, extractedMemberId)
+                    assertEquals(member.memberId.toString(), extractedMemberId)
                 }
             }
         }
