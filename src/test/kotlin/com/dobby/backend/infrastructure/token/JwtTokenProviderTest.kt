@@ -15,8 +15,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import java.time.LocalDate
 =======
 import org.springframework.test.context.ActiveProfiles
+<<<<<<< HEAD
 import kotlin.test.assertEquals
 >>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
+=======
+>>>>>>> a7fa0d8 (test: refactor JwtTokenProviderTest to use Kotest style)
 import kotlin.test.assertFailsWith
 
 @SpringBootTest
