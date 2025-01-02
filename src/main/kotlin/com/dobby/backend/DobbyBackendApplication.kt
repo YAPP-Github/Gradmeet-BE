@@ -1,5 +1,6 @@
 package com.dobby.backend
 
+
 import com.dobby.backend.domain.usecase.UseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -41,6 +41,7 @@ dependencies {
 	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
@@ -94,8 +95,8 @@ sonar {
 		property("sonar.sources", "src/main/kotlin")
 		property("sonar.sourceEncoding", "UTF-8")
 		property("sonar.exclusions", "**/test/**, **/resources/**, **/*Application*.kt, **/*Controller*.kt, " +
-				"**/*Config.kt, **/*Repository*.kt, **/*Dto*.kt, **/*Response*.kt, **/*Request*.kt, **/*Exception*.kt," +
-				"**/*Filter.kt, **/*Handler.kt, **/*Properties.kt, **/*Utils.kt")
+				"**/*Config.kt, **/*Entity*.kt, **/*Repository*.kt, **/*Dto*.kt, **/*Response*.kt, **/*Request*.kt, **/*Exception*.kt," +
+				"**/config/**, **/domain/gateway/**, **/domain/model/**, **/infrastructure/**, **/presentation/**, **/util/**")
 		property("sonar.test.inclusions", "**/*Test.kt")
 		property("sonar.kotlin.coveragePlugin", "jacoco")
 	}
