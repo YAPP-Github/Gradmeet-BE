@@ -60,8 +60,14 @@ class AuthController(
 =======
 import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.domain.usecase.GenerateTestToken
+<<<<<<< HEAD
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+=======
+import com.dobby.backend.domain.usecase.GenerateTokenWithRefreshToken
+import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
+import com.dobby.backend.presentation.api.dto.response.MemberSignInResponse
+>>>>>>> 63d0863 (feat: add GenerateTokenWithRefreshToken)
 import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -73,7 +79,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v1/auth")
 class AuthController(
     private val generateTestToken: GenerateTestToken,
+<<<<<<< HEAD
     private val oauthService: OauthService
+=======
+    private val generateTokenWithRefreshToken: GenerateTokenWithRefreshToken,
+>>>>>>> 63d0863 (feat: add GenerateTokenWithRefreshToken)
 ) {
     @Operation(summary = "테스트용 토큰 강제 발급", description = "memberId로 테스트용 토큰을 발급합니다")
     @PostMapping("/force-token")
@@ -90,12 +100,33 @@ class AuthController(
         )
     }
 
+<<<<<<< HEAD
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
     fun getUserDetails(
         @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
     ): OauthLoginResponse {
         return oauthService.getGoogleUserInfo(oauthLoginRequest)
+<<<<<<< HEAD
 >>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
+=======
+=======
+    @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")
+    @PostMapping("/refresh")
+    fun loginWithRefreshToken(
+        @RequestBody @Valid request: MemberRefreshTokenRequest,
+    ): MemberSignInResponse {
+        val tokens = generateTokenWithRefreshToken.execute(
+            GenerateTokenWithRefreshToken.Input(
+                refreshToken = request.refreshToken,
+            )
+        )
+        return MemberSignInResponse(
+            accessToken = tokens.accessToken,
+            refreshToken = tokens.refreshToken,
+            memberId = tokens.memberId
+        )
+>>>>>>> 63d0863 (feat: add GenerateTokenWithRefreshToken)
+>>>>>>> 3bac1d2 (feat: add GenerateTokenWithRefreshToken)
     }
 }
