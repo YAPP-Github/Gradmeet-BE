@@ -1,6 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity
 
 import AuditingEntity
+import com.dobby.backend.domain.model.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
@@ -10,7 +11,7 @@ import java.time.LocalDate
 @Entity(name = "member")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "role_type")
-open class Member (
+class MemberEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -39,4 +40,30 @@ open class Member (
 
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
-) : AuditingEntity()
+) : AuditingEntity() {
+    fun toDomain() = Member(
+        memberId = id,
+        name = name,
+        oauthEmail = oauthEmail,
+        contactEmail = contactEmail,
+        provider = provider,
+        status = status,
+        role = role,
+        birthDate = birthDate
+    )
+
+    companion object {
+        fun fromDomain(member: Member) = with(member) {
+            MemberEntity(
+                id = memberId,
+                name = name,
+                oauthEmail = oauthEmail,
+                contactEmail = contactEmail,
+                provider = provider,
+                status = status,
+                role = role,
+                birthDate = birthDate
+            )
+        }
+    }
+}

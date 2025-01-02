@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
-class Researcher (
+class ResearcherEntity (
     @Column(name = "univ_email", length = 100, nullable = false)
     val univEmail : String,
 
@@ -31,7 +31,7 @@ class Researcher (
     contactEmail: String,
     name: String,
     birthDate: LocalDate
-) : Member(
+) : MemberEntity(
     id= id,
     oauthEmail = oauthEmail,
     provider = provider,

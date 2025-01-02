@@ -15,7 +15,7 @@ import java.time.LocalDate
 
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
-class Participant (
+class ParticipantEntity (
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     val gender: GenderType,
@@ -46,7 +46,7 @@ class Participant (
     contactEmail: String,
     name: String,
     birthDate: LocalDate
-) : Member(
+) : MemberEntity(
     id= id,
     oauthEmail = oauthEmail,
     provider = provider,
