@@ -15,7 +15,7 @@ data class MemberResponse(
     @Schema(description = "연락 이메일", example = "dlawotn3@naver.com")
     val contactEmail: String,
 
-    @Schema(description = "역할", example = "USER")
+    @Schema(description = "역할", example = "RESEARCHER")
     val role: RoleType,
 
     @Schema(description = "이름", example = "야뿌")
