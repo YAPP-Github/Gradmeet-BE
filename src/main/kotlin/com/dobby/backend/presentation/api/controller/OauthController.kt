@@ -1,21 +1,17 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.OauthService
-import com.dobby.backend.domain.exception.OAuth2AuthenticationException
-import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
-import com.dobby.backend.domain.exception.OAuth2NameNotFoundException
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType.*
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.OauthUserDto
 import com.dobby.backend.presentation.api.dto.response.OauthTokenResponse
-import io.swagger.v3.oas.models.responses.ApiResponse
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "OAuth 로그인 관련 API")
 @RestController
 @RequestMapping("/v1/auth")
 class OauthController(
@@ -24,16 +20,17 @@ class OauthController(
 ) {
 
     @GetMapping("/oauth/login")
-    fun getUserDetails(@RequestHeader("Authorization") authHeader: String): OauthTokenResponse{
-        val accessToken = authHeader.substring(7)
-        val userInfo = oauthService.getGoogleUserInfo(accessToken)
-        val email = userInfo["email"] as? String ?: throw OAuth2EmailNotFoundException()
-        val name = userInfo["name"] as? String ?: throw OAuth2NameNotFoundException()
-        return OauthTokenResponse(
-            jwtToken= accessToken,
-            email = email,
-            name = name,
-            provider = GOOGLE
+    @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
+    fun getUserDetails(
+        @Parameter(
+            description = "Bearer Token for Google OAuth- OAuth 로그인 이후 [Execute] 버튼을 누르면 자동으로 추가됩니다.",
+            required = true,
+            example = "Bearer <AccessToken>"
         )
+        @RequestHeader("Authorization") authHeader: String
+    ): OauthTokenResponse {
+        println("Authorization Header: $authHeader")
+        val accessToken = authHeader.substring(7)
+        return oauthService.getGoogleUserInfo(accessToken)
     }
 }
