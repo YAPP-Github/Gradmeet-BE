@@ -12,6 +12,7 @@ import java.time.LocalDate
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/ParticipantEntity.kt
 class ParticipantEntity (
 =======
@@ -19,10 +20,14 @@ class ParticipantEntity (
 <<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Participant.kt
 >>>>>>> 6c4313b (refact: rename entity)
 class Participant (
+=======
+class ParticipantEntity (
+>>>>>>> e59675c (test: fix test due to changed domain)
     @OneToOne
     @JoinColumn(name = "member_id", nullable = false)
-    val member: Member,
+    val member: MemberEntity,
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13)):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Participant.kt
 =======
@@ -30,6 +35,8 @@ class Participant (
 class ParticipantEntity (
 >>>>>>> da69998 (refact: rename entity):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/ParticipantEntity.kt
 >>>>>>> 6c4313b (refact: rename entity)
+=======
+>>>>>>> e59675c (test: fix test due to changed domain)
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     val gender: GenderType,

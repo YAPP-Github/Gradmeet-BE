@@ -39,6 +39,7 @@ class MemberEntity (
     val name : String?,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
@@ -80,9 +81,12 @@ class MemberEntity (
     val birthDate : LocalDate?,
 ) : AuditingEntity()
 =======
+=======
+>>>>>>> e59675c (test: fix test due to changed domain)
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
 ) : AuditingEntity() {
+
     fun toDomain() = Member(
         memberId = id,
         name = name,
@@ -109,5 +113,8 @@ class MemberEntity (
         }
     }
 }
+<<<<<<< HEAD
 >>>>>>> da69998 (refact: rename entity):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
 >>>>>>> 6c4313b (refact: rename entity)
+=======
+>>>>>>> e59675c (test: fix test due to changed domain)
