@@ -2,7 +2,9 @@ package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.domain.usecase.GenerateTestToken
 import com.dobby.backend.domain.usecase.GenerateTokenWithRefreshToken
+import com.dobby.backend.domain.usecase.GetMemberById
 import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
+import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.MemberSignInResponse
 import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*
 class AuthController(
     private val generateTestToken: GenerateTestToken,
     private val generateTokenWithRefreshToken: GenerateTokenWithRefreshToken,
+    private val getMemberById: GetMemberById
 ) {
     @Operation(summary = "테스트용 토큰 강제 발급", description = "memberId로 테스트용 토큰을 발급합니다")
     @PostMapping("/force-token")
@@ -42,10 +45,16 @@ class AuthController(
                 refreshToken = request.refreshToken,
             )
         )
+        val member = getMemberById.execute(
+            GetMemberById.Input(
+                memberId = tokens.memberId,
+            )
+        )
+
         return MemberSignInResponse(
             accessToken = tokens.accessToken,
             refreshToken = tokens.refreshToken,
-            memberId = tokens.memberId
+            member = MemberResponse.fromDomain(member)
         )
     }
 }
