@@ -31,17 +31,4 @@ object OauthUserMapper {
             )
         )
     }
-
-    fun toTempMember(dto: OauthUserDto, role: RoleType): Member {
-        return Member(
-            id = 0L,
-            oauthEmail= dto.email,
-            name= dto.name,
-            provider = dto.provider,
-            status = MemberStatus.HOLD,
-            role = role,
-            contactEmail = null,
-            birthDate = null
-        )
-    }
 }
