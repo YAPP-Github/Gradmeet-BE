@@ -21,3 +21,13 @@ app:
     expiration:
       access: 86400
       refresh: 604800
+
+cloud:
+  aws:
+    s3:
+      bucket: test
+    region:
+      static: test
+    credentials:
+      access-key: test
+      secret-key: test
