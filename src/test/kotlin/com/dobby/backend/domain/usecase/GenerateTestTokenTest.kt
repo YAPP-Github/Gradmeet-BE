@@ -15,8 +15,8 @@ class GenerateTestTokenTest: BehaviorSpec({
         val accessToken = "testAccessToken"
         val refreshToken = "testRefreshToken"
 
-        every { tokenGateway.generateAccessTokenForTestMember(memberId) } returns accessToken
-        every { tokenGateway.generateRefreshTokenForTestMember(memberId) } returns refreshToken
+        every { tokenGateway.generateAccessToken(memberId) } returns accessToken
+        every { tokenGateway.generateRefreshToken(memberId) } returns refreshToken
 
         `when`("execute가 호출되면") {
             val input = GenerateTestToken.Input(memberId)

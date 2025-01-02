@@ -17,8 +17,8 @@ class GenerateTestToken(
     override fun execute(input: Input): Output {
         val memberId = input.memberId
         return Output(
-            accessToken = tokenGateway.generateAccessTokenForTestMember(memberId),
-            refreshToken = tokenGateway.generateRefreshTokenForTestMember(memberId)
+            accessToken = tokenGateway.generateAccessToken(memberId),
+            refreshToken = tokenGateway.generateRefreshToken(memberId)
         )
     }
 }
