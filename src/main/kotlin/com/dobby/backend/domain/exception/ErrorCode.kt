@@ -46,5 +46,11 @@ enum class ErrorCode(
     /**
      * Signup error codes
      */
-    SIGNUP_ALREADY_MEMBER("SI001", "You've already joined", HttpStatus.CONFLICT)
+    SIGNUP_ALREADY_MEMBER("SI001", "You've already joined", HttpStatus.CONFLICT),
+
+    /**
+     * Login error codes
+     */
+    LOGIN_MEMBER_NOT_FOUND("LO001", "Member Not Found. Please signup. (Redirect URI must be /v1/auth/{role}/signup)", HttpStatus.NOT_FOUND),
+    LOGIN_ROLE_MISMATCH("LO002", "Already registered member as %s. Please login as %s", HttpStatus.BAD_REQUEST)
 }
