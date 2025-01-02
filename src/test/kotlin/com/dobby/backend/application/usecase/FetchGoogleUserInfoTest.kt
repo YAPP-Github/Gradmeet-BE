@@ -1,93 +1,72 @@
-package com.dobby.backend.application.usecase
-
-import com.dobby.backend.domain.exception.OAuth2ProviderMissingException
-import io.kotest.assertions.throwables.shouldThrow
+import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
+import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
+import com.dobby.backend.infrastructure.database.entity.Member
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.repository.MemberRepository
+import com.dobby.backend.infrastructure.feign.GoogleAuthFeignClient
+import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
+import com.dobby.backend.infrastructure.token.JwtTokenProvider
+import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.GoogleTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.WebClientResponseException
-import org.springframework.web.reactive.function.client.bodyToMono
-import reactor.core.publisher.Mono
+import java.time.LocalDate
 
 @ActiveProfiles("test")
 class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
+    val googleAuthFeignClient = mockk<GoogleAuthFeignClient>()
+    val googleUserInfoFeginClient = mockk<GoogleUserInfoFeginClient>()
+    val jwtTokenProvider = mockk<JwtTokenProvider>()
+    val googleAuthProperties = mockk<GoogleAuthProperties>()
+    val memberRepository = mockk<MemberRepository>()
 
-    val webClientBuilder: WebClient.Builder = mockk(relaxed = true)
-    val webClient: WebClient = mockk(relaxed = true)
-    val requestHeadersUriSpec: WebClient.RequestHeadersUriSpec<*> = mockk(relaxed = true)
-    val requestHeadersSpec: WebClient.RequestHeadersSpec<*> = mockk(relaxed = true)
-    val responseSpec: WebClient.ResponseSpec = mockk(relaxed = true)
-    val useCase = FetchGoogleUserInfoUseCase(webClientBuilder)
+    val fetchGoogleUserInfoUseCase = FetchGoogleUserInfoUseCase(
+        googleAuthFeignClient,
+        googleUserInfoFeginClient,
+        jwtTokenProvider,
+        googleAuthProperties,
+        memberRepository
+    )
 
-    beforeTest {
-        every { webClientBuilder.build() } returns webClient
-        every { webClient.get() } returns requestHeadersUriSpec
-        every { requestHeadersUriSpec.uri(any<String>()) } returns requestHeadersSpec
-        every { requestHeadersSpec.header(any(), any()) } returns requestHeadersSpec
-        every { requestHeadersSpec.retrieve() } returns responseSpec
-        every { responseSpec.bodyToMono(Map::class.java) } answers {
-            Mono.just(mapOf("email" to "mock@example.com", "name" to "Mock User"))
+    given("Google OAuth 요청이 들어왔을 때") {
+        val oauthLoginRequest = OauthLoginRequest(authorizationCode = "valid-auth-code")
+        val mockMember = Member(
+            id = 1L,
+            oauthEmail = "test@example.com",
+            name = "Test User",
+            status = MemberStatus.ACTIVE,
+            role = RoleType.PARTICIPANT,
+            birthDate = LocalDate.of(2002, 11, 21),
+            contactEmail = "contact@example.com",
+            provider = ProviderType.GOOGLE
+        )
+
+        every { googleAuthProperties.clientId } returns "mock-client-id"
+        every { googleAuthProperties.clientSecret } returns "mock-client-secret"
+        every { googleAuthProperties.redirectUri } returns "http://localhost/callback"
+        every { googleAuthFeignClient.getAccessToken(any()) } returns GoogleTokenResponse("mock-access-token")
+        every { googleUserInfoFeginClient.getUserInfo(any()) } returns mockk {
+            every { email } returns "test@example.com"
+            every { name } returns "Test User"
         }
-    }
+        every { memberRepository.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
+        every { jwtTokenProvider.generateAccessToken(any()) } returns "mock-jwt-access-token"
+        every { jwtTokenProvider.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
 
+        `when`("정상적으로 모든 데이터가 주어지면") {
+            val result = fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
 
-
-    given("유효한 액세스 토큰이 주어졌을 때") {
-        val validAccessToken = "validAccessToken"
-        val userInfo = mapOf("email" to "test@example.com", "name" to "Test User")
-
-        `when`("Google API에서 사용자 정보를 성공적으로 가져오면") {
-            every { responseSpec.bodyToMono<Map<String, Any>>() } answers {
-                println("Mock: bodyToMono 호출")
-                Mono.just(userInfo)
-            }
-            val result = useCase.execute(validAccessToken)
-
-            then("사용자 정보가 반환된다") {
-                println("결과: $result")
-                result["email"] shouldBe "test@example.com"
-                result["name"] shouldBe "Test User"
-            }
-
-        }
-    }
-
-    given("유효하지 않은 액세스 토큰이 주어졌을 때") {
-        val invalidAccessToken = "invalidAccessToken"
-
-        `when`("Google API 호출 시 Unauthorized 예외가 발생하면") {
-            every { responseSpec.bodyToMono<Map<String, Any>>() } answers {
-                throw WebClientResponseException.Unauthorized.create(
-                    401,
-                    "Unauthorized",
-                    HttpHeaders.EMPTY,
-                    ByteArray(0),
-                    null
-                )
-            }
-
-            then("OAuth2ProviderMissingException 예외가 발생한다") {
-                shouldThrow<OAuth2ProviderMissingException> {
-                    useCase.execute(invalidAccessToken)
-                }
-            }
-        }
-    }
-
-    given("Google API 응답이 비어 있을 때") {
-        val emptyResponseToken = "emptyResponseToken"
-
-        `when`("API 응답이 null인 경우") {
-            every { responseSpec.bodyToMono<Map<String, Any>>() } returns Mono.empty()
-
-            then("OAuth2ProviderMissingException 예외가 발생한다") {
-                shouldThrow<OAuth2ProviderMissingException> {
-                    useCase.execute(emptyResponseToken)
-                }
+            then("유저 정보를 포함한 OauthLoginResponse를 반환해야 한다") {
+                result.isRegistered shouldBe true
+                result.accessToken shouldBe "mock-jwt-access-token"
+                result.refreshToken shouldBe "mock-jwt-refresh-token"
+                result.memberInfo.oauthEmail shouldBe "test@example.com"
+                result.memberInfo.name shouldBe "Test User"
             }
         }
     }

@@ -1,76 +1,47 @@
 package com.dobby.backend.application.mapper
 
-import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
-import com.dobby.backend.domain.exception.OAuth2NameNotFoundException
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.presentation.api.dto.request.OauthUserDto
-import io.kotest.assertions.throwables.shouldThrow
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
-import org.springframework.security.oauth2.core.user.OAuth2User
+import org.springframework.test.context.ActiveProfiles
 
+@ActiveProfiles("test")
 class OauthUserMapperTest : BehaviorSpec({
-    given("유효한 OAuth2User 객체가 주어졌을 때") {
-        `when`("toDto를 호출하면") {
-            val oauthUser = mockk<OAuth2User>()
-            every { oauthUser.getAttribute<String>("email") } returns "test@example.com"
-            every { oauthUser.getAttribute<String>("name") } returns "Test User"
+     given("OauthUserMapper가 호출될 때") {
+         val isRegistered = true
+         val accessToken = "mock-access-token"
+         val refreshToken = "mock-refresh-token"
+         val oauthEmail = "test@example.com"
+         val oauthName = "Test User"
+         val role = RoleType.PARTICIPANT
+         val provider = ProviderType.GOOGLE
+         val memberId = 1L
 
-            val result = OauthUserMapper.toDto(oauthUser, ProviderType.GOOGLE)
+         `when`("toDto 메서드가 호출되면") {
+             val result = OauthUserMapper.toDto(
+                 isRegistered = isRegistered,
+                 accessToken = accessToken,
+                 refreshToken = refreshToken,
+                 oauthEmail = oauthEmail,
+                 oauthName = oauthName,
+                 role = role,
+                 provider = provider,
+                 memberId = memberId
+             )
 
-            then("올바르게 OauthUserDto로 매핑된다") {
-                result.email shouldBe "test@example.com"
-                result.name shouldBe "Test User"
-                result.provider shouldBe ProviderType.GOOGLE
-            }
-        }
-    }
+             then("올바른 OauthLoginResponse가 반환되어야 한다") {
+                 result.isRegistered shouldBe isRegistered
+                 result.accessToken shouldBe accessToken
+                 result.refreshToken shouldBe refreshToken
 
-    given("email 속성이 없는 OAuth2User 객체가 주어졌을 때") {
-        `when`("toDto를 호출하면") {
-            val oauthUser = mockk<OAuth2User>()
-            every { oauthUser.getAttribute<String>("email") } returns null
-            every { oauthUser.getAttribute<String>("name") } returns "Test User"
-
-            then("OAuth2EmailNotFoundException 예외가 발생한다") {
-                shouldThrow<OAuth2EmailNotFoundException> {
-                    OauthUserMapper.toDto(oauthUser, ProviderType.GOOGLE)
+                 val memberInfo = result.memberInfo
+                    memberInfo.memberId shouldBe memberId
+                    memberInfo.oauthEmail shouldBe oauthEmail
+                    memberInfo.name shouldBe oauthName
+                    memberInfo.role shouldBe role
+                    memberInfo.provider shouldBe provider
                 }
             }
         }
-    }
-
-    given("name 속성이 없는 OAuth2User 객체가 주어졌을 때") {
-        `when`("toDto를 호출하면") {
-            val oauthUser = mockk<OAuth2User>()
-            every { oauthUser.getAttribute<String>("email") } returns "test@example.com"
-            every { oauthUser.getAttribute<String>("name") } returns null
-
-            then("OAuth2NameNotFoundException 예외가 발생한다") {
-                shouldThrow<OAuth2NameNotFoundException> {
-                    OauthUserMapper.toDto(oauthUser, ProviderType.GOOGLE)
-                }
-            }
-        }
-    }
-
-    given("유효한 OauthUserDto 객체가 주어졌을 때") {
-        `when`("toTempMember를 호출하면") {
-            val dto = OauthUserDto(
-                email = "test@example.com",
-                name = "Test User",
-                provider = ProviderType.GOOGLE
-            )
-            val result = OauthUserMapper.toTempMember(dto)
-
-            then("올바르게 Member 객체로 매핑된다") {
-                result.oauthEmail shouldBe "test@example.com"
-                result.name shouldBe "Test User"
-                result.provider shouldBe ProviderType.GOOGLE
-                result.status shouldBe com.dobby.backend.infrastructure.database.entity.enum.MemberStatus.HOLD
-            }
-        }
-    }
-})
+    })
