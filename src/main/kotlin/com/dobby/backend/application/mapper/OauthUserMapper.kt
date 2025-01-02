@@ -1,31 +1,45 @@
 package com.dobby.backend.application.mapper
 
-import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
-import com.dobby.backend.domain.exception.OAuth2NameNotFoundException
 import com.dobby.backend.infrastructure.database.entity.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.OauthUserDto
-import org.springframework.security.oauth2.core.user.OAuth2User
+import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
 
 object OauthUserMapper {
-    fun toDto(oauthUser: OAuth2User, provider: ProviderType): OauthUserDto {
-        val email = oauthUser.getAttribute<String>("email")
-            ?: throw OAuth2EmailNotFoundException()
-        val name = oauthUser.getAttribute<String>("name")
-            ?: throw OAuth2NameNotFoundException()
-
-        return OauthUserDto(email=email, name=name, provider= provider)
+    fun toDto(
+        isRegistered: Boolean,
+        accessToken: String,
+        refreshToken: String,
+        oauthEmail: String,
+        oauthName: String,
+        role: RoleType,
+        provider: ProviderType,
+        memberId: Long? = null
+    ): OauthLoginResponse {
+        return OauthLoginResponse(
+            isRegistered = isRegistered,
+            accessToken = accessToken,
+            refreshToken = refreshToken,
+            memberInfo = OauthLoginResponse.MemberInfo(
+                memberId = memberId,
+                oauthEmail = oauthEmail,
+                name = oauthName,
+                role = role,
+                provider = provider
+            )
+        )
     }
 
-    fun toTempMember(dto: OauthUserDto): Member {
+    fun toTempMember(dto: OauthUserDto, role: RoleType): Member {
         return Member(
             id = 0L,
             oauthEmail= dto.email,
             name= dto.name,
             provider = dto.provider,
             status = MemberStatus.HOLD,
-            role = null,
+            role = role,
             contactEmail = null,
             birthDate = null
         )

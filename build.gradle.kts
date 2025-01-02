@@ -45,6 +45,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("io.github.cdimascio:java-dotenv:5.2.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
@@ -66,6 +67,12 @@ dependencies {
 	testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
 	testImplementation("io.kotest:kotest-property:$koTestVersion")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:2024.0.0")
+	}
 }
 
 kotlin {

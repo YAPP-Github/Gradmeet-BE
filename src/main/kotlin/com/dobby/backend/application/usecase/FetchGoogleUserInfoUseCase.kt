@@ -1,26 +1,70 @@
 package com.dobby.backend.application.usecase
 
+import com.dobby.backend.application.mapper.OauthUserMapper
+import com.dobby.backend.domain.exception.LoginMemberException
+import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
+import com.dobby.backend.domain.exception.OAuth2NameNotFoundException
 import com.dobby.backend.domain.exception.OAuth2ProviderMissingException
+import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.repository.MemberRepository
+import com.dobby.backend.infrastructure.feign.GoogleAuthFeignClient
+import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
+import com.dobby.backend.infrastructure.token.JwtTokenProvider
+import com.dobby.backend.presentation.api.dto.request.GoogleTokenRequest
+import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import com.dobby.backend.util.AuthenticationUtils
+import feign.FeignException
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.WebClientResponseException
-import org.springframework.web.reactive.function.client.bodyToMono
 
 @Component
 class FetchGoogleUserInfoUseCase(
-    private val webClientBuilder : WebClient.Builder
+    private val googleAuthFeignClient: GoogleAuthFeignClient,
+    private val googleUserInfoFeginClient: GoogleUserInfoFeginClient,
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val googleAuthProperties: GoogleAuthProperties,
+    private val memberRepository: MemberRepository
 ){
-    fun execute(accessToken: String) : Map<String, Any>{
+    fun execute(oauthLoginRequest: OauthLoginRequest) : OauthLoginResponse{
         try {
-            val webClient = webClientBuilder.build()
-            return webClient.get()
-                .uri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .header("Authorization", "Bearer $accessToken")
-                .retrieve()
-                .bodyToMono<Map<String, Any>>()
-                .block() ?: throw OAuth2ProviderMissingException()
-        } catch (e : WebClientResponseException) {
+            val googleTokenRequest = GoogleTokenRequest(
+                code = oauthLoginRequest.authorizationCode,
+                clientId = googleAuthProperties.clientId,
+                clientSecret = googleAuthProperties.clientSecret,
+                redirectUri = googleAuthProperties.redirectUri
+            )
+
+            val oauthRes = fetchAccessToken(googleTokenRequest)
+            val oauthToken = oauthRes.accessToken
+
+            val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
+            val email = userInfo.email as? String?: throw OAuth2EmailNotFoundException()
+            val name = userInfo.name as? String?: throw OAuth2NameNotFoundException()
+            val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
+                ?: throw LoginMemberException()
+
+            val regMemberAuthentication = AuthenticationUtils.createAuthentication(regMember)
+            val jwtAccessToken = jwtTokenProvider.generateAccessToken(regMemberAuthentication)
+            val jwtRefreshToken = jwtTokenProvider.generateRefreshToken(regMemberAuthentication)
+
+            return OauthUserMapper.toDto(
+                isRegistered = true,
+                accessToken = jwtAccessToken,
+                refreshToken = jwtRefreshToken,
+                oauthEmail = regMember.oauthEmail,
+                oauthName = regMember.name?: throw LoginMemberException(),
+                role = regMember.role?: throw LoginMemberException(),
+                provider = ProviderType.GOOGLE
+            )
+        } catch (e : FeignException) {
             throw OAuth2ProviderMissingException()
         }
+    }
+
+    private fun fetchAccessToken(googleTokenRequest: GoogleTokenRequest): GoogleTokenResponse {
+        return googleAuthFeignClient.getAccessToken(googleTokenRequest)
     }
 }
