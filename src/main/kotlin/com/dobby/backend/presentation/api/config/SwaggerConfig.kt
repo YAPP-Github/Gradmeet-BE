@@ -24,36 +24,35 @@ import org.springframework.context.annotation.Configuration
 )
 @Configuration
 class SwaggerConfig {
+    val googleAuthUrl = "https://accounts.google.com/o/oauth2/auth"
+    val googleTokenUrl = "https://oauth2.googleapis.com/token"
+
+    val jwtScheme = SecurityScheme()
+        .type(SecurityScheme.Type.HTTP)
+        .scheme("Bearer")
+        .bearerFormat("JWT")
+
+    val googleOAuthScheme = SecurityScheme()
+        .type(SecurityScheme.Type.OAUTH2)
+        .flows(
+            OAuthFlows().authorizationCode(
+                OAuthFlow()
+                    .authorizationUrl(googleAuthUrl)
+                    .tokenUrl(googleTokenUrl)
+                    .scopes(
+                        Scopes()
+                            .addString("email", "Access your email address")
+                            .addString("profile", "Access your profile information")
+                    )
+            )
+        )
+
     @Bean
     fun openAPI(): OpenAPI = OpenAPI()
-        .addSecurityItem(SecurityRequirement().addList("JWT 토큰"))
-        .addSecurityItem(SecurityRequirement().addList("Google OAuth2 토큰"))
+        .addSecurityItem(SecurityRequirement().addList("JWT 토큰").addList("Google OAuth2 토큰"))
         .components(
             Components()
-                .addSecuritySchemes(
-                    "JWT 토큰",
-                    SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("Bearer")
-                        .bearerFormat("JWT")
-                )
-                .addSecuritySchemes(
-                    "Google OAuth2 토큰",
-                    SecurityScheme()
-                        .type(SecurityScheme.Type.OAUTH2)
-                        .flows(
-                            OAuthFlows()
-                                .authorizationCode(
-                                    OAuthFlow()
-                                        .authorizationUrl("https://accounts.google.com/o/oauth2/auth")
-                                        .tokenUrl("https://oauth2.googleapis.com/token")
-                                        .scopes(
-                                            Scopes()
-                                                .addString("email", "Access your email address")
-                                                .addString("profile", "Access your profile information")
-                                        )
-                                )
-                        )
-                )
+                .addSecuritySchemes("JWT 토큰", jwtScheme)
+                .addSecuritySchemes("Google OAuth2 토큰", googleOAuthScheme)
         )
 }
