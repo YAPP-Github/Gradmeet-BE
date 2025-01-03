@@ -1,5 +1,6 @@
 package com.dobby.backend.presentation.api.controller
 
+<<<<<<< HEAD
 import com.dobby.backend.domain.usecase.GenerateTestToken
 import com.dobby.backend.domain.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.domain.usecase.GetMemberById
@@ -56,5 +57,31 @@ class AuthController(
             refreshToken = tokens.refreshToken,
             member = MemberResponse.fromDomain(member)
         )
+=======
+import com.dobby.backend.application.service.OauthService
+import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@Tag(name = "회원가입 & 로그인 API")
+@RestController
+@RequestMapping("/v1/auth")
+class AuthController(
+    private val oauthService: OauthService
+) {
+
+    @PostMapping("/login/google")
+    @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
+    fun getUserDetails(
+        @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
+    ): OauthLoginResponse {
+        return oauthService.getGoogleUserInfo(oauthLoginRequest)
+>>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
     }
 }

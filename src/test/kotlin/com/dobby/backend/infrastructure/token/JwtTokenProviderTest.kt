@@ -11,10 +11,16 @@ import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+<<<<<<< HEAD
 import java.time.LocalDate
+=======
+import org.springframework.test.context.ActiveProfiles
+import kotlin.test.assertEquals
+>>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
 import kotlin.test.assertFailsWith
 
 @SpringBootTest
+@ActiveProfiles("test")
 class JwtTokenProviderTest : BehaviorSpec() {
 
     @Autowired

@@ -30,14 +30,15 @@ class MemberEntity (
 
     @Column(name = "role", nullable = true)
     @Enumerated(EnumType.STRING)
-    val role: RoleType,
+    val role: RoleType?,
 
-    @Column(name = "contact_email", length = 100, nullable = false)
-    val contactEmail : String,
+    @Column(name = "contact_email", length = 100, nullable = true)
+    val contactEmail : String?,
 
-    @Column(name = "name", length = 10, nullable = false)
-    val name : String,
+    @Column(name = "name", length = 10, nullable = true)
+    val name : String?,
 
+<<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
 ) : AuditingEntity() {
@@ -67,3 +68,8 @@ class MemberEntity (
         }
     }
 }
+=======
+    @Column(name = "birth_date", nullable = true)
+    val birthDate : LocalDate?,
+) : AuditingEntity()
+>>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13)):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Member.kt

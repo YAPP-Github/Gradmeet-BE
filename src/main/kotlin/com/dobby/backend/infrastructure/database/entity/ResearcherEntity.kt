@@ -2,14 +2,20 @@ package com.dobby.backend.infrastructure.database.entity
 
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import jakarta.persistence.Column
-import jakarta.persistence.DiscriminatorValue
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
+<<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/ResearcherEntity.kt
 class ResearcherEntity (
+=======
+class Researcher (
+    @OneToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    val member: Member,
+
+>>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13)):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Researcher.kt
     @Column(name = "univ_email", length = 100, nullable = false)
     val univEmail : String,
 
