@@ -1,7 +1,6 @@
 package com.dobby.backend.infrastructure.gateway
 
 import com.dobby.backend.domain.gateway.TokenGateway
-import com.dobby.backend.domain.model.Member
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Component
@@ -10,17 +9,17 @@ import org.springframework.stereotype.Component
 class TokenGatewayImpl(
     private val tokenProvider: JwtTokenProvider,
 ) : TokenGateway {
-    override fun generateAccessToken(member: Member): String {
+    override fun generateAccessToken(memberId: Long): String {
         val authentication = UsernamePasswordAuthenticationToken(
-            member.memberId,
+            memberId,
             null,
         )
         return tokenProvider.generateAccessToken(authentication)
     }
 
-    override fun generateRefreshToken(member: Member): String {
+    override fun generateRefreshToken(memberId: Long): String {
         val authentication = UsernamePasswordAuthenticationToken(
-            member.memberId,
+            memberId,
             null,
         )
         return tokenProvider.generateRefreshToken(authentication)

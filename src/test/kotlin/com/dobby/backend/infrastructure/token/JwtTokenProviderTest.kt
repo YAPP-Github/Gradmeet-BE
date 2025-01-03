@@ -2,14 +2,18 @@ package com.dobby.backend.infrastructure.token
 
 import com.dobby.backend.domain.exception.AuthenticationTokenNotValidException
 import com.dobby.backend.domain.model.Member
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.test.context.ActiveProfiles
-import kotlin.test.assertEquals
+import java.time.LocalDate
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,30 +24,34 @@ class JwtTokenProviderTest : BehaviorSpec() {
 
     init {
         given("회원 정보가 주어지고") {
-            val member = Member(memberId = "1", email = "dlawotn3@naver.com", name = "dobby")
+            val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+                provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
+                birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
 
             `when`("해당 인증 정보로 JWT 토큰을 생성하면") {
                 val jwtToken = jwtTokenProvider.generateAccessToken(authentication)
 
                 then("JWT 토큰이 생성된다") {
-                    assertNotNull(jwtToken)
+                    jwtToken shouldNotBe null
                 }
             }
         }
 
         given("유효한 JWT 토큰이 주어지고") {
-            val member = Member(memberId = "1", email = "dlawotn3@naver.com", name = "dobby")
+            val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+                provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
+                birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
             val validToken = jwtTokenProvider.generateAccessToken(authentication)
 
             `when`("해당 토큰을 파싱하면") {
                 val parsedAuthentication = jwtTokenProvider.parseAuthentication(validToken)
-                val extractedMemberId = parsedAuthentication.principal as String
+                val extractedMemberId = parsedAuthentication.principal
 
                 then("파싱된 멤버의 ID는 원래 멤버의 ID와 같아야 한다") {
-                    assertNotNull(extractedMemberId)
-                    assertEquals(member.memberId, extractedMemberId)
+                    extractedMemberId shouldNotBe null
+                    extractedMemberId shouldBe member.memberId.toString()
                 }
             }
         }
