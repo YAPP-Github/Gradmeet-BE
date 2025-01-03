@@ -11,27 +11,8 @@ import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import java.time.LocalDate
-=======
-import org.springframework.test.context.ActiveProfiles
-<<<<<<< HEAD
-import kotlin.test.assertEquals
->>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
-=======
->>>>>>> a7fa0d8 (test: refactor JwtTokenProviderTest to use Kotest style)
-=======
-=======
->>>>>>> d02399a (fix: fix conflicts for merge)
 import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDate
-<<<<<<< HEAD
->>>>>>> 6387bdb (test: fix test due to changed domain)
->>>>>>> e59675c (test: fix test due to changed domain)
-=======
->>>>>>> d02399a (fix: fix conflicts for merge)
 import kotlin.test.assertFailsWith
 
 @SpringBootTest

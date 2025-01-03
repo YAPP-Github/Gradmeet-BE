@@ -38,58 +38,8 @@ class MemberEntity (
     @Column(name = "name", length = 10, nullable = true)
     val name : String?,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
-    @Column(name = "birth_date", nullable = false)
-    val birthDate : LocalDate,
-) : AuditingEntity() {
-    fun toDomain() = Member(
-        memberId = id,
-        name = name,
-        oauthEmail = oauthEmail,
-        contactEmail = contactEmail,
-        provider = provider,
-        status = status,
-        role = role,
-        birthDate = birthDate
-    )
-
-    companion object {
-        fun fromDomain(member: Member) = with(member) {
-            MemberEntity(
-                id = memberId,
-                name = name,
-                oauthEmail = oauthEmail,
-                contactEmail = contactEmail,
-                provider = provider,
-                status = status,
-                role = role,
-                birthDate = birthDate
-            )
-        }
-    }
-}
-=======
     @Column(name = "birth_date", nullable = true)
     val birthDate : LocalDate?,
-) : AuditingEntity()
->>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13)):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Member.kt
-=======
-<<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/Member.kt
-    @Column(name = "birth_date", nullable = true)
-    val birthDate : LocalDate?,
-) : AuditingEntity()
-=======
-=======
->>>>>>> e59675c (test: fix test due to changed domain)
-    @Column(name = "birth_date", nullable = false)
-    val birthDate : LocalDate,
-=======
-    @Column(name = "birth_date", nullable = true)
-    val birthDate : LocalDate?,
->>>>>>> d02399a (fix: fix conflicts for merge)
 ) : AuditingEntity() {
 
     fun toDomain() = Member(
@@ -118,8 +68,3 @@ class MemberEntity (
         }
     }
 }
-<<<<<<< HEAD
->>>>>>> da69998 (refact: rename entity):src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
->>>>>>> 6c4313b (refact: rename entity)
-=======
->>>>>>> e59675c (test: fix test due to changed domain)

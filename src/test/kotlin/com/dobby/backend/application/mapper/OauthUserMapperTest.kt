@@ -8,17 +8,6 @@ import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
 class OauthUserMapperTest : BehaviorSpec({
-<<<<<<< HEAD
-     given("OauthUserMapper가 호출될 때") {
-         val isRegistered = true
-         val accessTgit oken = "mock-access-token"
-         val refreshToken = "mock-refresh-token"
-         val oauthEmail = "test@example.com"
-         val oauthName = "Test User"
-         val role = RoleType.PARTICIPANT
-         val provider = ProviderType.GOOGLE
-         val memberId = 1L
-=======
     given("OauthUserMapper가 호출될 때") {
         val isRegistered = true
         val accessToken = "mock-access-token"
@@ -28,7 +17,6 @@ class OauthUserMapperTest : BehaviorSpec({
         val role = RoleType.PARTICIPANT
         val provider = ProviderType.GOOGLE
         val memberId = 1L
->>>>>>> 4930f33 (refact: refactor OAuthLoginResponse response structure)
 
         `when`("toDto 메서드가 호출되면") {
             val result = OauthUserMapper.toDto(

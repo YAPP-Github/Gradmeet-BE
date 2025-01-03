@@ -41,13 +41,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
-<<<<<<< HEAD
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
-=======
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
->>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))
 	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
