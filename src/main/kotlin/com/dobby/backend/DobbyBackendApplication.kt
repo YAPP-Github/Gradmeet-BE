@@ -1,6 +1,7 @@
 package com.dobby.backend
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import com.dobby.backend.domain.usecase.UseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -11,6 +12,9 @@ import org.springframework.context.annotation.FilterType
 =======
 =======
 import com.dobby.backend.domain.usecase.UseCase
+=======
+import com.dobby.backend.application.usecase.UseCase
+>>>>>>> b4241af (refact: move usecase file to application)
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication

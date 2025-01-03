@@ -59,11 +59,11 @@ class AuthController(
         )
 =======
 import com.dobby.backend.application.service.OauthService
-import com.dobby.backend.domain.usecase.GenerateTestToken
+import com.dobby.backend.application.usecase.GenerateTestToken
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
-import com.dobby.backend.domain.usecase.GenerateTokenWithRefreshToken
-import com.dobby.backend.domain.usecase.GetMemberById
+import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
+import com.dobby.backend.application.usecase.GetMemberById
 import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.MemberSignInResponse
