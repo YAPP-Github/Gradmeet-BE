@@ -14,7 +14,13 @@ spring:
         format_sql: false
         dialect: org.hibernate.dialect.MySQL8Dialect
     database-platform: org.hibernate.dialect.MySQL8Dialect
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "dummy-client-id"
+            client-secret: "dummy-client-secret"
 app:
   token:
     secret_key: testtesttestteyyysttestteyyystte

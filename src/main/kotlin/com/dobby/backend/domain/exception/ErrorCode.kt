@@ -33,4 +33,24 @@ enum class ErrorCode(
      * Member error codes
      */
     MEMBER_NOT_FOUND("ME0001", "Member not found", HttpStatus.NOT_FOUND),
+
+    /**
+     * OAuth2 error codes
+     */
+    OAUTH_USER_NOT_FOUND("OA001", "Authentication Principal is not an instance of OAuth2User", HttpStatus.BAD_REQUEST),
+    OAUTH_PROVIDER_MISSING("OA002", "Cannot Load OAuth2 User Info during the external API calling", HttpStatus.BAD_REQUEST),
+    OAUTH_PROVIDER_NOT_FOUND("OA003", "Not supported Provider is requested", HttpStatus.BAD_REQUEST),
+    OAUTH_EMAIL_NOT_FOUND("OA004", "Email cannot found in OAuth2 Authentication Info", HttpStatus.BAD_REQUEST),
+    OAUTH_NAME_NOT_FOUND("OA005", "Name cannt found in OAuth2 Authentication Info", HttpStatus.BAD_REQUEST),
+
+    /**
+     * Signup error codes
+     */
+    SIGNUP_ALREADY_MEMBER("SIGN_UP_001", "You've already joined", HttpStatus.CONFLICT),
+
+    /**
+     * Signin error codes
+     */
+    SIGNIN_MEMBER_NOT_FOUND("SIGN_IN_001", "Member Not Found. Please signup. (Redirect URI must be /v1/auth/{role}/signup)", HttpStatus.NOT_FOUND),
+    SIGNIN_ROLE_MISMATCH("SIGN_IN_002", "Already registered member as %s. Please login as %s", HttpStatus.BAD_REQUEST)
 }
