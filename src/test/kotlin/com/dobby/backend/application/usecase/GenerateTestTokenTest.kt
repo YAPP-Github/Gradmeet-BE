@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.usecase
+package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.usecase.GenerateTestToken
 import com.dobby.backend.domain.gateway.MemberGateway
