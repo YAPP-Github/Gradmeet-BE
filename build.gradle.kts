@@ -41,7 +41,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("io.github.cdimascio:java-dotenv:5.2.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")

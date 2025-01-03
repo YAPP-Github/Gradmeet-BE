@@ -6,4 +6,4 @@ open class MemberException(
 
 class MemberNotFoundException : MemberException(ErrorCode.MEMBER_NOT_FOUND)
 class AlreadyMemberException: MemberException(ErrorCode.SIGNUP_ALREADY_MEMBER)
-class LoginMemberException: MemberException(ErrorCode.LOGIN_MEMBER_NOT_FOUND)
+class SignInMemberException: MemberException(ErrorCode.SIGNIN_MEMBER_NOT_FOUND)

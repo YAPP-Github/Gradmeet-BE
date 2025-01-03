@@ -63,7 +63,7 @@ class WebSecurityConfig(
         }
         .authorizeHttpRequests {
             println("[DEBUG] authSecurityFilterChain triggered")
-            it.requestMatchers("/v1/auth/oauth/**").permitAll()
+            it.requestMatchers("/v1/auth/**").permitAll()
             it.anyRequest().authenticated()
         }
         .build()

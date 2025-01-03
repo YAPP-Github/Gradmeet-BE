@@ -1,10 +1,9 @@
 package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.mapper.OauthUserMapper
-import com.dobby.backend.domain.exception.LoginMemberException
 import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
-import com.dobby.backend.domain.exception.OAuth2NameNotFoundException
 import com.dobby.backend.domain.exception.OAuth2ProviderMissingException
+import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
@@ -42,9 +41,8 @@ class FetchGoogleUserInfoUseCase(
 
             val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
             val email = userInfo.email as? String?: throw OAuth2EmailNotFoundException()
-            val name = userInfo.name as? String?: throw OAuth2NameNotFoundException()
             val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
-                ?: throw LoginMemberException()
+                ?: throw SignInMemberException()
 
             val regMemberAuthentication = AuthenticationUtils.createAuthentication(regMember)
             val jwtAccessToken = jwtTokenProvider.generateAccessToken(regMemberAuthentication)
@@ -55,8 +53,8 @@ class FetchGoogleUserInfoUseCase(
                 accessToken = jwtAccessToken,
                 refreshToken = jwtRefreshToken,
                 oauthEmail = regMember.oauthEmail,
-                oauthName = regMember.name?: throw LoginMemberException(),
-                role = regMember.role?: throw LoginMemberException(),
+                oauthName = regMember.name?: throw SignInMemberException(),
+                role = regMember.role?: throw SignInMemberException(),
                 provider = ProviderType.GOOGLE
             )
         } catch (e : FeignException) {

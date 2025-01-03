@@ -38,7 +38,7 @@ spring:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
 springdoc:
   swagger-ui:
-    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
+    oauth2-redirect-url: ${SWAGGER_REDIRECT_URI}
 
 app:
   token:
