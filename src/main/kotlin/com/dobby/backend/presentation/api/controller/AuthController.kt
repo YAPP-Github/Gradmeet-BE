@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*
 class AuthController(
     private val generateTestToken: GenerateTestToken,
     private val generateTokenWithRefreshToken: GenerateTokenWithRefreshToken,
+    private val getMemberById: GetMemberById,
     private val oauthService: OauthService,
-    private val getMemberById: GetMemberById
 ) {
     @Operation(summary = "테스트용 토큰 강제 발급", description = "memberId로 테스트용 토큰을 발급합니다")
     @PostMapping("/force-token")
@@ -48,7 +48,7 @@ class AuthController(
 
     @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")
     @PostMapping("/refresh")
-    fun loginWithRefreshToken(
+    fun signInWithRefreshToken(
         @RequestBody @Valid request: MemberRefreshTokenRequest,
     ): OauthLoginResponse {
         val tokens = generateTokenWithRefreshToken.execute(

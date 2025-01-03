@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase
 
+import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
 import com.dobby.backend.domain.exception.OAuth2ProviderMissingException
 import com.dobby.backend.domain.exception.SignInMemberException

@@ -1,3 +1,5 @@
+package com.dobby.backend.application.mapper
+
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.response.MemberResponse

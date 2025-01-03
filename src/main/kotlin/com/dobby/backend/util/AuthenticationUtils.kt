@@ -10,6 +10,6 @@ object AuthenticationUtils {
             member,
             null,
             emptyList()
-        )
+        ) as Authentication
     }
 }
