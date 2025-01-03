@@ -4,7 +4,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

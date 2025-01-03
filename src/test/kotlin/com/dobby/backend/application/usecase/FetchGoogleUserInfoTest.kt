@@ -9,7 +9,7 @@ import com.dobby.backend.infrastructure.feign.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

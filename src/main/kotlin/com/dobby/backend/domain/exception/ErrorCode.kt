@@ -47,6 +47,7 @@ enum class ErrorCode(
      * Signup error codes
      */
     SIGNUP_ALREADY_MEMBER("SIGN_UP_001", "You've already joined", HttpStatus.CONFLICT),
+    SIGNUP_UNSUPPORTED_ROLE("SIGN_UP_002", "Requested RoleType does not supported", HttpStatus.BAD_REQUEST),
 
     /**
      * Signin error codes

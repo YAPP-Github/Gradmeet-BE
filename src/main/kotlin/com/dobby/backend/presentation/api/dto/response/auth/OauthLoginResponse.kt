@@ -1,5 +1,6 @@
-package com.dobby.backend.presentation.api.dto.response
+package com.dobby.backend.presentation.api.dto.response.auth
 
+import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import io.swagger.v3.oas.annotations.media.Schema
 import lombok.Getter
 

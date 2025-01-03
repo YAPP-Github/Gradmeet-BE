@@ -13,8 +13,8 @@ import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.GoogleTokenRequest
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.GoogleTokenResponse
-import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
 import feign.FeignException
 import org.springframework.stereotype.Component
@@ -58,8 +58,8 @@ class FetchGoogleUserInfoUseCase(
                 role = regMember.role ?: throw SignInMemberException(),
                 provider = ProviderType.GOOGLE
             )
-        } catch (e: FeignException) {
-            throw OAuth2ProviderMissingException()
+        } catch (e: SignInMemberException) {
+            throw SignInMemberException()
         }
     }
 

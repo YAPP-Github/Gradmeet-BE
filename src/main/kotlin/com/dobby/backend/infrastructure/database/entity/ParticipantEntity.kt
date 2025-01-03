@@ -12,7 +12,7 @@ import java.time.LocalDate
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
 class ParticipantEntity (
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
@@ -20,38 +20,42 @@ class ParticipantEntity (
     @Enumerated(EnumType.STRING)
     val gender: GenderType,
 
-    @Column(name = "basic_region", nullable = false)
-    @Enumerated(EnumType.STRING)
-    var basicRegion: Region,
+    @Embedded
+    @AttributeOverrides(
+        AttributeOverride(name = "region", column = Column(name = "basic_region", nullable = false)),
+        AttributeOverride(name = "area", column = Column(name = "basic_area", nullable = false))
+    )
+    val basicAddressInfo: AddressInfo,
 
-    @Column(name = "basic_area", nullable = false)
-    @Enumerated(EnumType.STRING)
-    var basicArea : Area,
-
-    @Column(name = "optional_region", nullable = true)
-    @Enumerated(EnumType.STRING)
-    var optionalRegion: Region?,
-
-    @Column(name = "optional_area", nullable = true)
-    @Enumerated(EnumType.STRING)
-    var optionalArea: Area?,
+    @Embedded
+    @AttributeOverrides(
+        AttributeOverride(name = "region", column = Column(name = "optional_region", nullable = true)),
+        AttributeOverride(name = "area", column = Column(name = "optional_area", nullable = true))
+    )
+    val additionalAddressInfo: AddressInfo?,
 
     @Column(name = "prefer_type", nullable = true)
     @Enumerated(EnumType.STRING)
     var preferType: MatchType?,
 
-    id: Long,
-    oauthEmail: String,
-    provider: ProviderType,
-    contactEmail: String,
-    name: String,
-    birthDate: LocalDate
 ) : MemberEntity(
-    id= id,
-    oauthEmail = oauthEmail,
-    provider = provider,
-    contactEmail= contactEmail,
+    id= member.id,
+    oauthEmail = member.oauthEmail,
+    provider = member.provider,
+    contactEmail= member.contactEmail,
     role = RoleType.PARTICIPANT,
-    name = name,
-    birthDate = birthDate
+    name = member.name,
+    birthDate = member.birthDate
 )
+
+@Embeddable
+data class AddressInfo(
+    @Enumerated(EnumType.STRING)
+    @Column(name = "region", nullable = false)
+    val region: Region,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "area", nullable = false)
+    val area: Area
+)
+
