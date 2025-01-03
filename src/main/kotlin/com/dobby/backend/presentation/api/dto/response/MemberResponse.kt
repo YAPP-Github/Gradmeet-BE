@@ -10,16 +10,16 @@ data class MemberResponse(
     val id: Long,
 
     @Schema(description = "OAuth 이메일", example = "dlawotn3@naver.com")
-    val oauthEmail: String,
+    val oauthEmail: String?,
 
     @Schema(description = "연락 이메일", example = "dlawotn3@naver.com")
-    val contactEmail: String,
+    val contactEmail: String?,
 
     @Schema(description = "역할", example = "RESEARCHER")
-    val role: RoleType,
+    val role: RoleType?,
 
     @Schema(description = "이름", example = "야뿌")
-    val name: String,
+    val name: String?,
 ) {
 
     companion object {

@@ -1,8 +1,7 @@
 package com.dobby.backend.infrastructure.database.repository
 
-import com.dobby.backend.infrastructure.database.entity.Participant
+import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 
-interface ParticipantRepository: JpaRepository<Participant, Long> {
+interface ParticipantRepository: JpaRepository<ParticipantEntity, Long> {
 }

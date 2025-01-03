@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.time.LocalDate
 =======
 import org.springframework.test.context.ActiveProfiles
@@ -22,11 +23,15 @@ import kotlin.test.assertEquals
 =======
 >>>>>>> a7fa0d8 (test: refactor JwtTokenProviderTest to use Kotest style)
 =======
-import org.springframework.test.context.ActiveProfiles
 =======
+>>>>>>> d02399a (fix: fix conflicts for merge)
+import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDate
+<<<<<<< HEAD
 >>>>>>> 6387bdb (test: fix test due to changed domain)
 >>>>>>> e59675c (test: fix test due to changed domain)
+=======
+>>>>>>> d02399a (fix: fix conflicts for merge)
 import kotlin.test.assertFailsWith
 
 @SpringBootTest

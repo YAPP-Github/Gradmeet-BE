@@ -45,7 +45,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 =======
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("io.github.cdimascio:java-dotenv:5.2.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 >>>>>>> dc4d52e ([YS-31] feat: 구글 OAuth 로그인 구현 (#13))

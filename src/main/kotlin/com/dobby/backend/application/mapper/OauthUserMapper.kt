@@ -1,10 +1,7 @@
 package com.dobby.backend.application.mapper
 
-import com.dobby.backend.infrastructure.database.entity.Member
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.OauthUserDto
 import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
 
 object OauthUserMapper {

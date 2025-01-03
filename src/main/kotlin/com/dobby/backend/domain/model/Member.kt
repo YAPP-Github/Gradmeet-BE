@@ -7,13 +7,13 @@ import java.time.LocalDate
 
 data class Member(
     val memberId: Long,
-    val name: String,
+    val name: String?,
     val oauthEmail: String,
-    val contactEmail: String,
+    val contactEmail: String?,
     val provider: ProviderType,
     val status: MemberStatus,
-    val role: RoleType,
-    val birthDate: LocalDate,
+    val role: RoleType?,
+    val birthDate: LocalDate?
 ) {
 
     companion object {

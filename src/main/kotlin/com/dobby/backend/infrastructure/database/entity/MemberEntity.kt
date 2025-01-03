@@ -40,6 +40,7 @@ class MemberEntity (
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/kotlin/com/dobby/backend/infrastructure/database/entity/MemberEntity.kt
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
@@ -85,6 +86,10 @@ class MemberEntity (
 >>>>>>> e59675c (test: fix test due to changed domain)
     @Column(name = "birth_date", nullable = false)
     val birthDate : LocalDate,
+=======
+    @Column(name = "birth_date", nullable = true)
+    val birthDate : LocalDate?,
+>>>>>>> d02399a (fix: fix conflicts for merge)
 ) : AuditingEntity() {
 
     fun toDomain() = Member(

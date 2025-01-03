@@ -1,6 +1,6 @@
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
-import com.dobby.backend.infrastructure.database.entity.Member
+import com.dobby.backend.infrastructure.database.entity.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
@@ -35,7 +35,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
 
     given("Google OAuth 요청이 들어왔을 때") {
         val oauthLoginRequest = OauthLoginRequest(authorizationCode = "valid-auth-code")
-        val mockMember = Member(
+        val mockMember = MemberEntity(
             id = 1L,
             oauthEmail = "test@example.com",
             name = "Test User",
