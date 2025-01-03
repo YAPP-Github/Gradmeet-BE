@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.application.usecase.GenerateTestToken
 import com.dobby.backend.domain.gateway.MemberGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import com.dobby.backend.domain.gateway.TokenGateway
