@@ -22,9 +22,9 @@ class ParticipantSignupUseCase (
         val participantEntity = SignupMapper.toParticipant(memberEntity, input)
 
         val newParticipant = participantRepository.save(participantEntity)
-
-        val accessToken = jwtTokenProvider.generateAccessToken(AuthenticationUtils.createAuthentication(memberEntity))
-        val refreshToken = jwtTokenProvider.generateRefreshToken(AuthenticationUtils.createAuthentication(memberEntity))
+        val authentication = AuthenticationUtils.createAuthentication(memberEntity)
+        val accessToken = jwtTokenProvider.generateAccessToken(authentication)
+        val refreshToken = jwtTokenProvider.generateRefreshToken(authentication)
 
         return SignupResponse(
             memberInfo = MemberResponse.fromDomain(newParticipant.member.toDomain()),
