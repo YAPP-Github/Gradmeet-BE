@@ -10,7 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.AddressInfo as AddressIn
 import com.dobby.backend.presentation.api.dto.request.AddressInfo as DtoAddressInfo
 
 object SignupMapper {
-    fun toAddressInfoDto(dto: DtoAddressInfo): AddressInfo {
+    fun toAddressInfo(dto: DtoAddressInfo): AddressInfo {
         return AddressInfo(
             dto.region,
             dto.area
@@ -34,8 +34,8 @@ object SignupMapper {
     ): ParticipantEntity {
         return ParticipantEntity(
             member = member,
-            basicAddressInfo = toAddressInfoDto(req.basicAddressInfo),
-            additionalAddressInfo = req.additionalAddressInfo?.let { toAddressInfoDto(it) },
+            basicAddressInfo = toAddressInfo(req.basicAddressInfo),
+            additionalAddressInfo = req.additionalAddressInfo?.let { toAddressInfo(it) },
             preferType = req.preferType,
             gender = req.gender
         )
