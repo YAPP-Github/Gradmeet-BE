@@ -7,6 +7,9 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Past
+import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
 data class ParticipantSignupRequest(
@@ -27,7 +30,8 @@ data class ParticipantSignupRequest(
     @NotBlank(message = "성별은 공백일 수 없습니다.")
     val gender: GenderType,
 
-    @NotBlank(message = "생년월일은 공백일 수 없습니다.")
+    @Past @NotNull(message = "생년월일은 공백일 수 없습니다.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     val birthDate: LocalDate,
 
     @NotBlank(message = "거주 지역은 공백일 수 없습니다.")
