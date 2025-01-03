@@ -83,11 +83,17 @@ class JwtTokenProvider(
     }
 
     fun getMemberIdFromRefreshToken(refreshToken: String): String {
-        val claims = jwtParser.parseEncryptedClaims(refreshToken)
-        val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY] ?: throw RuntimeException()
-        if (tokenType != REFRESH_TOKEN_TYPE_VALUE) throw RuntimeException()
+        return try {
+            val claims = jwtParser.parseEncryptedClaims(refreshToken)
+            val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]
+            if (tokenType != REFRESH_TOKEN_TYPE_VALUE) {
+                throw InvalidTokenTypeException()
+            }
 
-        return claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw RuntimeException()
+            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException()
+        } catch (e: Exception) {
+            throw InvalidTokenValueException()
+        }
     }
 
     private fun generateAccessTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.expiration.access * 1000)
