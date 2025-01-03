@@ -1,9 +1,10 @@
 name: Java CD with Gradle and Docker
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_run:
+    workflows: ["Java CI with Gradle"]
+    types:
+      - completed
 
 jobs:
   deploy:
