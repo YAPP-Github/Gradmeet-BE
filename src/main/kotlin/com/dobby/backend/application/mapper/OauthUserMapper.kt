@@ -3,7 +3,7 @@ package com.dobby.backend.application.mapper
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 
 object OauthUserMapper {
     fun toDto(

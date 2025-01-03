@@ -3,9 +3,10 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.application.usecase.GenerateTestToken
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
+import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
@@ -41,6 +42,7 @@ class AuthController(
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
     fun signInWithGoogle(
+        @RequestParam role : RoleType, // RESEARCHER, PARTICIPANT
         @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
     ): OauthLoginResponse {
         return oauthService.getGoogleUserInfo(oauthLoginRequest)
