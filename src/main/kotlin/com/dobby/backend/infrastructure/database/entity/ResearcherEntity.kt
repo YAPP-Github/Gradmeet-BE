@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
 class ResearcherEntity (
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
@@ -26,19 +26,12 @@ class ResearcherEntity (
 
     @Column(name = "lab_info", length = 100, nullable = true)
     val labInfo : String,
-
-    id: Long,
-    oauthEmail: String,
-    provider: ProviderType,
-    contactEmail: String,
-    name: String,
-    birthDate: LocalDate
 ) : MemberEntity(
-    id= id,
-    oauthEmail = oauthEmail,
-    provider = provider,
-    contactEmail= contactEmail,
+    id= member.id,
+    oauthEmail = member.oauthEmail,
+    provider = member.provider,
+    contactEmail= member.contactEmail,
     role = RoleType.RESEARCHER,
-    name = name,
-    birthDate = birthDate
+    name = member.name,
+    birthDate = member.birthDate
 )
