@@ -15,7 +15,7 @@ class SignupMapperTest : BehaviorSpec({
     given("주소 dto를 AddressInfo 엔티티로 변환할 때") {
         `when`("toAddressInfoDto 메서드가 호출되면") {
             val dtoAddressInfo = DtoAddressInfo(region = Region.SEOUL, area = Area.SEOUL_ALL)
-            val result = SignupMapper.toAddressInfoDto(dtoAddressInfo)
+            val result = SignupMapper.toAddressInfo(dtoAddressInfo)
 
             then("올바른 AddressInfo 객체가 반환되어야 한다") {
                 result.region shouldBe Region.SEOUL
