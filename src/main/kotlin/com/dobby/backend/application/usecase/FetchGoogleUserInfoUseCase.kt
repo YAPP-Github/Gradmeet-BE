@@ -2,7 +2,6 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
-import com.dobby.backend.domain.exception.OAuth2ProviderMissingException
 import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -16,10 +15,7 @@ import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
-import feign.FeignException
-import org.springframework.stereotype.Component
 
-@Component
 class FetchGoogleUserInfoUseCase(
     private val googleAuthFeignClient: GoogleAuthFeignClient,
     private val googleUserInfoFeginClient: GoogleUserInfoFeginClient,

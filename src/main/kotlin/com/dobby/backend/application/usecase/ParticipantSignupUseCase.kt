@@ -7,10 +7,7 @@ import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
 import com.dobby.backend.util.AuthenticationUtils
-import jakarta.transaction.Transactional
-import org.springframework.stereotype.Component
 
-@Component
 class ParticipantSignupUseCase (
     private val participantRepository: ParticipantRepository,
     private val jwtTokenProvider: JwtTokenProvider
