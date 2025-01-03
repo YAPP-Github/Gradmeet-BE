@@ -26,11 +26,12 @@ class FetchGoogleUserInfoUseCase(
     private val jwtTokenProvider: JwtTokenProvider,
     private val googleAuthProperties: GoogleAuthProperties,
     private val memberRepository: MemberRepository
-){
-    fun execute(oauthLoginRequest: OauthLoginRequest) : OauthLoginResponse{
+) : UseCase<OauthLoginRequest, OauthLoginResponse> {
+
+    override fun execute(input: OauthLoginRequest): OauthLoginResponse {
         try {
             val googleTokenRequest = GoogleTokenRequest(
-                code = oauthLoginRequest.authorizationCode,
+                code = input.authorizationCode,
                 clientId = googleAuthProperties.clientId,
                 clientSecret = googleAuthProperties.clientSecret,
                 redirectUri = googleAuthProperties.redirectUri
@@ -40,7 +41,7 @@ class FetchGoogleUserInfoUseCase(
             val oauthToken = oauthRes.accessToken
 
             val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
-            val email = userInfo.email as? String?: throw OAuth2EmailNotFoundException()
+            val email = userInfo.email ?: throw OAuth2EmailNotFoundException()
             val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
                 ?: throw SignInMemberException()
 
@@ -53,11 +54,11 @@ class FetchGoogleUserInfoUseCase(
                 accessToken = jwtAccessToken,
                 refreshToken = jwtRefreshToken,
                 oauthEmail = regMember.oauthEmail,
-                oauthName = regMember.name?: throw SignInMemberException(),
-                role = regMember.role?: throw SignInMemberException(),
+                oauthName = regMember.name ?: throw SignInMemberException(),
+                role = regMember.role ?: throw SignInMemberException(),
                 provider = ProviderType.GOOGLE
             )
-        } catch (e : FeignException) {
+        } catch (e: FeignException) {
             throw OAuth2ProviderMissingException()
         }
     }

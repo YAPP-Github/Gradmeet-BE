@@ -11,10 +11,10 @@ import java.time.LocalDate
 
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
-class Participant (
+class ParticipantEntity (
     @OneToOne
     @JoinColumn(name = "member_id", nullable = false)
-    val member: Member,
+    val member: MemberEntity,
 
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -46,7 +46,7 @@ class Participant (
     contactEmail: String,
     name: String,
     birthDate: LocalDate
-) : Member(
+) : MemberEntity(
     id= id,
     oauthEmail = oauthEmail,
     provider = provider,
