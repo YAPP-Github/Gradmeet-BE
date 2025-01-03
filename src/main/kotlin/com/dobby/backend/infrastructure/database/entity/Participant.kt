@@ -6,16 +6,16 @@ import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
-import jakarta.persistence.Column
-import jakarta.persistence.DiscriminatorValue
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
 class Participant (
+    @OneToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    val member: Member,
+
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     val gender: GenderType,
@@ -30,15 +30,15 @@ class Participant (
 
     @Column(name = "optional_region", nullable = true)
     @Enumerated(EnumType.STRING)
-    var optionalRegion: Region,
+    var optionalRegion: Region?,
 
     @Column(name = "optional_area", nullable = true)
     @Enumerated(EnumType.STRING)
-    var optionalArea: Area,
+    var optionalArea: Area?,
 
     @Column(name = "prefer_type", nullable = true)
     @Enumerated(EnumType.STRING)
-    var preferType: MatchType,
+    var preferType: MatchType?,
 
     id: Long,
     oauthEmail: String,
@@ -55,4 +55,3 @@ class Participant (
     name = name,
     birthDate = birthDate
 )
-

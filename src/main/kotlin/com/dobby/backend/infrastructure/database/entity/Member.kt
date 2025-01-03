@@ -29,14 +29,14 @@ open class Member (
 
     @Column(name = "role", nullable = true)
     @Enumerated(EnumType.STRING)
-    val role: RoleType,
+    val role: RoleType?,
 
-    @Column(name = "contact_email", length = 100, nullable = false)
-    val contactEmail : String,
+    @Column(name = "contact_email", length = 100, nullable = true)
+    val contactEmail : String?,
 
-    @Column(name = "name", length = 10, nullable = false)
-    val name : String,
+    @Column(name = "name", length = 10, nullable = true)
+    val name : String?,
 
-    @Column(name = "birth_date", nullable = false)
-    val birthDate : LocalDate,
+    @Column(name = "birth_date", nullable = true)
+    val birthDate : LocalDate?,
 ) : AuditingEntity()

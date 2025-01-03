@@ -2,14 +2,16 @@ package com.dobby.backend.infrastructure.database.entity
 
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import jakarta.persistence.Column
-import jakarta.persistence.DiscriminatorValue
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
 class Researcher (
+    @OneToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    val member: Member,
+
     @Column(name = "univ_email", length = 100, nullable = false)
     val univEmail : String,
 

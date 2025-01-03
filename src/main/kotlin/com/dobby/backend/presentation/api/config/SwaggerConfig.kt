@@ -6,8 +6,7 @@ import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.annotations.servers.Server
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.security.SecurityRequirement
-import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.security.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -25,10 +24,35 @@ import org.springframework.context.annotation.Configuration
 )
 @Configuration
 class SwaggerConfig {
+    val googleAuthUrl = "https://accounts.google.com/o/oauth2/auth"
+    val googleTokenUrl = "https://oauth2.googleapis.com/token"
+
+    val jwtScheme = SecurityScheme()
+        .type(SecurityScheme.Type.HTTP)
+        .scheme("Bearer")
+        .bearerFormat("JWT")
+
+    val googleOAuthScheme = SecurityScheme()
+        .type(SecurityScheme.Type.OAUTH2)
+        .flows(
+            OAuthFlows().authorizationCode(
+                OAuthFlow()
+                    .authorizationUrl(googleAuthUrl)
+                    .tokenUrl(googleTokenUrl)
+                    .scopes(
+                        Scopes()
+                            .addString("email", "Access your email address")
+                            .addString("profile", "Access your profile information")
+                    )
+            )
+        )
+
     @Bean
     fun openAPI(): OpenAPI = OpenAPI()
-        .addSecurityItem(SecurityRequirement().addList("JWT 토큰"))
+        .addSecurityItem(SecurityRequirement().addList("JWT 토큰").addList("Google OAuth2 토큰"))
         .components(
-            Components().addSecuritySchemes("JWT 토큰",
-            SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("Bearer").bearerFormat("JWT")))
+            Components()
+                .addSecuritySchemes("JWT 토큰", jwtScheme)
+                .addSecuritySchemes("Google OAuth2 토큰", googleOAuthScheme)
+        )
 }

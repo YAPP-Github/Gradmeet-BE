@@ -17,7 +17,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig {
+class WebSecurityConfig(
+) {
     @Bean
     @Order(0)
     fun securityFilterChain(
@@ -49,7 +50,11 @@ class WebSecurityConfig {
 
     @Bean
     @Order(1)
-    fun authSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
+    fun authSecurityFilterChain(
+        httpSecurity: HttpSecurity,
+        jwtTokenProvider: JwtTokenProvider,
+        handlerExceptionResolver: HandlerExceptionResolver
+    ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/auth/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
@@ -57,7 +62,24 @@ class WebSecurityConfig {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.anyRequest().permitAll()
+            println("[DEBUG] authSecurityFilterChain triggered")
+            it.requestMatchers("/v1/auth/**").permitAll()
+            it.anyRequest().authenticated()
         }
         .build()
+
+    @Bean
+    @Order(2)
+    fun swaggerSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
+        .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
+        .csrf { it.disable() }
+        .cors(Customizer.withDefaults())
+        .authorizeHttpRequests {
+            it.requestMatchers(
+                "/swagger-ui/**",
+                "/v3/api-docs/**"
+            ).permitAll()
+        }
+        .build()
+
 }
