@@ -1,4 +1,4 @@
-name: "Pull Request 오토 템플릿 추가"
+name: "Add Pull Request Auto Template"
 on:
   pull_request:
     branches:
