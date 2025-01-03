@@ -66,7 +66,6 @@ import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
 import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.MemberSignInResponse
 import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -99,7 +98,7 @@ class AuthController(
 
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
-    fun getUserDetails(
+    fun signInWithGoogle(
         @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
     ): OauthLoginResponse {
         return oauthService.getGoogleUserInfo(oauthLoginRequest)
@@ -116,7 +115,7 @@ class AuthController(
     @PostMapping("/refresh")
     fun loginWithRefreshToken(
         @RequestBody @Valid request: MemberRefreshTokenRequest,
-    ): MemberSignInResponse {
+    ): OauthLoginResponse {
         val tokens = generateTokenWithRefreshToken.execute(
             GenerateTokenWithRefreshToken.Input(
                 refreshToken = request.refreshToken,
@@ -128,10 +127,11 @@ class AuthController(
             )
         )
 
-        return MemberSignInResponse(
+        return OauthLoginResponse(
+            isRegistered = false,
             accessToken = tokens.accessToken,
             refreshToken = tokens.refreshToken,
-            member = MemberResponse.fromDomain(member)
+            memberInfo = MemberResponse.fromDomain(member)
         )
 <<<<<<< HEAD
 >>>>>>> 63d0863 (feat: add GenerateTokenWithRefreshToken)

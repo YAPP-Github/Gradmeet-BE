@@ -3,6 +3,7 @@ import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.OauthLoginResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -21,7 +22,7 @@ class OauthServiceTest : BehaviorSpec({
             isRegistered = true,
             accessToken = "mock-access-token",
             refreshToken = "mock-refresh-token",
-            memberInfo = OauthLoginResponse.MemberInfo(
+            memberInfo = MemberResponse(
                 memberId = 1L,
                 oauthEmail = "test@example.com",
                 name = "Test User",
