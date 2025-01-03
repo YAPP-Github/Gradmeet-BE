@@ -16,7 +16,6 @@ class ParticipantSignupUseCase (
     private val jwtTokenProvider: JwtTokenProvider
 ):UseCase<ParticipantSignupRequest, SignupResponse>
 {
-    @Transactional
     override fun execute(input: ParticipantSignupRequest): SignupResponse {
         val memberEntity = SignupMapper.toMember(input)
         val participantEntity = SignupMapper.toParticipant(memberEntity, input)
