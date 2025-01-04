@@ -1,8 +1,8 @@
-package com.dobby.backend.presentation.api.dto.response.auth.google
+package com.dobby.backend.presentation.api.dto.response.auth
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class GoogleTokenResponse (
+data class NaverTokenResponse (
     @JsonProperty("access_token")
     val accessToken: String
 )

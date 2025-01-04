@@ -48,6 +48,15 @@ class AuthController(
         return oauthService.getGoogleUserInfo(oauthLoginRequest)
     }
 
+    @PostMapping("/login/naver")
+    @Operation(summary = "Naver OAuth 로그인 API", description = "Naver OAuth 로그인 후 인증 정보를 반환합니다")
+    fun signInWithNaver(
+        @RequestParam role : RoleType,
+        @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
+    ): OauthLoginResponse {
+        return oauthService.getNaverUserInfo(oauthLoginRequest)
+    }
+
     @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")
     @PostMapping("/refresh")
     fun signInWithRefreshToken(
