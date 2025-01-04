@@ -10,8 +10,8 @@ import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import com.dobby.backend.infrastructure.feign.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
+import com.dobby.backend.presentation.api.dto.request.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.request.GoogleTokenRequest
-import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
@@ -22,9 +22,9 @@ class FetchGoogleUserInfoUseCase(
     private val jwtTokenProvider: JwtTokenProvider,
     private val googleAuthProperties: GoogleAuthProperties,
     private val memberRepository: MemberRepository
-) : UseCase<OauthLoginRequest, OauthLoginResponse> {
+) : UseCase<GoogleOauthLoginRequest, OauthLoginResponse> {
 
-    override fun execute(input: OauthLoginRequest): OauthLoginResponse {
+    override fun execute(input: GoogleOauthLoginRequest): OauthLoginResponse {
         try {
             val googleTokenRequest = GoogleTokenRequest(
                 code = input.authorizationCode,

@@ -2,7 +2,8 @@ package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
-import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import org.springframework.stereotype.Service
 
@@ -11,11 +12,11 @@ class OauthService(
     private val fetchGoogleUserInfoUseCase: FetchGoogleUserInfoUseCase,
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
 ) {
-    fun getGoogleUserInfo(oauthLoginRequest: OauthLoginRequest): OauthLoginResponse {
+    fun getGoogleUserInfo(oauthLoginRequest: GoogleOauthLoginRequest): OauthLoginResponse {
         return fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
     }
 
-    fun getNaverUserInfo(oauthLoginRequest: OauthLoginRequest): OauthLoginResponse {
+    fun getNaverUserInfo(oauthLoginRequest: NaverOauthLoginRequest): OauthLoginResponse {
         return fetchNaverUserInfoUseCase.execute(oauthLoginRequest)
     }
 }

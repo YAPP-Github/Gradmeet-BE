@@ -1,8 +1,11 @@
 package com.dobby.backend.infrastructure.feign
 
+import com.dobby.backend.presentation.api.dto.request.GoogleTokenRequest
+import com.dobby.backend.presentation.api.dto.request.NaverTokenRequest
 import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
@@ -12,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam
 interface NaverAuthFeignClient {
     @PostMapping
     fun getAccessToken(
-        @RequestParam("grant_type") grantType: String,
-        @RequestParam("client_id") clientId: String,
-        @RequestParam("client_secret") clientSecret: String,
-        @RequestParam("code") code: String,
-        @RequestParam("state") state: String
+        @RequestBody naverTokenRequest: NaverTokenRequest
     ): NaverTokenResponse
 }
