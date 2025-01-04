@@ -2,7 +2,7 @@ import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import io.kotest.core.spec.style.BehaviorSpec
