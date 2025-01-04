@@ -49,6 +49,7 @@ enum class ErrorCode(
      */
     SIGNUP_ALREADY_MEMBER("SIGN_UP_001", "You've already joined", HttpStatus.CONFLICT),
     SIGNUP_UNSUPPORTED_ROLE("SIGN_UP_002", "Requested RoleType does not supported", HttpStatus.BAD_REQUEST),
+    SIGNUP_EMAIL_NOT_VALIDATED("SIGN_UP_003", "You should validate your school email first", HttpStatus.BAD_REQUEST),
 
     /**
      * Signin error codes

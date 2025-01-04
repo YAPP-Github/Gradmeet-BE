@@ -2,7 +2,7 @@ package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.application.usecase.GenerateTestToken
-import com.dobby.backend.presentation.api.dto.request.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "인증 관련 API")
+@Tag(name = "인증 관련 API - /v1/auth ")
 @RestController
 @RequestMapping("/v1/auth")
 class AuthController(

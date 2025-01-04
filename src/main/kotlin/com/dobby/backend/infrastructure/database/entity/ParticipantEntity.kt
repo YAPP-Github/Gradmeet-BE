@@ -2,7 +2,6 @@ package com.dobby.backend.infrastructure.database.entity
 
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
@@ -19,6 +18,9 @@ class ParticipantEntity (
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     val gender: GenderType,
+
+    @Column(name = "birth_date", nullable = false)
+    val birthDate : LocalDate,
 
     @Embedded
     @AttributeOverrides(
@@ -42,10 +44,9 @@ class ParticipantEntity (
     id= member.id,
     oauthEmail = member.oauthEmail,
     provider = member.provider,
-    contactEmail= member.contactEmail,
     role = RoleType.PARTICIPANT,
-    name = member.name,
-    birthDate = member.birthDate
+    contactEmail= member.contactEmail,
+    name = member.name
 )
 
 @Embeddable

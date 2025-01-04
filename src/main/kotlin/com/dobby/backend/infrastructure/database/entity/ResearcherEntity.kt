@@ -1,9 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity
 
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
@@ -25,13 +23,12 @@ class ResearcherEntity (
     val major : String,
 
     @Column(name = "lab_info", length = 100, nullable = true)
-    val labInfo : String,
+    val labInfo : String?,
 ) : MemberEntity(
     id= member.id,
     oauthEmail = member.oauthEmail,
     provider = member.provider,
-    contactEmail= member.contactEmail,
     role = RoleType.RESEARCHER,
-    name = member.name,
-    birthDate = member.birthDate
+    contactEmail= member.contactEmail,
+    name = member.name
 )
