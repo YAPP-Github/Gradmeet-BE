@@ -23,6 +23,7 @@ enum class ErrorCode(
     TOKEN_NOT_VALID("AU0002", "Authentication token is not valid.", HttpStatus.UNAUTHORIZED),
     TOKEN_EXPIRED("AU0003", "Authentication token has expired.", HttpStatus.UNAUTHORIZED),
     INVALID_TOKEN_TYPE("AU0004", "Invalid token type", HttpStatus.UNAUTHORIZED),
+    INVALID_TOKEN_VALUE("AU0005", "Invalid token value", HttpStatus.UNAUTHORIZED),
 
     /**
      * Authorization error codes

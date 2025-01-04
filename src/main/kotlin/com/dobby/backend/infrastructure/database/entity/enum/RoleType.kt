@@ -1,5 +1,8 @@
 package com.dobby.backend.infrastructure.database.entity.enum
 
-enum class RoleType {
-    RESEARCHER, PARTICIPANT
+enum class RoleType(
+    val roleName: String
+) {
+    RESEARCHER("RESEARCHER"),
+    PARTICIPANT("PARTICIPANT")
 }
