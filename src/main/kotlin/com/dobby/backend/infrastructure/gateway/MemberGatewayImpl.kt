@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class MemberGatewayImpl(
-    private val jpaMemberRepository: MemberRepository,
+    private val memberRepository: MemberRepository,
 ) : MemberGateway {
     override fun getById(memberId: Long): Member {
-        return jpaMemberRepository
+        return memberRepository
             .getReferenceById(memberId)
             .let(MemberEntity::toDomain)
     }
