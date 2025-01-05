@@ -5,10 +5,10 @@ import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.GoogleAuthFeignClient
-import com.dobby.backend.infrastructure.feign.GoogleUserInfoFeginClient
+import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
+import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

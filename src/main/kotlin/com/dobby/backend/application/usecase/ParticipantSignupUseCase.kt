@@ -3,7 +3,7 @@ package com.dobby.backend.application.usecase
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
 import com.dobby.backend.util.AuthenticationUtils

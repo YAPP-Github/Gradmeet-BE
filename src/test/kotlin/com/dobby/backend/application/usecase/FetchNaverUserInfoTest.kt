@@ -5,10 +5,10 @@ import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.NaverAuthFeignClient
-import com.dobby.backend.infrastructure.feign.NaverUserInfoFeignClient
+import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
+import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.NaverOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec

@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.feign
+package com.dobby.backend.infrastructure.feign.google
 
-import com.dobby.backend.presentation.api.dto.request.GoogleTokenRequest
+import com.dobby.backend.presentation.api.dto.request.auth.GoogleTokenRequest
 import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping

@@ -3,7 +3,7 @@ import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import io.kotest.core.spec.style.BehaviorSpec

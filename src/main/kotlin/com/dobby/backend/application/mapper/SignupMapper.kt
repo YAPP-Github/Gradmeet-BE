@@ -4,10 +4,9 @@ import com.dobby.backend.infrastructure.database.entity.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
+import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.infrastructure.database.entity.AddressInfo as AddressInfo
-import com.dobby.backend.presentation.api.dto.request.AddressInfo as DtoAddressInfo
+import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
 object SignupMapper {
     fun toAddressInfo(dto: DtoAddressInfo): AddressInfo {

@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.feign
+package com.dobby.backend.infrastructure.feign.naver
 
 import com.dobby.backend.presentation.api.dto.response.auth.NaverInfoResponse
 import org.springframework.cloud.openfeign.FeignClient

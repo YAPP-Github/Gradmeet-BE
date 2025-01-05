@@ -6,11 +6,11 @@ import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
-import com.dobby.backend.presentation.api.dto.request.NaverOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
+import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
+import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
