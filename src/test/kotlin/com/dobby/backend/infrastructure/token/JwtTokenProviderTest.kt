@@ -11,6 +11,7 @@ import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDate
 import kotlin.test.assertFailsWith
@@ -27,7 +28,8 @@ class JwtTokenProviderTest : BehaviorSpec() {
             val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
                 birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
-            val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
+            val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
+            val authentication = UsernamePasswordAuthenticationToken(member.memberId, null, authorities)
 
             `when`("해당 인증 정보로 JWT 토큰을 생성하면") {
                 val jwtToken = jwtTokenProvider.generateAccessToken(authentication)
@@ -42,16 +44,23 @@ class JwtTokenProviderTest : BehaviorSpec() {
             val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
                 birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
-            val authentication = UsernamePasswordAuthenticationToken(member.memberId, null)
+            val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
+            val authentication = UsernamePasswordAuthenticationToken(member.memberId, null, authorities)
             val validToken = jwtTokenProvider.generateAccessToken(authentication)
 
             `when`("해당 토큰을 파싱하면") {
                 val parsedAuthentication = jwtTokenProvider.parseAuthentication(validToken)
                 val extractedMemberId = parsedAuthentication.principal
+                val extractedAuthorities = parsedAuthentication.authorities
 
                 then("파싱된 멤버의 ID는 원래 멤버의 ID와 같아야 한다") {
                     extractedMemberId shouldNotBe null
                     extractedMemberId shouldBe member.memberId.toString()
+                }
+
+                then("파싱된 권한(role)은 원래 멤버의 역할과 같아야 한다") {
+                    extractedAuthorities.size shouldBe 1
+                    extractedAuthorities.first().authority shouldBe member.role?.name
                 }
             }
         }
