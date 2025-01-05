@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.usecase
+package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.usecase.GenerateTestToken
 import io.kotest.core.spec.style.BehaviorSpec

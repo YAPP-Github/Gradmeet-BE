@@ -1,7 +1,6 @@
 package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.mapper.OauthUserMapper
-import com.dobby.backend.domain.exception.OAuth2EmailNotFoundException
 import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -37,7 +36,7 @@ class FetchGoogleUserInfoUseCase(
             val oauthToken = oauthRes.accessToken
 
             val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
-            val email = userInfo.email ?: throw OAuth2EmailNotFoundException()
+            val email = userInfo.email
             val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
                 ?: throw SignInMemberException()
 
