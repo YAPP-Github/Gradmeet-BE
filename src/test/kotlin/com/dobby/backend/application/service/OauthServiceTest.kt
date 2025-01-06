@@ -1,8 +1,9 @@
 import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
+import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.auth.OauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import io.kotest.core.spec.style.BehaviorSpec
@@ -14,10 +15,12 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("test")
 class OauthServiceTest : BehaviorSpec({
     val fetchGoogleUserInfoUseCase = mockk<FetchGoogleUserInfoUseCase>()
-    val oauthService = OauthService(fetchGoogleUserInfoUseCase)
+    val fetchNaverUserInfoUseCase = mockk<FetchNaverUserInfoUseCase>()
+
+    val oauthService = OauthService(fetchGoogleUserInfoUseCase, fetchNaverUserInfoUseCase)
 
     given("Google OAuth 요청이 들어왔을 때") {
-        val oauthLoginRequest = OauthLoginRequest(authorizationCode = "valid-auth-code")
+        val oauthLoginRequest = GoogleOauthLoginRequest(authorizationCode = "valid-auth-code")
         val expectedResponse = OauthLoginResponse(
             isRegistered = true,
             accessToken = "mock-access-token",

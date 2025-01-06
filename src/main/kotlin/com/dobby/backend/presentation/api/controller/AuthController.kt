@@ -2,14 +2,15 @@ package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.OauthService
 import com.dobby.backend.application.usecase.GenerateTestToken
-import com.dobby.backend.presentation.api.dto.request.auth.OauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.MemberRefreshTokenRequest
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
+import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.TestMemberSignInResponse
+import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -42,10 +43,19 @@ class AuthController(
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
     fun signInWithGoogle(
-        @RequestParam role : RoleType, // RESEARCHER, PARTICIPANT
-        @RequestBody @Valid oauthLoginRequest: OauthLoginRequest
+        @RequestParam role : RoleType,
+        @RequestBody @Valid oauthLoginRequest: GoogleOauthLoginRequest
     ): OauthLoginResponse {
         return oauthService.getGoogleUserInfo(oauthLoginRequest)
+    }
+
+    @PostMapping("/login/naver")
+    @Operation(summary = "Naver OAuth 로그인 API", description = "Naver OAuth 로그인 후 인증 정보를 반환합니다")
+    fun signInWithNaver(
+        @RequestParam role : RoleType,
+        @RequestBody @Valid oauthLoginRequest: NaverOauthLoginRequest
+    ): OauthLoginResponse {
+        return oauthService.getNaverUserInfo(oauthLoginRequest)
     }
 
     @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")

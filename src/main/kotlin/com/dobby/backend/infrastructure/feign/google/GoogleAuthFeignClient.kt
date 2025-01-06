@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.feign
+package com.dobby.backend.infrastructure.feign.google
 
 import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleTokenRequest
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse

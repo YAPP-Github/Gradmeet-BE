@@ -2,40 +2,41 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.domain.exception.SignInMemberException
-import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
+import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
-import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
+import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
+import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleTokenRequest
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.NaverTokenRequest
+import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
 
-class FetchGoogleUserInfoUseCase(
-    private val googleAuthFeignClient: GoogleAuthFeignClient,
-    private val googleUserInfoFeginClient: GoogleUserInfoFeginClient,
+class FetchNaverUserInfoUseCase(
+    private val naverAuthFeignClient: NaverAuthFeignClient,
+    private val naverUserInfoFeginClient: NaverUserInfoFeignClient,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val googleAuthProperties: GoogleAuthProperties,
+    private val naverAuthProperties: NaverAuthProperties,
     private val memberRepository: MemberRepository
-) : UseCase<GoogleOauthLoginRequest, OauthLoginResponse> {
+) : UseCase<NaverOauthLoginRequest, OauthLoginResponse> {
 
-    override fun execute(input: GoogleOauthLoginRequest): OauthLoginResponse {
+    override fun execute(input: NaverOauthLoginRequest): OauthLoginResponse {
         try {
-            val googleTokenRequest = GoogleTokenRequest(
+            val naverTokenRequest = NaverTokenRequest(
+                grantType = "authorization_code",
+                clientId = naverAuthProperties.clientId,
+                clientSecret = naverAuthProperties.clientSecret,
                 code = input.authorizationCode,
-                clientId = googleAuthProperties.clientId,
-                clientSecret = googleAuthProperties.clientSecret,
-                redirectUri = googleAuthProperties.redirectUri
+                state = input.state
             )
 
-            val oauthRes = fetchAccessToken(googleTokenRequest)
+            val oauthRes = fetchAccessToken(naverTokenRequest)
             val oauthToken = oauthRes.accessToken
 
-            val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
+            val userInfo = naverUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
             val email = userInfo.email
             val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
                 ?: throw SignInMemberException()
@@ -51,14 +52,14 @@ class FetchGoogleUserInfoUseCase(
                 oauthEmail = regMember.oauthEmail,
                 oauthName = regMember.name ?: throw SignInMemberException(),
                 role = regMember.role ?: throw SignInMemberException(),
-                provider = ProviderType.GOOGLE
+                provider = ProviderType.NAVER
             )
         } catch (e: SignInMemberException) {
             throw SignInMemberException()
         }
     }
 
-    private fun fetchAccessToken(googleTokenRequest: GoogleTokenRequest): GoogleTokenResponse {
-        return googleAuthFeignClient.getAccessToken(googleTokenRequest)
+    private fun fetchAccessToken(naverTokenRequest: NaverTokenRequest): NaverTokenResponse {
+        return naverAuthFeignClient.getAccessToken(naverTokenRequest)
     }
 }

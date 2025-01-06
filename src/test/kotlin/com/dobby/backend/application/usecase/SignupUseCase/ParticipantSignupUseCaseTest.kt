@@ -8,14 +8,20 @@ import com.dobby.backend.infrastructure.database.entity.ResearcherEntity
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+<<<<<<< HEAD:src/test/kotlin/com/dobby/backend/application/usecase/SignupUseCase/ParticipantSignupUseCaseTest.kt
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+=======
+>>>>>>> 48c983ceaab3f3ae0a7ba5dd9dcb4fe26ebe1f25:src/test/kotlin/com/dobby/backend/application/usecase/ParticipantSignupUseCaseTest.kt
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
 import com.dobby.backend.infrastructure.database.repository.ResearcherRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
+<<<<<<< HEAD:src/test/kotlin/com/dobby/backend/application/usecase/SignupUseCase/ParticipantSignupUseCaseTest.kt
 import com.dobby.backend.util.AuthenticationUtils
+=======
+>>>>>>> 48c983ceaab3f3ae0a7ba5dd9dcb4fe26ebe1f25:src/test/kotlin/com/dobby/backend/application/usecase/ParticipantSignupUseCaseTest.kt
 import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

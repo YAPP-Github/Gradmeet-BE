@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.request.auth
+package com.dobby.backend.presentation.api.dto.request.auth.google
 
 import jakarta.validation.constraints.NotBlank
 

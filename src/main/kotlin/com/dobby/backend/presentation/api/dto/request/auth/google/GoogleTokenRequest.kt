@@ -1,7 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.auth.google
 
 import com.fasterxml.jackson.annotation.JsonProperty
-
 data class GoogleTokenRequest (
     @JsonProperty("code")
     val code: String,
