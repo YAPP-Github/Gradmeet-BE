@@ -1,7 +1,7 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.SignupUseCase.EmailCodeSendUseCase
-import com.dobby.backend.application.usecase.SignupUseCase.EmailVerificationUseCase
+import com.dobby.backend.application.usecase.SignupUseCase.email.EmailCodeSendUseCase
+import com.dobby.backend.application.usecase.SignupUseCase.email.EmailVerificationUseCase
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
 import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
