@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.entity
+package com.dobby.backend.infrastructure.database.entity.common
 
 import com.dobby.backend.infrastructure.database.entity.TestEntity
 import com.dobby.backend.infrastructure.repository.TestEntityRepository
