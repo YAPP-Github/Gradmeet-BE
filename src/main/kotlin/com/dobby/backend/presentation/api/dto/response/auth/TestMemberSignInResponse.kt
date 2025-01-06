@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.response
+package com.dobby.backend.presentation.api.dto.response.auth
 
 import io.swagger.v3.oas.annotations.media.Schema
 
