@@ -20,13 +20,11 @@ class VerificationEntity (
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    val status: VerificationStatus= VerificationStatus.HOLD,
+    var status: VerificationStatus= VerificationStatus.HOLD,
 
     @Column(name = "expires_at", nullable = false)
-    var expiresAt : LocalDateTime? = null
+    var expiresAt : LocalDateTime ? = null
 ): AuditingEntity() {
     @PrePersist
-    fun prePersist(){
-        if(expiresAt == null) expiresAt = LocalDateTime.now().plusMinutes(3)
-    }
+    fun prePersist(){  if(expiresAt == null) expiresAt = LocalDateTime.now().plusMinutes(10)}
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.FilterType
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 @ComponentScan(
 	includeFilters = [ComponentScan.Filter(
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.FilterType
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableFeignClients
+@EnableJpaAuditing
 class DobbyBackendApplication
 
 fun main(args: Array<String>) {
