@@ -1,15 +1,16 @@
-import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
-import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
+import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
+import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.database.entity.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
-import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
+import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
+import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
+import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -18,23 +19,23 @@ import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDate
 
 @ActiveProfiles("test")
-class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
-    val googleAuthFeignClient = mockk<GoogleAuthFeignClient>()
-    val googleUserInfoFeginClient = mockk<GoogleUserInfoFeginClient>()
+class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
+    val naverAuthFeignClient = mockk<NaverAuthFeignClient>()
+    val naverUserInfoFeginClient = mockk<NaverUserInfoFeignClient>()
     val jwtTokenProvider = mockk<JwtTokenProvider>()
-    val googleAuthProperties = mockk<GoogleAuthProperties>()
+    val naverAuthProperties = mockk<NaverAuthProperties>()
     val memberRepository = mockk<MemberRepository>()
 
-    val fetchGoogleUserInfoUseCase = FetchGoogleUserInfoUseCase(
-        googleAuthFeignClient,
-        googleUserInfoFeginClient,
+    val fetchNaverUserInfoUseCase = FetchNaverUserInfoUseCase(
+        naverAuthFeignClient,
+        naverUserInfoFeginClient,
         jwtTokenProvider,
-        googleAuthProperties,
+        naverAuthProperties,
         memberRepository
     )
 
-    given("Google OAuth 요청이 들어왔을 때") {
-        val oauthLoginRequest = GoogleOauthLoginRequest(authorizationCode = "valid-auth-code")
+    given("Naver OAuth 요청이 들어왔을 때") {
+        val oauthLoginRequest = NaverOauthLoginRequest(authorizationCode = "valid-auth-code", state = "valid-state")
         val mockMember = MemberEntity(
             id = 1L,
             oauthEmail = "test@example.com",
@@ -43,14 +44,14 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
             role = RoleType.PARTICIPANT,
             birthDate = LocalDate.of(2002, 11, 21),
             contactEmail = "contact@example.com",
-            provider = ProviderType.GOOGLE
+            provider = ProviderType.NAVER
         )
 
-        every { googleAuthProperties.clientId } returns "mock-client-id"
-        every { googleAuthProperties.clientSecret } returns "mock-client-secret"
-        every { googleAuthProperties.redirectUri } returns "http://localhost/callback"
-        every { googleAuthFeignClient.getAccessToken(any()) } returns GoogleTokenResponse("mock-access-token")
-        every { googleUserInfoFeginClient.getUserInfo(any()) } returns mockk {
+        every { naverAuthProperties.clientId } returns "mock-client-id"
+        every { naverAuthProperties.clientSecret } returns "mock-client-secret"
+        every { naverAuthProperties.redirectUri } returns "http://localhost/callback"
+        every { naverAuthFeignClient.getAccessToken(any()) } returns NaverTokenResponse("mock-access-token")
+        every { naverUserInfoFeginClient.getUserInfo("Bearer mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
             every { name } returns "Test User"
         }
@@ -59,7 +60,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         every { jwtTokenProvider.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
 
         `when`("정상적으로 모든 데이터가 주어지면") {
-            val result = fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
+            val result: OauthLoginResponse = fetchNaverUserInfoUseCase.execute(oauthLoginRequest)
 
             then("유저 정보를 포함한 OauthLoginResponse를 반환해야 한다") {
                 result.isRegistered shouldBe true

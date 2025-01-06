@@ -3,12 +3,12 @@ package com.dobby.backend.application.mapper
 import com.dobby.backend.infrastructure.database.entity.enum.*
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
-import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import org.springframework.test.context.ActiveProfiles
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
-import com.dobby.backend.presentation.api.dto.request.AddressInfo as DtoAddressInfo
+import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
 @ActiveProfiles("test")
 class SignupMapperTest : BehaviorSpec({

@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.request
+package com.dobby.backend.presentation.api.dto.request.signup
 
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType

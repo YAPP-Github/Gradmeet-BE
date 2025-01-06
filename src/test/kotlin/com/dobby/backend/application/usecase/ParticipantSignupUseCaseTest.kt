@@ -4,12 +4,13 @@ import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
+import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.AddressInfo as DtoAddressInfo
+import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -26,7 +27,7 @@ class ParticipantSignupUseCaseTest : BehaviorSpec({
 
         val request = ParticipantSignupRequest(
             oauthEmail = "test@example.com",
-            provider = com.dobby.backend.infrastructure.database.entity.enum.ProviderType.GOOGLE,
+            provider = ProviderType.GOOGLE,
             contactEmail = "contact@example.com",
             name = "Test User",
             birthDate = LocalDate.of(2002, 11, 21),
