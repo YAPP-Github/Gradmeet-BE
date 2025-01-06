@@ -2,12 +2,13 @@ package com.dobby.backend.application.usecase.SignupUseCase
 
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.EmailDomainNotFoundException
-import com.dobby.backend.domain.exception.EmailNotUnivException
+import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.EmailGateway
+import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import com.dobby.backend.infrastructure.database.repository.VerificationRepository
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
+import java.time.LocalDateTime
 import java.util.Hashtable
 import javax.naming.directory.InitialDirContext
 import javax.naming.directory.Attributes
@@ -20,9 +21,28 @@ class EmailCodeSendUseCase(
         if(!isDomainExists(input.univEmail)) throw EmailDomainNotFoundException()
         if(!isUnivMail(input.univEmail)) throw EmailNotUnivException()
 
+        val existingInfo = verificationRepository.findByUnivMail(input.univEmail)
         val code = generateCode()
-        val newVerificationInfo = VerificationMapper.toEntity(input, code)
-        verificationRepository.save(newVerificationInfo)
+
+        if(existingInfo != null) {
+            when (existingInfo.status) {
+                VerificationStatus.HOLD -> {
+                    existingInfo.verificationCode = code
+                    existingInfo.status = VerificationStatus.HOLD
+                    existingInfo.expiresAt = LocalDateTime.now().plusMinutes(10)
+                    verificationRepository.save(existingInfo)
+                }
+
+                VerificationStatus.VERIFIED -> {
+                    throw EmailAlreadyVerifiedException()
+                }
+            }
+        }
+        else {
+            val newVerificationInfo = VerificationMapper.toEntity(input, code)
+            verificationRepository.save(newVerificationInfo)
+        }
+
 
         val subject= "그라밋 - 이메일 인증 코드 입니다."
         val content = """
@@ -38,8 +58,12 @@ class EmailCodeSendUseCase(
         return VerificationMapper.toSendResDto()
     }
 
+    private fun extractDomain(email:String): String {
+        if(!email.contains("@")) throw EmailFormatInvalidException()
+        return email.substringAfter("@")
+    }
     private fun isDomainExists(email: String): Boolean {
-        val domain = email.substringAfter("@")
+        val domain = extractDomain(email)
         return try {
             val env = Hashtable<String, String>()
             env["java.naming.factory.initial"] = "com.sun.jndi.dns.DnsContextFactory"

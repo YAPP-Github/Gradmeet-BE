@@ -17,7 +17,9 @@ class EmailVerificationUseCase(
 ) : UseCase<EmailVerificationRequest, EmailVerificationResponse> {
 
     override fun execute(input: EmailVerificationRequest): EmailVerificationResponse {
-        val info = verificationRepository.findByUnivMailAndStatus(input.univEmail, VerificationStatus.HOLD)
+        val info = verificationRepository.findByUnivMailAndStatus(
+            input.univEmail,
+            VerificationStatus.HOLD)
             ?: throw VerifyInfoNotFoundException()
 
         if(input.inputCode != info.verificationCode)

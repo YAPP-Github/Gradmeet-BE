@@ -16,7 +16,7 @@ class VerificationEntity (
     val univMail : String,
 
     @Column(name = "verification_code", length = 6, nullable = false, unique = true)
-    val verificationCode: String,
+    var verificationCode: String,
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

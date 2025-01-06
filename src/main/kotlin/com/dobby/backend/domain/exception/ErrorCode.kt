@@ -65,4 +65,6 @@ enum class ErrorCode(
     VERIFY_INFO_NOT_FOUND("VER003", "Verification information is not found", HttpStatus.NOT_FOUND),
     VERIFY_CODE_NOT_CORRECT("VER004", "Verification code is not correct", HttpStatus.BAD_REQUEST),
     VERIFY_CODE_EXPIRED("VER005", "Verification code is expired", HttpStatus.BAD_REQUEST),
+    VERIFY_EMAIL_INVALID_FORMAT("VE006", "Email is invalid format", HttpStatus.BAD_REQUEST),
+    VERIFY_ALREADY_VERIFIED("VE007", "This email is already verified", HttpStatus.CONFLICT),
 }
