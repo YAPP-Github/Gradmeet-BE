@@ -2,6 +2,7 @@ package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.SignupUseCase.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.SignupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.application.usecase.SignupUseCase.VerifyResearcherEmailUseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Service
 @Service
 class SignupService(
     private val participantSignupUseCase: ParticipantSignupUseCase,
-    private val createResearcherUseCase: CreateResearcherUseCase
+    private val createResearcherUseCase: CreateResearcherUseCase,
+    private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase
 ) {
     @Transactional
     fun participantSignup(input: ParticipantSignupRequest): SignupResponse {
@@ -21,7 +23,12 @@ class SignupService(
 
     @Transactional
     fun researcherSignup(input: ResearcherSignupRequest) : SignupResponse{
-        if(!input.emailVerified) throw EmailNotValidateException()
+        if(!input.emailVerified) {
+            println("Email verification failed: ${input.univEmail}")
+            throw EmailNotValidateException()
+        }
+        verifyResearcherEmailUseCase.execute(input.univEmail)
+
         return createResearcherUseCase.execute(input)
     }
 
