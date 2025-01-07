@@ -8,14 +8,13 @@ import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
-import java.time.LocalDate
 
 @ActiveProfiles("test")
 class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
@@ -38,12 +37,11 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         val mockMember = MemberEntity(
             id = 1L,
             oauthEmail = "test@example.com",
-            name = "Test User",
+            provider = ProviderType.GOOGLE,
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
-            birthDate = LocalDate.of(2002, 11, 21),
             contactEmail = "contact@example.com",
-            provider = ProviderType.GOOGLE
+            name = "Test User"
         )
 
         every { googleAuthProperties.clientId } returns "mock-client-id"

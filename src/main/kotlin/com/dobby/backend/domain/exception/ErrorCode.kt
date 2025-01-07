@@ -49,10 +49,22 @@ enum class ErrorCode(
      */
     SIGNUP_ALREADY_MEMBER("SIGN_UP_001", "You've already joined", HttpStatus.CONFLICT),
     SIGNUP_UNSUPPORTED_ROLE("SIGN_UP_002", "Requested RoleType does not supported", HttpStatus.BAD_REQUEST),
+    SIGNUP_EMAIL_NOT_VALIDATED("SIGN_UP_003", "You should validate your school email first", HttpStatus.BAD_REQUEST),
 
     /**
      * Signin error codes
      */
     SIGNIN_MEMBER_NOT_FOUND("SIGN_IN_001", "Member Not Found. Please signup. (Redirect URI must be /v1/auth/{role}/signup)", HttpStatus.NOT_FOUND),
-    SIGNIN_ROLE_MISMATCH("SIGN_IN_002", "Already registered member as %s. Please login as %s", HttpStatus.BAD_REQUEST)
+    SIGNIN_ROLE_MISMATCH("SIGN_IN_002", "Already registered member as %s. Please login as %s", HttpStatus.BAD_REQUEST),
+
+    /**
+     * Email Verification error codes
+     */
+    VERIFY_EMAIL_NOT_FOUND("VE001", "Email domain not found as real email domain", HttpStatus.BAD_REQUEST),
+    VERIFY_UNIV_NOT_FOUND("VER002", "Email domain not found as university email", HttpStatus.BAD_REQUEST),
+    VERIFY_INFO_NOT_FOUND("VER003", "Verification information is not found", HttpStatus.NOT_FOUND),
+    VERIFY_CODE_NOT_CORRECT("VER004", "Verification code is not correct", HttpStatus.BAD_REQUEST),
+    VERIFY_CODE_EXPIRED("VER005", "Verification code is expired", HttpStatus.BAD_REQUEST),
+    VERIFY_EMAIL_INVALID_FORMAT("VE006", "Email is invalid format", HttpStatus.BAD_REQUEST),
+    VERIFY_ALREADY_VERIFIED("VE007", "This email is already verified", HttpStatus.CONFLICT),
 }

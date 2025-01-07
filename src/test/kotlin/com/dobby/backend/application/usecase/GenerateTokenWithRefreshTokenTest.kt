@@ -21,7 +21,7 @@ class GenerateTokenWithRefreshTokenTest : BehaviorSpec({
         val validRefreshToken = "validRefreshToken"
         val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
+            status = MemberStatus.ACTIVE)
         val accessToken = "newAccessToken"
         val newRefreshToken = "newRefreshToken"
 

@@ -6,7 +6,7 @@ import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.application.usecase.GetMemberById
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "인증 관련 API")
+@Tag(name = "인증 관련 API - /v1/auth ")
 @RestController
 @RequestMapping("/v1/auth")
 class AuthController(
