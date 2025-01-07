@@ -2,9 +2,11 @@ package com.dobby.backend.application.mapper
 
 import com.dobby.backend.infrastructure.database.entity.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.ResearcherEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.infrastructure.database.entity.AddressInfo as AddressInfo
 import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
@@ -15,7 +17,7 @@ object SignupMapper {
             dto.area
         )
     }
-    fun toMember(req: ParticipantSignupRequest): MemberEntity {
+    fun toParticipantMember(req: ParticipantSignupRequest): MemberEntity {
         return MemberEntity(
             id = 0, // Auto-generated
             oauthEmail = req.oauthEmail,
@@ -23,8 +25,19 @@ object SignupMapper {
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
             contactEmail = req.contactEmail,
+            name = req.name
+        )
+    }
+
+    fun toResearcherMember(req: ResearcherSignupRequest): MemberEntity {
+        return MemberEntity(
+            id = 0, // Auto-generated
+            oauthEmail = req.oauthEmail,
+            provider = req.provider,
+            status = MemberStatus.ACTIVE,
+            role = RoleType.RESEARCHER,
+            contactEmail = req.contactEmail,
             name = req.name,
-            birthDate = req.birthDate
         )
     }
     fun toParticipant(
@@ -36,7 +49,23 @@ object SignupMapper {
             basicAddressInfo = toAddressInfo(req.basicAddressInfo),
             additionalAddressInfo = req.additionalAddressInfo?.let { toAddressInfo(it) },
             preferType = req.preferType,
-            gender = req.gender
+            gender = req.gender,
+            birthDate = req.birthDate
         )
     }
+
+    fun toResearcher(
+        member: MemberEntity,
+        req: ResearcherSignupRequest
+    ): ResearcherEntity{
+        return ResearcherEntity(
+            member = member,
+            univEmail = req.univEmail,
+            emailVerified = req.emailVerified,
+            univName = req.univName,
+            major = req.major,
+            labInfo = req.labInfo
+        )
+    }
+
 }

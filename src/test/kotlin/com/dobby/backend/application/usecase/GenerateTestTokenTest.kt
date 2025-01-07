@@ -20,7 +20,7 @@ class GenerateTestTokenTest: BehaviorSpec({
     given("memberId가 주어졌을 때") {
         val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
+            status = MemberStatus.ACTIVE)
         val accessToken = "testAccessToken"
         val refreshToken = "testRefreshToken"
 

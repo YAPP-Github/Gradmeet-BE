@@ -23,7 +23,7 @@ class SignupMapperTest : BehaviorSpec({
             }
         }
 
-        `when`("toMember 메서드가 호출되면") {
+        `when`("toParticipantMember 메서드가 호출되면") {
             val request = ParticipantSignupRequest(
                 oauthEmail = "test@example.com",
                 provider = ProviderType.GOOGLE,
@@ -35,14 +35,13 @@ class SignupMapperTest : BehaviorSpec({
                 preferType = MatchType.HYBRID,
                 gender = GenderType.FEMALE
             )
-            val result = SignupMapper.toMember(request)
+            val result = SignupMapper.toParticipantMember(request)
 
             then("올바른 MemberEntity 객체가 반환되어야 한다") {
                 result.oauthEmail shouldBe "test@example.com"
                 result.provider shouldBe ProviderType.GOOGLE
                 result.contactEmail shouldBe "contact@example.com"
                 result.name shouldBe "Test User"
-                result.birthDate shouldBe LocalDate.of(2002, 11, 21)
                 result.role shouldBe RoleType.PARTICIPANT
                 result.status shouldBe MemberStatus.ACTIVE
             }
@@ -60,13 +59,14 @@ class SignupMapperTest : BehaviorSpec({
                 preferType = MatchType.HYBRID,
                 gender = GenderType.FEMALE
             )
-            val member = SignupMapper.toMember(request)
+            val member = SignupMapper.toParticipantMember(request)
             val result = SignupMapper.toParticipant(member, request)
 
             then("올바른 ParticipantEntity 객체가 반환되어야 한다") {
                 result.member.oauthEmail shouldBe "test@example.com"
                 result.basicAddressInfo.region shouldBe Region.SEOUL
                 result.basicAddressInfo.area shouldBe Area.SEOUL_ALL
+                result.birthDate shouldBe  LocalDate.of(2002, 11, 21)
                 result.additionalAddressInfo?.region shouldBe Region.GYEONGGI
                 result.additionalAddressInfo?.area shouldBe Area.GWANGMYEONGSI
             }
