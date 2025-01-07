@@ -33,7 +33,9 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa") {
+		exclude(group = "org.hibernate", module = "hibernate-core")
+	}
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -43,7 +45,6 @@ dependencies {
 	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	implementation("com.github.in-seo:univcert:master-SNAPSHOT") {

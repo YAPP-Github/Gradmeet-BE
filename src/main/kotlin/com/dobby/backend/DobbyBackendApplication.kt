@@ -18,7 +18,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableFeignClients
-@EnableJpaAuditing
 class DobbyBackendApplication
 
 fun main(args: Array<String>) {
