@@ -10,7 +10,7 @@ class ApplyMethodEntity (
     val id: Long,
 
     @Column(name = "phone_num", length = 11)
-    val phoneNum: Long,
+    val phoneNum: String,
 
     @Column(name = "form_url")
     val formUrl: String,
