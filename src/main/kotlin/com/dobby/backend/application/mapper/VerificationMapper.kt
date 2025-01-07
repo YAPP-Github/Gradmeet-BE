@@ -19,14 +19,14 @@ object VerificationMapper {
 
     fun toSendResDto() : EmailSendResponse{
         return EmailSendResponse(
-            isSucceess = true,
+            isSuccess = true,
             message = "해당 학교 이메일로 성공적으로 코드를 전송했습니다. 10분 이내로 인증을 완료해주세요."
         )
     }
 
     fun toVerifyResDto() : EmailVerificationResponse {
         return EmailVerificationResponse(
-            isSucceess = true,
+            isSuccess = true,
             message = "학교 메일 인증이 완료되었습니다."
         )
     }

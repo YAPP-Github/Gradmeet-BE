@@ -8,27 +8,35 @@ import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import com.dobby.backend.infrastructure.database.repository.VerificationRepository
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
+import com.dobby.backend.util.EmailUtils
 import java.time.LocalDateTime
-import java.util.Hashtable
-import javax.naming.directory.InitialDirContext
-import javax.naming.directory.Attributes
 
 class EmailCodeSendUseCase(
     private val verificationRepository: VerificationRepository,
     private val emailGateway: EmailGateway
 ) : UseCase<EmailSendRequest, EmailSendResponse> {
     override fun execute(input: EmailSendRequest): EmailSendResponse {
-        if(!isDomainExists(input.univEmail)) throw EmailDomainNotFoundException()
-        if(!isUnivMail(input.univEmail)) throw EmailNotUnivException()
+        validateEmail(input.univEmail)
 
+        val code = EmailUtils.generateCode()
+        reflectVerification(input, code)
+
+        sendVerificationEmail(input, code)
+        return VerificationMapper.toSendResDto()
+    }
+
+    private fun validateEmail(email : String){
+        if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException()
+        if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException()
+    }
+
+    private fun reflectVerification(input: EmailSendRequest, code: String) {
         val existingInfo = verificationRepository.findByUnivMail(input.univEmail)
-        val code = generateCode()
 
-        if(existingInfo != null) {
+        if (existingInfo != null) {
             when (existingInfo.status) {
                 VerificationStatus.HOLD -> {
                     existingInfo.verificationCode = code
-                    existingInfo.status = VerificationStatus.HOLD
                     existingInfo.expiresAt = LocalDateTime.now().plusMinutes(10)
                     verificationRepository.save(existingInfo)
                 }
@@ -37,61 +45,27 @@ class EmailCodeSendUseCase(
                     throw EmailAlreadyVerifiedException()
                 }
             }
-        }
-        else {
+        } else {
             val newVerificationInfo = VerificationMapper.toEntity(input, code)
             verificationRepository.save(newVerificationInfo)
         }
+    }
 
+    private fun sendVerificationEmail(input: EmailSendRequest, code: String) {
+        val content = EMAIL_CONTENT_TEMPLATE.format(code)
+        emailGateway.sendEmail(input.univEmail, EMAIL_SUBJECT, content)
+    }
 
-        val subject= "그라밋 - 이메일 인증 코드 입니다."
-        val content = """
+    companion object {
+        private const val EMAIL_SUBJECT = "그라밋 - 이메일 인증 코드 입니다."
+        private const val EMAIL_CONTENT_TEMPLATE = """
             안녕하세요, 그라밋입니다.
             
             아래의 코드는 이메일 인증을 위한 코드입니다:
             
-            $code
+            %s
             
             10분 이내에 인증을 완료해주세요.
-        """.trimIndent()
-        emailGateway.sendEmail(input.univEmail, subject, content)
-        return VerificationMapper.toSendResDto()
+        """
     }
-
-    private fun extractDomain(email:String): String {
-        if(!email.contains("@")) throw EmailFormatInvalidException()
-        return email.substringAfter("@")
-    }
-    private fun isDomainExists(email: String): Boolean {
-        val domain = extractDomain(email)
-        return try {
-            val env = Hashtable<String, String>()
-            env["java.naming.factory.initial"] = "com.sun.jndi.dns.DnsContextFactory"
-            val ctx = InitialDirContext(env)
-            val attributes: Attributes = ctx.getAttributes(domain, arrayOf("MX"))
-            val mxRecords = attributes.get("MX")
-            println("MX Records for $domain: $mxRecords")
-            mxRecords != null
-        } catch (ex: EmailDomainNotFoundException) {
-            println("DNS lookup failed for $domain: ${ex.message}")
-            false
-        }
-    }
-
-
-    private fun isUnivMail(email: String): Boolean {
-        val eduDomains = setOf(
-            "postech.edu",
-            "kaist.edu",
-            "handong.edu",
-            "ewhain.net"
-        )
-        return email.endsWith("@ac.kr") || eduDomains.any {email.endsWith(it)}
-    }
-
-    private fun generateCode() : String {
-        val randomNum = (0..999999).random()
-        return String.format("%06d", randomNum)
-    }
-
 }

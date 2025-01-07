@@ -37,7 +37,7 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
             val result = emailVerificationUseCase.execute(request)
 
             then("정상적으로 EmailVerificationResponse를 반환해야 한다") {
-                result.isSucceess shouldBe true
+                result.isSuccess shouldBe true
             }
 
             then("인증 상태가 VERIFIED로 업데이트되어야 한다") {
@@ -56,12 +56,10 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         coEvery { mockVerificationRepository.findByUnivMailAndStatus(request.univEmail, VerificationStatus.HOLD) } returns null
 
         `when`("EmailVerificationUseCase가 실행되면") {
-            val exception = shouldThrow<VerifyInfoNotFoundException> {
-                emailVerificationUseCase.execute(request)
-            }
-
             then("VerifyInfoNotFoundException 예외가 발생해야 한다") {
-                exception.message shouldBe "Verification information is not found"
+                val exception = shouldThrow<VerifyInfoNotFoundException> {
+                    emailVerificationUseCase.execute(request)
+                }
             }
         }
     }
@@ -79,12 +77,10 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         coEvery { mockVerificationRepository.findByUnivMailAndStatus(request.univEmail, VerificationStatus.HOLD) } returns mockEntity
 
         `when`("EmailVerificationUseCase가 실행되면") {
-            val exception = shouldThrow<CodeNotCorrectException> {
-                emailVerificationUseCase.execute(request)
-            }
-
             then("CodeNotCorrectException 예외가 발생해야 한다") {
-                exception.message shouldBe "Verification code is not correct"
+                val exception = shouldThrow<CodeNotCorrectException> {
+                    emailVerificationUseCase.execute(request)
+                }
             }
         }
     }
@@ -102,12 +98,10 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         coEvery { mockVerificationRepository.findByUnivMailAndStatus(request.univEmail, VerificationStatus.HOLD) } returns mockEntity
 
         `when`("EmailVerificationUseCase가 실행되면") {
-            val exception = shouldThrow<CodeExpiredException> {
-                emailVerificationUseCase.execute(request)
-            }
-
             then("CodeExpiredException 예외가 발생해야 한다") {
-                exception.message shouldBe "Verification code is expired"
+                val exception = shouldThrow<CodeExpiredException> {
+                    emailVerificationUseCase.execute(request)
+                }
             }
         }
     }

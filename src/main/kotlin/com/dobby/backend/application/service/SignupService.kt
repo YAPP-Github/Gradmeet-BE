@@ -24,7 +24,6 @@ class SignupService(
     @Transactional
     fun researcherSignup(input: ResearcherSignupRequest) : SignupResponse{
         if(!input.emailVerified) {
-            println("Email verification failed: ${input.univEmail}")
             throw EmailNotValidateException()
         }
         verifyResearcherEmailUseCase.execute(input.univEmail)

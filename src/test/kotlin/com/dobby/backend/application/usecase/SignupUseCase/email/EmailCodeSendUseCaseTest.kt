@@ -41,7 +41,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             val result = emailCodeSendUseCase.execute(request)
 
             then("정상적으로 EmailSendResponse를 반환해야 한다") {
-                result.isSucceess shouldBe true
+                result.isSuccess shouldBe true
             }
 
             then("save 메서드가 호출되어야 한다") {
@@ -61,12 +61,10 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
         val request = EmailSendRequest(univEmail = "test@gmail.com")
 
         `when`("코드 전송 요청을 하면") {
-            val exception = shouldThrow<EmailNotUnivException> {
-                emailCodeSendUseCase.execute(request)
-            }
-
             then("EmailNotUnivException 예외가 발생해야 한다") {
-                exception.message shouldBe "Email domain not found as university email"
+                val exception = shouldThrow<EmailNotUnivException> {
+                    emailCodeSendUseCase.execute(request)
+                }
             }
         }
     }

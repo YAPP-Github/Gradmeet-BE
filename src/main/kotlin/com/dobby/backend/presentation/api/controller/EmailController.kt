@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "이메일 인증 API - /v1/email")
+@Tag(name = "이메일 인증 API - /v1/emails")
 @RestController
-@RequestMapping("/v1/email")
+@RequestMapping("/v1/emails")
 class EmailController(
     private val emailService: EmailService
 ) {

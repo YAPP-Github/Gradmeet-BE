@@ -31,7 +31,7 @@ class VerificationMapperTest : BehaviorSpec({
 
             then("EmailSendResponse 객체를 반환해야 한다") {
                 result shouldBe EmailSendResponse(
-                    isSucceess = true,
+                    isSuccess = true,
                     message = "해당 학교 이메일로 성공적으로 코드를 전송했습니다. 10분 이내로 인증을 완료해주세요."
                 )
             }
@@ -44,7 +44,7 @@ class VerificationMapperTest : BehaviorSpec({
 
             then("EmailVerificationResponse 객체를 반환해야 한다") {
                 result shouldBe EmailVerificationResponse(
-                    isSucceess = true,
+                    isSuccess = true,
                     message = "학교 메일 인증이 완료되었습니다."
                 )
             }
