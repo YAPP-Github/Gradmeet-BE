@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity
+package com.dobby.backend.infrastructure.database.entity.member
 
 import AuditingEntity
 import com.dobby.backend.domain.model.Member

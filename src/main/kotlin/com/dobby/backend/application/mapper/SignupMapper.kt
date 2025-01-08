@@ -1,7 +1,7 @@
 package com.dobby.backend.application.mapper
 
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
-import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest

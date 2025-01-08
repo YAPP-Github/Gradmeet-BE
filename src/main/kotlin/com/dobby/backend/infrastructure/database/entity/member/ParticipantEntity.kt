@@ -1,13 +1,11 @@
-package com.dobby.backend.infrastructure.database.entity
+package com.dobby.backend.infrastructure.database.entity.member
 
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Entity(name = "participant")
 @DiscriminatorValue("PARTICIPANT")
@@ -38,7 +36,7 @@ class ParticipantEntity (
     @Enumerated(EnumType.STRING)
     var preferType: MatchType?,
 
-) : MemberEntity(
+    ) : MemberEntity(
     id= member.id,
     oauthEmail = member.oauthEmail,
     provider = member.provider,
@@ -58,4 +56,3 @@ data class AddressInfo(
     @Column(name = "area", nullable = false)
     val area: Area
 )
-

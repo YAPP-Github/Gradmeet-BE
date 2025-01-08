@@ -1,6 +1,6 @@
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType

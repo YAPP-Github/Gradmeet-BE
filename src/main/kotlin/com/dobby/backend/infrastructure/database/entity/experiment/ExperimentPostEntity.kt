@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
 import AuditingEntity
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region

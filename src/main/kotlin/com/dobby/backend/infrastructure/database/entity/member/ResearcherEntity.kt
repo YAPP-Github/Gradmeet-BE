@@ -1,9 +1,7 @@
-package com.dobby.backend.infrastructure.database.entity
+package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Entity(name = "researcher")
 @DiscriminatorValue("RESEARCHER")
