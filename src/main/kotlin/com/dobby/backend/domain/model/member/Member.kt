@@ -1,9 +1,8 @@
-package com.dobby.backend.domain.model
+package com.dobby.backend.domain.model.member
 
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import java.time.LocalDate
 
 data class Member(
     val memberId: Long,

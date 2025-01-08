@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
 import AuditingEntity
-import com.dobby.backend.domain.model.Member
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
