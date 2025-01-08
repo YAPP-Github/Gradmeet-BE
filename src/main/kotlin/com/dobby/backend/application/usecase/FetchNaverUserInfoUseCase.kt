@@ -25,8 +25,8 @@ class FetchNaverUserInfoUseCase(
 
     data class Output(
         val isRegistered: Boolean,
-        val accessToken: String,
-        val refreshToken: String,
+        val accessToken: String?,
+        val refreshToken: String?,
         val memberId: Long?,
         val oauthEmail: String,
         val oauthName: String,
@@ -59,8 +59,8 @@ class FetchNaverUserInfoUseCase(
                 // 등록된 멤버가 없으면 isRegistered = false, memberId = null
                 Output(
                     isRegistered = false,
-                    accessToken = "",
-                    refreshToken = "",
+                    accessToken = null,
+                    refreshToken = null,
                     memberId = null,
                     oauthEmail = email ?: "",
                     oauthName = "",
