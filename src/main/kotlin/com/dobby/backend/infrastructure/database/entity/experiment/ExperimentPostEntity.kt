@@ -28,7 +28,7 @@ class ExperimentPostEntity(
     val applyMethodId: ApplyMethodEntity,
 
     @Column(name = "views")
-    val views: Int,
+    var views: Int,
 
     @Column(name = "title", nullable = false, length = 70)
     val title: String,
@@ -37,7 +37,7 @@ class ExperimentPostEntity(
     val content: String,
 
     @Column(name = "researcher_name", nullable = false, length = 100)
-    val researcherName: String,
+    var researcherName: String,
 
     @Column(name = "reward", nullable = false, length = 170)
     val reward: String,
