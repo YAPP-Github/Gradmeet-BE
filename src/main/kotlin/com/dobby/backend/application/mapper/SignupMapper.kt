@@ -5,7 +5,7 @@ import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.infrastructure.database.entity.AddressInfo as AddressInfo
+import com.dobby.backend.infrastructure.database.entity.member.AddressInfo
 import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
 object SignupMapper {
