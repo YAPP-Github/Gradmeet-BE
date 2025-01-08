@@ -10,7 +10,6 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import java.time.LocalDate
 
 class GenerateTestTokenTest: BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()
@@ -18,7 +17,7 @@ class GenerateTestTokenTest: BehaviorSpec({
     val generateTestToken = GenerateTestToken(tokenGateway, memberGateway)
 
     given("memberId가 주어졌을 때") {
-        val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+        val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
             status = MemberStatus.ACTIVE)
         val accessToken = "testAccessToken"
@@ -29,7 +28,7 @@ class GenerateTestTokenTest: BehaviorSpec({
         every { memberGateway.getById(1) } returns member
 
         `when`("execute가 호출되면") {
-            val input = GenerateTestToken.Input(member.memberId)
+            val input = GenerateTestToken.Input(member.id)
             val result = generateTestToken.execute(input)
 
             then("생성된 accessToken과 refreshToken이 반환되어야 한다") {

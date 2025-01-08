@@ -3,10 +3,9 @@ package com.dobby.backend.domain.model
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import java.time.LocalDate
 
 data class Member(
-    val memberId: Long,
+    val id: Long,
     val name: String?,
     val oauthEmail: String,
     val contactEmail: String?,
@@ -17,7 +16,7 @@ data class Member(
 
     companion object {
         fun newMember(
-            memberId: Long,
+            id: Long,
             name: String,
             oauthEmail: String,
             contactEmail: String,
@@ -25,7 +24,7 @@ data class Member(
             status: MemberStatus,
             role: RoleType,
         ) = Member(
-            memberId = memberId,
+            id = id,
             name = name,
             oauthEmail = oauthEmail,
             contactEmail = contactEmail,

@@ -1,42 +1,32 @@
 import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
-import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
+import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.NaverAuthGateway
+import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.model.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
-import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
-import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
-import java.time.LocalDate
 
 @ActiveProfiles("test")
 class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
-    val naverAuthFeignClient = mockk<NaverAuthFeignClient>()
-    val naverUserInfoFeginClient = mockk<NaverUserInfoFeignClient>()
-    val jwtTokenProvider = mockk<JwtTokenProvider>()
-    val naverAuthProperties = mockk<NaverAuthProperties>()
-    val memberRepository = mockk<MemberRepository>()
+    val naverAuthGateway = mockk<NaverAuthGateway>()
+    val memberGateway = mockk<MemberGateway>()
+    val tokenGateway = mockk<TokenGateway>()
 
     val fetchNaverUserInfoUseCase = FetchNaverUserInfoUseCase(
-        naverAuthFeignClient,
-        naverUserInfoFeginClient,
-        jwtTokenProvider,
-        naverAuthProperties,
-        memberRepository
+        naverAuthGateway,
+        memberGateway,
+        tokenGateway
     )
 
     given("Naver OAuth 요청이 들어왔을 때") {
-        val oauthLoginRequest = NaverOauthLoginRequest(authorizationCode = "valid-auth-code", state = "valid-state")
-        val mockMember = MemberEntity(
+        val input = FetchNaverUserInfoUseCase.Input(authorizationCode = "valid-auth-code", state = "valid-state")
+        val mockMember = Member(
             id = 1L,
             oauthEmail = "test@example.com",
             name = "Test User",
@@ -46,27 +36,41 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
             provider = ProviderType.NAVER
         )
 
-        every { naverAuthProperties.clientId } returns "mock-client-id"
-        every { naverAuthProperties.clientSecret } returns "mock-client-secret"
-        every { naverAuthProperties.redirectUri } returns "http://localhost/callback"
-        every { naverAuthFeignClient.getAccessToken(any()) } returns NaverTokenResponse("mock-access-token")
-        every { naverUserInfoFeginClient.getUserInfo("Bearer mock-access-token") } returns mockk {
+        val mockEmptyMember = null
+        every { naverAuthGateway.getAccessToken(any(), any()) } returns "mock-access-token"
+        every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
             every { name } returns "Test User"
         }
-        every { memberRepository.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
-        every { jwtTokenProvider.generateAccessToken(any()) } returns "mock-jwt-access-token"
-        every { jwtTokenProvider.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
 
-        `when`("정상적으로 모든 데이터가 주어지면") {
-            val result: OauthLoginResponse = fetchNaverUserInfoUseCase.execute(oauthLoginRequest)
+        every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
+        every { tokenGateway.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
+
+        // 테스트 1: 등록된 멤버가 있을 경우
+        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
+
+        `when`("정상적으로 등록된 유저가 있는 경우") {
+            val result: FetchNaverUserInfoUseCase.Output = fetchNaverUserInfoUseCase.execute(input)
 
             then("유저 정보를 포함한 OauthLoginResponse를 반환해야 한다") {
                 result.isRegistered shouldBe true
                 result.accessToken shouldBe "mock-jwt-access-token"
                 result.refreshToken shouldBe "mock-jwt-refresh-token"
-                result.memberInfo.oauthEmail shouldBe "test@example.com"
-                result.memberInfo.name shouldBe "Test User"
+                result.memberId shouldBe 1L
+                result.oauthEmail shouldBe "test@example.com"
+            }
+        }
+
+        // 테스트 2: 등록된 멤버가 없는 경우
+        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockEmptyMember
+
+        `when`("등록되지 않은 유저가 있는 경우") {
+            val result: FetchNaverUserInfoUseCase.Output = fetchNaverUserInfoUseCase.execute(input)
+
+            then("isRegistered는 false, memberId는 null이어야 한다") {
+                result.isRegistered shouldBe false
+                result.memberId shouldBe null
+                result.oauthEmail shouldBe "test@example.com"
             }
         }
     }

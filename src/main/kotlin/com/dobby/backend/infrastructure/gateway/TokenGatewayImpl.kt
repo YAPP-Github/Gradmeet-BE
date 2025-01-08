@@ -14,7 +14,7 @@ class TokenGatewayImpl(
     override fun generateAccessToken(member: Member): String {
         val authorities = listOf(SimpleGrantedAuthority(member.role?.roleName))
         val authentication = UsernamePasswordAuthenticationToken(
-            member.memberId,
+            member.id,
             null,
             authorities
         )
@@ -23,7 +23,7 @@ class TokenGatewayImpl(
 
     override fun generateRefreshToken(member: Member): String {
         val authentication = UsernamePasswordAuthenticationToken(
-            member.memberId,
+            member.id,
             null
         )
         return tokenProvider.generateRefreshToken(authentication)

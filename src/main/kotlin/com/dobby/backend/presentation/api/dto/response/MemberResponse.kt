@@ -26,7 +26,7 @@ data class MemberResponse(
     companion object {
         fun fromDomain(member: Member): MemberResponse = with(member) {
             MemberResponse(
-                memberId = memberId,
+                memberId = id,
                 oauthEmail = oauthEmail,
                 provider = provider,
                 role = role,
