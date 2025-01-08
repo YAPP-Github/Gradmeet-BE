@@ -1,6 +1,8 @@
-import com.dobby.backend.application.service.OauthService
+import com.dobby.backend.application.service.AuthService
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
+import com.dobby.backend.application.usecase.GenerateTestToken
+import com.dobby.backend.application.usecase.GenerateTokenWithRefreshToken
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
@@ -13,11 +15,13 @@ import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
-class OauthServiceTest : BehaviorSpec({
+class AuthServiceTest : BehaviorSpec({
     val fetchGoogleUserInfoUseCase = mockk<FetchGoogleUserInfoUseCase>()
     val fetchNaverUserInfoUseCase = mockk<FetchNaverUserInfoUseCase>()
+    val generateTokenWithRefreshToken = mockk<GenerateTokenWithRefreshToken>()
+    val generateTestToken = mockk<GenerateTestToken>()
 
-    val oauthService = OauthService(fetchGoogleUserInfoUseCase, fetchNaverUserInfoUseCase)
+    val oauthService = AuthService(fetchGoogleUserInfoUseCase, fetchNaverUserInfoUseCase, generateTokenWithRefreshToken, generateTestToken)
 
     given("Google OAuth 요청이 들어왔을 때") {
         val oauthLoginRequest = GoogleOauthLoginRequest(authorizationCode = "valid-auth-code")
