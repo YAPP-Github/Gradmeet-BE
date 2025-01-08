@@ -1,6 +1,6 @@
 package com.dobby.backend.util
 
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 

@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity
+package com.dobby.backend.infrastructure.database.entity.member
 
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
