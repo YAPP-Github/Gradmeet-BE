@@ -1,5 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
+import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import jakarta.persistence.*
 
@@ -23,4 +24,23 @@ class TargetGroupEntity(
     @Column(name = "other_condition", length = 300)
     val otherCondition: String,
 ) {
+    fun toDomain(): TargetGroup = TargetGroup(
+        id = id,
+        startAge = startAge,
+        endAge = endAge,
+        genderType = genderType,
+        otherCondition = otherCondition
+    )
+
+    companion object {
+        fun fromDomain(targetGroup: TargetGroup) = with(targetGroup) {
+            TargetGroupEntity(
+                id = id,
+                startAge = startAge,
+                endAge = endAge,
+                genderType = genderType,
+                otherCondition = otherCondition
+            )
+        }
+    }
 }

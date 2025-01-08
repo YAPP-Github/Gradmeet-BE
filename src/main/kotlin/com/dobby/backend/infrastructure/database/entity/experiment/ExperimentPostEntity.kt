@@ -1,6 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
 import AuditingEntity
+import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
@@ -17,15 +18,15 @@ class ExperimentPostEntity(
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    val memberId: MemberEntity,
+    val member: MemberEntity,
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "target_group_id")
-    val targetGroupId: TargetGroupEntity,
+    val targetGroup: TargetGroupEntity,
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_method_id")
-    val applyMethodId: ApplyMethodEntity,
+    val applyMethod: ApplyMethodEntity,
 
     @Column(name = "views")
     var views: Int,
@@ -75,7 +76,57 @@ class ExperimentPostEntity(
     @Column(name = "alarm_agree", nullable = false)
     val alarmAgree: Boolean,
 
-    @OneToMany(mappedBy = "experimentPost", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    val images: List<ExperimentImageEntity> = mutableListOf()
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "experiment_image_id")
+    val images: List<ExperimentImageEntity>
 ): AuditingEntity() {
+    fun toDomain(): ExperimentPost = ExperimentPost(
+        id = id,
+        member = member.toDomain(),
+        targetGroup = targetGroup.toDomain(),
+        applyMethod = applyMethod.toDomain(),
+        views = views,
+        title = title,
+        content = content,
+        researcherName = researcherName,
+        reward = reward,
+        startDate = startDate,
+        endDate = endDate,
+        durationMinutes = durationMinutes,
+        count = count,
+        matchType = matchType,
+        univName = univName,
+        region = region,
+        area = area,
+        detailedAddress = detailedAddress,
+        alarmAgree = alarmAgree,
+        images = images.map { it.toDomain() }
+    )
+
+    companion object {
+        fun fromDomain(experimentPost: ExperimentPost): ExperimentPostEntity = with(experimentPost) {
+            ExperimentPostEntity(
+                id = id,
+                member = MemberEntity.fromDomain(member),
+                targetGroup = TargetGroupEntity.fromDomain(targetGroup),
+                applyMethod = ApplyMethodEntity.fromDomain(applyMethod),
+                views = views,
+                title = title,
+                content = content,
+                researcherName = researcherName,
+                reward = reward,
+                startDate = startDate,
+                endDate = endDate,
+                durationMinutes = durationMinutes,
+                count = count,
+                matchType = matchType,
+                univName = univName,
+                region = region,
+                area = area,
+                detailedAddress = detailedAddress,
+                alarmAgree = alarmAgree,
+                images = images.map { ExperimentImageEntity.fromDomain(it) }
+            )
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.model.experiment
 
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
@@ -7,9 +8,9 @@ import java.time.LocalDate
 
 data class ExperimentPost(
     val id: Long,
-    val memberId: Long,
-    val targetGroupId: Long,
-    val applyMethodId: Long,
+    val member: Member,
+    val targetGroup: TargetGroup,
+    val applyMethod: ApplyMethod,
     var views: Int,
     val title: String,
     val content: String,
@@ -30,9 +31,9 @@ data class ExperimentPost(
     companion object {
         fun newExperimentPost(
             id: Long,
-            memberId: Long,
-            targetGroupId: Long,
-            applyMethodId: Long,
+            member: Member,
+            targetGroup: TargetGroup,
+            applyMethod: ApplyMethod,
             views: Int,
             title: String,
             content: String,
@@ -51,9 +52,9 @@ data class ExperimentPost(
             images: List<ExperimentImage>
         ) = ExperimentPost(
             id = id,
-            memberId = memberId,
-            targetGroupId = targetGroupId,
-            applyMethodId = applyMethodId,
+            member = member,
+            targetGroup = targetGroup,
+            applyMethod = applyMethod,
             views = views,
             title = title,
             content = content,
