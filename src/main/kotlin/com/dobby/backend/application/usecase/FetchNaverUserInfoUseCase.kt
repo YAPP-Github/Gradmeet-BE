@@ -1,7 +1,9 @@
 package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.exception.SignInMemberException
+import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.NaverAuthGateway
+import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
@@ -12,8 +14,8 @@ import java.lang.Exception
 
 class FetchNaverUserInfoUseCase(
     private val naverAuthGateway: NaverAuthGateway,
-    private val jwtTokenProvider: JwtTokenProvider,
-    private val memberRepository: MemberRepository
+    private val memberGateway: MemberGateway,
+    private val jwtTokenGateway: TokenGateway
 ) : UseCase<FetchNaverUserInfoUseCase.Input, FetchNaverUserInfoUseCase.Output> {
 
     data class Input(
@@ -37,12 +39,11 @@ class FetchNaverUserInfoUseCase(
             val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state)
             val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
             val email = userInfo?.email
-            val member = email?.let { memberRepository.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
+            val member = email?.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
             return if (member != null) {
-                val memberAuthentication = AuthenticationUtils.createAuthentication(member)
-                val jwtAccessToken = jwtTokenProvider.generateAccessToken(memberAuthentication)
-                val jwtRefreshToken = jwtTokenProvider.generateRefreshToken(memberAuthentication)
+                val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
+                val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
 
                 Output(
                     isRegistered = true,
