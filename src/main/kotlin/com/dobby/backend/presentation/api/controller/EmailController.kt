@@ -26,8 +26,8 @@ class EmailController(
         description = "연구자 회원가입 시, 학교 메일 인증 코드를 전송하는 API입니다."
     )
     fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
-    : ApiResponse<EmailSendResponse> {
-        return ApiResponse.onSuccess(emailService.sendEmail(emailSendRequest))
+    : EmailSendResponse {
+        return emailService.sendEmail(emailSendRequest)
     }
 
     @PostMapping("/verify")
@@ -36,8 +36,8 @@ class EmailController(
         description = "연구자 회원가입 시, 코드를 인증하는 API입니다."
     )
     fun verifyCode(@RequestBody @Valid emailVerificationRequest: EmailVerificationRequest)
-    : ApiResponse<EmailVerificationResponse> {
-        return ApiResponse.onSuccess(emailService.verifyCode(emailVerificationRequest))
+    : EmailVerificationResponse {
+        return emailService.verifyCode(emailVerificationRequest)
     }
 
 }
