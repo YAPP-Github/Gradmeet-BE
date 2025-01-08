@@ -1,6 +1,7 @@
-package com.dobby.backend.application.usecase
+package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
+import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
@@ -11,10 +12,10 @@ import com.dobby.backend.util.AuthenticationUtils
 class ParticipantSignupUseCase (
     private val participantRepository: ParticipantRepository,
     private val jwtTokenProvider: JwtTokenProvider
-):UseCase<ParticipantSignupRequest, SignupResponse>
+): UseCase<ParticipantSignupRequest, SignupResponse>
 {
     override fun execute(input: ParticipantSignupRequest): SignupResponse {
-        val memberEntity = SignupMapper.toMember(input)
+        val memberEntity = SignupMapper.toParticipantMember(input)
         val participantEntity = SignupMapper.toParticipant(memberEntity, input)
 
         val newParticipant = participantRepository.save(participantEntity)

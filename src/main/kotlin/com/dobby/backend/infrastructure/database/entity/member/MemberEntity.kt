@@ -6,23 +6,22 @@ import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Entity(name = "member")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "role_type")
-class MemberEntity (
+class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: Long,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)
-    val oauthEmail : String,
+    val oauthEmail: String,
 
     @Column(name = "oauth_provider", nullable = false)
     @Enumerated(EnumType.STRING)
-    val provider : ProviderType,
+    val provider: ProviderType,
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -33,13 +32,10 @@ class MemberEntity (
     val role: RoleType?,
 
     @Column(name = "contact_email", length = 100, nullable = true)
-    val contactEmail : String?,
+    val contactEmail: String?,
 
     @Column(name = "name", length = 10, nullable = true)
-    val name : String?,
-
-    @Column(name = "birth_date", nullable = true)
-    val birthDate : LocalDate?,
+    val name: String?,
 ) : AuditingEntity() {
 
     fun toDomain() = Member(
@@ -49,21 +45,19 @@ class MemberEntity (
         contactEmail = contactEmail,
         provider = provider,
         status = status,
-        role = role,
-        birthDate = birthDate
+        role = role
     )
 
     companion object {
         fun fromDomain(member: Member) = with(member) {
             MemberEntity(
                 id = memberId,
-                name = name,
                 oauthEmail = oauthEmail,
-                contactEmail = contactEmail,
                 provider = provider,
                 status = status,
                 role = role,
-                birthDate = birthDate
+                contactEmail = contactEmail,
+                name = name
             )
         }
     }

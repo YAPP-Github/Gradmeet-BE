@@ -42,7 +42,6 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
             name = "Test User",
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
-            birthDate = LocalDate.of(2002, 11, 21),
             contactEmail = "contact@example.com",
             provider = ProviderType.NAVER
         )

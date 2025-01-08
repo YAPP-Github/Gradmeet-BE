@@ -13,7 +13,6 @@ data class Member(
     val provider: ProviderType,
     val status: MemberStatus,
     val role: RoleType?,
-    val birthDate: LocalDate?
 ) {
 
     companion object {
@@ -25,7 +24,6 @@ data class Member(
             provider: ProviderType,
             status: MemberStatus,
             role: RoleType,
-            birthDate: LocalDate,
         ) = Member(
             memberId = memberId,
             name = name,
@@ -33,8 +31,7 @@ data class Member(
             contactEmail = contactEmail,
             provider = provider,
             status = status,
-            role = role,
-            birthDate = birthDate,
+            role = role
         )
     }
 }

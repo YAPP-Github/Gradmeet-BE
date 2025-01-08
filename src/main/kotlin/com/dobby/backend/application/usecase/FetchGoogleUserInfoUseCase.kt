@@ -9,9 +9,9 @@ import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.request.auth.GoogleTokenRequest
-import com.dobby.backend.presentation.api.dto.response.auth.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleTokenRequest
+import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
 

@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.test.context.ActiveProfiles
-import java.time.LocalDate
 import kotlin.test.assertFailsWith
 
 @SpringBootTest
@@ -27,7 +26,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
         given("회원 정보가 주어지고") {
             val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-                birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
+                status = MemberStatus.ACTIVE)
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null, authorities)
 
@@ -43,7 +42,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
         given("유효한 JWT 토큰이 주어지고") {
             val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-                birthDate = LocalDate.of(2000, 7, 8), status = MemberStatus.ACTIVE)
+                status = MemberStatus.ACTIVE)
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
             val authentication = UsernamePasswordAuthenticationToken(member.memberId, null, authorities)
             val validToken = jwtTokenProvider.generateAccessToken(authentication)
