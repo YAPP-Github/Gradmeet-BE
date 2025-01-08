@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.SignupUseCase.email
+package com.dobby.backend.application.usecase.signupUseCase.email
 
 import com.dobby.backend.domain.exception.EmailNotUnivException
 import com.dobby.backend.domain.gateway.EmailGateway
