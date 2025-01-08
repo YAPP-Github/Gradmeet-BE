@@ -1,65 +1,74 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.domain.exception.SignInMemberException
-import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
+import com.dobby.backend.domain.gateway.NaverAuthGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
-import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.request.auth.NaverTokenRequest
-import com.dobby.backend.presentation.api.dto.response.auth.NaverTokenResponse
-import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
+import java.lang.Exception
 
 class FetchNaverUserInfoUseCase(
-    private val naverAuthFeignClient: NaverAuthFeignClient,
-    private val naverUserInfoFeginClient: NaverUserInfoFeignClient,
+    private val naverAuthGateway: NaverAuthGateway,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val naverAuthProperties: NaverAuthProperties,
     private val memberRepository: MemberRepository
-) : UseCase<NaverOauthLoginRequest, OauthLoginResponse> {
+) : UseCase<FetchNaverUserInfoUseCase.Input, FetchNaverUserInfoUseCase.Output> {
 
-    override fun execute(input: NaverOauthLoginRequest): OauthLoginResponse {
+    data class Input(
+        val authorizationCode: String,
+        val state: String
+    )
+
+    data class Output(
+        val isRegistered: Boolean,
+        val accessToken: String,
+        val refreshToken: String,
+        val memberId: Long?,
+        val oauthEmail: String,
+        val oauthName: String,
+        val role: RoleType?,
+        val provider: ProviderType
+    )
+
+    override fun execute(input: Input): Output {
         try {
-            val naverTokenRequest = NaverTokenRequest(
-                grantType = "authorization_code",
-                clientId = naverAuthProperties.clientId,
-                clientSecret = naverAuthProperties.clientSecret,
-                code = input.authorizationCode,
-                state = input.state
-            )
+            val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state)
+            val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
+            val email = userInfo?.email
+            val member = email?.let { memberRepository.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
-            val oauthRes = fetchAccessToken(naverTokenRequest)
-            val oauthToken = oauthRes.accessToken
+            return if (member != null) {
+                val memberAuthentication = AuthenticationUtils.createAuthentication(member)
+                val jwtAccessToken = jwtTokenProvider.generateAccessToken(memberAuthentication)
+                val jwtRefreshToken = jwtTokenProvider.generateRefreshToken(memberAuthentication)
 
-            val userInfo = naverUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
-            val email = userInfo.email
-            val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
-                ?: throw SignInMemberException()
-
-            val regMemberAuthentication = AuthenticationUtils.createAuthentication(regMember)
-            val jwtAccessToken = jwtTokenProvider.generateAccessToken(regMemberAuthentication)
-            val jwtRefreshToken = jwtTokenProvider.generateRefreshToken(regMemberAuthentication)
-
-            return OauthUserMapper.toDto(
-                isRegistered = true,
-                accessToken = jwtAccessToken,
-                refreshToken = jwtRefreshToken,
-                oauthEmail = regMember.oauthEmail,
-                oauthName = regMember.name ?: throw SignInMemberException(),
-                role = regMember.role ?: throw SignInMemberException(),
-                provider = ProviderType.NAVER
-            )
-        } catch (e: SignInMemberException) {
+                Output(
+                    isRegistered = true,
+                    accessToken = jwtAccessToken,
+                    refreshToken = jwtRefreshToken,
+                    memberId = member.id,
+                    oauthEmail = member.oauthEmail,
+                    oauthName = member.name ?: throw SignInMemberException(),
+                    role = member.role ?: throw SignInMemberException(),
+                    provider = ProviderType.NAVER
+                )
+            } else {
+                // 등록된 멤버가 없으면 isRegistered = false, memberId = null
+                Output(
+                    isRegistered = false,
+                    accessToken = "",
+                    refreshToken = "",
+                    memberId = null,
+                    oauthEmail = email ?: "",
+                    oauthName = "",
+                    role = null,
+                    provider = ProviderType.NAVER
+                )
+            }
+        } catch (e: Exception) {
             throw SignInMemberException()
         }
-    }
-
-    private fun fetchAccessToken(naverTokenRequest: NaverTokenRequest): NaverTokenResponse {
-        return naverAuthFeignClient.getAccessToken(naverTokenRequest)
     }
 }
