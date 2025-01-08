@@ -58,6 +58,9 @@ class ExperimentPostEntity(
     @Column(name = "match_type", nullable = false)
     val matchType: MatchType,
 
+    @Column(name = "school", nullable = false)
+    val school: String,
+
     @Enumerated(EnumType.STRING)
     @Column(name = "region", nullable = false)
     val region: Region,
