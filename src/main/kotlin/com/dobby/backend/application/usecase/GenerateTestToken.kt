@@ -2,6 +2,7 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.model.Member
 
 class GenerateTestToken(
     private val tokenGateway: TokenGateway,
@@ -14,6 +15,7 @@ class GenerateTestToken(
     data class Output(
         val accessToken: String,
         val refreshToken: String,
+        val member: Member
     )
 
     override fun execute(input: Input): Output {
@@ -21,7 +23,8 @@ class GenerateTestToken(
         val member = memberGateway.getById(memberId)
         return Output(
             accessToken = tokenGateway.generateAccessToken(member),
-            refreshToken = tokenGateway.generateRefreshToken(member)
+            refreshToken = tokenGateway.generateRefreshToken(member),
+            member = member
         )
     }
 }
