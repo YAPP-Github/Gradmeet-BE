@@ -9,14 +9,13 @@ class ApplyMethodEntity (
     @Column(name = "id")
     val id: Long,
 
-    @Column(name = "phone_num", length = 11)
+    @Column(name = "phone_num", length = 50)
     val phoneNum: String,
 
-    @Column(name = "form_url")
+    @Column(name = "form_url", length = 100)
     val formUrl: String,
 
-    // TODO: content 길이 제한
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 200)
     val content: String,
 ) {
 }

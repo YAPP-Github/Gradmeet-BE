@@ -30,20 +30,16 @@ class ExperimentPostEntity(
     @Column(name = "views")
     val views: Int,
 
-    // TODO: title 길이 제한
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 70)
     val title: String,
 
-    // TODO: content 길이 제한
-    @Column(name = "content")
+    @Column(name = "content", nullable = false, length = 5000)
     val content: String,
 
-    // TODO: researcherName 길이 제한
-    @Column(name = "researcher_name", nullable = false)
+    @Column(name = "researcher_name", nullable = false, length = 100)
     val researcherName: String,
 
-    // TODO: reward 길이 제한
-    @Column(name = "reward", nullable = false)
+    @Column(name = "reward", nullable = false, length = 170)
     val reward: String,
 
     @Column(name = "start_date")
@@ -70,8 +66,7 @@ class ExperimentPostEntity(
     @Column(name = "area", nullable = false)
     val area: Area,
 
-    // TODO: detailedAddress 길이 제한
-    @Column(name = "detailed_address", nullable = false)
+    @Column(name = "detailed_address", length = 70)
     val detailedAddress: String,
 
     @Column(name = "alarm_agree", nullable = false)

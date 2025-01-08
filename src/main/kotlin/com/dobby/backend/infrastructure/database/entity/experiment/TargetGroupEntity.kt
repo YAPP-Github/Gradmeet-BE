@@ -17,11 +17,10 @@ class TargetGroupEntity(
     val endAge: Int,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender_type", columnDefinition = "VARCHAR(10)")
+    @Column(name = "gender_type", nullable = false)
     val genderType: GenderType,
 
-    // TODO: other_condition 길이 제한
-    @Column(name = "other_condition")
+    @Column(name = "other_condition", length = 300)
     val otherCondition: String,
 ) {
 }
