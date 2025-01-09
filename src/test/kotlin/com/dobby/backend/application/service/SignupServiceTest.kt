@@ -4,6 +4,7 @@ import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCa
 import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
 import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException
+import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enum.*
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import io.kotest.assertions.throwables.shouldThrow
@@ -13,12 +14,13 @@ import io.mockk.*
 
 
 class SignupServiceTest : BehaviorSpec({
-
+    val memberGateway = mockk<MemberGateway>(relaxed = true)
     val participantSignupUseCase = mockk<ParticipantSignupUseCase>(relaxed = true)
     val createResearcherUseCase = mockk<CreateResearcherUseCase>(relaxed = true)
     val verifyResearcherEmailUseCase = mockk<VerifyResearcherEmailUseCase>(relaxed = true)
 
     val signupService = SignupService(
+        memberGateway,
         participantSignupUseCase,
         createResearcherUseCase,
         verifyResearcherEmailUseCase
