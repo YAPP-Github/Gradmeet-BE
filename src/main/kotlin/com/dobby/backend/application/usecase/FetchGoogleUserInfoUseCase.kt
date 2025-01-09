@@ -22,8 +22,8 @@ class FetchGoogleUserInfoUseCase(
         val accessToken: String?,
         val refreshToken: String?,
         val memberId: Long?,
+        val name: String?,
         val oauthEmail: String,
-        val oauthName: String?,
         val role: RoleType?,
         val provider: ProviderType
     )
@@ -43,8 +43,8 @@ class FetchGoogleUserInfoUseCase(
                 accessToken = jwtAccessToken,
                 refreshToken = jwtRefreshToken,
                 memberId = member.id,
+                name = member.name,
                 oauthEmail = member.oauthEmail,
-                oauthName = member.name,
                 role = member.role,
                 provider = ProviderType.GOOGLE
             )
@@ -55,8 +55,8 @@ class FetchGoogleUserInfoUseCase(
                 accessToken = null,
                 refreshToken = null,
                 memberId = null,
+                name = null,
                 oauthEmail = email,
-                oauthName = null,
                 role = null,
                 provider = ProviderType.GOOGLE
             )

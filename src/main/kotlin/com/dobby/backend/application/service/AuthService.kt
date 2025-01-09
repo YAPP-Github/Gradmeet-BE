@@ -19,8 +19,8 @@ class AuthService(
             accessToken = result.accessToken,
             refreshToken = result.refreshToken,
             memberId = result.memberId,
+            name = result.name,
             oauthEmail = result.oauthEmail,
-            oauthName = result.oauthName,
             role = result.role,
             provider = result.provider,
         )
@@ -38,8 +38,8 @@ class AuthService(
             accessToken = result.accessToken,
             refreshToken = result.refreshToken,
             memberId = result.memberId,
+            name = result.name,
             oauthEmail = result.oauthEmail,
-            oauthName = result.oauthName,
             role = result.role,
             provider = result.provider,
         )

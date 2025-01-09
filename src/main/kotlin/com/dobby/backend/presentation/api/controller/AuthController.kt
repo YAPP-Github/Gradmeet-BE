@@ -33,7 +33,7 @@ class AuthController(
             refreshToken = result.refreshToken,
             memberInfo = MemberResponse(
                 memberId = result.memberId,
-                name = result.oauthName,
+                name = result.name,
                 oauthEmail = result.oauthEmail,
                 role = result.role,
                 provider = result.provider,
@@ -54,7 +54,7 @@ class AuthController(
             refreshToken = result.refreshToken,
             memberInfo = MemberResponse(
                 memberId = result.memberId,
-                name = result.oauthName,
+                name = result.name,
                 oauthEmail = result.oauthEmail,
                 role = result.role,
                 provider = result.provider,

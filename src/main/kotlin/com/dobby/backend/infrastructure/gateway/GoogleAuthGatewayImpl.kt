@@ -6,11 +6,9 @@ import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleInfoResponse
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
 
 @Component
-@EnableConfigurationProperties(GoogleAuthProperties::class)
 class GoogleAuthGatewayImpl(
     private val googleAuthProperties: GoogleAuthProperties,
     private val googleAuthFeignClient: GoogleAuthFeignClient,
@@ -22,7 +20,8 @@ class GoogleAuthGatewayImpl(
             clientId = googleAuthProperties.clientId,
             redirectUri = googleAuthProperties.redirectUri,
             code = code,
-            clientSecret = googleAuthProperties.clientSecret
+            clientSecret = googleAuthProperties.clientSecret,
+            grantType = googleAuthProperties.grantType
         )
     }
 
