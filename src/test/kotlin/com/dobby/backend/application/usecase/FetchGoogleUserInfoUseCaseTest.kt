@@ -1,14 +1,11 @@
 import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
-import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
-import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
+import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
-import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -18,53 +15,64 @@ import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
 class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
-    val googleAuthFeignClient = mockk<GoogleAuthFeignClient>()
-    val googleUserInfoFeginClient = mockk<GoogleUserInfoFeginClient>()
-    val jwtTokenProvider = mockk<JwtTokenProvider>()
-    val googleAuthProperties = mockk<GoogleAuthProperties>()
-    val memberRepository = mockk<MemberRepository>()
+    val googleAuthGateway = mockk<GoogleAuthGateway>()
+    val memberGateway = mockk<MemberGateway>()
+    val tokenGateway = mockk<TokenGateway>()
 
     val fetchGoogleUserInfoUseCase = FetchGoogleUserInfoUseCase(
-        googleAuthFeignClient,
-        googleUserInfoFeginClient,
-        jwtTokenProvider,
-        googleAuthProperties,
-        memberRepository
+        googleAuthGateway,
+        memberGateway,
+        tokenGateway
     )
 
     given("Google OAuth 요청이 들어왔을 때") {
-        val oauthLoginRequest = GoogleOauthLoginRequest(authorizationCode = "valid-auth-code")
-        val mockMember = MemberEntity(
+        val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code")
+        val mockMember = Member(
             id = 1L,
             oauthEmail = "test@example.com",
-            provider = ProviderType.GOOGLE,
+            name = "Test User",
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
             contactEmail = "contact@example.com",
-            name = "Test User"
+            provider = ProviderType.GOOGLE
         )
 
-        every { googleAuthProperties.clientId } returns "mock-client-id"
-        every { googleAuthProperties.clientSecret } returns "mock-client-secret"
-        every { googleAuthProperties.redirectUri } returns "http://localhost/callback"
-        every { googleAuthFeignClient.getAccessToken(any()) } returns GoogleTokenResponse("mock-access-token")
-        every { googleUserInfoFeginClient.getUserInfo(any()) } returns mockk {
+        val mockEmptyMember = null
+        val mockGoogleTokenResponse = GoogleTokenResponse("mock-access-token")
+        every { googleAuthGateway.getAccessToken(any()) } returns mockGoogleTokenResponse
+        every { googleAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
             every { name } returns "Test User"
         }
-        every { memberRepository.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
-        every { jwtTokenProvider.generateAccessToken(any()) } returns "mock-jwt-access-token"
-        every { jwtTokenProvider.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
 
-        `when`("정상적으로 모든 데이터가 주어지면") {
-            val result = fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
+        every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
+        every { tokenGateway.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
+
+        // 테스트 1: 등록된 멤버가 있는 경우
+        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
+
+        `when`("정상적으로 등록된 유저가 있는 경우") {
+            val result: FetchGoogleUserInfoUseCase.Output = fetchGoogleUserInfoUseCase.execute(input)
 
             then("유저 정보를 포함한 OauthLoginResponse를 반환해야 한다") {
                 result.isRegistered shouldBe true
                 result.accessToken shouldBe "mock-jwt-access-token"
                 result.refreshToken shouldBe "mock-jwt-refresh-token"
-                result.memberInfo.oauthEmail shouldBe "test@example.com"
-                result.memberInfo.name shouldBe "Test User"
+                result.memberId shouldBe 1L
+                result.oauthEmail shouldBe "test@example.com"
+            }
+        }
+
+        // 테스트 2: 등록된 멤버가 없는 경우
+        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockEmptyMember
+
+        `when`("등록되지 않은 유저가 있는 경우") {
+            val result: FetchGoogleUserInfoUseCase.Output = fetchGoogleUserInfoUseCase.execute(input)
+
+            then("isRegistered는 false, memberId는 null이어야 한다") {
+                result.isRegistered shouldBe false
+                result.memberId shouldBe null
+                result.oauthEmail shouldBe "test@example.com"
             }
         }
     }
