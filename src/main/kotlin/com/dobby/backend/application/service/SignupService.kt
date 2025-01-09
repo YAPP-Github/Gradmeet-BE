@@ -24,7 +24,6 @@ class SignupService(
             throw EmailNotValidateException()
         }
         verifyResearcherEmailUseCase.execute(input.univEmail)
-
         return createResearcherUseCase.execute(input)
     }
 

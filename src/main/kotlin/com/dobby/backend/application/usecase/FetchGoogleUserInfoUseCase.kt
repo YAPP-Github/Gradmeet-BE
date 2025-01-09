@@ -14,6 +14,9 @@ import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLog
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.util.AuthenticationUtils
+import org.hibernate.query.sqm.tree.SqmNode.log
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class FetchGoogleUserInfoUseCase(
     private val googleAuthFeignClient: GoogleAuthFeignClient,
@@ -29,7 +32,8 @@ class FetchGoogleUserInfoUseCase(
                 code = input.authorizationCode,
                 clientId = googleAuthProperties.clientId,
                 clientSecret = googleAuthProperties.clientSecret,
-                redirectUri = googleAuthProperties.redirectUri
+                redirectUri = googleAuthProperties.redirectUri,
+                grantType = "authorization_code"
             )
 
             val oauthRes = fetchAccessToken(googleTokenRequest)
@@ -59,6 +63,7 @@ class FetchGoogleUserInfoUseCase(
     }
 
     private fun fetchAccessToken(googleTokenRequest: GoogleTokenRequest): GoogleTokenResponse {
+        log.info("GoogleTokenRequest: $googleTokenRequest")
         return googleAuthFeignClient.getAccessToken(googleTokenRequest)
     }
 }

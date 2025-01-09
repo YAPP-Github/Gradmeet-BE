@@ -2,7 +2,7 @@ package com.dobby.backend.domain.model.member
 
 
 data class Researcher(
-    val member: Member,
+    var member: Member,
     val univEmail: String,
     val emailVerified: Boolean,
     val univName: String,

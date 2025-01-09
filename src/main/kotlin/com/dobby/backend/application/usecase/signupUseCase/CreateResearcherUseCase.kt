@@ -38,15 +38,15 @@ class CreateResearcherUseCase(
     )
 
     override fun execute(input: Input):Output {
-        val newResearcher = createResearcher(input)
-        val newMember = newResearcher.member
-        val accessToken = tokenGateway.generateAccessToken(newMember)
-        val refreshToken = tokenGateway.generateRefreshToken(newMember)
+        val savedResearcher = createResearcher(input)
+        val savedMember = savedResearcher.member
+        val accessToken = tokenGateway.generateAccessToken(savedMember)
+        val refreshToken = tokenGateway.generateRefreshToken(savedMember)
 
         return Output(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            memberInfo = SignupMapper.modelToResearcherRes(newResearcher)
+            memberInfo = SignupMapper.modelToResearcherRes(savedResearcher)
         )
     }
 
