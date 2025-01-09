@@ -1,64 +1,66 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.application.mapper.OauthUserMapper
 import com.dobby.backend.domain.exception.SignInMemberException
-import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
+import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
-import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleTokenRequest
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
-import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
-import com.dobby.backend.util.AuthenticationUtils
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 
 class FetchGoogleUserInfoUseCase(
-    private val googleAuthFeignClient: GoogleAuthFeignClient,
-    private val googleUserInfoFeginClient: GoogleUserInfoFeginClient,
-    private val jwtTokenProvider: JwtTokenProvider,
-    private val googleAuthProperties: GoogleAuthProperties,
-    private val memberRepository: MemberRepository
-) : UseCase<GoogleOauthLoginRequest, OauthLoginResponse> {
+    private val googleAuthGateway: GoogleAuthGateway,
+    private val memberGateway: MemberGateway,
+    private val jwtTokenGateway: TokenGateway
+) : UseCase<FetchGoogleUserInfoUseCase.Input, FetchGoogleUserInfoUseCase.Output> {
 
-    override fun execute(input: GoogleOauthLoginRequest): OauthLoginResponse {
-        try {
-            val googleTokenRequest = GoogleTokenRequest(
-                code = input.authorizationCode,
-                clientId = googleAuthProperties.clientId,
-                clientSecret = googleAuthProperties.clientSecret,
-                redirectUri = googleAuthProperties.redirectUri
-            )
+    data class Input(
+        val authorizationCode: String
+    )
 
-            val oauthRes = fetchAccessToken(googleTokenRequest)
-            val oauthToken = oauthRes.accessToken
+    data class Output(
+        val isRegistered: Boolean,
+        val accessToken: String?,
+        val refreshToken: String?,
+        val memberId: Long?,
+        val oauthEmail: String,
+        val oauthName: String?,
+        val role: RoleType?,
+        val provider: ProviderType
+    )
 
-            val userInfo = googleUserInfoFeginClient.getUserInfo("Bearer $oauthToken")
-            val email = userInfo.email
-            val regMember = memberRepository.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE)
-                ?: throw SignInMemberException()
+    override fun execute(input: Input): Output {
+        val oauthToken = googleAuthGateway.getAccessToken(input.authorizationCode).accessToken
+        val userInfo = googleAuthGateway.getUserInfo(oauthToken)
+        val email = userInfo.email
+        val member = email.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
-            val regMemberAuthentication = AuthenticationUtils.createAuthentication(regMember)
-            val jwtAccessToken = jwtTokenProvider.generateAccessToken(regMemberAuthentication)
-            val jwtRefreshToken = jwtTokenProvider.generateRefreshToken(regMemberAuthentication)
+        return if (member != null) {
+            val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
+            val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
 
-            return OauthUserMapper.toDto(
+            Output(
                 isRegistered = true,
                 accessToken = jwtAccessToken,
                 refreshToken = jwtRefreshToken,
-                oauthEmail = regMember.oauthEmail,
-                oauthName = regMember.name ?: throw SignInMemberException(),
-                role = regMember.role ?: throw SignInMemberException(),
+                memberId = member.id,
+                oauthEmail = member.oauthEmail,
+                oauthName = member.name ?: throw SignInMemberException(),
+                role = member.role ?: throw SignInMemberException(),
                 provider = ProviderType.GOOGLE
             )
-        } catch (e: SignInMemberException) {
-            throw SignInMemberException()
+        } else {
+            // 등록된 멤버가 없으면 isRegistered = false, memberId = null
+            Output(
+                isRegistered = false,
+                accessToken = null,
+                refreshToken = null,
+                memberId = null,
+                oauthEmail = email,
+                oauthName = null,
+                role = null,
+                provider = ProviderType.GOOGLE
+            )
         }
-    }
-
-    private fun fetchAccessToken(googleTokenRequest: GoogleTokenRequest): GoogleTokenResponse {
-        return googleAuthFeignClient.getAccessToken(googleTokenRequest)
     }
 }
