@@ -16,6 +16,6 @@ interface GoogleAuthFeignClient {
         @RequestParam(name = "client_id") clientId: String,
         @RequestParam(name = "client_secret") clientSecret: String,
         @RequestParam(name = "redirect_uri") redirectUri: String,
-        @RequestParam(name = "grant_type") grantType: String = "authorization_code",
+        @RequestParam(name = "grant_type") grantType: String,
     ): GoogleTokenResponse
 }
