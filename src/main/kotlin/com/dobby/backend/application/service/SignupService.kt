@@ -1,8 +1,13 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.SignupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.SignupUseCase.ParticipantSignupUseCase
-import com.dobby.backend.application.usecase.SignupUseCase.VerifyResearcherEmailUseCase
+<<<<<<< HEAD
+import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
+=======
+import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+
+>>>>>>> 03b03d56d8a6f26e26d51fe41356c6b74bbd3342
 import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest

@@ -1,7 +1,7 @@
-package com.dobby.backend.application.usecase.SignupUseCase
+package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
-import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType

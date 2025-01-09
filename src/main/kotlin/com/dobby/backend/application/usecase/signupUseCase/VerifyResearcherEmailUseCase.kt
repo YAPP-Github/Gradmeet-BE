@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.SignupUseCase
+package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException

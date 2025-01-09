@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.gateway
 
 import com.dobby.backend.domain.gateway.TokenGateway
-import com.dobby.backend.domain.model.Member
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
