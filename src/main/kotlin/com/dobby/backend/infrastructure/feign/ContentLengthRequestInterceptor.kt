@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure
+package com.dobby.backend.infrastructure.feign
 
 import feign.RequestInterceptor
 import feign.RequestTemplate
