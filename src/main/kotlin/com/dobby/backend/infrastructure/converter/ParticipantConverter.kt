@@ -1,0 +1,62 @@
+package com.dobby.backend.infrastructure.converter
+
+import com.dobby.backend.domain.model.member.Participant
+import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.member.AddressInfo as EntityAddressInfo
+
+object ParticipantConverter {
+    fun toModel(entity: ParticipantEntity): Participant {
+        return Participant(
+            member = Member(
+                memberId = entity.member.id,
+                contactEmail = entity.member.contactEmail,
+                oauthEmail = entity.member.oauthEmail,
+                provider = entity.member.provider,
+                role = entity.member.role,
+                name = entity.member.name,
+                status = entity.member.status
+            ),
+            gender = entity.gender,
+            birthDate = entity.birthDate,
+            basicAddressInfo = entity.basicAddressInfo.toModel(),
+            additionalAddressInfo = entity.additionalAddressInfo?.toModel(),
+            preferType = entity.preferType
+        )
+    }
+
+    fun toEntity(participant: Participant): ParticipantEntity {
+        val memberEntity = MemberEntity(
+            id = participant.member.memberId,
+            oauthEmail = participant.member.oauthEmail,
+            provider = participant.member.provider,
+            role = participant.member.role,
+            contactEmail = participant.member.contactEmail,
+            name = participant.member.name
+        )
+        return ParticipantEntity(
+            member = memberEntity,
+            gender = participant.gender,
+            birthDate = participant.birthDate,
+            preferType = participant.preferType,
+            basicAddressInfo = participant.basicAddressInfo.toEntity(),
+            additionalAddressInfo = participant.additionalAddressInfo?.toEntity()
+        )
+    }
+
+    private fun EntityAddressInfo.toModel(): Participant.AddressInfo {
+        return Participant.AddressInfo(
+            region = this.region,
+            area = this.area
+        )
+    }
+
+    private fun Participant.AddressInfo.toEntity(): EntityAddressInfo {
+        return EntityAddressInfo(
+            region = this.region,
+            area = this.area
+        )
+        }
+}

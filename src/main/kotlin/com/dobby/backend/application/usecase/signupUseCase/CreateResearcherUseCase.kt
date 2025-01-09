@@ -7,21 +7,6 @@ import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enum.*
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
-import com.dobby.backend.infrastructure.database.repository.ResearcherRepository
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
-import com.dobby.backend.util.AuthenticationUtils
-import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Past
-import org.springframework.format.annotation.DateTimeFormat
-import java.time.LocalDate
 
 class CreateResearcherUseCase(
     private val researcherGateway: ResearcherGateway,
@@ -54,8 +39,9 @@ class CreateResearcherUseCase(
 
     override fun execute(input: Input):Output {
         val newResearcher = createResearcher(input)
-        val accessToken = tokenGateway.generateAccessToken(newResearcher.member)
-        val refreshToken = tokenGateway.generateRefreshToken(newResearcher.member)
+        val newMember = newResearcher.member
+        val accessToken = tokenGateway.generateAccessToken(newMember)
+        val refreshToken = tokenGateway.generateRefreshToken(newMember)
 
         return Output(
             accessToken = accessToken,

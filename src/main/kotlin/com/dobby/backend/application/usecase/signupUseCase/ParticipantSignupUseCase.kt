@@ -2,31 +2,88 @@ package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
-import com.dobby.backend.util.AuthenticationUtils
+import com.dobby.backend.domain.gateway.ParticipantGateway
+import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.Participant
+import com.dobby.backend.infrastructure.database.entity.enum.*
+import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import java.time.LocalDate
 
 class ParticipantSignupUseCase (
-    private val participantRepository: ParticipantRepository,
-    private val jwtTokenProvider: JwtTokenProvider
-): UseCase<ParticipantSignupRequest, SignupResponse>
+    private val participantGateway: ParticipantGateway,
+    private val tokenGateway: TokenGateway
+): UseCase<ParticipantSignupUseCase.Input, ParticipantSignupUseCase.Output>
 {
-    override fun execute(input: ParticipantSignupRequest): SignupResponse {
-        val memberEntity = SignupMapper.toParticipantMember(input)
-        val participantEntity = SignupMapper.toParticipant(memberEntity, input)
+    data class Input (
+        val oauthEmail: String,
+        val provider: ProviderType,
+        val contactEmail: String,
+        val name : String,
+        val gender: GenderType,
+        val birthDate: LocalDate,
+        var basicAddressInfo: AddressInfo,
+        var additionalAddressInfo: AddressInfo?,
+        var preferType: MatchType,
+    )
+    data class AddressInfo(
+        val region: Region,
+        val area: Area
+    )
+    data class Output(
+        val accessToken: String,
+        val refreshToken: String,
+        val memberInfo: MemberResponse
+    )
+    data class MemberResponse(
+        val memberId: Long?,
+        val name: String?,
+        val oauthEmail: String?,
+        val provider: ProviderType?,
+        val role: RoleType?,
+    )
 
-        val newParticipant = participantRepository.save(participantEntity)
-        val authentication = AuthenticationUtils.createAuthentication(memberEntity)
-        val accessToken = jwtTokenProvider.generateAccessToken(authentication)
-        val refreshToken = jwtTokenProvider.generateRefreshToken(authentication)
 
-        return SignupResponse(
-            memberInfo = MemberResponse.fromDomain(newParticipant.member.toDomain()),
+    override fun execute(input: Input): Output {
+        val participant = createParticipant(input)
+        val newParticipant = participantGateway.save(participant)
+
+        val newMember = newParticipant.member
+        val accessToken = tokenGateway.generateAccessToken(newMember)
+        val refreshToken = tokenGateway.generateRefreshToken(newMember)
+
+        return Output(
             accessToken = accessToken,
-            refreshToken = refreshToken
+            refreshToken = refreshToken,
+            memberInfo = SignupMapper.modelToParticipantRes(newParticipant)
+        )
+    }
+
+
+    private fun createParticipant(input: Input): Participant {
+        val member = Member(
+            memberId = 0L,
+            oauthEmail = input.oauthEmail,
+            contactEmail = input.contactEmail,
+            provider = input.provider,
+            role = RoleType.PARTICIPANT,
+            name = input.name,
+            status = MemberStatus.ACTIVE
+        )
+
+        return Participant(
+            member = member,
+            gender = input.gender,
+            birthDate = input.birthDate,
+            basicAddressInfo = Participant.AddressInfo(
+                region = input.basicAddressInfo.region,
+                area = input.basicAddressInfo.area
+            ),
+            additionalAddressInfo = input.additionalAddressInfo?.let {
+                Participant.AddressInfo(region = it.region, area = it.area)
+            },
+            preferType = input.preferType
         )
     }
 }

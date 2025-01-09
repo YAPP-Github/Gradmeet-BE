@@ -24,7 +24,9 @@ class SignupController(
     fun signupParticipants(
         @RequestBody @Valid req: ParticipantSignupRequest
     ): SignupResponse {
-        return signupService.participantSignup(req)
+        val input = SignupMapper.toCreateParticipantInput(req)
+        val output = signupService.participantSignup(input)
+        return SignupMapper.toParticipantSignupResponse(output)
     }
 
     @PostMapping("/signup/researcher")

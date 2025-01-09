@@ -4,9 +4,6 @@ import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseC
 import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -17,7 +14,7 @@ class SignupService(
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase
 ) {
     @Transactional
-    fun participantSignup(input: ParticipantSignupRequest): SignupResponse {
+    fun participantSignup(input: ParticipantSignupUseCase.Input): ParticipantSignupUseCase.Output {
            return participantSignupUseCase.execute(input)
     }
 

@@ -1,5 +1,7 @@
 package com.dobby.backend.application.mapper
 import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
@@ -77,6 +79,17 @@ object SignupMapper {
             oauthEmail = newResearcher.member.oauthEmail,
             provider = newResearcher.member.provider,
             role = newResearcher.member.role
+        )
+    }
+
+    fun modelToParticipantRes(newParticipant: Participant)
+    : ParticipantSignupUseCase.MemberResponse {
+        return ParticipantSignupUseCase.MemberResponse(
+            memberId = newParticipant.member.memberId,
+            name = newParticipant.member.name,
+            oauthEmail = newParticipant.member.oauthEmail,
+            provider = newParticipant.member.provider,
+            role = newParticipant.member.role
         )
     }
 }
