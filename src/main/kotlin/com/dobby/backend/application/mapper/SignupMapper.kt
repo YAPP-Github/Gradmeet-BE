@@ -48,6 +48,7 @@ object SignupMapper {
         req: ParticipantSignupRequest
     ): ParticipantEntity {
         return ParticipantEntity(
+            id = 0,
             member = member,
             basicAddressInfo = toAddressInfo(req.basicAddressInfo),
             additionalAddressInfo = req.additionalAddressInfo?.let { toAddressInfo(it) },
@@ -62,6 +63,7 @@ object SignupMapper {
         req: CreateResearcherUseCase.Input
     ): ResearcherEntity {
         return ResearcherEntity(
+            id = 0,
             member = member,
             univEmail = req.univEmail,
             emailVerified = req.emailVerified,
@@ -74,7 +76,7 @@ object SignupMapper {
     fun modelToResearcherRes(newResearcher: Researcher)
     : CreateResearcherUseCase.MemberResponse {
         return CreateResearcherUseCase.MemberResponse(
-            memberId = newResearcher.member.memberId,
+            memberId = newResearcher.member.id,
             name = newResearcher.member.name,
             oauthEmail = newResearcher.member.oauthEmail,
             provider = newResearcher.member.provider,
@@ -85,7 +87,7 @@ object SignupMapper {
     fun modelToParticipantRes(newParticipant: Participant)
     : ParticipantSignupUseCase.MemberResponse {
         return ParticipantSignupUseCase.MemberResponse(
-            memberId = newParticipant.member.memberId,
+            memberId = newParticipant.member.id,
             name = newParticipant.member.name,
             oauthEmail = newParticipant.member.oauthEmail,
             provider = newParticipant.member.provider,

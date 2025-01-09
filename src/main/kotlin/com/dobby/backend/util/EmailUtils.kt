@@ -31,7 +31,7 @@ object EmailUtils{
             "handong.edu",
             "ewhain.net"
         )
-        return email.endsWith("@ac.kr") || eduDomains.any { email.endsWith(it) }
+        return email.endsWith(".ac.kr") || eduDomains.any { email.endsWith(it) }
     }
     fun generateCode(): String {
         val randomNum = (0..999999).random()

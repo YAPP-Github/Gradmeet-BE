@@ -2,6 +2,8 @@ package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
+import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.ResearcherGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
@@ -9,6 +11,7 @@ import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enum.*
 
 class CreateResearcherUseCase(
+    private val memberGateway: MemberGateway,
     private val researcherGateway: ResearcherGateway,
     private val tokenGateway: TokenGateway
 ) : UseCase<CreateResearcherUseCase.Input, CreateResearcherUseCase.Output> {
@@ -38,6 +41,9 @@ class CreateResearcherUseCase(
     )
 
     override fun execute(input: Input):Output {
+        if(memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)!= null)
+            throw SignupOauthEmailDuplicateException()
+
         val savedResearcher = createResearcher(input)
         val savedMember = savedResearcher.member
         val accessToken = tokenGateway.generateAccessToken(savedMember)
@@ -52,7 +58,7 @@ class CreateResearcherUseCase(
 
     private fun createResearcher(input: Input): Researcher {
         val member = Member(
-            memberId= 0L,
+            id = 0L,
             status = MemberStatus.ACTIVE,
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
@@ -60,8 +66,10 @@ class CreateResearcherUseCase(
             role = RoleType.RESEARCHER,
             name = input.name
         )
+        println("디버깅: 생성된 Member role 값 -> ${member.role}")  // 디버깅 추가
 
         val researcher = Researcher(
+            id = 0L,
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,

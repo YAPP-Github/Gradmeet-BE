@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
 
 data class Participant(
+    val id: Long,
     val member: Member,
     val gender: GenderType,
     val birthDate: LocalDate,
@@ -14,6 +15,7 @@ data class Participant(
     val additionalAddressInfo: AddressInfo?,
     val preferType: MatchType?
 ) {
+
     data class AddressInfo(
         val region: Region,
         val area: Area
@@ -28,6 +30,7 @@ data class Participant(
             additionalAddressInfo: AddressInfo?,
             preferType: MatchType?
         ) = Participant(
+            id = 0,
             member = member,
             gender = gender,
             birthDate = birthDate,

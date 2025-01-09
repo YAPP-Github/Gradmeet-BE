@@ -7,9 +7,8 @@ import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
 
-@Entity(name = "member")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "role_type")
+@Entity
+@Table(name = "member")
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

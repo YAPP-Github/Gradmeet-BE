@@ -8,12 +8,17 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.persistence.*
 import java.time.LocalDate
 
-@Entity(name = "participant")
-@DiscriminatorValue("PARTICIPANT")
+@Entity
+@Table(name = "participant")
 class ParticipantEntity (
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "participant_id")
+    val id: Long,
 
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -39,14 +44,6 @@ class ParticipantEntity (
     @Column(name = "prefer_type", nullable = true)
     @Enumerated(EnumType.STRING)
     var preferType: MatchType?,
-
-    ) : MemberEntity(
-    id= member.id,
-    oauthEmail = member.oauthEmail,
-    provider = member.provider,
-    role = RoleType.PARTICIPANT,
-    contactEmail= member.contactEmail,
-    name = member.name
 )
 
 @Embeddable

@@ -2,6 +2,7 @@ package com.dobby.backend.domain.model.member
 
 
 data class Researcher(
+    val id: Long,
     var member: Member,
     val univEmail: String,
     val emailVerified: Boolean,
@@ -9,6 +10,7 @@ data class Researcher(
     val major: String,
     val labInfo: String? = null
 ) {
+
     companion object {
         fun newResearcher(
             member: Member,
@@ -18,6 +20,7 @@ data class Researcher(
             major: String,
             labInfo: String?
         ) = Researcher(
+            id = 0L,
             member = member,
             univEmail = univEmail,
             emailVerified = emailVerified,

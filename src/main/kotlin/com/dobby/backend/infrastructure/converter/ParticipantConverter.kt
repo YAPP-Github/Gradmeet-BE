@@ -11,7 +11,7 @@ object ParticipantConverter {
     fun toModel(entity: ParticipantEntity): Participant {
         return Participant(
             member = Member(
-                memberId = entity.member.id,
+                id = entity.member.id,
                 contactEmail = entity.member.contactEmail,
                 oauthEmail = entity.member.oauthEmail,
                 provider = entity.member.provider,
@@ -19,6 +19,7 @@ object ParticipantConverter {
                 name = entity.member.name,
                 status = entity.member.status
             ),
+            id = entity.id,
             gender = entity.gender,
             birthDate = entity.birthDate,
             basicAddressInfo = entity.basicAddressInfo.toModel(),
@@ -29,7 +30,7 @@ object ParticipantConverter {
 
     fun toEntity(participant: Participant): ParticipantEntity {
         val memberEntity = MemberEntity(
-            id = participant.member.memberId,
+            id = participant.member.id,
             oauthEmail = participant.member.oauthEmail,
             provider = participant.member.provider,
             role = participant.member.role,
@@ -37,6 +38,7 @@ object ParticipantConverter {
             name = participant.member.name
         )
         return ParticipantEntity(
+            id = participant.id,
             member = memberEntity,
             gender = participant.gender,
             birthDate = participant.birthDate,
@@ -58,5 +60,5 @@ object ParticipantConverter {
             region = this.region,
             area = this.area
         )
-        }
+    }
 }

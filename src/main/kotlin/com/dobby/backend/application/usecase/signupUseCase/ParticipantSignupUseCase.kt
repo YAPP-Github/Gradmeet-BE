@@ -71,7 +71,7 @@ class ParticipantSignupUseCase (
 
     private fun createParticipant(input: Input): Participant {
         val member = Member(
-            memberId = 0L,
+            id = 0L,
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -83,6 +83,7 @@ class ParticipantSignupUseCase (
 
 
         return Participant(
+            id = 0L,
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,

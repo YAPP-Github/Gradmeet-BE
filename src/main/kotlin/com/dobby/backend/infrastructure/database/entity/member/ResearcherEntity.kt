@@ -3,12 +3,17 @@ package com.dobby.backend.infrastructure.database.entity.member
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
 
-@Entity(name = "researcher")
-@DiscriminatorValue("RESEARCHER")
+@Entity
+@Table(name = "researcher")
 class ResearcherEntity (
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "researcher_id")
+    val id: Long,
 
     @Column(name = "univ_email", length = 100, nullable = false)
     val univEmail : String,
@@ -24,11 +29,4 @@ class ResearcherEntity (
 
     @Column(name = "lab_info", length = 100, nullable = true)
     val labInfo : String?,
-) : MemberEntity(
-    id= member.id,
-    oauthEmail = member.oauthEmail,
-    provider = member.provider,
-    role = RoleType.RESEARCHER,
-    contactEmail= member.contactEmail,
-    name = member.name
 )

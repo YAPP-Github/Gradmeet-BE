@@ -10,14 +10,15 @@ object ResearcherConverter {
     fun toModel(entity: ResearcherEntity): Researcher{
         return Researcher(
             member = Member(
-                memberId = entity.member.id,
+                id = entity.member.id,
                 contactEmail = entity.member.contactEmail,
                 oauthEmail = entity.member.oauthEmail,
                 provider = entity.member.provider,
                 role = RoleType.RESEARCHER,
-                name = entity.name,
-                status = entity.status
+                name = entity.member.name,
+                status = entity.member.status
             ),
+            id = entity.id,
             univEmail = entity.univEmail,
             univName = entity.univName,
             emailVerified = entity.emailVerified,
@@ -28,7 +29,7 @@ object ResearcherConverter {
 
     fun toEntity(researcher: Researcher): ResearcherEntity {
         val memberEntity = MemberEntity(
-            id = researcher.member.memberId,
+            id = researcher.member.id,
             oauthEmail = researcher.member.oauthEmail,
             provider = researcher.member.provider,
             role = researcher.member.role,
@@ -37,6 +38,7 @@ object ResearcherConverter {
         )
 
         return ResearcherEntity(
+            id = researcher.id,
             member = memberEntity,
             univEmail = researcher.univEmail,
             emailVerified = researcher.emailVerified,
