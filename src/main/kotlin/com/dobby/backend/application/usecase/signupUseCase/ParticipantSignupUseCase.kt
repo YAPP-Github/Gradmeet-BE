@@ -46,24 +46,18 @@ class ParticipantSignupUseCase (
 
 
     override fun execute(input: Input): Output {
-        println("Debug: Received input: $input") // 입력 확인
         val participant = createParticipant(input)
-        println("Debug: Created participant: $participant") // 생성된 Participant 확인
 
         val newParticipant = participantGateway.save(participant)
-        println("Debug: Saved participant: $newParticipant") // 저장된 Participant 확인
 
         val newMember = newParticipant.member
-        println("Debug: New member: $newMember") // 생성된 Member 확인
 
         val accessToken = tokenGateway.generateAccessToken(newMember)
         val refreshToken = tokenGateway.generateRefreshToken(newMember)
-        println("Debug: Generated access token: $accessToken") // AccessToken 확인
-        println("Debug: Generated refresh token: $refreshToken") // RefreshToken 확인
 
         return Output(
-            accessToken = "test",
-            refreshToken = "test",
+            accessToken = accessToken,
+            refreshToken = refreshToken,
             memberInfo = SignupMapper.modelToParticipantRes(newParticipant)
         )
     }
@@ -79,8 +73,6 @@ class ParticipantSignupUseCase (
             name = input.name,
             status = MemberStatus.ACTIVE
         )
-        println("Debug: Created member: $member") // Member 생성 확인
-
 
         return Participant(
             id = 0L,
