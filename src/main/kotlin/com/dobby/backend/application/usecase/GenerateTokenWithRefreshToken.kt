@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
-import com.dobby.backend.domain.model.Member
+import com.dobby.backend.domain.model.member.Member
 
 class GenerateTokenWithRefreshToken(
     private val tokenGateway: TokenGateway,

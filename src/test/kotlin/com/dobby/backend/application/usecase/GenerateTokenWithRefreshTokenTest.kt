@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
-import com.dobby.backend.domain.model.Member
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
@@ -10,7 +10,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import java.time.LocalDate
 
 class GenerateTokenWithRefreshTokenTest : BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()

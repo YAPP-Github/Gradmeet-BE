@@ -1,8 +1,8 @@
 package com.dobby.backend.util
 
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

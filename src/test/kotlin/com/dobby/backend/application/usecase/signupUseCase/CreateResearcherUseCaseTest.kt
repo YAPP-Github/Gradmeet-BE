@@ -1,22 +1,18 @@
-package com.dobby.backend.application.usecase.SignupUseCase
+package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
-import com.dobby.backend.infrastructure.database.entity.ResearcherEntity
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 import com.dobby.backend.infrastructure.database.repository.ResearcherRepository
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
-import com.dobby.backend.util.AuthenticationUtils
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.verify
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 
 class CreateResearcherUseCaseTest: BehaviorSpec ({
 

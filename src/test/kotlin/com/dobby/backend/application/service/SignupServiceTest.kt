@@ -1,25 +1,14 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.SignupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.SignupUseCase.ParticipantSignupUseCase
-import com.dobby.backend.application.usecase.SignupUseCase.VerifyResearcherEmailUseCase
+import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException
-import com.dobby.backend.infrastructure.database.entity.VerificationEntity
 import com.dobby.backend.infrastructure.database.entity.enum.*
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
-import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
-import java.time.LocalDate
 
 class SignupServiceTest : BehaviorSpec({
 

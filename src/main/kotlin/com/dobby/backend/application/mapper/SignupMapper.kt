@@ -1,13 +1,13 @@
 package com.dobby.backend.application.mapper
 
-import com.dobby.backend.infrastructure.database.entity.MemberEntity
-import com.dobby.backend.infrastructure.database.entity.ParticipantEntity
-import com.dobby.backend.infrastructure.database.entity.ResearcherEntity
+import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
+import com.dobby.backend.infrastructure.database.entity.member.AddressInfo
+import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.infrastructure.database.entity.AddressInfo as AddressInfo
 import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
 object SignupMapper {
@@ -57,7 +57,7 @@ object SignupMapper {
     fun toResearcher(
         member: MemberEntity,
         req: ResearcherSignupRequest
-    ): ResearcherEntity{
+    ): ResearcherEntity {
         return ResearcherEntity(
             member = member,
             univEmail = req.univEmail,
@@ -67,5 +67,4 @@ object SignupMapper {
             labInfo = req.labInfo
         )
     }
-
 }

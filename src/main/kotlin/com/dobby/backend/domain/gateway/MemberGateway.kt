@@ -1,6 +1,6 @@
 package com.dobby.backend.domain.gateway
 
-import com.dobby.backend.domain.model.Member
+import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 
 interface MemberGateway {
