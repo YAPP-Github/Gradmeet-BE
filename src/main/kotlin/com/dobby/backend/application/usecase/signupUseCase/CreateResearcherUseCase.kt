@@ -66,7 +66,6 @@ class CreateResearcherUseCase(
             role = RoleType.RESEARCHER,
             name = input.name
         )
-        println("디버깅: 생성된 Member role 값 -> ${member.role}")  // 디버깅 추가
 
         val researcher = Researcher(
             id = 0L,
@@ -77,8 +76,8 @@ class CreateResearcherUseCase(
             major = input.major,
             labInfo = input.labInfo
         )
-        researcherGateway.save(researcher)
-        return researcher
+        val newResearcher = researcherGateway.save(researcher)
+        return newResearcher
     }
 
 }

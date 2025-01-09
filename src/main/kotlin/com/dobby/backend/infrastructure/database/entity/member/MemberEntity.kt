@@ -13,7 +13,7 @@ class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    val id: Long,
+    val id: Long = 0L,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)
     val oauthEmail: String,
