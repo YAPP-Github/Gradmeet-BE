@@ -2,28 +2,29 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.model.member.Member
 
-class GenerateTokenWithRefreshToken(
+class GenerateTestTokenUseCase(
     private val tokenGateway: TokenGateway,
     private val memberGateway: MemberGateway,
-) : UseCase<GenerateTokenWithRefreshToken.Input, GenerateTokenWithRefreshToken.Output> {
+) : UseCase<GenerateTestTokenUseCase.Input, GenerateTestTokenUseCase.Output> {
     data class Input(
-        val refreshToken: String,
+        val memberId: Long
     )
 
     data class Output(
         val accessToken: String,
         val refreshToken: String,
-        val memberId: Long
+        val member: Member
     )
 
     override fun execute(input: Input): Output {
-        val memberId = tokenGateway.extractMemberIdFromRefreshToken(input.refreshToken).toLong()
+        val memberId = input.memberId
         val member = memberGateway.getById(memberId)
         return Output(
             accessToken = tokenGateway.generateAccessToken(member),
             refreshToken = tokenGateway.generateRefreshToken(member),
-            memberId = memberId
+            member = member
         )
     }
 }

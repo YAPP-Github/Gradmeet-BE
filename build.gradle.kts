@@ -46,7 +46,7 @@ dependencies {
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-	implementation ("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
+	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	implementation("com.github.in-seo:univcert:master-SNAPSHOT") {
 		exclude(group = "org.hamcrest", module= "harmcest-core")
 	}
