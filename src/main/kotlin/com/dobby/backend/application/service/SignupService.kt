@@ -22,7 +22,7 @@ class SignupService(
     }
 
     @Transactional
-    fun researcherSignup(input: ResearcherSignupRequest) : SignupResponse{
+    fun researcherSignup(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
         if(!input.emailVerified) {
             throw EmailNotValidateException()
         }

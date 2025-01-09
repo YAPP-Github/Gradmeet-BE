@@ -1,4 +1,6 @@
 package com.dobby.backend.application.mapper
+import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
+import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -28,7 +30,7 @@ object SignupMapper {
         )
     }
 
-    fun toResearcherMember(req: ResearcherSignupRequest): MemberEntity {
+    fun toResearcherMember(req: CreateResearcherUseCase.Input): MemberEntity {
         return MemberEntity(
             id = 0, // Auto-generated
             oauthEmail = req.oauthEmail,
@@ -55,7 +57,7 @@ object SignupMapper {
 
     fun toResearcher(
         member: MemberEntity,
-        req: ResearcherSignupRequest
+        req: CreateResearcherUseCase.Input
     ): ResearcherEntity {
         return ResearcherEntity(
             member = member,
@@ -64,6 +66,17 @@ object SignupMapper {
             univName = req.univName,
             major = req.major,
             labInfo = req.labInfo
+        )
+    }
+
+    fun modelToResearcherRes(newResearcher: Researcher)
+    : CreateResearcherUseCase.MemberResponse {
+        return CreateResearcherUseCase.MemberResponse(
+            memberId = newResearcher.member.memberId,
+            name = newResearcher.member.name,
+            oauthEmail = newResearcher.member.oauthEmail,
+            provider = newResearcher.member.provider,
+            role = newResearcher.member.role
         )
     }
 }
