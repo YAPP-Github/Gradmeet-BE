@@ -11,13 +11,13 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 
-class GenerateTestTokenTest: BehaviorSpec({
+class GenerateTestTokenUseCaseTest: BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()
     val memberGateway = mockk<MemberGateway>()
-    val generateTestToken = GenerateTestToken(tokenGateway, memberGateway)
+    val generateTestTokenUseCase = GenerateTestTokenUseCase(tokenGateway, memberGateway)
 
     given("memberId가 주어졌을 때") {
-        val member = Member(memberId = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+        val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
             status = MemberStatus.ACTIVE)
         val accessToken = "testAccessToken"
@@ -28,8 +28,8 @@ class GenerateTestTokenTest: BehaviorSpec({
         every { memberGateway.getById(1) } returns member
 
         `when`("execute가 호출되면") {
-            val input = GenerateTestToken.Input(member.memberId)
-            val result = generateTestToken.execute(input)
+            val input = GenerateTestTokenUseCase.Input(member.id)
+            val result = generateTestTokenUseCase.execute(input)
 
             then("생성된 accessToken과 refreshToken이 반환되어야 한다") {
                 result.accessToken shouldBe accessToken

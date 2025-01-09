@@ -39,7 +39,7 @@ class MemberEntity(
 ) : AuditingEntity() {
 
     fun toDomain() = Member(
-        memberId = id,
+        id = id,
         name = name,
         oauthEmail = oauthEmail,
         contactEmail = contactEmail,
@@ -51,7 +51,7 @@ class MemberEntity(
     companion object {
         fun fromDomain(member: Member) = with(member) {
             MemberEntity(
-                id = memberId,
+                id = id,
                 oauthEmail = oauthEmail,
                 provider = provider,
                 status = status,

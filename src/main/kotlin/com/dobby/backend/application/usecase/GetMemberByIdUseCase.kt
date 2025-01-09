@@ -3,9 +3,9 @@ package com.dobby.backend.application.usecase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.model.member.Member
 
-class GetMemberById(
+class GetMemberByIdUseCase(
     private val memberGateway: MemberGateway,
-) : UseCase<GetMemberById.Input, Member> {
+) : UseCase<GetMemberByIdUseCase.Input, Member> {
     data class Input(
         val memberId: Long,
     )

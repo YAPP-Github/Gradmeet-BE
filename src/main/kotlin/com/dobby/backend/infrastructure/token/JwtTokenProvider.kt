@@ -5,7 +5,6 @@ import com.dobby.backend.infrastructure.config.properties.TokenProperties
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -15,7 +14,6 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
 @Component
-@EnableConfigurationProperties(TokenProperties::class)
 class JwtTokenProvider(
     private val tokenProperties: TokenProperties
 ) {
