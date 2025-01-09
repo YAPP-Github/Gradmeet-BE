@@ -1,19 +1,29 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.*
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
-import org.springframework.stereotype.Service
 
-@Service
 class AuthService(
     private val fetchGoogleUserInfoUseCase: FetchGoogleUserInfoUseCase,
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
     private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
     private val generateTestTokenUseCase: GenerateTestTokenUseCase,
 ) {
-    fun getGoogleUserInfo(oauthLoginRequest: GoogleOauthLoginRequest): OauthLoginResponse {
-        return fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
+    fun getGoogleUserInfo(authorizationCode: String): FetchGoogleUserInfoUseCase.Output {
+        val result = fetchGoogleUserInfoUseCase.execute(
+            FetchGoogleUserInfoUseCase.Input(
+                authorizationCode = authorizationCode
+            )
+        )
+        return FetchGoogleUserInfoUseCase.Output(
+            isRegistered = result.isRegistered,
+            accessToken = result.accessToken,
+            refreshToken = result.refreshToken,
+            memberId = result.memberId,
+            oauthEmail = result.oauthEmail,
+            oauthName = result.oauthName,
+            role = result.role,
+            provider = result.provider,
+        )
     }
 
     fun getNaverUserInfo(authorizationCode: String, state: String): FetchNaverUserInfoUseCase.Output {

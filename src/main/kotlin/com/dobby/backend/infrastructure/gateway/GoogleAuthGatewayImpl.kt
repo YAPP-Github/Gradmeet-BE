@@ -29,7 +29,7 @@ class GoogleAuthGatewayImpl(
         return googleAuthFeignClient.getAccessToken(googleTokenRequest)
     }
 
-    override fun getUserInfo(token: String): GoogleInfoResponse {
-        return googleUserInfoFeignClient.getUserInfo(token)
+    override fun getUserInfo(accessToken: String): GoogleInfoResponse {
+        return googleUserInfoFeignClient.getUserInfo("Bearer $accessToken")
     }
 }

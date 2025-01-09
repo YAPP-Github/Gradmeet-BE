@@ -26,7 +26,19 @@ class AuthController(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: GoogleOauthLoginRequest
     ): OauthLoginResponse {
-        return authService.getGoogleUserInfo(request)
+        val result = authService.getGoogleUserInfo(request.authorizationCode)
+        return OauthLoginResponse(
+            isRegistered = result.isRegistered,
+            accessToken = result.accessToken,
+            refreshToken = result.refreshToken,
+            memberInfo = MemberResponse(
+                memberId = result.memberId,
+                name = result.oauthName,
+                oauthEmail = result.oauthEmail,
+                role = result.role,
+                provider = result.provider,
+            )
+        )
     }
 
     @PostMapping("/login/naver")
@@ -41,7 +53,7 @@ class AuthController(
             accessToken = result.accessToken,
             refreshToken = result.refreshToken,
             memberInfo = MemberResponse(
-                memberId = null,
+                memberId = result.memberId,
                 name = result.oauthName,
                 oauthEmail = result.oauthEmail,
                 role = result.role,

@@ -26,7 +26,7 @@ class FetchNaverUserInfoUseCase(
         val refreshToken: String?,
         val memberId: Long?,
         val oauthEmail: String,
-        val oauthName: String,
+        val oauthName: String?,
         val role: RoleType?,
         val provider: ProviderType
     )
