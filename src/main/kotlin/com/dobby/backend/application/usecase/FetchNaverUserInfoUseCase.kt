@@ -1,13 +1,11 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import java.lang.Exception
 
 class FetchNaverUserInfoUseCase(
     private val naverAuthGateway: NaverAuthGateway,
@@ -20,53 +18,50 @@ class FetchNaverUserInfoUseCase(
         val state: String
     )
 
+    // TODO: 테스트 후, oauthEmail not null 처리
     data class Output(
         val isRegistered: Boolean,
         val accessToken: String?,
         val refreshToken: String?,
         val memberId: Long?,
-        val oauthEmail: String,
+        val oauthEmail: String?,
         val oauthName: String?,
         val role: RoleType?,
         val provider: ProviderType
     )
 
     override fun execute(input: Input): Output {
-        try {
-            val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state)
-            val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
-            val email = userInfo?.email
-            val member = email?.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
+        val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state).accessToken
+        val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
+        val email = userInfo?.email
+        val member = email?.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
-            return if (member != null) {
-                val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
-                val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
+        return if (member != null) {
+            val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
+            val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
 
-                Output(
-                    isRegistered = true,
-                    accessToken = jwtAccessToken,
-                    refreshToken = jwtRefreshToken,
-                    memberId = member.id,
-                    oauthEmail = member.oauthEmail,
-                    oauthName = member.name ?: throw SignInMemberException(),
-                    role = member.role ?: throw SignInMemberException(),
-                    provider = ProviderType.NAVER
-                )
-            } else {
-                // 등록된 멤버가 없으면 isRegistered = false, memberId = null
-                Output(
-                    isRegistered = false,
-                    accessToken = null,
-                    refreshToken = null,
-                    memberId = null,
-                    oauthEmail = email ?: "",
-                    oauthName = "",
-                    role = null,
-                    provider = ProviderType.NAVER
-                )
-            }
-        } catch (e: Exception) {
-            throw SignInMemberException()
+            Output(
+                isRegistered = true,
+                accessToken = jwtAccessToken,
+                refreshToken = jwtRefreshToken,
+                memberId = member.id,
+                oauthEmail = member.oauthEmail,
+                oauthName = member.name,
+                role = member.role,
+                provider = ProviderType.NAVER
+            )
+        } else {
+            // 등록된 멤버가 없으면 isRegistered = false, memberId = null
+            Output(
+                isRegistered = false,
+                accessToken = null,
+                refreshToken = null,
+                memberId = null,
+                oauthEmail = email,
+                oauthName = null,
+                role = null,
+                provider = ProviderType.NAVER
+            )
         }
     }
 }

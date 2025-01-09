@@ -18,7 +18,7 @@ class NaverAuthGatewayImpl(
     private val naverUserInfoFeignClient: NaverUserInfoFeignClient
 ): NaverAuthGateway {
 
-    override fun getAccessToken(authorizationCode: String, state: String): String? {
+    override fun getAccessToken(authorizationCode: String, state: String): NaverTokenResponse {
         val naverTokenRequest = NaverTokenRequest(
             grantType = "authorization_code",
             clientId = naverAuthProperties.clientId,
@@ -27,8 +27,7 @@ class NaverAuthGatewayImpl(
             state = state
         )
 
-        val tokenResponse: NaverTokenResponse = naverAuthFeignClient.getAccessToken(naverTokenRequest)
-        return tokenResponse.accessToken
+        return naverAuthFeignClient.getAccessToken(naverTokenRequest)
     }
 
     override fun getUserInfo(accessToken: String): NaverInfoResponse? {

@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
@@ -45,8 +44,8 @@ class FetchGoogleUserInfoUseCase(
                 refreshToken = jwtRefreshToken,
                 memberId = member.id,
                 oauthEmail = member.oauthEmail,
-                oauthName = member.name ?: throw SignInMemberException(),
-                role = member.role ?: throw SignInMemberException(),
+                oauthName = member.name,
+                role = member.role,
                 provider = ProviderType.GOOGLE
             )
         } else {
