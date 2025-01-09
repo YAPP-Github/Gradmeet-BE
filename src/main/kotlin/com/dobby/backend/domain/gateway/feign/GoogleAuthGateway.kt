@@ -5,5 +5,5 @@ import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenRe
 
 interface GoogleAuthGateway {
     fun getAccessToken(code: String): GoogleTokenResponse
-    fun getUserInfo(token: String): GoogleInfoResponse
+    fun getUserInfo(accessToken: String): GoogleInfoResponse
 }

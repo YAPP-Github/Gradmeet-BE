@@ -11,5 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 )
 interface NaverUserInfoFeignClient {
     @PostMapping
-    fun getUserInfo(@RequestHeader("Authorization") accessToken: String): NaverInfoResponse
+    fun getUserInfo(
+        @RequestHeader("Authorization") accessToken: String
+    ): NaverInfoResponse
 }
