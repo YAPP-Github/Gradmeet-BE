@@ -11,7 +11,7 @@ class VerifyResearcherEmailUseCase(
     private val verificationRepository: VerificationRepository
 ) : UseCase<String, VerificationEntity> {
     override fun execute(input: String): VerificationEntity {
-        val verificationEntity = verificationRepository.findByUnivMail(input)
+        val verificationEntity = verificationRepository.findByUnivEmail(input)
             ?: throw VerifyInfoNotFoundException()
 
         if (verificationEntity.status != VerificationStatus.VERIFIED) {

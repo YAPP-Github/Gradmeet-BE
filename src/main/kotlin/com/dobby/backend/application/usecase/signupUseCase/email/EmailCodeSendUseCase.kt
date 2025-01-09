@@ -4,6 +4,8 @@ import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.EmailGateway
+import com.dobby.backend.domain.gateway.VerificationGateway
+import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import com.dobby.backend.infrastructure.database.repository.VerificationRepository
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
@@ -12,17 +14,29 @@ import com.dobby.backend.util.EmailUtils
 import java.time.LocalDateTime
 
 class EmailCodeSendUseCase(
-    private val verificationRepository: VerificationRepository,
+    private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway
-) : UseCase<EmailSendRequest, EmailSendResponse> {
-    override fun execute(input: EmailSendRequest): EmailSendResponse {
+) : UseCase<EmailCodeSendUseCase.Input, EmailCodeSendUseCase.Output> {
+
+    data class Input(
+        val univEmail: String
+    )
+
+    data class Output(
+        val isSuccess: Boolean,
+        val message: String
+    )
+    override fun execute(input: Input): Output {
         validateEmail(input.univEmail)
 
         val code = EmailUtils.generateCode()
         reflectVerification(input, code)
 
         sendVerificationEmail(input, code)
-        return VerificationMapper.toSendResDto()
+        return VerificationMapper.toSendResDto(
+            isSuccess = true,
+            message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요."
+        )
     }
 
     private fun validateEmail(email : String){
@@ -30,28 +44,37 @@ class EmailCodeSendUseCase(
         if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException()
     }
 
-    private fun reflectVerification(input: EmailSendRequest, code: String) {
-        val existingInfo = verificationRepository.findByUnivMail(input.univEmail)
+    private fun reflectVerification(input: Input, code: String) {
+        val existingInfo = verificationGateway.findByUnivEmail(input.univEmail)
 
-        if (existingInfo != null) {
-            when (existingInfo.status) {
-                VerificationStatus.HOLD -> {
-                    existingInfo.verificationCode = code
-                    existingInfo.expiresAt = LocalDateTime.now().plusMinutes(10)
-                    verificationRepository.save(existingInfo)
-                }
-
-                VerificationStatus.VERIFIED -> {
-                    throw EmailAlreadyVerifiedException()
-                }
-            }
-        } else {
-            val newVerificationInfo = VerificationMapper.toEntity(input, code)
-            verificationRepository.save(newVerificationInfo)
+        val updatedVerification = when {
+            existingInfo == null ->
+                createNewVerification(input.univEmail, code)
+            existingInfo.status == VerificationStatus.VERIFIED
+                -> throw EmailAlreadyVerifiedException()
+            else
+                -> updateExistingVerification(existingInfo, code)
         }
+
+        verificationGateway.save(updatedVerification)
     }
 
-    private fun sendVerificationEmail(input: EmailSendRequest, code: String) {
+    private fun createNewVerification(univEmail: String, code: String): Verification {
+        return Verification(
+            verificationId = 0,
+            univEmail = univEmail,
+            verificationCode = code,
+            status = VerificationStatus.HOLD,
+            expiresAt = LocalDateTime.now().plusMinutes(10)
+        )
+    }
+
+    private fun updateExistingVerification(verification: Verification, code: String): Verification {
+        verification.updateCode(code)
+        return verification
+    }
+
+    private fun sendVerificationEmail(input: Input, code: String) {
         val content = EMAIL_CONTENT_TEMPLATE.format(code)
         emailGateway.sendEmail(input.univEmail, EMAIL_SUBJECT, content)
     }

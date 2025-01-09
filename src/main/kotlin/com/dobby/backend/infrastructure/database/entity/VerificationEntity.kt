@@ -12,8 +12,8 @@ class VerificationEntity (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @Column(name = "univ_mail", nullable = false, unique = true)
-    val univMail : String,
+    @Column(name = "univ_email", nullable = false, unique = true)
+    val univEmail : String,
 
     @Column(name = "verification_code", length = 6, nullable = false, unique = true)
     var verificationCode: String,

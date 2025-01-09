@@ -15,12 +15,12 @@ class EmailService(
     private val emailVerificationUseCase: EmailVerificationUseCase
 ) {
     @Transactional
-    fun sendEmail(req: EmailSendRequest) : EmailSendResponse{
+    fun sendEmail(req: EmailCodeSendUseCase.Input) : EmailCodeSendUseCase.Output{
         return emailCodeSendUseCase.execute(req)
     }
 
     @Transactional
-    fun verifyCode(req: EmailVerificationRequest) : EmailVerificationResponse {
+    fun verifyCode(req: EmailVerificationUseCase.Input) : EmailVerificationUseCase.Output {
         return emailVerificationUseCase.execute(req)
     }
 }

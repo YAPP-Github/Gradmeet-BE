@@ -6,6 +6,7 @@ import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
 import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
 import com.dobby.backend.presentation.api.dto.response.signup.EmailVerificationResponse
+import com.dobby.backend.presentation.api.mapper.EmailMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -27,7 +28,10 @@ class EmailController(
     )
     fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
     : ApiResponse<EmailSendResponse> {
-        return ApiResponse.onSuccess(emailService.sendEmail(emailSendRequest))
+        val input = EmailMapper.toEmailCodeSendUseCaseInput(emailSendRequest)
+        val output = emailService.sendEmail(input)
+        val response = EmailMapper.toEmailSendResponse(output)
+        return ApiResponse.onSuccess(response)
     }
 
     @PostMapping("/verify")
@@ -37,7 +41,10 @@ class EmailController(
     )
     fun verifyCode(@RequestBody @Valid emailVerificationRequest: EmailVerificationRequest)
     : ApiResponse<EmailVerificationResponse> {
-        return ApiResponse.onSuccess(emailService.verifyCode(emailVerificationRequest))
+        val input = EmailMapper.toEmailVerificationUseCaseInput(emailVerificationRequest)
+        val output = emailService.verifyCode(input)
+        val response = EmailMapper.toEmailVerificationResponse(output)
+        return ApiResponse.onSuccess(response)
     }
 
 }
