@@ -22,7 +22,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 )
 @SpringBootApplication
 @ConfigurationPropertiesScan
-@EnableConfigurationProperties(TokenProperties::class, S3Properties::class, GoogleAuthProperties::class, NaverAuthProperties::class)
 @EnableFeignClients
 @EnableJpaAuditing
 class DobbyBackendApplication
