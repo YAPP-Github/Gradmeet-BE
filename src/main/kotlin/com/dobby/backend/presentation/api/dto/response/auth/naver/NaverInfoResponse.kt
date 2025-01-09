@@ -4,8 +4,5 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class NaverInfoResponse(
     @JsonProperty("email")
-    val email: String,
-
-    @JsonProperty("name")
-    val name: String
+    val email: String
 )

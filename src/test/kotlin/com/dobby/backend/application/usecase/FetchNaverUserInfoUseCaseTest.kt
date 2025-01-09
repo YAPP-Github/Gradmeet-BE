@@ -42,7 +42,6 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
         every { naverAuthGateway.getAccessToken(any(), any()) } returns mockNaverTokenResponse
         every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
-            every { name } returns "Test User"
         }
 
         every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
