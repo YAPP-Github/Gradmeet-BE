@@ -4,14 +4,11 @@ import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
 import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
-import com.dobby.backend.presentation.api.dto.request.auth.NaverTokenRequest
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverInfoResponse
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResponse
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
 
 @Component
-@EnableConfigurationProperties(NaverAuthProperties::class)
 class NaverAuthGatewayImpl(
     private val naverAuthProperties: NaverAuthProperties,
     private val naverAuthFeignClient: NaverAuthFeignClient,
@@ -19,15 +16,13 @@ class NaverAuthGatewayImpl(
 ): NaverAuthGateway {
 
     override fun getAccessToken(authorizationCode: String, state: String): NaverTokenResponse {
-        val naverTokenRequest = NaverTokenRequest(
-            grantType = "authorization_code",
+        return naverAuthFeignClient.getAccessToken(
+            code = authorizationCode,
             clientId = naverAuthProperties.clientId,
             clientSecret = naverAuthProperties.clientSecret,
-            code = authorizationCode,
-            state = state
+            state = state,
+            grantType = "authorization_code"
         )
-
-        return naverAuthFeignClient.getAccessToken(naverTokenRequest)
     }
 
     override fun getUserInfo(accessToken: String): NaverInfoResponse? {
