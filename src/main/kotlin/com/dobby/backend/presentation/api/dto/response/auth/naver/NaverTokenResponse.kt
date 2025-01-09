@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.response.auth
+package com.dobby.backend.presentation.api.dto.response.auth.naver
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

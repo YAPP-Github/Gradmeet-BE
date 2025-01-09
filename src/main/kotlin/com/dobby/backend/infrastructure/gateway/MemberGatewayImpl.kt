@@ -1,6 +1,7 @@
 package com.dobby.backend.infrastructure.gateway
 
 import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
@@ -14,5 +15,11 @@ class MemberGatewayImpl(
         return memberRepository
             .getReferenceById(memberId)
             .let(MemberEntity::toDomain)
+    }
+
+    override fun findByOauthEmailAndStatus(email: String, status: MemberStatus): Member? {
+        return memberRepository
+            .findByOauthEmailAndStatus(email, status)
+            ?.let(MemberEntity::toDomain)
     }
 }

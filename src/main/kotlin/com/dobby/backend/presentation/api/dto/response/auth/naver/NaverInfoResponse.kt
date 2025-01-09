@@ -1,8 +1,8 @@
-package com.dobby.backend.presentation.api.dto.response.auth.google
+package com.dobby.backend.presentation.api.dto.response.auth.naver
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class GoogleInfoResponse(
+data class NaverInfoResponse(
     @JsonProperty("email")
     val email: String
 )
