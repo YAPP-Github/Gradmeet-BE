@@ -4,10 +4,10 @@ import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 
-class GenerateTokenWithRefreshToken(
+class GenerateTokenWithRefreshTokenUseCase(
     private val tokenGateway: TokenGateway,
     private val memberGateway: MemberGateway,
-) : UseCase<GenerateTokenWithRefreshToken.Input, GenerateTokenWithRefreshToken.Output> {
+) : UseCase<GenerateTokenWithRefreshTokenUseCase.Input, GenerateTokenWithRefreshTokenUseCase.Output> {
     data class Input(
         val refreshToken: String,
     )

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 class AuthService(
     private val fetchGoogleUserInfoUseCase: FetchGoogleUserInfoUseCase,
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
-    private val generateTokenWithRefreshToken: GenerateTokenWithRefreshToken,
-    private val generateTestToken: GenerateTestToken,
+    private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
+    private val generateTestTokenUseCase: GenerateTestTokenUseCase,
 ) {
     fun getGoogleUserInfo(oauthLoginRequest: GoogleOauthLoginRequest): OauthLoginResponse {
         return fetchGoogleUserInfoUseCase.execute(oauthLoginRequest)
@@ -35,26 +35,26 @@ class AuthService(
         )
     }
 
-    fun forceToken(memberId: Long): GenerateTestToken.Output {
-        val result = generateTestToken.execute(
-            GenerateTestToken.Input(
+    fun forceToken(memberId: Long): GenerateTestTokenUseCase.Output {
+        val result = generateTestTokenUseCase.execute(
+            GenerateTestTokenUseCase.Input(
                 memberId = memberId
             )
         )
-        return GenerateTestToken.Output(
+        return GenerateTestTokenUseCase.Output(
             accessToken = result.accessToken,
             refreshToken = result.refreshToken,
             member = result.member
         )
     }
 
-    fun signInWithRefreshToken(refreshToken: String): GenerateTokenWithRefreshToken.Output {
-        val result = generateTokenWithRefreshToken.execute(
-            GenerateTokenWithRefreshToken.Input(
+    fun signInWithRefreshToken(refreshToken: String): GenerateTokenWithRefreshTokenUseCase.Output {
+        val result = generateTokenWithRefreshTokenUseCase.execute(
+            GenerateTokenWithRefreshTokenUseCase.Input(
                 refreshToken = refreshToken,
             )
         )
-        return GenerateTokenWithRefreshToken.Output(
+        return GenerateTokenWithRefreshTokenUseCase.Output(
             accessToken = result.accessToken,
             refreshToken = result.refreshToken,
             member = result.member

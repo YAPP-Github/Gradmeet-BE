@@ -4,10 +4,10 @@ import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 
-class GenerateTestToken(
+class GenerateTestTokenUseCase(
     private val tokenGateway: TokenGateway,
     private val memberGateway: MemberGateway,
-) : UseCase<GenerateTestToken.Input, GenerateTestToken.Output> {
+) : UseCase<GenerateTestTokenUseCase.Input, GenerateTestTokenUseCase.Output> {
     data class Input(
         val memberId: Long
     )

@@ -11,10 +11,10 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 
-class GenerateTokenWithRefreshTokenTest : BehaviorSpec({
+class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()
     val memberGateway = mockk<MemberGateway>()
-    val generateTokenWithRefreshToken = GenerateTokenWithRefreshToken(tokenGateway, memberGateway)
+    val generateTokenWithRefreshTokenUseCase = GenerateTokenWithRefreshTokenUseCase(tokenGateway, memberGateway)
 
     given("유효한 리프레시 토큰이 주어졌을 때") {
         val validRefreshToken = "validRefreshToken"
@@ -30,8 +30,8 @@ class GenerateTokenWithRefreshTokenTest : BehaviorSpec({
         every { memberGateway.getById(1) } returns member
 
         `when`("execute가 호출되면") {
-            val input = GenerateTokenWithRefreshToken.Input(refreshToken = validRefreshToken)
-            val result = generateTokenWithRefreshToken.execute(input)
+            val input = GenerateTokenWithRefreshTokenUseCase.Input(refreshToken = validRefreshToken)
+            val result = generateTokenWithRefreshTokenUseCase.execute(input)
 
             then("accessToken과 refreshToken이 생성되고, memberId가 포함된다") {
                 result.accessToken shouldBe accessToken
@@ -47,10 +47,10 @@ class GenerateTokenWithRefreshTokenTest : BehaviorSpec({
         every { tokenGateway.extractMemberIdFromRefreshToken(invalidRefreshToken) } throws IllegalArgumentException("Invalid refresh token")
 
         `when`("execute가 호출되면") {
-            val input = GenerateTokenWithRefreshToken.Input(refreshToken = invalidRefreshToken)
+            val input = GenerateTokenWithRefreshTokenUseCase.Input(refreshToken = invalidRefreshToken)
 
             then("예외가 발생한다") {
-                val exception = runCatching { generateTokenWithRefreshToken.execute(input) }.exceptionOrNull()
+                val exception = runCatching { generateTokenWithRefreshTokenUseCase.execute(input) }.exceptionOrNull()
                 exception shouldBe IllegalArgumentException("Invalid refresh token")
             }
         }
