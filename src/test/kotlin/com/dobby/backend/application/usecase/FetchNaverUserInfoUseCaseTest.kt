@@ -1,6 +1,6 @@
 import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
-import com.dobby.backend.domain.gateway.NaverAuthGateway
+import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus

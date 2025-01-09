@@ -2,14 +2,11 @@ package com.dobby.backend.application.usecase
 
 import com.dobby.backend.domain.exception.SignInMemberException
 import com.dobby.backend.domain.gateway.MemberGateway
-import com.dobby.backend.domain.gateway.NaverAuthGateway
+import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.infrastructure.database.repository.MemberRepository
-import com.dobby.backend.infrastructure.token.JwtTokenProvider
-import com.dobby.backend.util.AuthenticationUtils
 import java.lang.Exception
 
 class FetchNaverUserInfoUseCase(

@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.gateway
+package com.dobby.backend.domain.gateway.feign
 
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverInfoResponse
 

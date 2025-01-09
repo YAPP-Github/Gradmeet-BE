@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway
 
-import com.dobby.backend.domain.gateway.NaverAuthGateway
+import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
 import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
@@ -16,7 +16,7 @@ class NaverAuthGatewayImpl(
     private val naverAuthProperties: NaverAuthProperties,
     private val naverAuthFeignClient: NaverAuthFeignClient,
     private val naverUserInfoFeignClient: NaverUserInfoFeignClient
-) : NaverAuthGateway {
+): NaverAuthGateway {
 
     override fun getAccessToken(authorizationCode: String, state: String): String? {
         val naverTokenRequest = NaverTokenRequest(
