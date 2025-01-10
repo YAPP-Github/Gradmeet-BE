@@ -4,4 +4,5 @@ import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ResearcherRepository: JpaRepository<ResearcherEntity, Long> {
+    fun findByMemberId(memberId: Long) : ResearcherEntity?
 }

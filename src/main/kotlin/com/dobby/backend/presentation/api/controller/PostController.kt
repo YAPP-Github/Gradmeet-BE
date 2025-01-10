@@ -4,14 +4,12 @@ import com.dobby.backend.application.service.PostService
 import com.dobby.backend.presentation.api.dto.payload.ApiResponse
 import com.dobby.backend.presentation.api.dto.request.expirement.CreatePostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.CreatePostResponse
+import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.mapper.PostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "[실험자] 공고 등록 API - /v1/experiment-posts")
 @RestController
@@ -30,6 +28,16 @@ class PostController (
         val input = PostMapper.toCreatePostUseCaseInput(request)
         val output = postService.createNewExperimentPost(input)
         val response = PostMapper.toCreatePostResponse(output)
+        return ApiResponse.onSuccess(response)
+    }
+
+    @GetMapping("/default")
+    @Operation(
+        summary = "공고 등록 API- 연구자 기본 정보 렌더링",
+        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다.")
+    fun getDefaultInfo() : ApiResponse<DefaultInfoResponse>{
+        val output = postService.getDefaultInfo()
+        val response = PostMapper.toDefaultInfoResponse(output)
         return ApiResponse.onSuccess(response)
     }
 }

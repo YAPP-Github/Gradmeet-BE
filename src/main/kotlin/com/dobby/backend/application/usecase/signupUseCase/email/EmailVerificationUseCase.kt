@@ -7,12 +7,6 @@ import com.dobby.backend.domain.exception.CodeNotCorrectException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.VerificationGateway
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
-import com.dobby.backend.infrastructure.database.repository.VerificationRepository
-import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
-import com.dobby.backend.presentation.api.dto.response.signup.EmailVerificationResponse
-import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Email
-import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
 

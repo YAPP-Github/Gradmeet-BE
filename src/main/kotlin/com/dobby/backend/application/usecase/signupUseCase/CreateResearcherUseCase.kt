@@ -2,7 +2,6 @@ package com.dobby.backend.application.usecase.signupUseCase
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.ResearcherGateway
 import com.dobby.backend.domain.gateway.TokenGateway
@@ -15,7 +14,6 @@ class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
     private val researcherGateway: ResearcherGateway,
     private val tokenGateway: TokenGateway,
-    private val verificationGateway: VerificationGateway
 ) : UseCase<CreateResearcherUseCase.Input, CreateResearcherUseCase.Output> {
     data class Input(
         val oauthEmail: String,
@@ -42,7 +40,7 @@ class CreateResearcherUseCase(
         val role: RoleType?,
     )
 
-    override fun execute(input: Input):Output {
+    override fun execute(input: Input): Output {
         val savedResearcher = createResearcher(input)
         val savedMember = savedResearcher.member
         savedMember.status = MemberStatus.ACTIVE

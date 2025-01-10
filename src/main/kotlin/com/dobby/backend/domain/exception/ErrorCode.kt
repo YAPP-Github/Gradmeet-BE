@@ -67,4 +67,9 @@ enum class ErrorCode(
     VERIFY_CODE_EXPIRED("VER005", "Verification code is expired", HttpStatus.BAD_REQUEST),
     VERIFY_EMAIL_INVALID_FORMAT("VE006", "Email is invalid format", HttpStatus.BAD_REQUEST),
     VERIFY_ALREADY_VERIFIED("VE007", "This email is already verified", HttpStatus.CONFLICT),
+
+    /**
+     * Researcher Post error codes
+     */
+    RESEARCHER_NOT_FOUND("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND),
 }

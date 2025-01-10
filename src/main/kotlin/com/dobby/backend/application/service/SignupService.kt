@@ -3,7 +3,6 @@ package com.dobby.backend.application.service
 import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
 import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
-import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -27,7 +26,7 @@ class SignupService(
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if(existingMember!= null) throw SignupOauthEmailDuplicateException()
 
-        verifyResearcherEmailUseCase.execute(input.univEmail)
+        verifyResearcherEmailUseCase.execute(input.oauthEmail)
         return createResearcherUseCase.execute(input)
     }
 

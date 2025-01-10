@@ -30,6 +30,7 @@ class CreatePostUseCase(
         val count: Int, // N 회 참여
         val durationMinutes: TimeSlot,
 
+        val researcherName: String,
         val univName: String,
         val region: Region,
         val area: Area,
@@ -79,7 +80,6 @@ class CreatePostUseCase(
         if (member.role != RoleType.RESEARCHER) {
             throw PermissionDeniedException()
         }
-
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
         val experimentPost = createExperimentPost(member, input, targetGroup, applyMethod)

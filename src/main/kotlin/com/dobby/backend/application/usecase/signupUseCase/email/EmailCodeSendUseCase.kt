@@ -7,9 +7,6 @@ import com.dobby.backend.domain.gateway.EmailGateway
 import com.dobby.backend.domain.gateway.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
-import com.dobby.backend.infrastructure.database.repository.VerificationRepository
-import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
-import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
 import com.dobby.backend.util.EmailUtils
 import java.time.LocalDateTime
 
