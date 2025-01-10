@@ -262,4 +262,10 @@ enum class Area (val region: Region, val displayName: String){
     // 제주특별자치도
     JEJU_SEOGWIPOSI(Region.JEJU, "서귀포시"),
     JEJU_JEJUSI(Region.JEJU, "제주시");
+
+    companion object {
+        fun findByRegion(region : Region) : List<Area> {
+            return values().filter { it.region == region }
+        }
+    }
 }

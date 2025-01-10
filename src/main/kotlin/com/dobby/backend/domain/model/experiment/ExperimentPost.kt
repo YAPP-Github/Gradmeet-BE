@@ -2,6 +2,7 @@ package com.dobby.backend.domain.model.experiment
 
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
+import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
@@ -18,7 +19,7 @@ data class ExperimentPost(
     val reward: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
-    val durationMinutes: Int,
+    val durationMinutes: TimeSlot,
     val count: Int,
     val matchType: MatchType,
     val univName: String,
@@ -28,6 +29,7 @@ data class ExperimentPost(
     val alarmAgree: Boolean,
     val images: List<ExperimentImage>
 ) {
+
     companion object {
         fun newExperimentPost(
             id: Long,
@@ -41,7 +43,7 @@ data class ExperimentPost(
             reward: String,
             startDate: LocalDate,
             endDate: LocalDate,
-            durationMinutes: Int,
+            durationMinutes: TimeSlot,
             count: Int,
             matchType: MatchType,
             univName: String,

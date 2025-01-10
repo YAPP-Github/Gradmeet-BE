@@ -19,6 +19,10 @@ enum class Region(val displayName: String) {
     JEONBUK("전북"),
     JEJU("제주");
 
+    fun getAreas(): List<Area> {
+        return Area.findByRegion(this)
+    }
+
     companion object {
         private val displayNameMap = values().associateBy(Region::displayName)
         fun fromDisplayName(name : String): Region? {

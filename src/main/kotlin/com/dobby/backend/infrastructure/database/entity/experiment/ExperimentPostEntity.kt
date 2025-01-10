@@ -4,6 +4,7 @@ import AuditingEntity
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
+import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.persistence.*
@@ -20,11 +21,11 @@ class ExperimentPostEntity(
     @JoinColumn(name = "member_id")
     val member: MemberEntity,
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,  cascade = [CascadeType.ALL])
     @JoinColumn(name = "target_group_id")
     val targetGroup: TargetGroupEntity,
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,  cascade = [CascadeType.ALL])
     @JoinColumn(name = "apply_method_id")
     val applyMethod: ApplyMethodEntity,
 
@@ -49,8 +50,9 @@ class ExperimentPostEntity(
     @Column(name = "end_date")
     val endDate: LocalDate,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "duration_minutes")
-    val durationMinutes: Int,
+    val durationMinutes: TimeSlot,
 
     @Column(name = "count", nullable = false)
     val count: Int,
@@ -100,7 +102,7 @@ class ExperimentPostEntity(
         area = area,
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
-        images = images.map { it.toDomain() }
+        images = emptyList() // 이미지 업로드 보류
     )
 
     companion object {

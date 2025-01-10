@@ -6,6 +6,7 @@ import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.ResearcherGateway
 import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.gateway.VerificationGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enum.*
@@ -13,7 +14,8 @@ import com.dobby.backend.infrastructure.database.entity.enum.*
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
     private val researcherGateway: ResearcherGateway,
-    private val tokenGateway: TokenGateway
+    private val tokenGateway: TokenGateway,
+    private val verificationGateway: VerificationGateway
 ) : UseCase<CreateResearcherUseCase.Input, CreateResearcherUseCase.Output> {
     data class Input(
         val oauthEmail: String,
@@ -41,13 +43,13 @@ class CreateResearcherUseCase(
     )
 
     override fun execute(input: Input):Output {
-        if(memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)!= null)
-            throw SignupOauthEmailDuplicateException()
-
         val savedResearcher = createResearcher(input)
         val savedMember = savedResearcher.member
-        val accessToken = tokenGateway.generateAccessToken(savedMember)
-        val refreshToken = tokenGateway.generateRefreshToken(savedMember)
+        savedMember.status = MemberStatus.ACTIVE
+        val updatedMember = memberGateway.save(savedMember)
+
+        val accessToken = tokenGateway.generateAccessToken(updatedMember)
+        val refreshToken = tokenGateway.generateRefreshToken(updatedMember)
 
         return Output(
             accessToken = accessToken,

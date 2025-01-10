@@ -24,9 +24,6 @@ class SignupService(
 
     @Transactional
     fun researcherSignup(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
-        if(!input.emailVerified) {
-            throw EmailNotValidateException()
-        }
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if(existingMember!= null) throw SignupOauthEmailDuplicateException()
 
