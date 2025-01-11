@@ -1,6 +1,6 @@
 package com.dobby.backend.application.mapper
-import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
+import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity

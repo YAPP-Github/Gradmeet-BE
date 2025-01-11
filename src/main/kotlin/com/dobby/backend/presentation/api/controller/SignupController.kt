@@ -3,7 +3,7 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.SignupService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
+import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 import com.dobby.backend.presentation.api.mapper.SignupMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

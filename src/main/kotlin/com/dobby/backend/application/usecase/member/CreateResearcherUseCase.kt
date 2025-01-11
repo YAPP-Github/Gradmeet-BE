@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signup
+package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
