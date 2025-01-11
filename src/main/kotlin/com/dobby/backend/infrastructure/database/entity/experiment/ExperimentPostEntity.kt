@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import AuditingEntity
+import com.dobby.backend.infrastructure.database.entity.common.AuditingEntity
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
