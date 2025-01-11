@@ -14,7 +14,7 @@ import java.time.LocalDate
 class ExperimentPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "experiment_post_id")
     val id: Long,
 
     @OneToOne(fetch = FetchType.LAZY)

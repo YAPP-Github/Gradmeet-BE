@@ -7,7 +7,7 @@ import jakarta.persistence.*
 class ApplyMethodEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "apply_method_id")
     val id: Long,
 
     @Column(name = "phone_num", length = 50)

@@ -8,7 +8,7 @@ import jakarta.persistence.*
 class ExperimentImageEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "experiment_image_id")
     val id: Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
