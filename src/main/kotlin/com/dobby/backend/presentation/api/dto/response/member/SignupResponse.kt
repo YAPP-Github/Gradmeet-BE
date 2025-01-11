@@ -1,6 +1,5 @@
-package com.dobby.backend.presentation.api.dto.response.signup
+package com.dobby.backend.presentation.api.dto.response.member
 
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class SignupResponse(

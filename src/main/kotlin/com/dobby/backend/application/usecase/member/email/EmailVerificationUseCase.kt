@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signup.email
+package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
