@@ -1,11 +1,11 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
+import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
+import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
+import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 
 object SignupMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{

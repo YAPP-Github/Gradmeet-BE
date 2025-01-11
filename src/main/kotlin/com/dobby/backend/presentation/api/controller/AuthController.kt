@@ -6,7 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.MemberResponse
+import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

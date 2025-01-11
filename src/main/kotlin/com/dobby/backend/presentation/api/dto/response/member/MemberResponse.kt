@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.response
+package com.dobby.backend.presentation.api.dto.response.member
 
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType

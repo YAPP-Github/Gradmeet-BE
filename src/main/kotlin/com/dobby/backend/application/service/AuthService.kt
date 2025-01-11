@@ -1,8 +1,9 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.*
 import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
+import com.dobby.backend.application.usecase.auth.GenerateTestTokenUseCase
+import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
 import org.springframework.stereotype.Service
 
 @Service
