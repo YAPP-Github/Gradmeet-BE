@@ -1,4 +1,4 @@
-import com.dobby.backend.application.usecase.FetchNaverUserInfoUseCase
+import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.domain.gateway.TokenGateway

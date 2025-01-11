@@ -32,4 +32,9 @@ class TokenGatewayImpl(
     override fun extractMemberIdFromRefreshToken(token: String): String {
         return tokenProvider.getMemberIdFromRefreshToken(token)
     }
+
+    override fun extractMemberIdFromAccessToken(token: String): String {
+        return tokenProvider.getMemberIdFromAccessToken(token)
+    }
+
 }

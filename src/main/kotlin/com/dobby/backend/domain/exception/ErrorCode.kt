@@ -50,7 +50,7 @@ enum class ErrorCode(
     SIGNUP_ALREADY_MEMBER("SIGN_UP_001", "You've already joined", HttpStatus.CONFLICT),
     SIGNUP_UNSUPPORTED_ROLE("SIGN_UP_002", "Requested RoleType does not supported", HttpStatus.BAD_REQUEST),
     SIGNUP_EMAIL_NOT_VALIDATED("SIGN_UP_003", "You should validate your school email first", HttpStatus.BAD_REQUEST),
-
+    SIGNUP_DUPLICATE_OAUTH("SIGN_UP_004", "You've already joined with requested oauth email", HttpStatus.CONFLICT),
     /**
      * Signin error codes
      */
@@ -67,4 +67,9 @@ enum class ErrorCode(
     VERIFY_CODE_EXPIRED("VER005", "Verification code is expired", HttpStatus.BAD_REQUEST),
     VERIFY_EMAIL_INVALID_FORMAT("VE006", "Email is invalid format", HttpStatus.BAD_REQUEST),
     VERIFY_ALREADY_VERIFIED("VE007", "This email is already verified", HttpStatus.CONFLICT),
+
+    /**
+     * Researcher Post error codes
+     */
+    RESEARCHER_NOT_FOUND("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND),
 }

@@ -4,6 +4,7 @@ import com.dobby.backend.application.service.SignupService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
+import com.dobby.backend.presentation.api.mapper.SignupMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -23,7 +24,9 @@ class SignupController(
     fun signupParticipants(
         @RequestBody @Valid req: ParticipantSignupRequest
     ): SignupResponse {
-        return signupService.participantSignup(req)
+        val input = SignupMapper.toCreateParticipantInput(req)
+        val output = signupService.participantSignup(input)
+        return SignupMapper.toParticipantSignupResponse(output)
     }
 
     @PostMapping("/signup/researcher")
@@ -36,7 +39,9 @@ class SignupController(
     )
     fun signupResearchers(
         @RequestBody @Valid req: ResearcherSignupRequest
-    ) : SignupResponse {
-        return signupService.researcherSignup(req)
+    ): SignupResponse {
+        val input = SignupMapper.toCreateResearcherInput(req)
+        val output = signupService.researcherSignup(input)
+        return SignupMapper.toResearcherSignupResponse(output)
     }
 }

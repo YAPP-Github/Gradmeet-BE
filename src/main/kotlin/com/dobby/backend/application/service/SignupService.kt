@@ -1,33 +1,32 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
-import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
-import com.dobby.backend.domain.exception.EmailNotValidateException
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.signup.SignupResponse
+import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
+import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signup.VerifyResearcherEmailUseCase
+import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
+import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
 class SignupService(
-    private val participantSignupUseCase: ParticipantSignupUseCase,
+    private val memberGateway: MemberGateway,
+    private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase
 ) {
     @Transactional
-    fun participantSignup(input: ParticipantSignupRequest): SignupResponse {
-           return participantSignupUseCase.execute(input)
+    fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
+           return createParticipantUseCase.execute(input)
     }
 
     @Transactional
-    fun researcherSignup(input: ResearcherSignupRequest) : SignupResponse{
-        if(!input.emailVerified) {
-            throw EmailNotValidateException()
-        }
-        verifyResearcherEmailUseCase.execute(input.univEmail)
+    fun researcherSignup(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
+        val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
+        if(existingMember!= null) throw SignupOauthEmailDuplicateException()
 
+        verifyResearcherEmailUseCase.execute(input.univEmail)
         return createResearcherUseCase.execute(input)
     }
 

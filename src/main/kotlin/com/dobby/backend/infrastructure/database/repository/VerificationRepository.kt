@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
 
 interface VerificationRepository : JpaRepository<VerificationEntity, Long> {
-    fun findByUnivMailAndStatus(univEmail: String, verified: VerificationStatus): VerificationEntity?
-    fun findByUnivMail(univEmail: String): VerificationEntity?
+    fun findByUnivEmailAndStatus(univEmail: String, verified: VerificationStatus): VerificationEntity?
+    fun findByUnivEmail(univEmail: String): VerificationEntity?
 }

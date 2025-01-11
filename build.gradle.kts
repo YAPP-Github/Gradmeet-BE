@@ -80,6 +80,11 @@ dependencyManagement {
 	}
 }
 
+dependencies {
+	implementation("org.slf4j:slf4j-api")
+	implementation("ch.qos.logback:logback-classic")
+}
+
 kotlin {
 	compilerOptions {
 		freeCompilerArgs.addAll("-Xjsr305=strict")

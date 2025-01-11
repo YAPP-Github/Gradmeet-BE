@@ -19,6 +19,12 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
+        val path = request.servletPath
+
+        if(path.startsWith("/v1/members/signup") || path.startsWith("/v1/emails") || path.startsWith("/v1/auth")) {
+            filterChain.doFilter(request, response)
+            return
+        }
         try {
             val authenticationHeader =
                 request.getHeader("Authorization") ?: throw AuthenticationTokenNotFoundException()

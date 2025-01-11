@@ -4,10 +4,10 @@ import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 
 data class TargetGroup(
     val id: Long,
-    val startAge: Int,
-    val endAge: Int,
+    val startAge: Int?,
+    val endAge: Int?,
     val genderType: GenderType,
-    val otherCondition: String
+    val otherCondition: String?
 ) {
     companion object {
         fun newTargetGroup(

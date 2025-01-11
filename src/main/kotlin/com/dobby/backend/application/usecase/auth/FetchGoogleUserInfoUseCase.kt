@@ -1,5 +1,6 @@
-package com.dobby.backend.application.usecase
+package com.dobby.backend.application.usecase.auth
 
+import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
