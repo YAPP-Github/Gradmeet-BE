@@ -5,6 +5,7 @@ import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import jakarta.persistence.*
 
 @Entity
@@ -35,7 +36,11 @@ class MemberEntity(
 
     @Column(name = "name", length = 10, nullable = true)
     val name: String,
-) : AuditingEntity() {
+
+    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val experimentPosts: List<ExperimentPostEntity> = mutableListOf(),
+
+    ) : AuditingEntity() {
 
     fun toDomain() = Member(
         id = id,

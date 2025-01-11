@@ -17,7 +17,7 @@ class ExperimentPostEntity(
     @Column(name = "experiment_post_id")
     val id: Long,
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     val member: MemberEntity,
 
