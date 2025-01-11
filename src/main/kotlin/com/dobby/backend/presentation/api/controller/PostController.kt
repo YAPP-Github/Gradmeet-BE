@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "[실험자] 공고 등록 API - /v1/experiment-posts")
+@Tag(name = "[연구자] 공고 등록 API - /v1/experiment-posts")
 @RestController
 @RequestMapping("/v1/expirement-posts")
 class PostController (
