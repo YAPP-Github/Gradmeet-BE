@@ -6,10 +6,12 @@ import com.dobby.backend.presentation.api.dto.request.expirement.CreatePostReque
 import com.dobby.backend.presentation.api.dto.response.expirement.CreatePostResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.PostInfo
+import com.dobby.backend.util.getCurrentMemberId
 
 object PostMapper {
     fun toCreatePostUseCaseInput(request: CreatePostRequest): CreatePostUseCase.Input {
         return CreatePostUseCase.Input(
+            memberId = getCurrentMemberId(),
             applyMethodInfo = toApplyMethodInfo(request.applyMethodInfo),
             targetGroupInfo = toTargetGroupInfo(request.targetGroupInfo),
             imageListInfo = toImageListInfo(request.imageListInfo),
@@ -75,6 +77,12 @@ object PostMapper {
         return DefaultInfoResponse(
             leadResearcher = response.leadResearcher,
             univName = response.univName
+        )
+    }
+
+    fun toDefaultInfoUseCaseInput(): GetResearcherInfoUseCase.Input {
+        return GetResearcherInfoUseCase.Input(
+            memberId = getCurrentMemberId()
         )
     }
 }

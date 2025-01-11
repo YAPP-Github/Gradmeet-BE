@@ -12,7 +12,6 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
-import com.dobby.backend.util.AuthenticationUtils
 import java.time.LocalDate
 
 class CreatePostUseCase(
@@ -20,6 +19,7 @@ class CreatePostUseCase(
     private val memberGateway: MemberGateway,
 ) : UseCase<CreatePostUseCase.Input, CreatePostUseCase.Output> {
     data class Input(
+        val memberId: Long,
         val targetGroupInfo: TargetGroupInfo,
         val applyMethodInfo: ApplyMethodInfo,
         val imageListInfo: ImageListInfo,
@@ -74,8 +74,7 @@ class CreatePostUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val memberId = AuthenticationUtils.getCurrentMemberId()
-        val member = memberGateway.getById(memberId)
+        val member = memberGateway.getById(input.memberId)
 
         if (member.role != RoleType.RESEARCHER) {
             throw PermissionDeniedException()

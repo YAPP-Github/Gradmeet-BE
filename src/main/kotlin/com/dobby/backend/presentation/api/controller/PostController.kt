@@ -35,7 +35,8 @@ class PostController (
         description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
     )
     fun getDefaultInfo(): DefaultInfoResponse {
-        val output = postService.getDefaultInfo()
+        val input = PostMapper.toDefaultInfoUseCaseInput()
+        val output = postService.getDefaultInfo(input)
         return PostMapper.toDefaultInfoResponse(output)
     }
 }

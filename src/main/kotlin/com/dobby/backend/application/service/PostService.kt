@@ -15,7 +15,7 @@ class PostService(
         return createPostUseCase.execute(input)
     }
 
-    fun getDefaultInfo(): GetResearcherInfoUseCase.Output {
-        return getResearcherInfoUseCase.execute(Unit)
+    fun getDefaultInfo(input: GetResearcherInfoUseCase.Input): GetResearcherInfoUseCase.Output {
+        return getResearcherInfoUseCase.execute(input)
     }
 }
