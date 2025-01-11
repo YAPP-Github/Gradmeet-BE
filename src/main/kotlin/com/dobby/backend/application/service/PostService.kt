@@ -1,7 +1,7 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.expirementUseCase.CreatePostUseCase
-import com.dobby.backend.application.usecase.expirementUseCase.GetResearcherInfoUseCase
+import com.dobby.backend.application.usecase.experiment.CreatePostUseCase
+import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

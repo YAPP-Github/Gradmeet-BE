@@ -1,4 +1,4 @@
-import com.dobby.backend.application.usecase.FetchGoogleUserInfoUseCase
+import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway

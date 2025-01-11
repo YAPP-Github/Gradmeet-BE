@@ -1,7 +1,7 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.signupUseCase.email.EmailCodeSendUseCase
-import com.dobby.backend.application.usecase.signupUseCase.email.EmailVerificationUseCase
+import com.dobby.backend.application.usecase.signup.email.EmailCodeSendUseCase
+import com.dobby.backend.application.usecase.signup.email.EmailVerificationUseCase
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

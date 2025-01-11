@@ -38,8 +38,8 @@ class ExperimentPostEntity(
     @Column(name = "content", nullable = false, length = 5000)
     val content: String,
 
-    @Column(name = "researcher_name", nullable = false, length = 100)
-    var researcherName: String,
+    @Column(name = "lead_researcher", nullable = false, length = 150)
+    var leadResearcher: String,
 
     @Column(name = "reward", nullable = false, length = 170)
     val reward: String,
@@ -73,7 +73,7 @@ class ExperimentPostEntity(
     val area: Area,
 
     @Column(name = "detailed_address", length = 70)
-    val detailedAddress: String,
+    val detailedAddress: String?,
 
     @Column(name = "alarm_agree", nullable = false)
     val alarmAgree: Boolean,
@@ -90,7 +90,7 @@ class ExperimentPostEntity(
         views = views,
         title = title,
         content = content,
-        researcherName = researcherName,
+        leadResearcher = leadResearcher,
         reward = reward,
         startDate = startDate,
         endDate = endDate,
@@ -115,7 +115,7 @@ class ExperimentPostEntity(
                 views = views,
                 title = title,
                 content = content,
-                researcherName = researcherName,
+                leadResearcher = leadResearcher,
                 reward = reward,
                 startDate = startDate,
                 endDate = endDate,

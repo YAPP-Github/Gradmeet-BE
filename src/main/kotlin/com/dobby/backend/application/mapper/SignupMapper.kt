@@ -1,6 +1,6 @@
 package com.dobby.backend.application.mapper
-import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
@@ -10,7 +10,6 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.infrastructure.database.entity.member.AddressInfo
 import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.AddressInfo as DtoAddressInfo
 
 object SignupMapper {
@@ -85,8 +84,8 @@ object SignupMapper {
     }
 
     fun modelToParticipantRes(newParticipant: Participant)
-    : ParticipantSignupUseCase.MemberResponse {
-        return ParticipantSignupUseCase.MemberResponse(
+    : CreateParticipantUseCase.MemberResponse {
+        return CreateParticipantUseCase.MemberResponse(
             memberId = newParticipant.member.id,
             name = newParticipant.member.name,
             oauthEmail = newParticipant.member.oauthEmail,

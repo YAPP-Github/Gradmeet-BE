@@ -1,7 +1,6 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.PostService
-import com.dobby.backend.presentation.api.dto.payload.ApiResponse
 import com.dobby.backend.presentation.api.dto.request.expirement.CreatePostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.CreatePostResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
@@ -24,20 +23,19 @@ class PostController (
     )
     fun createPost(
         @RequestBody @Valid request: CreatePostRequest
-    ): ApiResponse<CreatePostResponse>{
+    ): CreatePostResponse {
         val input = PostMapper.toCreatePostUseCaseInput(request)
         val output = postService.createNewExperimentPost(input)
-        val response = PostMapper.toCreatePostResponse(output)
-        return ApiResponse.onSuccess(response)
+        return PostMapper.toCreatePostResponse(output)
     }
 
     @GetMapping("/default")
     @Operation(
         summary = "공고 등록 API- 연구자 기본 정보 렌더링",
-        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다.")
-    fun getDefaultInfo() : ApiResponse<DefaultInfoResponse>{
+        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
+    )
+    fun getDefaultInfo(): DefaultInfoResponse {
         val output = postService.getDefaultInfo()
-        val response = PostMapper.toDefaultInfoResponse(output)
-        return ApiResponse.onSuccess(response)
+        return PostMapper.toDefaultInfoResponse(output)
     }
 }

@@ -1,6 +1,6 @@
 package com.dobby.backend.application.service
-import com.dobby.backend.application.usecase.signupUseCase.email.EmailCodeSendUseCase
-import com.dobby.backend.application.usecase.signupUseCase.email.EmailVerificationUseCase
+import com.dobby.backend.application.usecase.signup.email.EmailCodeSendUseCase
+import com.dobby.backend.application.usecase.signup.email.EmailVerificationUseCase
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

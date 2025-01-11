@@ -1,8 +1,8 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
-import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signupUseCase.VerifyResearcherEmailUseCase
+import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
+import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signup.VerifyResearcherEmailUseCase
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service
 @Service
 class SignupService(
     private val memberGateway: MemberGateway,
-    private val participantSignupUseCase: ParticipantSignupUseCase,
+    private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase
 ) {
     @Transactional
-    fun participantSignup(input: ParticipantSignupUseCase.Input): ParticipantSignupUseCase.Output {
-           return participantSignupUseCase.execute(input)
+    fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
+           return createParticipantUseCase.execute(input)
     }
 
     @Transactional
@@ -26,7 +26,7 @@ class SignupService(
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if(existingMember!= null) throw SignupOauthEmailDuplicateException()
 
-        verifyResearcherEmailUseCase.execute(input.oauthEmail)
+        verifyResearcherEmailUseCase.execute(input.univEmail)
         return createResearcherUseCase.execute(input)
     }
 

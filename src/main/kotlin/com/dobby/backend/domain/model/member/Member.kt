@@ -6,7 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 
 data class Member(
     val id: Long,
-    val name: String?,
+    val name: String,
     val oauthEmail: String,
     val contactEmail: String?,
     val provider: ProviderType,

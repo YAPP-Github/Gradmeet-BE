@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signupUseCase.email
+package com.dobby.backend.application.usecase.signup.email
 
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
@@ -18,7 +18,6 @@ class EmailCodeSendUseCase(
     data class Input(
         val univEmail: String
     )
-
     data class Output(
         val isSuccess: Boolean,
         val message: String

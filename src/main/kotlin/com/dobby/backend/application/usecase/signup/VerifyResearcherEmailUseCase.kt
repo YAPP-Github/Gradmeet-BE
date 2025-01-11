@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signupUseCase
+package com.dobby.backend.application.usecase.signup
 
 
 import com.dobby.backend.application.usecase.UseCase
@@ -10,14 +10,17 @@ import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 
 class VerifyResearcherEmailUseCase(
     private val verificationGateway: VerificationGateway
-) : UseCase<String, Verification> {
-    override fun execute(input: String): Verification {
-        val verification = verificationGateway.findByUnivEmail(input)
+) : UseCase<String, Unit> {
+
+    override fun execute(input: String): Unit {
+        val verification = verificationGateway
+            .findByUnivEmail(input)
             ?: throw VerifyInfoNotFoundException()
 
         if (verification.status != VerificationStatus.VERIFIED) {
-                throw EmailNotValidateException()
+            throw EmailNotValidateException()
         }
-        return verification
+        return
     }
+
 }

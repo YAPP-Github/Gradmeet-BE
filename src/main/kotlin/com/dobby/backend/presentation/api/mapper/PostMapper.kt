@@ -1,8 +1,7 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.expirementUseCase.CreatePostUseCase
-import com.dobby.backend.application.usecase.expirementUseCase.GetResearcherInfoUseCase
-import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.experiment.CreatePostUseCase
+import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import com.dobby.backend.presentation.api.dto.request.expirement.CreatePostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.CreatePostResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
@@ -27,7 +26,7 @@ object PostMapper {
             endDate = request.endDate,
             matchType = request.matchType,
             detailedAddress = request.detailedAddress,
-            researcherName = request.researcherName,
+            leadResearcher = request.leadResearcher,
         )
     }
 
@@ -74,7 +73,7 @@ object PostMapper {
 
     fun toDefaultInfoResponse(response: GetResearcherInfoUseCase.Output): DefaultInfoResponse{
         return DefaultInfoResponse(
-            researcherName = response.researcherName,
+            leadResearcher = response.leadResearcher,
             univName = response.univName
         )
     }

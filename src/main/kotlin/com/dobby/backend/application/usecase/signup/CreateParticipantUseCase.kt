@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signupUseCase
+package com.dobby.backend.application.usecase.signup
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
@@ -11,10 +11,10 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
 
-class ParticipantSignupUseCase (
+class CreateParticipantUseCase (
     private val participantGateway: ParticipantGateway,
     private val tokenGateway: TokenGateway
-): UseCase<ParticipantSignupUseCase.Input, ParticipantSignupUseCase.Output>
+): UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output>
 {
     data class Input (
         val oauthEmail: String,

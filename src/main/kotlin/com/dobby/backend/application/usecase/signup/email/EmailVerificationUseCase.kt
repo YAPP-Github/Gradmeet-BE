@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.signupUseCase.email
+package com.dobby.backend.application.usecase.signup.email
 
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
@@ -25,9 +25,8 @@ class EmailVerificationUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val info = verificationGateway.findByUnivEmailAndStatus(
-            input.univEmail,
-            VerificationStatus.HOLD)
+        val info = verificationGateway.findByUnivEmail(
+            input.univEmail)
             ?: throw VerifyInfoNotFoundException()
 
         if(input.inputCode != info.verificationCode)

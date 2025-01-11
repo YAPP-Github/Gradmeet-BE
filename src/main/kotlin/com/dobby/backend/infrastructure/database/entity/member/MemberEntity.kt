@@ -34,7 +34,7 @@ class MemberEntity(
     val contactEmail: String?,
 
     @Column(name = "name", length = 10, nullable = true)
-    val name: String?,
+    val name: String,
 ) : AuditingEntity() {
 
     fun toDomain() = Member(

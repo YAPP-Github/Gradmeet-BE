@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.signupUseCase.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.signupUseCase.ParticipantSignupUseCase
+import com.dobby.backend.application.usecase.signup.CreateResearcherUseCase
+import com.dobby.backend.application.usecase.signup.CreateParticipantUseCase
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.MemberResponse
@@ -30,26 +30,26 @@ object SignupMapper {
         )
     }
 
-    fun toCreateParticipantInput(req: ParticipantSignupRequest): ParticipantSignupUseCase.Input {
-        return ParticipantSignupUseCase.Input(
+    fun toCreateParticipantInput(req: ParticipantSignupRequest): CreateParticipantUseCase.Input {
+        return CreateParticipantUseCase.Input(
             oauthEmail = req.oauthEmail,
             provider = req.provider,
             contactEmail = req.contactEmail,
             name = req.name,
             gender = req.gender,
             birthDate = req.birthDate,
-            basicAddressInfo = ParticipantSignupUseCase.AddressInfo(
+            basicAddressInfo = CreateParticipantUseCase.AddressInfo(
                 region = req.basicAddressInfo.region,
                 area = req.basicAddressInfo.area
             ),
             additionalAddressInfo = req.additionalAddressInfo?.let {
-                ParticipantSignupUseCase.AddressInfo(region = it.region, area = it.area)
+                CreateParticipantUseCase.AddressInfo(region = it.region, area = it.area)
             },
             preferType = req.preferType
         )
     }
 
-    fun toParticipantSignupResponse(output: ParticipantSignupUseCase.Output): SignupResponse {
+    fun toParticipantSignupResponse(output: CreateParticipantUseCase.Output): SignupResponse {
         return SignupResponse(
             accessToken = output.accessToken,
             refreshToken = output.refreshToken,
@@ -68,7 +68,7 @@ object SignupMapper {
                     oauthEmail = input.oauthEmail
                 )
             }
-            is ParticipantSignupUseCase.MemberResponse -> {
+            is CreateParticipantUseCase.MemberResponse -> {
                 MemberResponse(
                     memberId = input.memberId,
                     name = input.name,

@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.expirementUseCase
+package com.dobby.backend.application.usecase.experiment
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.*
@@ -30,7 +30,7 @@ class CreatePostUseCase(
         val count: Int, // N 회 참여
         val durationMinutes: TimeSlot,
 
-        val researcherName: String,
+        val leadResearcher: String,
         val univName: String,
         val region: Region,
         val area: Area,
@@ -43,8 +43,8 @@ class CreatePostUseCase(
     )
 
     data class TargetGroupInfo(
-        val startAge: Int,
-        val endAge: Int,
+        val startAge: Int?,
+        val endAge: Int?,
         val genderType: GenderType,
         val otherCondition: String?,
     )
@@ -52,7 +52,7 @@ class CreatePostUseCase(
     data class ApplyMethodInfo(
         val content: String,
         val formUrl: String?,
-        val phoneNum: String,
+        val phoneNum: String?,
     )
 
     data class ImageListInfo(
@@ -104,7 +104,7 @@ class CreatePostUseCase(
                 startAge = targetGroupInfo.startAge,
                 endAge = targetGroupInfo.endAge,
                 genderType = targetGroupInfo.genderType,
-                otherCondition = targetGroupInfo.otherCondition?:""
+                otherCondition = targetGroupInfo.otherCondition
             )
         }
     }
@@ -113,7 +113,7 @@ class CreatePostUseCase(
         return ApplyMethod(
                 id = 0L,
                 phoneNum = applyMethodInfo.phoneNum,
-                formUrl = applyMethodInfo.formUrl?:"",
+                formUrl = applyMethodInfo.formUrl,
                 content = applyMethodInfo.content
             )
     }
@@ -126,7 +126,7 @@ class CreatePostUseCase(
     ): ExperimentPost {
         return ExperimentPost(
             member = member,
-            researcherName = member.name?:"",
+            leadResearcher = member.name,
             id = 0L,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
@@ -142,7 +142,7 @@ class CreatePostUseCase(
             univName = input.univName,
             region = input.region,
             area = input.area,
-            detailedAddress = input.detailedAddress ?: "",
+            detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
             images = emptyList() // 이미지 업로드 보류
         )
