@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 
 @Tag(name = "[연구자] 공고 등록 API - /v1/experiment-posts")
 @RestController
-@RequestMapping("/v1/expirement-posts")
+@RequestMapping("/v1/experiment-posts")
 class PostController (
     private val postService: PostService
 ){

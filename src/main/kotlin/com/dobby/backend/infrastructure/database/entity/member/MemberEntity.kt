@@ -12,7 +12,7 @@ import jakarta.persistence.*
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "member_id")
     val id: Long = 0L,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)

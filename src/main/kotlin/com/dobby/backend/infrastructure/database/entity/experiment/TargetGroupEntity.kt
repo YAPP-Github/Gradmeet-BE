@@ -8,7 +8,7 @@ import jakarta.persistence.*
 class TargetGroupEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "target_group_id")
     val id: Long,
 
     @Column(name = "start_age")
