@@ -1,6 +1,5 @@
 package com.dobby.backend.presentation.api.dto.request.expirement
 
-import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.infrastructure.database.entity.enum.GenderType
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
 import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
