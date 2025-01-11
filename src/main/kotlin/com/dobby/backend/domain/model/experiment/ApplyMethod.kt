@@ -2,8 +2,8 @@ package com.dobby.backend.domain.model.experiment
 
 data class ApplyMethod(
     val id: Long,
-    val phoneNum: String,
-    val formUrl: String,
+    val phoneNum: String?,
+    val formUrl: String?,
     val content: String
 ) {
     companion object {

@@ -7,14 +7,13 @@ import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import jakarta.persistence.*
 
-@Entity(name = "member")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "role_type")
+@Entity
+@Table(name = "member")
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    val id: Long,
+    val id: Long = 0L,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)
     val oauthEmail: String,
@@ -35,7 +34,7 @@ class MemberEntity(
     val contactEmail: String?,
 
     @Column(name = "name", length = 10, nullable = true)
-    val name: String?,
+    val name: String,
 ) : AuditingEntity() {
 
     fun toDomain() = Member(

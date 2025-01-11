@@ -94,6 +94,20 @@ class JwtTokenProvider(
         }
     }
 
+    fun getMemberIdFromAccessToken(accessToken: String): String {
+        return try {
+            val claims = jwtParser.parseEncryptedClaims(accessToken)
+            val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]
+            if (tokenType != ACCESS_TOKEN_TYPE_VALUE) {
+                throw InvalidTokenTypeException()
+            }
+
+            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException()
+        } catch (e: Exception) {
+            throw InvalidTokenValueException()
+        }
+    }
+
     private fun generateAccessTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.expiration.access * 1000)
 
     private fun generateRefreshTokenExpiration() = Date(System.currentTimeMillis() + tokenProperties.expiration.refresh * 1000)

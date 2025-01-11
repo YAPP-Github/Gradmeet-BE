@@ -1,6 +1,8 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.*
+import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
+import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import org.springframework.stereotype.Service
 
 @Service

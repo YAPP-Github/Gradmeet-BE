@@ -6,7 +6,7 @@ import javax.naming.directory.Attributes
 import javax.naming.directory.InitialDirContext
 
 object EmailUtils{
-    private fun extractDomain(email:String): String {
+    fun extractDomain(email:String): String {
         if(!email.contains("@")) throw EmailFormatInvalidException()
         return email.substringAfter("@")
     }
@@ -31,7 +31,7 @@ object EmailUtils{
             "handong.edu",
             "ewhain.net"
         )
-        return email.endsWith("@ac.kr") || eduDomains.any { email.endsWith(it) }
+        return email.endsWith(".ac.kr") || eduDomains.any { email.endsWith(it) }
     }
     fun generateCode(): String {
         val randomNum = (0..999999).random()

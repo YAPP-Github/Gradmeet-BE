@@ -259,7 +259,39 @@ enum class Area (val region: Region, val displayName: String){
     GWANGJU_BUKGU(Region.GWANGJU, "북구"),
     GWANGJU_SEOGU(Region.GWANGJU, "서구"),
 
+    // 부산
+    BUSAN_ALL(Region.BUSAN, "부산 전체"),
+    GANGSEOGU(Region.BUSAN, "강서구"),
+    GEUMJEONGGU(Region.BUSAN, "금정구"),
+    GIJANGGUN(Region.BUSAN, "기장군"),
+    NAMGU(Region.BUSAN, "남구"),
+    BUSAN_DONGGU(Region.BUSAN, "동구"),
+    DONGNAEGU(Region.BUSAN, "동래구"),
+    BUSANJINGU(Region.BUSAN, "부산진구"),
+    BUKGU(Region.BUSAN, "북구"),
+    SASANGGU(Region.BUSAN, "사상구"),
+    SAHAGU(Region.BUSAN, "사하구"),
+    BUSAN_SEOGU(Region.BUSAN, "서구"),
+    SUYEONGGU(Region.BUSAN, "수영구"),
+    YEONJEGU(Region.BUSAN, "연제구"),
+    YEONGDOGU(Region.BUSAN, "영도구"),
+    BUSAN_JUNGGU(Region.BUSAN, "중구"),
+    HAEUNDAEGU(Region.BUSAN, "해운대구"),
+
+    // 울산
+    ULSAN_ALL(Region.ULSAN, "울산 전체"),
+    ULSAN_NAMGU(Region.ULSAN, "남구"),
+    ULSAN_DONGGU(Region.ULSAN, "동구"),
+    ULSAN_BUKGU(Region.ULSAN, "북구"),
+    ULJUGUN(Region.ULSAN, "울주군"),
+    ULSAN_JUNGGU(Region.ULSAN, "중구"),
     // 제주특별자치도
     JEJU_SEOGWIPOSI(Region.JEJU, "서귀포시"),
     JEJU_JEJUSI(Region.JEJU, "제주시");
+
+    companion object {
+        fun findByRegion(region : Region) : List<Area> {
+            return values().filter { it.region == region }
+        }
+    }
 }

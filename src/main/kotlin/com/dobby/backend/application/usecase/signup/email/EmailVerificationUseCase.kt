@@ -1,25 +1,32 @@
-package com.dobby.backend.application.usecase.signupUseCase.email
+package com.dobby.backend.application.usecase.signup.email
 
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.CodeExpiredException
 import com.dobby.backend.domain.exception.CodeNotCorrectException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
+import com.dobby.backend.domain.gateway.VerificationGateway
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
-import com.dobby.backend.infrastructure.database.repository.VerificationRepository
-import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
-import com.dobby.backend.presentation.api.dto.response.signup.EmailVerificationResponse
 import java.time.LocalDateTime
 
 
 class EmailVerificationUseCase(
-    private val verificationRepository: VerificationRepository
-) : UseCase<EmailVerificationRequest, EmailVerificationResponse> {
+    private val verificationGateway: VerificationGateway
+) : UseCase<EmailVerificationUseCase.Input, EmailVerificationUseCase.Output> {
 
-    override fun execute(input: EmailVerificationRequest): EmailVerificationResponse {
-        val info = verificationRepository.findByUnivMailAndStatus(
-            input.univEmail,
-            VerificationStatus.HOLD)
+    data class Input (
+        val univEmail : String,
+        val inputCode: String,
+    )
+
+    data class Output (
+        val isSuccess: Boolean,
+        val message : String
+    )
+
+    override fun execute(input: Input): Output {
+        val info = verificationGateway.findByUnivEmail(
+            input.univEmail)
             ?: throw VerifyInfoNotFoundException()
 
         if(input.inputCode != info.verificationCode)
@@ -29,8 +36,11 @@ class EmailVerificationUseCase(
             throw CodeExpiredException()
 
         info.status = VerificationStatus.VERIFIED
-        verificationRepository.save(info)
+        verificationGateway.save(info)
 
-        return VerificationMapper.toVerifyResDto()
+        return VerificationMapper.toVerifyResDto(
+            isSuccess = true,
+            message = "학교 메일 인증이 완료되었습니다."
+        )
     }
 }

@@ -26,14 +26,14 @@ class WebSecurityConfig(
         jwtTokenProvider: JwtTokenProvider,
         handlerExceptionResolver: HandlerExceptionResolver,
     ): SecurityFilterChain = httpSecurity
-        .securityMatcher( "/v1/members/**")
+        .securityMatcher( "/v1/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.anyRequest().authenticated()
+            it.anyRequest().permitAll() // 모든 요청 허용
         }
         .addFilterBefore(
             JwtAuthenticationFilter(jwtTokenProvider, handlerExceptionResolver),

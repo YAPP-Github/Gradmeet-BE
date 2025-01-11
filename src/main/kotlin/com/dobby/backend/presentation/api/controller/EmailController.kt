@@ -1,11 +1,11 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.EmailService
-import com.dobby.backend.presentation.api.dto.payload.ApiResponse
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
 import com.dobby.backend.presentation.api.dto.response.signup.EmailSendResponse
 import com.dobby.backend.presentation.api.dto.response.signup.EmailVerificationResponse
+import com.dobby.backend.presentation.api.mapper.EmailMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -26,8 +26,10 @@ class EmailController(
         description = "연구자 회원가입 시, 학교 메일 인증 코드를 전송하는 API입니다."
     )
     fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
-    : EmailSendResponse {
-        return emailService.sendEmail(emailSendRequest)
+            : EmailSendResponse {
+        val input = EmailMapper.toEmailCodeSendUseCaseInput(emailSendRequest)
+        val output = emailService.sendEmail(input)
+        return EmailMapper.toEmailSendResponse(output)
     }
 
     @PostMapping("/verify")
@@ -36,8 +38,10 @@ class EmailController(
         description = "연구자 회원가입 시, 코드를 인증하는 API입니다."
     )
     fun verifyCode(@RequestBody @Valid emailVerificationRequest: EmailVerificationRequest)
-    : EmailVerificationResponse {
-        return emailService.verifyCode(emailVerificationRequest)
+            : EmailVerificationResponse {
+        val input = EmailMapper.toEmailVerificationUseCaseInput(emailVerificationRequest)
+        val output = emailService.verifyCode(input)
+        return EmailMapper.toEmailVerificationResponse(output)
     }
 
 }
