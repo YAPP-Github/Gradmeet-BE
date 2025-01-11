@@ -8,7 +8,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
 
-data class CreatePostRequest(
+data class CreateExperimentPostRequest(
     val targetGroupInfo: TargetGroupInfo,
     val applyMethodInfo: ApplyMethodInfo,
     val imageListInfo: ImageListInfo,

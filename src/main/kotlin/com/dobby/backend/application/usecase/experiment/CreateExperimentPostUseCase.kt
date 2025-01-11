@@ -14,10 +14,10 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
 
-class CreatePostUseCase(
+class CreateExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
     private val memberGateway: MemberGateway,
-) : UseCase<CreatePostUseCase.Input, CreatePostUseCase.Output> {
+) : UseCase<CreateExperimentPostUseCase.Input, CreateExperimentPostUseCase.Output> {
     data class Input(
         val memberId: Long,
         val targetGroupInfo: TargetGroupInfo,
@@ -108,7 +108,7 @@ class CreatePostUseCase(
         }
     }
 
-    private fun createApplyMethod(applyMethodInfo: CreatePostUseCase.ApplyMethodInfo): ApplyMethod {
+    private fun createApplyMethod(applyMethodInfo: CreateExperimentPostUseCase.ApplyMethodInfo): ApplyMethod {
         return ApplyMethod(
                 id = 0L,
                 phoneNum = applyMethodInfo.phoneNum,
@@ -119,7 +119,7 @@ class CreatePostUseCase(
 
     private fun createExperimentPost(
         member: Member,
-        input: CreatePostUseCase.Input,
+        input: CreateExperimentPostUseCase.Input,
         targetGroup: TargetGroup,
         applyMethod: ApplyMethod
     ): ExperimentPost {
