@@ -17,23 +17,42 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig(
-) {
+class WebSecurityConfig {
     @Bean
-    @Order(0)
-    fun securityFilterChain(
+    @Order(1)
+    fun authSecurityFilterChain(
         httpSecurity: HttpSecurity,
         jwtTokenProvider: JwtTokenProvider,
-        handlerExceptionResolver: HandlerExceptionResolver,
+        handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
-        .securityMatcher( "/v1/**")
+        .securityMatcher("/v1/auth/**", "/v1/members/signup", "/v1/emails/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.anyRequest().permitAll() // 모든 요청 허용
+            it.requestMatchers("/v1/auth/**").permitAll()
+            it.requestMatchers("/v1/members/signup", "/v1/emails/**").permitAll()
+            it.anyRequest().authenticated()
+        }
+        .build()
+
+    @Bean
+    @Order(2)
+    fun securityFilterChain(
+        httpSecurity: HttpSecurity,
+        jwtTokenProvider: JwtTokenProvider,
+        handlerExceptionResolver: HandlerExceptionResolver,
+    ): SecurityFilterChain = httpSecurity
+        .securityMatcher("/v1/**")
+        .csrf { it.disable() }
+        .cors(Customizer.withDefaults())
+        .sessionManagement {
+            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        }
+        .authorizeHttpRequests {
+            it.anyRequest().authenticated()
         }
         .addFilterBefore(
             JwtAuthenticationFilter(jwtTokenProvider, handlerExceptionResolver),
@@ -49,37 +68,13 @@ class WebSecurityConfig(
         .build()
 
     @Bean
-    @Order(1)
-    fun authSecurityFilterChain(
-        httpSecurity: HttpSecurity,
-        jwtTokenProvider: JwtTokenProvider,
-        handlerExceptionResolver: HandlerExceptionResolver
-    ): SecurityFilterChain = httpSecurity
-        .securityMatcher("/v1/auth/**")
-        .csrf { it.disable() }
-        .cors(Customizer.withDefaults())
-        .sessionManagement {
-            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        }
-        .authorizeHttpRequests {
-            println("[DEBUG] authSecurityFilterChain triggered")
-            it.requestMatchers("/v1/auth/**").permitAll()
-            it.anyRequest().authenticated()
-        }
-        .build()
-
-    @Bean
-    @Order(2)
+    @Order(3)
     fun swaggerSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
         .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .authorizeHttpRequests {
-            it.requestMatchers(
-                "/swagger-ui/**",
-                "/v3/api-docs/**"
-            ).permitAll()
+            it.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
         }
         .build()
-
 }
