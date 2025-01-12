@@ -101,7 +101,7 @@ object ExperimentPostMapper {
             uploadDate = response.experimentPostDetailResponse.uploadDate,
             uploaderName = response.experimentPostDetailResponse.uploaderName,
             views = response.experimentPostDetailResponse.views,
-            state = response.experimentPostDetailResponse.state,
+            recruitDone = response.experimentPostDetailResponse.recruitDone,
             summary = response.experimentPostDetailResponse.summary,
             targetGroup = response.experimentPostDetailResponse.targetGroup,
             address = response.experimentPostDetailResponse.address,
