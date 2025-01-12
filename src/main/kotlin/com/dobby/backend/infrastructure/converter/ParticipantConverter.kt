@@ -17,7 +17,9 @@ object ParticipantConverter {
                 provider = entity.member.provider,
                 role = entity.member.role,
                 name = entity.member.name,
-                status = entity.member.status
+                status = entity.member.status,
+                createdAt = entity.member.createdAt,
+                updatedAt = entity.member.updatedAt
             ),
             id = entity.id,
             gender = entity.gender,
@@ -35,7 +37,9 @@ object ParticipantConverter {
             provider = participant.member.provider,
             role = participant.member.role,
             contactEmail = participant.member.contactEmail,
-            name = participant.member.name
+            name = participant.member.name,
+            createdAt = participant.member.createdAt,
+            updatedAt = participant.member.updatedAt,
         )
         return ParticipantEntity(
             id = participant.id,

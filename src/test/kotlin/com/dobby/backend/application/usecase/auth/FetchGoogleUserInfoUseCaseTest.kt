@@ -1,3 +1,5 @@
+package com.dobby.backend.application.usecase.auth
+
 import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
@@ -12,6 +14,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
+import java.time.LocalDateTime
 
 @ActiveProfiles("test")
 class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
@@ -34,7 +37,9 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
             contactEmail = "contact@example.com",
-            provider = ProviderType.GOOGLE
+            provider = ProviderType.GOOGLE,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
 
         val mockEmptyMember = null

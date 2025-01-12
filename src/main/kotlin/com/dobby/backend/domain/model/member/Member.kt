@@ -3,6 +3,7 @@ package com.dobby.backend.domain.model.member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import java.time.LocalDateTime
 
 data class Member(
     val id: Long,
@@ -12,6 +13,8 @@ data class Member(
     val provider: ProviderType,
     var status: MemberStatus,
     val role: RoleType?,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime
 ) {
 
     companion object {
@@ -23,6 +26,8 @@ data class Member(
             provider: ProviderType,
             status: MemberStatus,
             role: RoleType,
+            createdAt: LocalDateTime,
+            updatedAt: LocalDateTime
         ) = Member(
             id = id,
             name = name,
@@ -30,7 +35,9 @@ data class Member(
             contactEmail = contactEmail,
             provider = provider,
             status = MemberStatus.ACTIVE,
-            role = role
+            role = role,
+            createdAt = createdAt,
+            updatedAt = updatedAt
         )
     }
 }

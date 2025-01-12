@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.*
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class CreateParticipantUseCase (
     private val participantGateway: ParticipantGateway,
@@ -71,7 +72,9 @@ class CreateParticipantUseCase (
             provider = input.provider,
             role = RoleType.PARTICIPANT,
             name = input.name,
-            status = MemberStatus.ACTIVE
+            status = MemberStatus.ACTIVE,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
 
         return Participant(

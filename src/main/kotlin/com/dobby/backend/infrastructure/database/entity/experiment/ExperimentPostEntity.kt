@@ -1,6 +1,5 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import com.dobby.backend.infrastructure.database.entity.common.AuditingEntity
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
@@ -9,6 +8,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.persistence.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity(name = "experiment_post")
 class ExperimentPostEntity(
@@ -45,14 +45,14 @@ class ExperimentPostEntity(
     val reward: String,
 
     @Column(name = "start_date")
-    val startDate: LocalDate,
+    val startDate: LocalDate?,
 
     @Column(name = "end_date")
-    val endDate: LocalDate,
+    val endDate: LocalDate?,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "duration_minutes")
-    val durationMinutes: TimeSlot,
+    @Column(name = "time_required")
+    val timeRequired: TimeSlot?,
 
     @Column(name = "count", nullable = false)
     val count: Int,
@@ -78,10 +78,19 @@ class ExperimentPostEntity(
     @Column(name = "alarm_agree", nullable = false)
     val alarmAgree: Boolean,
 
+    @Column(name = "recruit_done", nullable = false)
+    val recruitDone: Boolean = false,
+
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "experiment_image_id")
-    val images: List<ExperimentImageEntity>
-): AuditingEntity() {
+    val images: List<ExperimentImageEntity>,
+
+    @Column(name = "created_at", nullable = false)
+    val createdAt: LocalDateTime,
+
+    @Column(name = "updated_at", nullable = false)
+    var updatedAt: LocalDateTime
+) {
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
         member = member.toDomain(),
@@ -94,7 +103,7 @@ class ExperimentPostEntity(
         reward = reward,
         startDate = startDate,
         endDate = endDate,
-        durationMinutes = durationMinutes,
+        timeRequired = timeRequired,
         count = count,
         matchType = matchType,
         univName = univName,
@@ -102,7 +111,10 @@ class ExperimentPostEntity(
         area = area,
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
-        images = emptyList() // 이미지 업로드 보류
+        recruitDone = recruitDone,
+        images = images.map { it.toDomain() },
+        createdAt = createdAt,
+        updatedAt = updatedAt
     )
 
     companion object {
@@ -119,7 +131,7 @@ class ExperimentPostEntity(
                 reward = reward,
                 startDate = startDate,
                 endDate = endDate,
-                durationMinutes = durationMinutes,
+                timeRequired = timeRequired,
                 count = count,
                 matchType = matchType,
                 univName = univName,
@@ -127,7 +139,10 @@ class ExperimentPostEntity(
                 area = area,
                 detailedAddress = detailedAddress,
                 alarmAgree = alarmAgree,
-                images = images.map { ExperimentImageEntity.fromDomain(it) }
+                recruitDone = recruitDone,
+                images = images.map { ExperimentImageEntity.fromDomain(it) },
+                createdAt = createdAt,
+                updatedAt = updatedAt
             )
         }
     }

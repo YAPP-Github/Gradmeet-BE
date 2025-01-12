@@ -1,6 +1,5 @@
-package com.dobby.backend.application.usecase
+package com.dobby.backend.application.usecase.auth
 
-import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
 import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
@@ -11,6 +10,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
 
 class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()
@@ -21,7 +21,7 @@ class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
         val validRefreshToken = "validRefreshToken"
         val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE)
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
         val accessToken = "newAccessToken"
         val newRefreshToken = "newRefreshToken"
 

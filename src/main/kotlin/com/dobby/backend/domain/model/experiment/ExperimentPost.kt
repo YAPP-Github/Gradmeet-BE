@@ -6,6 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class ExperimentPost(
     val id: Long,
@@ -17,9 +18,9 @@ data class ExperimentPost(
     val content: String,
     var leadResearcher: String,
     val reward: String,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
-    val durationMinutes: TimeSlot,
+    val startDate: LocalDate?,
+    val endDate: LocalDate?,
+    val timeRequired: TimeSlot?,
     val count: Int,
     val matchType: MatchType,
     val univName: String,
@@ -27,8 +28,15 @@ data class ExperimentPost(
     val area: Area,
     val detailedAddress: String?,
     val alarmAgree: Boolean,
-    val images: List<ExperimentImage>
+    val recruitDone: Boolean = false,
+    val images: List<ExperimentImage>,
+    var createdAt: LocalDateTime,
+    var updatedAt: LocalDateTime
 ) {
+    fun incrementViews() {
+        this.views += 1
+        this.updatedAt = LocalDateTime.now()
+    }
 
     companion object {
         fun newExperimentPost(
@@ -41,9 +49,9 @@ data class ExperimentPost(
             content: String,
             leadResearcher: String,
             reward: String,
-            startDate: LocalDate,
-            endDate: LocalDate,
-            durationMinutes: TimeSlot,
+            startDate: LocalDate?,
+            endDate: LocalDate?,
+            timeRequired: TimeSlot?,
             count: Int,
             matchType: MatchType,
             univName: String,
@@ -51,7 +59,10 @@ data class ExperimentPost(
             area: Area,
             detailedAddress: String,
             alarmAgree: Boolean,
-            images: List<ExperimentImage>
+            recruitDone: Boolean,
+            images: List<ExperimentImage>,
+            createdAt: LocalDateTime = LocalDateTime.now(),
+            updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(
             id = id,
             member = member,
@@ -64,7 +75,7 @@ data class ExperimentPost(
             reward = reward,
             startDate = startDate,
             endDate = endDate,
-            durationMinutes = durationMinutes,
+            timeRequired = timeRequired,
             count = count,
             matchType = matchType,
             univName = univName,
@@ -72,7 +83,10 @@ data class ExperimentPost(
             area = area,
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
-            images = images
+            recruitDone = recruitDone,
+            images = images,
+            createdAt = createdAt,
+            updatedAt = updatedAt
         )
     }
 }

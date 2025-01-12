@@ -27,10 +27,12 @@ object ExperimentPostConverter{
             alarmAgree = entity.alarmAgree,
             detailedAddress = entity.detailedAddress,
             applyMethod = entity.applyMethod.toDomain(),
-            durationMinutes = entity.durationMinutes,
+            timeRequired = entity.timeRequired,
             matchType = entity.matchType,
             targetGroup = entity.targetGroup.toDomain(),
-            images = emptyList() // 이미지 업로드 부분 보류
+            images = emptyList(), // 이미지 업로드 부분 보류,
+            createdAt = entity.createdAt,
+            updatedAt = entity.updatedAt
         )
     }
     fun toEntity(model: ExperimentPost): ExperimentPostEntity{
@@ -52,9 +54,11 @@ object ExperimentPostConverter{
             count = model.count,
             alarmAgree = model.alarmAgree,
             detailedAddress = model.detailedAddress,
-            durationMinutes = model.durationMinutes,
+            timeRequired = model.timeRequired,
             matchType = model.matchType,
-            images = emptyList() // 이미지 업로드 부분 보류
+            images = emptyList(), // 이미지 업로드 부분 보류,
+            createdAt = model.createdAt,
+            updatedAt = model.updatedAt
         )
     }
 }

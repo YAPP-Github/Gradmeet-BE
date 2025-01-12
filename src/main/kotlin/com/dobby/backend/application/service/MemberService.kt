@@ -10,7 +10,7 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
-class SignupService(
+class MemberService(
     private val memberGateway: MemberGateway,
     private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,

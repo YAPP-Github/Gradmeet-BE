@@ -1,10 +1,10 @@
 package com.dobby.backend.presentation.api.controller
 
-import com.dobby.backend.application.service.SignupService
+import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
-import com.dobby.backend.presentation.api.mapper.SignupMapper
+import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "회원가입 API - /v1/members/signup")
 @RestController
 @RequestMapping("/v1/members")
-class SignupController(
-    private val signupService: SignupService
+class MemberController(
+    private val memberService: MemberService
 ) {
     @PostMapping("/signup/participant")
     @Operation(
@@ -24,9 +24,9 @@ class SignupController(
     fun signupParticipants(
         @RequestBody @Valid req: ParticipantSignupRequest
     ): SignupResponse {
-        val input = SignupMapper.toCreateParticipantInput(req)
-        val output = signupService.participantSignup(input)
-        return SignupMapper.toParticipantSignupResponse(output)
+        val input = MemberMapper.toCreateParticipantInput(req)
+        val output = memberService.participantSignup(input)
+        return MemberMapper.toParticipantSignupResponse(output)
     }
 
     @PostMapping("/signup/researcher")
@@ -40,8 +40,8 @@ class SignupController(
     fun signupResearchers(
         @RequestBody @Valid req: ResearcherSignupRequest
     ): SignupResponse {
-        val input = SignupMapper.toCreateResearcherInput(req)
-        val output = signupService.researcherSignup(input)
-        return SignupMapper.toResearcherSignupResponse(output)
+        val input = MemberMapper.toCreateResearcherInput(req)
+        val output = memberService.researcherSignup(input)
+        return MemberMapper.toResearcherSignupResponse(output)
     }
 }
