@@ -8,6 +8,7 @@ import com.dobby.backend.domain.gateway.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enum.*
+import java.time.LocalDateTime
 
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
@@ -63,7 +64,9 @@ class CreateResearcherUseCase(
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.RESEARCHER,
-            name = input.name
+            name = input.name,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
 
         val researcher = Researcher(

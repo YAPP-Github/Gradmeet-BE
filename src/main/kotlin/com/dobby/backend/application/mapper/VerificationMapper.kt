@@ -13,7 +13,9 @@ object VerificationMapper {
             univEmail = req.univEmail,
             verificationCode = code,
             status = VerificationStatus.HOLD,
-            expiresAt = null
+            expiresAt = null,
+            createdAt = null,
+            updatedAt = null
         )
     }
 

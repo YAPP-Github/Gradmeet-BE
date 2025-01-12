@@ -61,7 +61,9 @@ class EmailCodeSendUseCase(
             univEmail = univEmail,
             verificationCode = code,
             status = VerificationStatus.HOLD,
-            expiresAt = LocalDateTime.now().plusMinutes(10)
+            expiresAt = LocalDateTime.now().plusMinutes(10),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
     }
 

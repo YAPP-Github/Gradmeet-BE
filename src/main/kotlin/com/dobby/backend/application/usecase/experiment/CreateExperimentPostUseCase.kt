@@ -1,4 +1,5 @@
 package com.dobby.backend.application.usecase.experiment
+
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.*
@@ -13,22 +14,24 @@ import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class CreateExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
-    private val memberGateway: MemberGateway,
+    private val memberGateway: MemberGateway
 ) : UseCase<CreateExperimentPostUseCase.Input, CreateExperimentPostUseCase.Output> {
+
     data class Input(
         val memberId: Long,
         val targetGroupInfo: TargetGroupInfo,
         val applyMethodInfo: ApplyMethodInfo,
         val imageListInfo: ImageListInfo,
 
-        val startDate: LocalDate,
-        val endDate: LocalDate,
+        val startDate: LocalDate?,
+        val endDate: LocalDate?,
         val matchType: MatchType,
         val count: Int, // N 회 참여
-        val durationMinutes: TimeSlot,
+        val timeRequired: TimeSlot?,
 
         val leadResearcher: String,
         val univName: String,
@@ -46,13 +49,13 @@ class CreateExperimentPostUseCase(
         val startAge: Int?,
         val endAge: Int?,
         val genderType: GenderType,
-        val otherCondition: String?,
+        val otherCondition: String?
     )
 
     data class ApplyMethodInfo(
         val content: String,
         val formUrl: String?,
-        val phoneNum: String?,
+        val phoneNum: String?
     )
 
     data class ImageListInfo(
@@ -67,10 +70,10 @@ class CreateExperimentPostUseCase(
         val postId: Long,
         val title: String,
         val views: Int,
-        val school: String,
+        val univName: String,
         val reward: String,
-        val startDate: LocalDate,
-        val endDate: LocalDate
+        val startDate: LocalDate?,
+        val endDate: LocalDate?
     )
 
     override fun execute(input: Input): Output {
@@ -79,6 +82,7 @@ class CreateExperimentPostUseCase(
         if (member.role != RoleType.RESEARCHER) {
             throw PermissionDeniedException()
         }
+
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
         val experimentPost = createExperimentPost(member, input, targetGroup, applyMethod)
@@ -89,7 +93,7 @@ class CreateExperimentPostUseCase(
                 postId = savedExperimentPost.id,
                 title = savedExperimentPost.title,
                 views = savedExperimentPost.views,
-                school = savedExperimentPost.univName,
+                univName = savedExperimentPost.univName,
                 startDate = savedExperimentPost.startDate,
                 endDate = savedExperimentPost.endDate,
                 reward = savedExperimentPost.reward
@@ -99,27 +103,26 @@ class CreateExperimentPostUseCase(
 
     private fun createTargetGroup(targetGroupInfo: TargetGroupInfo): TargetGroup {
         return TargetGroup(
-                id = 0L,
-                startAge = targetGroupInfo.startAge,
-                endAge = targetGroupInfo.endAge,
-                genderType = targetGroupInfo.genderType,
-                otherCondition = targetGroupInfo.otherCondition
-            )
-        }
+            id = 0L,
+            startAge = targetGroupInfo.startAge,
+            endAge = targetGroupInfo.endAge,
+            genderType = targetGroupInfo.genderType,
+            otherCondition = targetGroupInfo.otherCondition
+        )
     }
 
-    private fun createApplyMethod(applyMethodInfo: CreateExperimentPostUseCase.ApplyMethodInfo): ApplyMethod {
+    private fun createApplyMethod(applyMethodInfo: ApplyMethodInfo): ApplyMethod {
         return ApplyMethod(
-                id = 0L,
-                phoneNum = applyMethodInfo.phoneNum,
-                formUrl = applyMethodInfo.formUrl,
-                content = applyMethodInfo.content
-            )
+            id = 0L,
+            phoneNum = applyMethodInfo.phoneNum,
+            formUrl = applyMethodInfo.formUrl,
+            content = applyMethodInfo.content
+        )
     }
 
     private fun createExperimentPost(
         member: Member,
-        input: CreateExperimentPostUseCase.Input,
+        input: Input,
         targetGroup: TargetGroup,
         applyMethod: ApplyMethod
     ): ExperimentPost {
@@ -135,7 +138,7 @@ class CreateExperimentPostUseCase(
             reward = input.reward,
             startDate = input.startDate,
             endDate = input.endDate,
-            durationMinutes = input.durationMinutes,
+            timeRequired = input.timeRequired,
             count = input.count,
             matchType = input.matchType,
             univName = input.univName,
@@ -143,7 +146,9 @@ class CreateExperimentPostUseCase(
             area = input.area,
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
-            images = emptyList() // 이미지 업로드 보류
+            images = emptyList(), // 이미지 업로드 보류
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
     }
-
+}

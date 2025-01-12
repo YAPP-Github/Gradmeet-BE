@@ -1,12 +1,12 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.backend.infrastructure.database.entity.common.AuditingEntity
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "member")
@@ -40,7 +40,12 @@ class MemberEntity(
     @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL], orphanRemoval = true)
     val experimentPosts: List<ExperimentPostEntity> = mutableListOf(),
 
-    ) : AuditingEntity() {
+    @Column(name = "created_at", nullable = false)
+    val createdAt: LocalDateTime,
+
+    @Column(name = "updated_at", nullable = false)
+    val updatedAt: LocalDateTime
+) {
 
     fun toDomain() = Member(
         id = id,
@@ -49,7 +54,9 @@ class MemberEntity(
         contactEmail = contactEmail,
         provider = provider,
         status = status,
-        role = role
+        role = role,
+        createdAt = createdAt,
+        updatedAt = updatedAt
     )
 
     companion object {
@@ -61,7 +68,9 @@ class MemberEntity(
                 status = status,
                 role = role,
                 contactEmail = contactEmail,
-                name = name
+                name = name,
+                createdAt = createdAt,
+                updatedAt = updatedAt
             )
         }
     }

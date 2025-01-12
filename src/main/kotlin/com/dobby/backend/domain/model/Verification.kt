@@ -8,7 +8,9 @@ data class Verification(
     val univEmail: String,
     var verificationCode: String,
     var status: VerificationStatus = VerificationStatus.HOLD,
-    var expiresAt: LocalDateTime? = null
+    var expiresAt: LocalDateTime? = null,
+    val createdAt: LocalDateTime? = null,
+    var updatedAt: LocalDateTime? = null,
 ) {
     fun isExpired(): Boolean {
         return expiresAt?.isBefore(LocalDateTime.now()) == true
