@@ -28,11 +28,15 @@ data class ExperimentPost(
     val area: Area,
     val detailedAddress: String?,
     val alarmAgree: Boolean,
-    val state: Boolean = true,
+    val recruitDone: Boolean = false,
     val images: List<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
+    fun incrementViews() {
+        this.views += 1
+        this.updatedAt = LocalDateTime.now()
+    }
 
     companion object {
         fun newExperimentPost(
@@ -55,7 +59,7 @@ data class ExperimentPost(
             area: Area,
             detailedAddress: String,
             alarmAgree: Boolean,
-            state: Boolean,
+            recruitDone: Boolean,
             images: List<ExperimentImage>,
             createdAt: LocalDateTime = LocalDateTime.now(),
             updatedAt: LocalDateTime = LocalDateTime.now()
@@ -79,7 +83,7 @@ data class ExperimentPost(
             area = area,
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
-            state = state,
+            recruitDone = recruitDone,
             images = images,
             createdAt = createdAt,
             updatedAt = updatedAt

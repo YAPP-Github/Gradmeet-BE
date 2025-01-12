@@ -22,10 +22,11 @@ class GetExperimentPostDetailUseCase(
     override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException()
+        experimentPost.incrementViews()
+        experimentPostGateway.save(experimentPost)
 
-        val response = experimentPost.toDetailResponse()
         return Output(
-            experimentPostDetailResponse = response
+            experimentPostDetailResponse = experimentPost.toDetailResponse()
         )
     }
 }
@@ -37,7 +38,7 @@ fun ExperimentPost.toDetailResponse(): ExperimentPostDetailResponse {
         uploadDate = this.createdAt.toLocalDate(),
         uploaderName = this.member.name,
         views = this.views,
-        state = this.state,
+        recruitDone = this.recruitDone,
         summary = this.toSummaryResponse(),
         targetGroup = this.targetGroup.toResponse(),
         address = this.toAddressResponse(),
