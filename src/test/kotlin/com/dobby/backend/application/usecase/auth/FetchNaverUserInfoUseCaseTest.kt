@@ -1,12 +1,14 @@
-import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
+package com.dobby.backend.application.usecase.auth
+
+import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
 import com.dobby.backend.domain.gateway.TokenGateway
-import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
+import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -14,19 +16,19 @@ import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
-class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
-    val googleAuthGateway = mockk<GoogleAuthGateway>()
+class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
+    val naverAuthGateway = mockk<NaverAuthGateway>()
     val memberGateway = mockk<MemberGateway>()
     val tokenGateway = mockk<TokenGateway>()
 
-    val fetchGoogleUserInfoUseCase = FetchGoogleUserInfoUseCase(
-        googleAuthGateway,
+    val fetchNaverUserInfoUseCase = FetchNaverUserInfoUseCase(
+        naverAuthGateway,
         memberGateway,
         tokenGateway
     )
 
-    given("Google OAuth 요청이 들어왔을 때") {
-        val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code")
+    given("Naver OAuth 요청이 들어왔을 때") {
+        val input = FetchNaverUserInfoUseCase.Input(authorizationCode = "valid-auth-code", state = "valid-state")
         val mockMember = Member(
             id = 1L,
             oauthEmail = "test@example.com",
@@ -34,24 +36,24 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
             contactEmail = "contact@example.com",
-            provider = ProviderType.GOOGLE
+            provider = ProviderType.NAVER
         )
 
         val mockEmptyMember = null
-        val mockGoogleTokenResponse = GoogleTokenResponse("mock-access-token")
-        every { googleAuthGateway.getAccessToken(any()) } returns mockGoogleTokenResponse
-        every { googleAuthGateway.getUserInfo("mock-access-token") } returns mockk {
+        val mockNaverTokenResponse = NaverTokenResponse("mock-access-token")
+        every { naverAuthGateway.getAccessToken(any(), any()) } returns mockNaverTokenResponse
+        every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
         }
 
         every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
         every { tokenGateway.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
 
-        // 테스트 1: 등록된 멤버가 있는 경우
+        // 테스트 1: 등록된 멤버가 있을 경우
         every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockMember
 
         `when`("정상적으로 등록된 유저가 있는 경우") {
-            val result: FetchGoogleUserInfoUseCase.Output = fetchGoogleUserInfoUseCase.execute(input)
+            val result: FetchNaverUserInfoUseCase.Output = fetchNaverUserInfoUseCase.execute(input)
 
             then("유저 정보를 포함한 OauthLoginResponse를 반환해야 한다") {
                 result.isRegistered shouldBe true
@@ -66,7 +68,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockEmptyMember
 
         `when`("등록되지 않은 유저가 있는 경우") {
-            val result: FetchGoogleUserInfoUseCase.Output = fetchGoogleUserInfoUseCase.execute(input)
+            val result: FetchNaverUserInfoUseCase.Output = fetchNaverUserInfoUseCase.execute(input)
 
             then("isRegistered는 false, memberId는 null이어야 한다") {
                 result.isRegistered shouldBe false

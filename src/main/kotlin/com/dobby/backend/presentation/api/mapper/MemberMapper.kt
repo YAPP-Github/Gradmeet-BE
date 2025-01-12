@@ -7,7 +7,7 @@ import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupReq
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 
-object SignupMapper {
+object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
         return CreateResearcherUseCase.Input(
             oauthEmail = req.oauthEmail,
