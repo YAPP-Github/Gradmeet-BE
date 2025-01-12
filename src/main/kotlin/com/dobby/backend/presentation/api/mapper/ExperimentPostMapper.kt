@@ -71,7 +71,7 @@ object ExperimentPostMapper {
             startDate = input.startDate,
             endDate = input.endDate,
             reward = input.reward,
-            school = input.school
+            univName = input.univName
         )
     }
 

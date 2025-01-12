@@ -10,8 +10,8 @@ data class PostInfo(
     val postId: Long,
     val title: String,
     val views: Int,
-    val school: String,
-    val reward: String,
-    val startDate: LocalDate,
-    val endDate: LocalDate
+    val univName: String?,
+    val reward: String?,
+    val startDate: LocalDate?,
+    val endDate: LocalDate?
 )

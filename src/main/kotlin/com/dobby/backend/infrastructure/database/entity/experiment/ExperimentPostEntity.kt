@@ -45,14 +45,14 @@ class ExperimentPostEntity(
     val reward: String,
 
     @Column(name = "start_date")
-    val startDate: LocalDate,
+    val startDate: LocalDate?,
 
     @Column(name = "end_date")
-    val endDate: LocalDate,
+    val endDate: LocalDate?,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "time_required")
-    val timeRequired: TimeSlot,
+    val timeRequired: TimeSlot?,
 
     @Column(name = "count", nullable = false)
     val count: Int,

@@ -27,11 +27,11 @@ class CreateExperimentPostUseCase(
         val applyMethodInfo: ApplyMethodInfo,
         val imageListInfo: ImageListInfo,
 
-        val startDate: LocalDate,
-        val endDate: LocalDate,
+        val startDate: LocalDate?,
+        val endDate: LocalDate?,
         val matchType: MatchType,
         val count: Int, // N 회 참여
-        val timeRequired: TimeSlot,
+        val timeRequired: TimeSlot?,
 
         val leadResearcher: String,
         val univName: String,
@@ -70,10 +70,10 @@ class CreateExperimentPostUseCase(
         val postId: Long,
         val title: String,
         val views: Int,
-        val school: String,
+        val univName: String,
         val reward: String,
-        val startDate: LocalDate,
-        val endDate: LocalDate
+        val startDate: LocalDate?,
+        val endDate: LocalDate?
     )
 
     override fun execute(input: Input): Output {
@@ -93,7 +93,7 @@ class CreateExperimentPostUseCase(
                 postId = savedExperimentPost.id,
                 title = savedExperimentPost.title,
                 views = savedExperimentPost.views,
-                school = savedExperimentPost.univName,
+                univName = savedExperimentPost.univName,
                 startDate = savedExperimentPost.startDate,
                 endDate = savedExperimentPost.endDate,
                 reward = savedExperimentPost.reward
