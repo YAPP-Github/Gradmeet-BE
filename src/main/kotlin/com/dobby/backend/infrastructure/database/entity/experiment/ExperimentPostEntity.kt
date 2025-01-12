@@ -51,8 +51,8 @@ class ExperimentPostEntity(
     val endDate: LocalDate,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "duration_minutes")
-    val durationMinutes: TimeSlot,
+    @Column(name = "time_required")
+    val timeRequired: TimeSlot,
 
     @Column(name = "count", nullable = false)
     val count: Int,
@@ -103,7 +103,7 @@ class ExperimentPostEntity(
         reward = reward,
         startDate = startDate,
         endDate = endDate,
-        durationMinutes = durationMinutes,
+        timeRequired = timeRequired,
         count = count,
         matchType = matchType,
         univName = univName,
@@ -131,7 +131,7 @@ class ExperimentPostEntity(
                 reward = reward,
                 startDate = startDate,
                 endDate = endDate,
-                durationMinutes = durationMinutes,
+                timeRequired = timeRequired,
                 count = count,
                 matchType = matchType,
                 univName = univName,

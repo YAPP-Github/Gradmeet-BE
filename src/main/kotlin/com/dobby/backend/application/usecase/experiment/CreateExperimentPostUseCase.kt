@@ -31,7 +31,7 @@ class CreateExperimentPostUseCase(
         val endDate: LocalDate,
         val matchType: MatchType,
         val count: Int, // N 회 참여
-        val durationMinutes: TimeSlot,
+        val timeRequired: TimeSlot,
 
         val leadResearcher: String,
         val univName: String,
@@ -138,7 +138,7 @@ class CreateExperimentPostUseCase(
             reward = input.reward,
             startDate = input.startDate,
             endDate = input.endDate,
-            durationMinutes = input.durationMinutes,
+            timeRequired = input.timeRequired,
             count = input.count,
             matchType = input.matchType,
             univName = input.univName,

@@ -1,5 +1,10 @@
 package com.dobby.backend.presentation.api.dto.response.expirement
 
+import com.dobby.backend.infrastructure.database.entity.enum.GenderType
+import com.dobby.backend.infrastructure.database.entity.enum.MatchType
+import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 
@@ -50,7 +55,7 @@ data class ExperimentPostDetailResponse(
         val leadResearcher: String,
 
         @Schema(description = "매칭 방식", example = "ONLINE")
-        val matchType: String,
+        val matchType: MatchType,
 
         @Schema(description = "보상", example = "상품권 5만원")
         val reward: String,
@@ -59,7 +64,7 @@ data class ExperimentPostDetailResponse(
         val count: Int,
 
         @Schema(description = "소요 시간 (nullable)", example = "ABOUT_1H", nullable = true)
-        val durationMinutes: String?
+        val timeRequired: TimeSlot?
     )
 
     @Schema(description = "실험 대상 그룹 응답 DTO")
@@ -71,7 +76,7 @@ data class ExperimentPostDetailResponse(
         val endAge: Int?,
 
         @Schema(description = "성별 타입", example = "MALE")
-        val genderType: String,
+        val genderType: GenderType,
 
         @Schema(description = "기타 조건", example = "흡연자 제외")
         val otherCondition: String?
@@ -83,10 +88,10 @@ data class ExperimentPostDetailResponse(
         val univName: String,
 
         @Schema(description = "지역", example = "SEOUL")
-        val region: String,
+        val region: Region,
 
-        @Schema(description = "구/군", example = "GWANGJIN")
-        val district: String,
+        @Schema(description = "구/군", example = "GWANGJINGU")
+        val area: Area,
 
         @Schema(description = "상세 주소 (nullable)", example = "1동 101호", nullable = true)
         val detailedAddress: String?

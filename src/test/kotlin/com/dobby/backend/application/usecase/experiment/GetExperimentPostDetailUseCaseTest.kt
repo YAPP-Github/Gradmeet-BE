@@ -55,7 +55,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             matchType = MatchType.HYBRID,
             reward = "네이버페이 1000원",
             count = 10,
-            durationMinutes = TimeSlot.ABOUT_1H,
+            timeRequired = TimeSlot.ABOUT_1H,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
             region = Region.SEOUL,

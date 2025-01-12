@@ -52,10 +52,10 @@ fun ExperimentPost.toSummaryResponse(): ExperimentPostDetailResponse.SummaryResp
         startDate = this.startDate,
         endDate = this.endDate,
         leadResearcher = this.leadResearcher,
-        matchType = this.matchType.name,
+        matchType = this.matchType,
         reward = this.reward,
         count = this.count,
-        durationMinutes = this.durationMinutes.name
+        timeRequired = this.timeRequired
     )
 }
 
@@ -63,7 +63,7 @@ fun TargetGroup.toResponse(): ExperimentPostDetailResponse.TargetGroupResponse {
     return ExperimentPostDetailResponse.TargetGroupResponse(
         startAge = this.startAge,
         endAge = this.endAge,
-        genderType = this.genderType.name,
+        genderType = this.genderType,
         otherCondition = this.otherCondition
     )
 }
@@ -71,8 +71,8 @@ fun TargetGroup.toResponse(): ExperimentPostDetailResponse.TargetGroupResponse {
 fun ExperimentPost.toAddressResponse(): ExperimentPostDetailResponse.AddressResponse {
     return ExperimentPostDetailResponse.AddressResponse(
         univName = this.univName,
-        region = this.region.name,
-        district = this.area.name,
+        region = this.region,
+        area = this.area,
         detailedAddress = this.detailedAddress
     )
 }

@@ -16,7 +16,7 @@ data class CreateExperimentPostRequest(
     val endDate: LocalDate,
     val matchType: MatchType,
     val count: Int, // N 회 참여
-    val durationMinutes: TimeSlot,
+    val timeRequired: TimeSlot,
 
     val leadResearcher: String, // 연구 책임 정보 -> 기본값: 연구자 정보에서 끌어와야 함, 추후에 자유롭게 수정 가능
 

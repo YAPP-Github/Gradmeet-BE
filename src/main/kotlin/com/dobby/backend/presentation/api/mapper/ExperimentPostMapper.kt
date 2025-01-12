@@ -24,7 +24,7 @@ object ExperimentPostMapper {
             count = request.count,
             region = request.region,
             area = request.area,
-            durationMinutes = request.durationMinutes,
+            timeRequired = request.timeRequired,
             reward = request.reward,
             startDate = request.startDate,
             endDate = request.endDate,
