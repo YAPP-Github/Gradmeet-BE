@@ -69,7 +69,12 @@ enum class ErrorCode(
     VERIFY_ALREADY_VERIFIED("VE007", "This email is already verified", HttpStatus.CONFLICT),
 
     /**
-     * Researcher Post error codes
+     * Researcher error codes
      */
     RESEARCHER_NOT_FOUND("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND),
+
+    /**
+     * Experiment Post error codes
+     */
+    EXPERIMENT_POST_NOT_FOUND("EP001", "Experiment Post Not Found.", HttpStatus.NOT_FOUND),
 }
