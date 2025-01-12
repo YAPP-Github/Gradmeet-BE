@@ -43,3 +43,6 @@ application-local.yml
 ### Kotlin ###
 .kotlin
 /src/main/resources/application.yml
+
+### QueryDSL ###
+generated/

@@ -1,11 +1,12 @@
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
+	kotlin("plugin.jpa") version "1.9.25"
+	kotlin("kapt") version "1.9.25"
 	id("org.springframework.boot") version "3.4.1"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("jacoco")
 	id("org.sonarqube") version "6.0.1.5171"
-	kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "com.dobby"
@@ -26,10 +27,15 @@ configurations {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
 }
+val queryDslVersion: String by extra
 
 repositories {
 	mavenCentral()
 	maven{url = uri("https://jitpack.io") }
+}
+
+kapt {
+	includeCompileClasspath = false
 }
 
 dependencies {
@@ -47,9 +53,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
-	implementation("com.github.in-seo:univcert:master-SNAPSHOT") {
-		exclude(group = "org.hamcrest", module= "harmcest-core")
-	}
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
@@ -64,6 +67,12 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+
+	// querydsl
+	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+	kapt("jakarta.annotation:jakarta.annotation-api")
+	kapt("jakarta.persistence:jakarta.persistence-api")
 
 	val koTestVersion = "5.8.1"
 	testImplementation("io.kotest:kotest-runner-junit5-jvm:$koTestVersion")
@@ -96,6 +105,29 @@ allOpen {
 	annotation("jakarta.persistence.MappedSuperclass")
 	annotation("jakarta.persistence.Embeddable")
 }
+
+// querydsl
+val generated = file("src/main/generated")
+tasks.withType<JavaCompile> {
+	options.generatedSourceOutputDirectory.set(generated)
+}
+
+sourceSets {
+	main {
+		kotlin.srcDirs += generated
+	}
+}
+
+tasks.named("clean") {
+	doLast {
+		generated.deleteRecursively()
+	}
+}
+
+kapt {
+	generateStubs = true
+}
+
 
 jacoco {
 	toolVersion = "0.8.8"
@@ -131,6 +163,11 @@ tasks.jacocoTestReport {
 		xml.outputLocation.set(file(layout.buildDirectory.dir("reports/jacoco/index.xml").get().asFile))
 	}
 
+	val Qdomains = mutableListOf<String>()  // 초기화
+	for (qPattern in listOf("**/QA", "**/QZ")) {
+		Qdomains.add("$qPattern*")
+	}
+
 	classDirectories.setFrom(
 		files(
 			classDirectories.files.flatMap { dir ->
@@ -143,7 +180,8 @@ tasks.jacocoTestReport {
 						"**/domain/model/*",
 						"**/infrastructure/*",
 						"**/presentation/*",
-						"**/util/*"
+						"**/util/*",
+						*Qdomains.toTypedArray()
 					)
 				}.files
 			}
@@ -153,6 +191,11 @@ tasks.jacocoTestReport {
 }
 
 tasks.jacocoTestCoverageVerification {
+	val Qdomains = mutableListOf<String>()
+	for (qPattern in listOf("**/QA", "**/QZ")) {
+		Qdomains.add("$qPattern*")
+	}
+
 	violationRules {
 		rule {
 			isFailOnViolation = false
@@ -179,7 +222,8 @@ tasks.jacocoTestCoverageVerification {
 				"**.domain.model.*",
 				"**.infrastructure.*",
 				"**.presentation.*",
-				"**.util.*"
+				"**.util.*",
+				*Qdomains.toTypedArray()
 			)
 		}
 	}
