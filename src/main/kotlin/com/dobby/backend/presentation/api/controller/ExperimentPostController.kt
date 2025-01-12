@@ -9,6 +9,7 @@ import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "[연구자] 공고 등록 API - /v1/experiment-posts")
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*
 class ExperimentPostController (
     private val experimentPostService: ExperimentPostService
 ){
+    @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping
     @Operation(
         summary = "공고 등록 API- 연구자 공고 등록",
@@ -41,6 +43,7 @@ class ExperimentPostController (
         return ExperimentPostMapper.toDefaultInfoResponse(output)
     }
 
+    @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping("/{postId}")
     @Operation(
         summary = "특정 공고 상세 정보 조회",
