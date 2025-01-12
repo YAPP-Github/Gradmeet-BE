@@ -6,6 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class ExperimentPost(
     val id: Long,
@@ -27,7 +28,10 @@ data class ExperimentPost(
     val area: Area,
     val detailedAddress: String?,
     val alarmAgree: Boolean,
-    val images: List<ExperimentImage>
+    val state: Boolean = true,
+    val images: List<ExperimentImage>,
+    var createdAt: LocalDateTime,
+    var updatedAt: LocalDateTime
 ) {
 
     companion object {
@@ -51,7 +55,10 @@ data class ExperimentPost(
             area: Area,
             detailedAddress: String,
             alarmAgree: Boolean,
-            images: List<ExperimentImage>
+            state: Boolean,
+            images: List<ExperimentImage>,
+            createdAt: LocalDateTime = LocalDateTime.now(),
+            updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(
             id = id,
             member = member,
@@ -72,7 +79,10 @@ data class ExperimentPost(
             area = area,
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
-            images = images
+            state = state,
+            images = images,
+            createdAt = createdAt,
+            updatedAt = updatedAt
         )
     }
 }

@@ -11,6 +11,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
 
 class GenerateTestTokenUseCaseTest: BehaviorSpec({
     val tokenGateway = mockk<TokenGateway>()
@@ -20,7 +21,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
     given("memberId가 주어졌을 때") {
         val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE)
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
         val accessToken = "testAccessToken"
         val refreshToken = "testRefreshToken"
 

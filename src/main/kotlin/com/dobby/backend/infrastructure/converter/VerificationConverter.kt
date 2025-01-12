@@ -10,7 +10,9 @@ object VerificationConverter {
             univEmail = entity.univEmail,
             verificationCode = entity.verificationCode,
             status = entity.status,
-            expiresAt = entity.expiresAt
+            expiresAt = entity.expiresAt,
+            createdAt = entity.createdAt,
+            updatedAt = entity.updatedAt
         )
     }
 
@@ -20,7 +22,9 @@ object VerificationConverter {
             univEmail = model.univEmail,
             verificationCode = model.verificationCode,
             status = model.status,
-            expiresAt = model.expiresAt
+            expiresAt = model.expiresAt,
+            createdAt = model.createdAt,
+            updatedAt = model.updatedAt
         )
     }
 }

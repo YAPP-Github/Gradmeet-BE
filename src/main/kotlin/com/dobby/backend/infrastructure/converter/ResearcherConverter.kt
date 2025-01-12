@@ -16,7 +16,9 @@ object ResearcherConverter {
                 provider = entity.member.provider,
                 role = RoleType.RESEARCHER,
                 name = entity.member.name,
-                status = entity.member.status
+                status = entity.member.status,
+                createdAt = entity.member.createdAt,
+                updatedAt = entity.member.updatedAt
             ),
             id = entity.id,
             univEmail = entity.univEmail,
@@ -34,7 +36,9 @@ object ResearcherConverter {
             provider = researcher.member.provider,
             role = researcher.member.role,
             contactEmail = researcher.member.contactEmail,
-            name = researcher.member.name
+            name = researcher.member.name,
+            createdAt = researcher.member.createdAt,
+            updatedAt = researcher.member.updatedAt,
         )
 
         return ResearcherEntity(

@@ -14,6 +14,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.springframework.test.context.ActiveProfiles
+import java.time.LocalDateTime
 
 @ActiveProfiles("test")
 class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
@@ -36,7 +37,9 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
             status = MemberStatus.ACTIVE,
             role = RoleType.PARTICIPANT,
             contactEmail = "contact@example.com",
-            provider = ProviderType.NAVER
+            provider = ProviderType.NAVER,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
 
         val mockEmptyMember = null

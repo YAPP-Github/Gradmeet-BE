@@ -1,6 +1,5 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import AuditingEntity
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.enum.MatchType
@@ -9,6 +8,7 @@ import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import jakarta.persistence.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity(name = "experiment_post")
 class ExperimentPostEntity(
@@ -78,10 +78,19 @@ class ExperimentPostEntity(
     @Column(name = "alarm_agree", nullable = false)
     val alarmAgree: Boolean,
 
+    @Column(name = "state", nullable = false)
+    val state: Boolean = true,
+
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "experiment_image_id")
-    val images: List<ExperimentImageEntity>
-): AuditingEntity() {
+    val images: List<ExperimentImageEntity>,
+
+    @Column(name = "created_at", nullable = false)
+    val createdAt: LocalDateTime,
+
+    @Column(name = "updated_at", nullable = false)
+    var updatedAt: LocalDateTime
+) {
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
         member = member.toDomain(),
@@ -102,7 +111,10 @@ class ExperimentPostEntity(
         area = area,
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
-        images = emptyList() // 이미지 업로드 보류
+        state = state,
+        images = images.map { it.toDomain() },
+        createdAt = createdAt,
+        updatedAt = updatedAt
     )
 
     companion object {
@@ -127,7 +139,10 @@ class ExperimentPostEntity(
                 area = area,
                 detailedAddress = detailedAddress,
                 alarmAgree = alarmAgree,
-                images = images.map { ExperimentImageEntity.fromDomain(it) }
+                state = state,
+                images = images.map { ExperimentImageEntity.fromDomain(it) },
+                createdAt = createdAt,
+                updatedAt = updatedAt
             )
         }
     }

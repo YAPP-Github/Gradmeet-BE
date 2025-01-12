@@ -1,6 +1,5 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import AuditingEntity
 import com.dobby.backend.domain.model.experiment.ExperimentImage
 import jakarta.persistence.*
 
@@ -17,7 +16,7 @@ class ExperimentImageEntity(
 
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
-) : AuditingEntity() {
+) {
     fun toDomain(): ExperimentImage = ExperimentImage(
         id = id,
         experimentPost = experimentPost.toDomain(),

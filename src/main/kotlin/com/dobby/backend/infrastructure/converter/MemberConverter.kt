@@ -13,7 +13,9 @@ object MemberConverter {
             oauthEmail = model.oauthEmail,
             role = model.role,
             provider = model.provider,
-            status = model.status
+            status = model.status,
+            createdAt = model.createdAt,
+            updatedAt = model.updatedAt
         )
     }
 
@@ -25,7 +27,9 @@ object MemberConverter {
             oauthEmail = entity.oauthEmail,
             role = entity.role,
             provider = entity.provider,
-            status = entity.status
+            status = entity.status,
+            createdAt = entity.createdAt,
+            updatedAt = entity.updatedAt
         )
     }
 }

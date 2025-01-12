@@ -1,11 +1,10 @@
 package com.dobby.backend.infrastructure.database.entity
 
-import AuditingEntity
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-@Entity(name = "VERIFICATION")
+@Entity(name = "verification")
 class VerificationEntity (
     @Id
     @Column(name = "verification_id")
@@ -23,8 +22,19 @@ class VerificationEntity (
     var status: VerificationStatus= VerificationStatus.HOLD,
 
     @Column(name = "expires_at", nullable = false)
-    var expiresAt : LocalDateTime ? = null
-): AuditingEntity() {
+    var expiresAt : LocalDateTime ? = null,
+
+    @Column(name = "created_at", nullable = false)
+    val createdAt: LocalDateTime ? = null,
+
+    @Column(name = "updated_at", nullable = false)
+    var updatedAt: LocalDateTime ? = null,
+) {
     @PrePersist
-    fun prePersist(){  if(expiresAt == null) expiresAt = LocalDateTime.now().plusMinutes(10)}
+    fun prePersist() {
+        createdAt ?: LocalDateTime.now()
+        updatedAt ?: LocalDateTime.now()
+        if(expiresAt == null)
+            expiresAt = LocalDateTime.now().plusMinutes(10)
+    }
 }

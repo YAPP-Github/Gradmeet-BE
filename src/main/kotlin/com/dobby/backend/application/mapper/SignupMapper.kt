@@ -5,8 +5,6 @@ import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.infrastructure.database.entity.member.AddressInfo
 import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
@@ -19,29 +17,7 @@ object SignupMapper {
             dto.area
         )
     }
-    fun toParticipantMember(req: ParticipantSignupRequest): MemberEntity {
-        return MemberEntity(
-            id = 0, // Auto-generated
-            oauthEmail = req.oauthEmail,
-            provider = req.provider,
-            status = MemberStatus.ACTIVE,
-            role = RoleType.PARTICIPANT,
-            contactEmail = req.contactEmail,
-            name = req.name
-        )
-    }
 
-    fun toResearcherMember(req: CreateResearcherUseCase.Input): MemberEntity {
-        return MemberEntity(
-            id = 0, // Auto-generated
-            oauthEmail = req.oauthEmail,
-            provider = req.provider,
-            status = MemberStatus.ACTIVE,
-            role = RoleType.RESEARCHER,
-            contactEmail = req.contactEmail,
-            name = req.name,
-        )
-    }
     fun toParticipant(
         member: MemberEntity,
         req: ParticipantSignupRequest
