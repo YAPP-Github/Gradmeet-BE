@@ -32,6 +32,7 @@ class ExperimentPostController (
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
     }
 
+    @PreAuthorize("hasRole('RESEARCHER')")
     @GetMapping("/default")
     @Operation(
         summary = "공고 등록 API- 연구자 기본 정보 렌더링",
@@ -43,7 +44,6 @@ class ExperimentPostController (
         return ExperimentPostMapper.toDefaultInfoResponse(output)
     }
 
-    @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping("/{postId}")
     @Operation(
         summary = "특정 공고 상세 정보 조회",
