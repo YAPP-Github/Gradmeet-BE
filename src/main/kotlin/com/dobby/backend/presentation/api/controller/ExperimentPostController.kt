@@ -14,7 +14,7 @@ import jakarta.validation.Valid
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "[연구자] 공고 등록 API - /v1/experiment-posts")
+@Tag(name = "실험 공고 API - /v1/experiment-posts")
 @RestController
 @RequestMapping("/v1/experiment-posts")
 class ExperimentPostController (
