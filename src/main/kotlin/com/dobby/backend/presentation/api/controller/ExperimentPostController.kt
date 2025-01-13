@@ -5,6 +5,7 @@ import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimen
 import com.dobby.backend.presentation.api.dto.response.expirement.CreateExperimentPostResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostApplyMethodResponse
+import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostCountsResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
@@ -47,7 +48,7 @@ class ExperimentPostController (
 
     @PostMapping("/{postId}")
     @Operation(
-        summary = "특정 공고 상세 정보 조회",
+        summary = "특정 공고 상세 정보 조회 API",
         description = "특정 공고 상세 정보를 반환합니다"
     )
     fun getExperimentPostDetail(
@@ -58,9 +59,22 @@ class ExperimentPostController (
         return ExperimentPostMapper.toGetExperimentPostDetailResponse(output)
     }
 
+    @GetMapping("/counts")
+    @Operation(
+        summary = "등록된 공고 수 조회 API",
+        description = "지역 별로 등록된 공고 수를 조회합니다"
+    )
+    fun getExperimentPostCounts(
+        @RequestParam(required = false) region: String?
+    ): ExperimentPostCountsResponse {
+        val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region)
+        val output = experimentPostService.getExperimentPostCounts(input)
+        return ExperimentPostMapper.toGetExperimentPostCountsResponse(output)
+    }
+
     @GetMapping("/{postId}/apply-method")
     @Operation(
-        summary = "특정 공고 지원 방법 조회",
+        summary = "특정 공고 지원 방법 조회 API",
         description = "특정 공고의 지원 방법을 반환합니다."
     )
     fun getExperimentPostApplyMethod(

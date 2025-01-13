@@ -2,8 +2,8 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.ParticipantGateway
-import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.gateway.member.ParticipantGateway
+import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enum.*

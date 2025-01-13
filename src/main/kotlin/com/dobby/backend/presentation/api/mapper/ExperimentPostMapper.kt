@@ -1,5 +1,6 @@
 package com.dobby.backend.presentation.api.mapper
 
+import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
@@ -106,6 +107,42 @@ object ExperimentPostMapper {
             content = response.experimentPostDetailResponse.content,
             imageList = response.experimentPostDetailResponse.imageList
         )
+    }
+
+    fun toGetExperimentPostCountsUseCaseInput(region: String?): Any {
+        return if (region == null) {
+            GetExperimentPostCountsByRegionUseCase.Input(region = null)
+        } else {
+            GetExperimentPostCountsByAreaUseCase.Input(region = region)
+        }
+    }
+
+    fun toGetExperimentPostCountsResponse(output: Any): ExperimentPostCountsResponse {
+        return when (output) {
+            is GetExperimentPostCountsByAreaUseCase.Output -> {
+                ExperimentPostCountsResponse(
+                    total = output.total,
+                    data = output.area.map {
+                        DataCount(
+                            name = it.name,
+                            count = it.count
+                        )
+                    }
+                )
+            }
+            is GetExperimentPostCountsByRegionUseCase.Output -> {
+                ExperimentPostCountsResponse(
+                    total = output.total,
+                    data = output.area.map {
+                        DataCount(
+                            name = it.name,
+                            count = it.count
+                        )
+                    }
+                )
+            }
+            else -> throw IllegalArgumentException("Unsupported output type: ${output::class.simpleName}")
+        }
     }
 
     fun toGetExperimentPostApplyMethodUseCaseInput(experimentPostId: Long): GetExperimentPostApplyMethodUseCase.Input {

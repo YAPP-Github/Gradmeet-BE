@@ -1,9 +1,9 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.MemberGateway
-import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
-import com.dobby.backend.domain.gateway.TokenGateway
+import com.dobby.backend.domain.gateway.member.MemberGateway
+import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
+import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enum.RoleType

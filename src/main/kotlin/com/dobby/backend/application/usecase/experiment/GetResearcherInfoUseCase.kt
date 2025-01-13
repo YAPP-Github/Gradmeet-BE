@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ResearcherNotFoundException
-import com.dobby.backend.domain.gateway.ResearcherGateway
+import com.dobby.backend.domain.gateway.member.ResearcherGateway
 
 class GetResearcherInfoUseCase(
     private val researcherGateway: ResearcherGateway

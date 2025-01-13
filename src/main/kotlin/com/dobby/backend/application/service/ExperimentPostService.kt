@@ -1,5 +1,6 @@
 package com.dobby.backend.application.service
 
+import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
@@ -12,6 +13,8 @@ class ExperimentPostService(
     private val createExperimentPostUseCase: CreateExperimentPostUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
+    private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
+    private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
 ) {
     @Transactional
@@ -29,5 +32,13 @@ class ExperimentPostService(
 
     fun getExperimentPostApplyMethod(input: GetExperimentPostApplyMethodUseCase.Input): GetExperimentPostApplyMethodUseCase.Output {
         return getExperimentPostApplyMethodUseCase.execute(input)
+    }
+
+    fun getExperimentPostCounts(input: Any): Any {
+        return when (input) {
+            is GetExperimentPostCountsByRegionUseCase.Input -> getExperimentPostCountsByRegionUseCase.execute(input)
+            is GetExperimentPostCountsByAreaUseCase.Input -> getExperimentPostCountsByAreaUseCase.execute(input)
+            else -> throw IllegalArgumentException("Invalid input type: ${input::class.java.simpleName}")
+        }
     }
 }
