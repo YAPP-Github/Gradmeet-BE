@@ -28,7 +28,7 @@ class GetExperimentPostCountsByAreaUseCase(
         val region = Region.fromDisplayName(input.region)
 
         val total = experimentPostGateway.countExperimentPostsByRegion(region)
-        val regionData = region.let { experimentPostGateway.countExperimentPostByRegionGroupedByArea(it) } ?: emptyList()
+        val regionData = region.let { experimentPostGateway.countExperimentPostByRegionGroupedByArea(it) }
         val areaCounts = getAreaCounts(region, regionData)
 
         return Output(total, areaCounts)
