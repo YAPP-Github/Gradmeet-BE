@@ -1,13 +1,8 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
-import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
+import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
-import com.dobby.backend.presentation.api.dto.response.expirement.CreateExperimentPostResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.PostInfo
+import com.dobby.backend.presentation.api.dto.response.expirement.*
 import com.dobby.backend.util.getCurrentMemberId
 
 object ExperimentPostMapper {
@@ -108,5 +103,41 @@ object ExperimentPostMapper {
             content = response.experimentPostDetailResponse.content,
             imageList = response.experimentPostDetailResponse.imageList
         )
+    }
+
+    fun toGetExperimentPostCountsUseCaseInput(region: String?): Any {
+        return if (region == null) {
+            GetExperimentPostCountsByRegionUseCase.Input(region = null)
+        } else {
+            GetExperimentPostCountsByAreaUseCase.Input(region = region)
+        }
+    }
+
+    fun toGetExperimentPostCountsResponse(output: Any): ExperimentPostCountsResponse {
+        return when (output) {
+            is GetExperimentPostCountsByAreaUseCase.Output -> {
+                ExperimentPostCountsResponse(
+                    total = output.total,
+                    data = output.area.map {
+                        DataCount(
+                            name = it.name,
+                            count = it.count
+                        )
+                    }
+                )
+            }
+            is GetExperimentPostCountsByRegionUseCase.Output -> {
+                ExperimentPostCountsResponse(
+                    total = output.total,
+                    data = output.area.map {
+                        DataCount(
+                            name = it.name,
+                            count = it.count
+                        )
+                    }
+                )
+            }
+            else -> throw IllegalArgumentException("Unsupported output type: ${output::class.simpleName}")
+        }
     }
 }
