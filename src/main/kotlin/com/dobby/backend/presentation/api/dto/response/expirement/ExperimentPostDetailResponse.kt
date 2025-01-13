@@ -40,7 +40,7 @@ data class ExperimentPostDetailResponse(
     @Schema(description = "내용", example = "실험 게시물 내용입니다.")
     val content: String,
 
-    @Schema(description = "이미지 목록", example = "[\"https://bucket/image1.wep\", \"https://bucket/image2.wep\"]")
+    @Schema(description = "이미지 목록", example = "[\"https://bucket/image1.webp\", \"https://bucket/image2.webp\"]")
     val imageList: List<String>
 ) {
     @Schema(description = "실험 공고 요약 정보")
