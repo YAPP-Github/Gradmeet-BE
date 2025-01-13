@@ -1,6 +1,10 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.experiment.*
+import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -10,7 +14,8 @@ class ExperimentPostService(
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
-    private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase
+    private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
+    private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -23,6 +28,10 @@ class ExperimentPostService(
 
     fun getExperimentPostDetail(input: GetExperimentPostDetailUseCase.Input): GetExperimentPostDetailUseCase.Output {
         return getExperimentPostDetailUseCase.execute(input)
+    }
+
+    fun getExperimentPostApplyMethod(input: GetExperimentPostApplyMethodUseCase.Input): GetExperimentPostApplyMethodUseCase.Output {
+        return getExperimentPostApplyMethodUseCase.execute(input)
     }
 
     fun getExperimentPostCounts(input: Any): Any {

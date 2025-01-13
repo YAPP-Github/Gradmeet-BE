@@ -1,6 +1,10 @@
 package com.dobby.backend.presentation.api.mapper
 
 import com.dobby.backend.application.usecase.experiment.*
+import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -139,5 +143,20 @@ object ExperimentPostMapper {
             }
             else -> throw IllegalArgumentException("Unsupported output type: ${output::class.simpleName}")
         }
+    }
+
+    fun toGetExperimentPostApplyMethodUseCaseInput(experimentPostId: Long): GetExperimentPostApplyMethodUseCase.Input {
+        return GetExperimentPostApplyMethodUseCase.Input(
+            experimentPostId = experimentPostId
+        )
+    }
+
+    fun toGetExperimentPostApplyMethodResponse(output: GetExperimentPostApplyMethodUseCase.Output): ExperimentPostApplyMethodResponse {
+        return ExperimentPostApplyMethodResponse(
+            applyMethodId = output.applyMethodId,
+            phoneNum = output.phoneNum,
+            formUrl = output.formUrl,
+            content = output.content
+        )
     }
 }
