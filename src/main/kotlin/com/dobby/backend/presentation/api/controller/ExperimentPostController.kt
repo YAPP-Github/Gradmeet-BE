@@ -4,6 +4,7 @@ import com.dobby.backend.application.service.ExperimentPostService
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.CreateExperimentPostResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
+import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostApplyMethodResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
@@ -55,5 +56,18 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toGetExperimentPostDetailUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostDetail(input)
         return ExperimentPostMapper.toGetExperimentPostDetailResponse(output)
+    }
+
+    @GetMapping("/{postId}/apply-method")
+    @Operation(
+        summary = "특정 공고 지원 방법 조회",
+        description = "특정 공고의 지원 방법을 반환합니다."
+    )
+    fun getExperimentPostApplyMethod(
+        @PathVariable postId: Long
+    ): ExperimentPostApplyMethodResponse {
+        val input = ExperimentPostMapper.toGetExperimentPostApplyMethodUseCaseInput(postId)
+        val output = experimentPostService.getExperimentPostApplyMethod(input)
+        return ExperimentPostMapper.toGetExperimentPostApplyMethodResponse(output)
     }
 }

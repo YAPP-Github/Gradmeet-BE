@@ -1,6 +1,7 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import jakarta.transaction.Transactional
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service
 class ExperimentPostService(
     private val createExperimentPostUseCase: CreateExperimentPostUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
-    private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase
+    private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
+    private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -23,5 +25,9 @@ class ExperimentPostService(
 
     fun getExperimentPostDetail(input: GetExperimentPostDetailUseCase.Input): GetExperimentPostDetailUseCase.Output {
         return getExperimentPostDetailUseCase.execute(input)
+    }
+
+    fun getExperimentPostApplyMethod(input: GetExperimentPostApplyMethodUseCase.Input): GetExperimentPostApplyMethodUseCase.Output {
+        return getExperimentPostApplyMethodUseCase.execute(input)
     }
 }
