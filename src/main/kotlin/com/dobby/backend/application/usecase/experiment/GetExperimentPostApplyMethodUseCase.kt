@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
-import com.dobby.backend.domain.gateway.ExperimentPostGateway
+import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 
 class GetExperimentPostApplyMethodUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
