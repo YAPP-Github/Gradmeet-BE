@@ -40,7 +40,6 @@ app:
       access: 86400
       refresh: 604800
 
-
 cloud:
   aws:
     s3:
