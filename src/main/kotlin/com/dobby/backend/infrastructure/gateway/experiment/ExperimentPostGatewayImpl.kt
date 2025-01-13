@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.experiment
 
-import com.dobby.backend.domain.gateway.ExperimentPostGateway
+import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.converter.ExperimentPostConverter
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region

@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.gateway
+package com.dobby.backend.domain.gateway.auth
 
 import com.dobby.backend.domain.model.member.Member
 

@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.auth
 
-import com.dobby.backend.domain.gateway.feign.NaverAuthGateway
+import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
 import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
 import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient

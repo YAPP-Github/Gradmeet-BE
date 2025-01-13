@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.gateway
+package com.dobby.backend.domain.gateway.experiment
 
 import com.amazonaws.services.ec2.model.TargetGroup
 

@@ -1,5 +1,5 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByRegionUseCase
-import com.dobby.backend.domain.gateway.ExperimentPostGateway
+import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

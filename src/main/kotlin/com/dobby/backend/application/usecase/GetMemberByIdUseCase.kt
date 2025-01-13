@@ -1,6 +1,6 @@
 package com.dobby.backend.application.usecase
 
-import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.member.Member
 
 class GetMemberByIdUseCase(

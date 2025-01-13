@@ -3,8 +3,8 @@ package com.dobby.backend.application.usecase.member.email
 import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
-import com.dobby.backend.domain.gateway.EmailGateway
-import com.dobby.backend.domain.gateway.VerificationGateway
+import com.dobby.backend.domain.gateway.email.EmailGateway
+import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import com.dobby.backend.util.EmailUtils

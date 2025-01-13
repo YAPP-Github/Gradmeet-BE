@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.email
 
-import com.dobby.backend.domain.gateway.VerificationGateway
+import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
 import com.dobby.backend.infrastructure.database.repository.VerificationRepository
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class VerificationGatewayImpl(
     private val verificationRepository: VerificationRepository
-) : VerificationGateway{
+) : VerificationGateway {
 
     override fun findByUnivEmailAndStatus(univEmail: String, status: VerificationStatus): Verification? {
         return verificationRepository

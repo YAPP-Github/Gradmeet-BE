@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.auth
 
-import com.dobby.backend.domain.gateway.feign.GoogleAuthGateway
+import com.dobby.backend.domain.gateway.auth.GoogleAuthGateway
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient

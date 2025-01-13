@@ -1,4 +1,4 @@
-package com.dobby.backend.domain.gateway
+package com.dobby.backend.domain.gateway.experiment
 
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region

@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.email
 
-import com.dobby.backend.domain.gateway.EmailGateway
+import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.infrastructure.config.properties.EmailProperties
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender

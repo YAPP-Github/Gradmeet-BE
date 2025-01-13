@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.member
 
-import com.dobby.backend.domain.gateway.ParticipantGateway
+import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.converter.ParticipantConverter
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository

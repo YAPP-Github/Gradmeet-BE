@@ -1,6 +1,6 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.gateway.member
 
-import com.dobby.backend.domain.gateway.MemberGateway
+import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.converter.MemberConverter
