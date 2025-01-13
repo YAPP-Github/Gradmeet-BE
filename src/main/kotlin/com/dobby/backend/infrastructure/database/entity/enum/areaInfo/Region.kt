@@ -1,5 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity.enum.areaInfo
 
+import java.security.InvalidParameterException
+
 enum class Region(val displayName: String) {
     SEOUL("SEOUL"),
     GYEONGGI("GYEONGGI"),
@@ -25,8 +27,10 @@ enum class Region(val displayName: String) {
 
     companion object {
         private val displayNameMap = values().associateBy(Region::displayName)
-        fun fromDisplayName(name : String): Region? {
-            return displayNameMap[name]
+
+        fun fromDisplayName(typeKey: String): Region {
+            return displayNameMap[typeKey]
+                ?: throw InvalidParameterException()
         }
     }
 }
