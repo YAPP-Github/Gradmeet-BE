@@ -27,10 +27,10 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
         `when`("S3에서 PreSigned URL을 생성하면") {
             `when`(amazonS3Client.generatePresignedUrl(any(GeneratePresignedUrlRequest::class.java))).thenReturn(mockPresignedUrl)
 
-            then("PreSignedUrlResponse가 반환된다") {
-                val response = provider.getPreSignedUrl(imageName)
-                assertNotNull(response)
-                assertEquals(mockPresignedUrl.toString(), response.url)
+            then("PreSigned URL이 반환된다") {
+                val preSignedUrl = provider.getExperimentPostPreSignedUrl(imageName)
+                assertNotNull(preSignedUrl)
+                assertEquals(mockPresignedUrl.toString(), preSignedUrl)
             }
         }
     }
@@ -40,7 +40,7 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
 
         then("InvalidInputException이 발생한다") {
             assertFailsWith<InvalidInputException> {
-                provider.getPreSignedUrl(imageName)
+                provider.getExperimentPostPreSignedUrl(imageName)
             }
         }
     }
