@@ -74,6 +74,11 @@ enum class ErrorCode(
     RESEARCHER_NOT_FOUND("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND),
 
     /**
+     * Participant error codes
+     */
+    PARTICIPANT_NOT_FOUND("PA001", "Participant Not Found.", HttpStatus.NOT_FOUND),
+
+    /**
      * Experiment Post error codes
      */
     EXPERIMENT_POST_NOT_FOUND("EP001", "Experiment Post Not Found.", HttpStatus.NOT_FOUND),
