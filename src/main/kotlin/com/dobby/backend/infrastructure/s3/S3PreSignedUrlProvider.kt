@@ -21,7 +21,7 @@ class S3PreSignedUrlProvider(
     lateinit var bucket: String
 
     fun getExperimentPostPreSignedUrl(fileName: String): String {
-        val generatePreSignedUrlRequest = getGenerateImagePreSignedUrlRequest(fileName)
+        val generatePreSignedUrlRequest = getGenerateImagePreSignedUrlRequest("experiment-post", fileName)
         return generatePreSignedUrl(generatePreSignedUrlRequest)
     }
 
@@ -33,9 +33,9 @@ class S3PreSignedUrlProvider(
         }
     }
 
-    private fun getGenerateImagePreSignedUrlRequest(fileName: String): GeneratePresignedUrlRequest {
+    private fun getGenerateImagePreSignedUrlRequest(directory: String, fileName: String): GeneratePresignedUrlRequest {
         val savedImageName = generateUniqueImageName(fileName)
-        val savedImagePath = "images/$savedImageName"
+        val savedImagePath = "images/$directory/$savedImageName"
         return getPreSignedUrlRequest(bucket, savedImagePath)
     }
 
