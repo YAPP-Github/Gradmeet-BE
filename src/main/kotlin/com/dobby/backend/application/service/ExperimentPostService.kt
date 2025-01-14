@@ -26,10 +26,12 @@ class ExperimentPostService(
         return getResearcherInfoUseCase.execute(input)
     }
 
+    @Transactional
     fun getExperimentPostDetail(input: GetExperimentPostDetailUseCase.Input): GetExperimentPostDetailUseCase.Output {
         return getExperimentPostDetailUseCase.execute(input)
     }
 
+    @Transactional
     fun getExperimentPostApplyMethod(input: GetExperimentPostApplyMethodUseCase.Input): GetExperimentPostApplyMethodUseCase.Output {
         return getExperimentPostApplyMethodUseCase.execute(input)
     }
