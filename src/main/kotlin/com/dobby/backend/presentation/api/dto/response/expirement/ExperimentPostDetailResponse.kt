@@ -61,7 +61,7 @@ data class ExperimentPostDetailResponse(
         val reward: String,
 
         @Schema(description = "참여 횟수", example = "10")
-        val count: Int,
+        val count: Int?,
 
         @Schema(description = "소요 시간 (nullable)", example = "ABOUT_1H", nullable = true)
         val timeRequired: TimeSlot?
