@@ -3,14 +3,16 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "회원가입 API - /v1/members/signup")
+@Tag(name = "회원 API - /v1/members")
 @RestController
 @RequestMapping("/v1/members")
 class MemberController(
@@ -43,5 +45,17 @@ class MemberController(
         val input = MemberMapper.toCreateResearcherInput(req)
         val output = memberService.researcherSignup(input)
         return MemberMapper.toResearcherSignupResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @GetMapping("/default-info/researcher")
+    @Operation(
+        summary = "연구자 기본 정보 렌더링",
+        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
+    )
+    fun getDefaultInfo(): DefaultInfoResponse {
+        val input = MemberMapper.toDefaultInfoUseCaseInput()
+        val output = memberService.getDefaultInfo(input)
+        return MemberMapper.toDefaultInfoResponse(output)
     }
 }

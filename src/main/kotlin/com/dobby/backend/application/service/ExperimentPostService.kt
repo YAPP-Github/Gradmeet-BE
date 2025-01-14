@@ -4,7 +4,7 @@ import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
-import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
+import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -20,10 +20,6 @@ class ExperimentPostService(
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
         return createExperimentPostUseCase.execute(input)
-    }
-
-    fun getDefaultInfo(input: GetResearcherInfoUseCase.Input): GetResearcherInfoUseCase.Output {
-        return getResearcherInfoUseCase.execute(input)
     }
 
     @Transactional

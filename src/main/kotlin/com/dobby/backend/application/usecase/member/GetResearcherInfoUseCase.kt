@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.experiment
+package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ResearcherNotFoundException

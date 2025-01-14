@@ -4,7 +4,6 @@ import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
-import com.dobby.backend.application.usecase.experiment.GetResearcherInfoUseCase
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -71,19 +70,6 @@ object ExperimentPostMapper {
             endDate = input.endDate,
             reward = input.reward,
             univName = input.univName
-        )
-    }
-
-    fun toDefaultInfoUseCaseInput(): GetResearcherInfoUseCase.Input {
-        return GetResearcherInfoUseCase.Input(
-            memberId = getCurrentMemberId()
-        )
-    }
-
-    fun toDefaultInfoResponse(response: GetResearcherInfoUseCase.Output): DefaultInfoResponse{
-        return DefaultInfoResponse(
-            leadResearcher = response.leadResearcher,
-            univName = response.univName
         )
     }
 
