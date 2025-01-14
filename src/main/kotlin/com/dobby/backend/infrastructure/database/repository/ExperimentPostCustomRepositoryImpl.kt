@@ -5,6 +5,7 @@ import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.entity.experiment.QExperimentPostEntity
@@ -58,7 +59,9 @@ class ExperimentPostCustomRepositoryImpl (
     }
 
     private fun areasIn(post: QExperimentPostEntity, areas: List<Area>?): BooleanExpression? {
-        return areas?.takeIf { it.isNotEmpty() }?.let { post.area.`in`(it) }
+        return areas?.takeIf { it.isNotEmpty() && !it.any { area -> area.isAll() } }?.let {
+            post.area.`in`(it)
+        }
     }
 
     private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
