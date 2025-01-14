@@ -1,8 +1,11 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.Input // Input 클래스 임포트
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.CustomFilter // CustomFilter 클래스 임포트
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.Pagination // CustomFilter 클래스 임포트
+import com.dobby.backend.application.mapper.ExperimentMapper
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.Input
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.CustomFilterInput
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
 
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
@@ -24,13 +27,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
     val useCase = GetExperimentPostsUseCase(experimentPostGateway)
 
     given("유효한 필터와 페이지네이션이 주어졌을 때") {
-        val customFilter = CustomFilter(
+        val customFilter = CustomFilterInput(
             matchType = MatchType.HYBRID,
-            studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 24),
-            locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU, Area.MAPOGU)),
+            studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 24),
+            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU, Area.MAPOGU)),
             recruitDone = false
         )
-        val pagination = Pagination(page = 1, count = 6)
+        val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
@@ -82,8 +85,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                input.toDomainFilter(),
-                input.toDomainPagination()
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
             )
         } returns listOf(mockPost)
 
@@ -101,13 +104,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
     }
 
     given("studyTarget이 null인 경우") {
-        val customFilter = CustomFilter(
+        val customFilter = CustomFilterInput(
             matchType = MatchType.HYBRID,
             studyTarget = null,
-            locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
+            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
             recruitDone = false
         )
-        val pagination = Pagination(page = 1, count = 6)
+        val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
@@ -159,8 +162,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                input.toDomainFilter(),
-                input.toDomainPagination()
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
             )
         } returns listOf(mockPost)
 
@@ -175,13 +178,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
     }
 
     given("locationTarget의 areas가 null인 경우") {
-        val customFilter = CustomFilter(
+        val customFilter = CustomFilterInput(
             matchType = MatchType.HYBRID,
-            studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 24),
-            locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = null),
+            studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 24),
+            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = null),
             recruitDone = false
         )
-        val pagination = Pagination(page = 1, count = 6)
+        val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
@@ -233,8 +236,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                input.toDomainFilter(),
-                input.toDomainPagination()
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
             )
         } returns listOf(mockPost)
 
@@ -248,19 +251,19 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         }
     }
     given("필터에 맞는 공고가 없을 경우") {
-        val customFilter = CustomFilter(
+        val customFilter = CustomFilterInput(
             matchType = MatchType.HYBRID,
-            studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 30),
-            locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.GYEONGGI, areas = listOf(Area.GWANGMYEONGSI)),
+            studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 30),
+            locationTarget = LocationTargetInput(region = Region.GYEONGGI, areas = listOf(Area.GWANGMYEONGSI)),
             recruitDone = false
         )
-        val pagination = Pagination(page = 1, count = 6)
+        val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                input.toDomainFilter(),
-                input.toDomainPagination()
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
             )
         } returns emptyList()
 
