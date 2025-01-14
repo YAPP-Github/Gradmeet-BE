@@ -3,7 +3,8 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
+import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
+import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
@@ -53,9 +54,23 @@ class MemberController(
         summary = "연구자 기본 정보 렌더링",
         description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
     )
-    fun getDefaultInfo(): DefaultInfoResponse {
-        val input = MemberMapper.toDefaultInfoUseCaseInput()
-        val output = memberService.getDefaultInfo(input)
-        return MemberMapper.toDefaultInfoResponse(output)
+    fun getResearcherInfo(): ResearcherInfoResponse {
+        val input = MemberMapper.toGetResearcherInfoUseCaseInput()
+        val output = memberService.getResearcherInfo(input)
+        return MemberMapper.toResearcherInfoResponse(output)
+    }
+
+    @PreAuthorize("hasRole('PARTICIPANT')")
+    @GetMapping("/participant/{memberId}")
+    @Operation(
+        summary = "참여자 회원 기본 정보 렌더링",
+        description = "참여자의 기본 정보를 반환합니다."
+    )
+    fun getParticipantInfo(
+        @PathVariable memberId: Long
+    ): ParticipantInfoResponse {
+        val input = MemberMapper.toGetParticipantInfoUseCaseInput(memberId)
+        val output = memberService.getParticipantInfo(input)
+        return MemberMapper.toParticipantInfoResponse(output)
     }
 }
