@@ -96,10 +96,9 @@ object MemberMapper {
         )
     }
 
-    fun toGetParticipantInfoUseCaseInput(memberId: Long): GetParticipantInfoUseCase.Input {
+    fun toGetParticipantInfoUseCaseInput(): GetParticipantInfoUseCase.Input {
         return GetParticipantInfoUseCase.Input(
-            memberId = memberId,
-            loginMemberId = getCurrentMemberId()
+            memberId = getCurrentMemberId()
         )
     }
 

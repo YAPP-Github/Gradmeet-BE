@@ -22,9 +22,8 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
     val participantGateway = mockk<ParticipantGateway>()
     val useCase = GetParticipantInfoUseCase(memberGateway, participantGateway)
 
-    given("유효한 memberId와 loginMemberId가 주어졌을 때") {
+    given("유효한 memberId가 주어졌을 때") {
         val memberId = 1L
-        val loginMemberId = 1L
 
         val member = mockk<Member>()
         val participant = mockk<Participant>()
@@ -40,7 +39,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
         every { participant.preferType } returns MatchType.HYBRID
 
         `when`("useCase의 execute가 호출되면") {
-            val input = GetParticipantInfoUseCase.Input(memberId, loginMemberId)
+            val input = GetParticipantInfoUseCase.Input(memberId)
             val result = useCase.execute(input)
 
             then("정상적으로 participant 정보가 반환된다") {
@@ -54,24 +53,8 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
         }
     }
 
-    given("memberId와 loginMemberId가 다를 때") {
-        val memberId = 1L
-        val loginMemberId = 2L
-
-        `when`("useCase의 execute가 호출되면") {
-            val input = GetParticipantInfoUseCase.Input(memberId, loginMemberId)
-
-            then("PermissionDeniedException이 발생한다") {
-                shouldThrow<PermissionDeniedException> {
-                    useCase.execute(input)
-                }
-            }
-        }
-    }
-
     given("존재하지 않는 participantId가 주어졌을 때") {
         val memberId = 1L
-        val loginMemberId = 1L
 
         val member = mockk<Member>()
 
@@ -79,7 +62,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
         every { participantGateway.findByMemberId(memberId) } returns null
 
         `when`("useCase의 execute가 호출되면") {
-            val input = GetParticipantInfoUseCase.Input(memberId, loginMemberId)
+            val input = GetParticipantInfoUseCase.Input(memberId)
 
             then("ParticipantNotFoundException이 발생한다") {
                 shouldThrow<ParticipantNotFoundException> {

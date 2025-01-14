@@ -17,7 +17,6 @@ class GetParticipantInfoUseCase(
 ) : UseCase<GetParticipantInfoUseCase.Input, GetParticipantInfoUseCase.Output>{
     data class Input(
         val memberId: Long,
-        val loginMemberId: Long,
     )
 
     data class Output(
@@ -31,9 +30,6 @@ class GetParticipantInfoUseCase(
 
     override fun execute(input: Input): Output {
         val memberId = input.memberId
-        if (memberId != input.loginMemberId) {
-            throw PermissionDeniedException()
-        }
         val member = memberGateway.getById(memberId)
         val participant = participantGateway.findByMemberId(memberId)
             ?: throw ParticipantNotFoundException()

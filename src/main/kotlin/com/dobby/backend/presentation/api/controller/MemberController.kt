@@ -49,7 +49,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/default-info/researcher")
+    @GetMapping("/researchers")
     @Operation(
         summary = "연구자 기본 정보 렌더링",
         description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
@@ -61,15 +61,13 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @GetMapping("/participant/{memberId}")
+    @GetMapping("/participants")
     @Operation(
         summary = "참여자 회원 기본 정보 렌더링",
         description = "참여자의 기본 정보를 반환합니다."
     )
-    fun getParticipantInfo(
-        @PathVariable memberId: Long
-    ): ParticipantInfoResponse {
-        val input = MemberMapper.toGetParticipantInfoUseCaseInput(memberId)
+    fun getParticipantInfo(): ParticipantInfoResponse {
+        val input = MemberMapper.toGetParticipantInfoUseCaseInput()
         val output = memberService.getParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
     }
