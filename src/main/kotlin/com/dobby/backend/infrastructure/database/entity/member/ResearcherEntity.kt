@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "researcher")
 class ResearcherEntity (
-    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
