@@ -260,6 +260,53 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
 
+        val mockPost = ExperimentPost(
+            id = 1L,
+            title = "Location Target Null Test",
+            views = 10,
+            univName = "Test University",
+            reward = "Test Reward",
+            recruitDone = false,
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusDays(10),
+            alarmAgree = true,
+            applyMethod = ApplyMethod(
+                id = 1L,
+                phoneNum = "123-456-7890",
+                formUrl = "https://example.googleform.com",
+                content = "구글 폼 참고하여 신청해주세요."
+            ),
+            region = Region.SEOUL,
+            area = Area.SEODAEMUNGU,
+            content = "Test content",
+            count = 10,
+            detailedAddress = "Test Address",
+            images = emptyList(),
+            leadResearcher = "Test Researcher",
+            matchType = MatchType.ALL,
+            timeRequired = TimeSlot.ABOUT_1H,
+            member = Member(
+                id = 1L,
+                name = "Test Member",
+                role = RoleType.RESEARCHER,
+                contactEmail = "researcher@example.com",
+                oauthEmail = "researcher@gmail.com",
+                provider = ProviderType.GOOGLE,
+                status = MemberStatus.ACTIVE,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            ),
+            targetGroup = TargetGroup(
+                id = 0L,
+                startAge = 20,
+                endAge = 29,
+                genderType = GenderType.FEMALE,
+                otherCondition = null
+            ),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
                 ExperimentMapper.toDomainFilter(input.customFilter),
@@ -275,5 +322,154 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             }
         }
     }
+
+    given("studyTarget이 null인 경우") {
+        val customFilter = CustomFilterInput(
+            matchType = MatchType.ALL,
+            studyTarget = null,
+            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
+            recruitDone = false
+        )
+        val pagination = PaginationInput(page = 1, count = 6)
+        val input = Input(customFilter, pagination)
+
+        val mockPost = ExperimentPost(
+            id = 1L,
+            title = "야뿌 피자 먹방 테스트",
+            views = 10,
+            univName = "Test University",
+            reward = "Test Reward",
+            recruitDone = false,
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusDays(10),
+            alarmAgree = true,
+            applyMethod = ApplyMethod(
+                id = 1L,
+                phoneNum = "123-456-7890",
+                formUrl = "https://example.googleform.com",
+                content = "구글 폼 참고하여 신청해주세요."
+            ),
+            region = Region.SEOUL,
+            area = Area.SEODAEMUNGU,
+            content = "Test content",
+            count = 10,
+            detailedAddress = "Test Address",
+            images = emptyList(),
+            leadResearcher = "Test Researcher",
+            matchType = MatchType.ALL,
+            timeRequired = TimeSlot.ABOUT_1H,
+            member = Member(
+                id = 1L,
+                name = "Test Member",
+                role = RoleType.RESEARCHER,
+                contactEmail = "researcher@example.com",
+                oauthEmail = "researcher@gmail.com",
+                provider = ProviderType.GOOGLE,
+                status = MemberStatus.ACTIVE,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            ),
+            targetGroup = TargetGroup(
+                id = 0L,
+                startAge = 20,
+                endAge = 29,
+                genderType = GenderType.FEMALE,
+                otherCondition = null
+            ),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+
+        every {
+            experimentPostGateway.findExperimentPostsByCustomFilter(
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
+            )
+        } returns listOf(mockPost)
+
+        `when`("studyTarget이 null인 경우") {
+            val result = useCase.execute(input)
+
+            then("studyTarget이 null일 때에도 필터링된 공고가 반환된다") {
+                result.size shouldBe 1
+                result.first().postInfo.title shouldBe "야뿌 피자 먹방 테스트"
+            }
+        }
+    }
+
+    given("필터가 없는 경우") {
+        val customFilter = CustomFilterInput(
+            matchType = MatchType.ALL,
+            studyTarget = null,
+            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
+            recruitDone = true
+        )
+        val pagination = PaginationInput(page = 1, count = 6)
+        val input = Input(customFilter, pagination)
+
+        val mockPost = ExperimentPost(
+            id = 1L,
+            title = "야뿌 피자 먹방 테스트",
+            views = 10,
+            univName = "Test University",
+            reward = "Test Reward",
+            recruitDone = false,
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusDays(10),
+            alarmAgree = true,
+            applyMethod = ApplyMethod(
+                id = 1L,
+                phoneNum = "123-456-7890",
+                formUrl = "https://example.googleform.com",
+                content = "구글 폼 참고하여 신청해주세요."
+            ),
+            region = Region.SEOUL,
+            area = Area.SEODAEMUNGU,
+            content = "Test content",
+            count = 10,
+            detailedAddress = "Test Address",
+            images = emptyList(),
+            leadResearcher = "Test Researcher",
+            matchType = MatchType.ALL,
+            timeRequired = TimeSlot.ABOUT_1H,
+            member = Member(
+                id = 1L,
+                name = "Test Member",
+                role = RoleType.RESEARCHER,
+                contactEmail = "researcher@example.com",
+                oauthEmail = "researcher@gmail.com",
+                provider = ProviderType.GOOGLE,
+                status = MemberStatus.ACTIVE,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            ),
+            targetGroup = TargetGroup(
+                id = 0L,
+                startAge = 20,
+                endAge = 29,
+                genderType = GenderType.FEMALE,
+                otherCondition = null
+            ),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+
+        every {
+            experimentPostGateway.findExperimentPostsByCustomFilter(
+                ExperimentMapper.toDomainFilter(input.customFilter),
+                ExperimentMapper.toDomainPagination(input.pagination)
+            )
+        } returns listOf(mockPost)
+
+        `when`("필터가 없으면 모든 공고가 반환된다") {
+            val result = useCase.execute(input)
+
+            then("모든 공고가 반환된다") {
+                result.size shouldBe 1
+                result.first().postInfo.title shouldBe "야뿌 피자 먹방 테스트"
+            }
+        }
+    }
+
 })
 
