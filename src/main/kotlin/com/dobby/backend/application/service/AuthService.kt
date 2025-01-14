@@ -4,6 +4,7 @@ import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTestTokenUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -50,6 +51,7 @@ class AuthService(
         )
     }
 
+    @Transactional
     fun forceToken(memberId: Long): GenerateTestTokenUseCase.Output {
         val result = generateTestTokenUseCase.execute(
             GenerateTestTokenUseCase.Input(
@@ -63,6 +65,7 @@ class AuthService(
         )
     }
 
+    @Transactional
     fun signInWithRefreshToken(refreshToken: String): GenerateTokenWithRefreshTokenUseCase.Output {
         val result = generateTokenWithRefreshTokenUseCase.execute(
             GenerateTokenWithRefreshTokenUseCase.Input(
