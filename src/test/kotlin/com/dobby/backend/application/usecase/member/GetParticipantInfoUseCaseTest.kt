@@ -1,15 +1,14 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
-import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Participant
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -36,7 +35,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
         every { participant.birthDate } returns LocalDate.of(2000, 7, 8)
         every { participant.basicAddressInfo } returns basicAddressInfo
         every { participant.additionalAddressInfo } returns additionalAddressInfo
-        every { participant.matchType } returns MatchType.HYBRID
+        every { participant.matchType } returns MatchType.ALL
 
         `when`("useCase의 execute가 호출되면") {
             val input = GetParticipantInfoUseCase.Input(memberId)
@@ -48,7 +47,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
                 result.birthDate shouldBe LocalDate.of(2000, 7, 8)
                 result.basicAddressInfo shouldBe basicAddressInfo
                 result.additionalAddressInfo shouldBe additionalAddressInfo
-                result.matchType shouldBe MatchType.HYBRID
+                result.matchType shouldBe MatchType.ALL
             }
         }
     }
