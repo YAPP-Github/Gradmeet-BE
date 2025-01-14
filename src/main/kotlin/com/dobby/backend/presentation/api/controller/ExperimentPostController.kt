@@ -34,18 +34,6 @@ class ExperimentPostController (
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
     }
 
-    @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/default")
-    @Operation(
-        summary = "공고 등록 API- 연구자 기본 정보 렌더링",
-        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
-    )
-    fun getDefaultInfo(): DefaultInfoResponse {
-        val input = ExperimentPostMapper.toDefaultInfoUseCaseInput()
-        val output = experimentPostService.getDefaultInfo(input)
-        return ExperimentPostMapper.toDefaultInfoResponse(output)
-    }
-
     @PostMapping("/{postId}")
     @Operation(
         summary = "특정 공고 상세 정보 조회 API",

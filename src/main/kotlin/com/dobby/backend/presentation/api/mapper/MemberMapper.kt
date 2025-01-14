@@ -1,11 +1,14 @@
 package com.dobby.backend.presentation.api.mapper
 
+import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
+import com.dobby.backend.util.getCurrentMemberId
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
@@ -79,5 +82,18 @@ object MemberMapper {
             }
             else -> throw IllegalArgumentException("Unsupported MemberResponse type")
         }
+    }
+
+    fun toDefaultInfoUseCaseInput(): GetResearcherInfoUseCase.Input {
+        return GetResearcherInfoUseCase.Input(
+            memberId = getCurrentMemberId()
+        )
+    }
+
+    fun toDefaultInfoResponse(response: GetResearcherInfoUseCase.Output): DefaultInfoResponse {
+        return DefaultInfoResponse(
+            leadResearcher = response.leadResearcher,
+            univName = response.univName
+        )
     }
 }
