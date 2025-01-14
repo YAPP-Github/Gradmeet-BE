@@ -73,7 +73,7 @@ class ExperimentPostController (
         return ExperimentPostMapper.toGetExperimentPostApplyMethodResponse(output)
     }
 
-    @GetMapping("/regions")
+    @GetMapping("/search")
     @Operation(
         summary = "공고 전체 조회 API - 필터링 + 페이지네이션 적용" ,
         description = "사용자가 필터링한 조건에 맞는 공고 목록들을 조회합니다"
