@@ -158,14 +158,14 @@ object ExperimentPostMapper {
         age: Int?,
         region: Region?,
         areas: List<Area>?,
-        recruitDone: Boolean?, ): GetExperimentPostsUseCase.CustomFilter {
-        return GetExperimentPostsUseCase.CustomFilter(
+        recruitDone: Boolean?, ): GetExperimentPostsUseCase.CustomFilterInput {
+        return GetExperimentPostsUseCase.CustomFilterInput(
             matchType = matchType,
-            studyTarget = GetExperimentPostsUseCase.StudyTarget(
+            studyTarget = GetExperimentPostsUseCase.StudyTargetInput(
                 gender = gender,
                 age = age
             ),
-            locationTarget = GetExperimentPostsUseCase.LocationTarget(
+            locationTarget = GetExperimentPostsUseCase.LocationTargetInput(
                 region = region,
                 areas = areas
             ),
@@ -174,16 +174,16 @@ object ExperimentPostMapper {
     }
 
     fun toUseCasePagination(
-        page: Int, count: Int) : GetExperimentPostsUseCase.Pagination {
-        return GetExperimentPostsUseCase.Pagination(
+        page: Int, count: Int) : GetExperimentPostsUseCase.PaginationInput {
+        return GetExperimentPostsUseCase.PaginationInput(
             page=  page,
             count = count,
         )
     }
 
     fun toExperimentPostsUseCaseInput(
-        customFilter: GetExperimentPostsUseCase.CustomFilter,
-        pagination: GetExperimentPostsUseCase.Pagination
+        customFilter: GetExperimentPostsUseCase.CustomFilterInput,
+        pagination: GetExperimentPostsUseCase.PaginationInput
     ): GetExperimentPostsUseCase.Input {
         return GetExperimentPostsUseCase.Input(
             customFilter = customFilter,
