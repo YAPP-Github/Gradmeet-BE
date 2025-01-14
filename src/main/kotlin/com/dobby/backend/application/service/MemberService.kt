@@ -1,9 +1,6 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
-import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
-import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.member.VerifyResearcherEmailUseCase
+import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
@@ -16,7 +13,8 @@ class MemberService(
     private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
-    private val getResearcherInfoUseCase: GetResearcherInfoUseCase
+    private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
+    private val getParticipantInfoUseCase: GetParticipantInfoUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -32,7 +30,11 @@ class MemberService(
         return createResearcherUseCase.execute(input)
     }
 
-    fun getDefaultInfo(input: GetResearcherInfoUseCase.Input): GetResearcherInfoUseCase.Output {
+    fun getResearcherInfo(input: GetResearcherInfoUseCase.Input): GetResearcherInfoUseCase.Output {
         return getResearcherInfoUseCase.execute(input)
+    }
+
+    fun getParticipantInfo(input: GetParticipantInfoUseCase.Input): GetParticipantInfoUseCase.Output {
+        return getParticipantInfoUseCase.execute(input)
     }
 }

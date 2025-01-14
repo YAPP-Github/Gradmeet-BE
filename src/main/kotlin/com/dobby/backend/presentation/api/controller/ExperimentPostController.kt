@@ -3,7 +3,6 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.ExperimentPostService
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.expirement.CreateExperimentPostResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostApplyMethodResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostCountsResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
