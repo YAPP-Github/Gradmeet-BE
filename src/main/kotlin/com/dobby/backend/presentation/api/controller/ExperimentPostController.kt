@@ -1,12 +1,12 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.ExperimentPostService
-import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
-import com.dobby.backend.presentation.api.dto.response.expirement.CreateExperimentPostResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostApplyMethodResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostCountsResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.backend.presentation.api.dto.response.expirement.*
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -71,5 +71,27 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toGetExperimentPostApplyMethodUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostApplyMethod(input)
         return ExperimentPostMapper.toGetExperimentPostApplyMethodResponse(output)
+    }
+
+    @GetMapping("/regions")
+    @Operation(
+        summary = "공고 전체 조회 API - 필터링 + 페이지네이션 적용" ,
+        description = "사용자가 필터링한 조건에 맞는 공고 목록들을 조회합니다"
+    )
+    fun getExperimentPosts(
+        @RequestParam(required = false) method: MatchType?,
+        @RequestParam(required = false) gender: GenderType?,
+        @RequestParam(required = false) age: Int?,
+        @RequestParam(required = false) region: Region?,
+        @RequestParam(required = false) areas: List<Area>?,
+        @RequestParam(required = false) recruitDone: Boolean?,
+        @RequestParam(defaultValue = "1") page: Int,
+        @RequestParam(defaultValue = "6") count: Int
+    ): List<ExperimentPostsResponse> {
+        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(method, gender, age, region, areas, recruitDone)
+        val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
+        val input = ExperimentPostMapper.toExperimentPostsUseCaseInput(customFilter, pagination)
+        val output = experimentPostService.getExperimentPosts(input)
+        return output.map { ExperimentPostMapper.toGetExperimentPostsResponse(it) }
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service
 class ExperimentPostService(
     private val createExperimentPostUseCase: CreateExperimentPostUseCase,
-    private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
+    private val getExperimentPostsUseCase: GetExperimentPostsUseCase,
     private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
@@ -20,6 +20,11 @@ class ExperimentPostService(
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
         return createExperimentPostUseCase.execute(input)
+    }
+
+    @Transactional
+    fun getExperimentPosts(input : GetExperimentPostsUseCase.Input): List<GetExperimentPostsUseCase.Output> {
+        return getExperimentPostsUseCase.execute(input)
     }
 
     @Transactional

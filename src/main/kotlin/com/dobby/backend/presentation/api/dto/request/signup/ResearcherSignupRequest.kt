@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.signup
 
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

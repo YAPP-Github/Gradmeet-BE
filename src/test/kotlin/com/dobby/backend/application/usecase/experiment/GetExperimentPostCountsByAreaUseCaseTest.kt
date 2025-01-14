@@ -1,7 +1,7 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByAreaUseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

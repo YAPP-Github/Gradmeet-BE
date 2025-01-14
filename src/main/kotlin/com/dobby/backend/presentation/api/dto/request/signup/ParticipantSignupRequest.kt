@@ -1,10 +1,10 @@
 package com.dobby.backend.presentation.api.dto.request.signup
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

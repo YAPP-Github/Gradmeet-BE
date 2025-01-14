@@ -77,4 +77,7 @@ enum class ErrorCode(
      * Experiment Post error codes
      */
     EXPERIMENT_POST_NOT_FOUND("EP001", "Experiment Post Not Found.", HttpStatus.NOT_FOUND),
+    EXPERIMENT_POST_SINGLE_SELECTION_ERROR("EP002", "You can only select one Area_ALL selection", HttpStatus.BAD_REQUEST),
+    EXPERIMENT_POST_AREA_SELECTION_LIMIT("EP003", "You can only select up to 5 Area options in 1 Region.", HttpStatus.BAD_REQUEST),
+    EXPERIMENT_POST_AREA_INCORRECT("EP004", "Selected Area doesn't belong to correct Region.", HttpStatus.BAD_REQUEST),
 }

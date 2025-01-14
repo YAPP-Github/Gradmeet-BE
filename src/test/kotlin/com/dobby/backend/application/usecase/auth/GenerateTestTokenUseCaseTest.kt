@@ -4,9 +4,9 @@ import com.dobby.backend.domain.gateway.member.MemberGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
