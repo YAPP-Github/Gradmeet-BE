@@ -41,7 +41,9 @@ class ExperimentPostCustomRepositoryImpl (
     }
 
     private fun matchTypeEq(post: QExperimentPostEntity, matchType: MatchType?): BooleanExpression? {
-        return matchType?.let { post.matchType.eq(it) }
+        return matchType?.let {
+            if(it == MatchType.ALL) null else post.matchType.eq(it)
+        }
     }
 
     private fun genderEq(post: QExperimentPostEntity, gender: GenderType?): BooleanExpression? {

@@ -44,7 +44,7 @@ class GetExperimentPostApplyMethodUseCaseTest : BehaviorSpec({
             startDate = LocalDate.now(),
             endDate = LocalDate.now(),
             leadResearcher = "Lead",
-            matchType = MatchType.HYBRID,
+            matchType = MatchType.ALL,
             reward = "네이버페이 1000원",
             count = 10,
             timeRequired = TimeSlot.ABOUT_1H,
