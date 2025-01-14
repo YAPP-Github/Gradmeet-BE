@@ -41,9 +41,9 @@ class ParticipantEntity (
     )
     val additionalAddressInfo: AddressInfo?,
 
-    @Column(name = "prefer_type", nullable = true)
+    @Column(name = "match_type", nullable = true)
     @Enumerated(EnumType.STRING)
-    var preferType: MatchType?,
+    var matchType: MatchType?,
 ) {
 
     fun toDomain() = Participant(
@@ -53,7 +53,7 @@ class ParticipantEntity (
         birthDate = birthDate,
         basicAddressInfo = basicAddressInfo.toDomain(),
         additionalAddressInfo = additionalAddressInfo?.toDomain(),
-        preferType = preferType
+        matchType = matchType
     )
 
     companion object {
@@ -65,7 +65,7 @@ class ParticipantEntity (
                 birthDate = birthDate,
                 basicAddressInfo = AddressInfo.fromDomain(basicAddressInfo), // 수정: AddressInfo.fromDomain() 사용
                 additionalAddressInfo = additionalAddressInfo?.let { AddressInfo.fromDomain(it) }, // 수정
-                preferType = preferType
+                matchType = matchType
             )
         }
     }

@@ -27,7 +27,7 @@ object SignupMapper {
             member = member,
             basicAddressInfo = toAddressInfo(req.basicAddressInfo),
             additionalAddressInfo = req.additionalAddressInfo?.let { toAddressInfo(it) },
-            preferType = req.preferType,
+            matchType = req.matchType,
             gender = req.gender,
             birthDate = req.birthDate
         )

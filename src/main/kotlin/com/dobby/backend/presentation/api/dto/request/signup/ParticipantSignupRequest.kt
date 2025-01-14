@@ -41,7 +41,7 @@ data class ParticipantSignupRequest(
     var additionalAddressInfo: AddressInfo?,
 
     // 선호 실험 진행 방식
-    var preferType: MatchType,
+    var matchType: MatchType,
 )
 
 data class AddressInfo(

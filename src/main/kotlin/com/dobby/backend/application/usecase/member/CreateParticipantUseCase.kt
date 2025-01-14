@@ -26,7 +26,7 @@ class CreateParticipantUseCase (
         val birthDate: LocalDate,
         var basicAddressInfo: AddressInfo,
         var additionalAddressInfo: AddressInfo?,
-        var preferType: MatchType,
+        var matchType: MatchType,
     )
     data class AddressInfo(
         val region: Region,
@@ -89,7 +89,7 @@ class CreateParticipantUseCase (
             additionalAddressInfo = input.additionalAddressInfo?.let {
                 Participant.AddressInfo(region = it.region, area = it.area)
             },
-            preferType = input.preferType
+            matchType = input.matchType
         )
     }
 }

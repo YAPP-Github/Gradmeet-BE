@@ -47,7 +47,7 @@ object MemberMapper {
             additionalAddressInfo = req.additionalAddressInfo?.let {
                 CreateParticipantUseCase.AddressInfo(region = it.region, area = it.area)
             },
-            preferType = req.preferType
+            matchType = req.matchType
         )
     }
 
@@ -109,7 +109,7 @@ object MemberMapper {
             birthDate = output.birthDate,
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
-            matchType = output.preferType
+            matchType = output.matchType
         )
     }
 }

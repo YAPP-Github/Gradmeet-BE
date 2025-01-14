@@ -2,7 +2,6 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
-import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
@@ -25,7 +24,7 @@ class GetParticipantInfoUseCase(
         val birthDate: LocalDate,
         val basicAddressInfo: Participant.AddressInfo,
         val additionalAddressInfo: Participant.AddressInfo?,
-        val preferType: MatchType?
+        val matchType: MatchType?
     )
 
     override fun execute(input: Input): Output {
@@ -40,7 +39,7 @@ class GetParticipantInfoUseCase(
             birthDate = participant.birthDate,
             basicAddressInfo = participant.basicAddressInfo,
             additionalAddressInfo = participant.additionalAddressInfo,
-            preferType = participant.preferType
+            matchType = participant.matchType
         )
     }
 }

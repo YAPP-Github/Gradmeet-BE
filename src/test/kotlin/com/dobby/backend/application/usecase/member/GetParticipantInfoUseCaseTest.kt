@@ -36,7 +36,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
         every { participant.birthDate } returns LocalDate.of(2000, 7, 8)
         every { participant.basicAddressInfo } returns basicAddressInfo
         every { participant.additionalAddressInfo } returns additionalAddressInfo
-        every { participant.preferType } returns MatchType.HYBRID
+        every { participant.matchType } returns MatchType.HYBRID
 
         `when`("useCase의 execute가 호출되면") {
             val input = GetParticipantInfoUseCase.Input(memberId)
@@ -48,7 +48,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
                 result.birthDate shouldBe LocalDate.of(2000, 7, 8)
                 result.basicAddressInfo shouldBe basicAddressInfo
                 result.additionalAddressInfo shouldBe additionalAddressInfo
-                result.preferType shouldBe MatchType.HYBRID
+                result.matchType shouldBe MatchType.HYBRID
             }
         }
     }
