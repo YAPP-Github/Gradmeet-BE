@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 data class CustomFilter (
     @Schema(description = "진행 방식 필터")
-    val method : MatchType?,
+    val matchType : MatchType?,
 
     @Schema(description = "모집 대상")
     val studyTarget: StudyTarget?,

@@ -16,7 +16,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 	)]
 )
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = ["com.dobby.backend.infrastructure.database.repository"])
 @ConfigurationPropertiesScan
 @EnableFeignClients
 class DobbyBackendApplication

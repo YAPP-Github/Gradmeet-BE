@@ -79,7 +79,7 @@ class ExperimentPostController (
         description = "사용자가 필터링한 조건에 맞는 공고 목록들을 조회합니다"
     )
     fun getExperimentPosts(
-        @RequestParam(required = false) method: MatchType?,
+        @RequestParam(required = false) matchType: MatchType?,
         @RequestParam(required = false) gender: GenderType?,
         @RequestParam(required = false) age: Int?,
         @RequestParam(required = false) region: Region?,
@@ -88,7 +88,7 @@ class ExperimentPostController (
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
     ): List<ExperimentPostsResponse> {
-        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(method, gender, age, region, areas, recruitDone)
+        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitDone)
         val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
         val input = ExperimentPostMapper.toExperimentPostsUseCaseInput(customFilter, pagination)
         val output = experimentPostService.getExperimentPosts(input)

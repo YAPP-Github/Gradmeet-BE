@@ -27,7 +27,7 @@ class ExperimentPostCustomRepositoryImpl (
             .join(post.targetGroup).fetchJoin()
             .join(post.applyMethod).fetchJoin()
             .where(
-                matchTypeEq(post, customFilter.method),
+                matchTypeEq(post, customFilter.matchType),
                 genderEq(post, customFilter.studyTarget?.gender),
                 ageBetween(post, customFilter.studyTarget?.age),
                 regionEq(post, customFilter.locationTarget?.region),

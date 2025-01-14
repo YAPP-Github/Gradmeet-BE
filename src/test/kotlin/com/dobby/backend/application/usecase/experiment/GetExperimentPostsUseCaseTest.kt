@@ -25,7 +25,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
     given("유효한 필터와 페이지네이션이 주어졌을 때") {
         val customFilter = CustomFilter(
-            method = MatchType.HYBRID,
+            matchType = MatchType.HYBRID,
             studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 24),
             locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU, Area.MAPOGU)),
             recruitDone = false
@@ -102,7 +102,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
     given("studyTarget이 null인 경우") {
         val customFilter = CustomFilter(
-            method = MatchType.HYBRID,
+            matchType = MatchType.HYBRID,
             studyTarget = null,
             locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
             recruitDone = false
@@ -176,7 +176,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
     given("locationTarget의 areas가 null인 경우") {
         val customFilter = CustomFilter(
-            method = MatchType.HYBRID,
+            matchType = MatchType.HYBRID,
             studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 24),
             locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.SEOUL, areas = null),
             recruitDone = false
@@ -249,7 +249,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
     }
     given("필터에 맞는 공고가 없을 경우") {
         val customFilter = CustomFilter(
-            method = MatchType.HYBRID,
+            matchType = MatchType.HYBRID,
             studyTarget = GetExperimentPostsUseCase.StudyTarget(gender = GenderType.FEMALE, age = 30),
             locationTarget = GetExperimentPostsUseCase.LocationTarget(region = Region.GYEONGGI, areas = listOf(Area.GWANGMYEONGSI)),
             recruitDone = false

@@ -5,6 +5,11 @@ import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseC
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
+import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
+import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
+import com.dobby.backend.domain.exception.ExperimentAreaSelectionException
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -24,6 +29,7 @@ class ExperimentPostService(
 
     @Transactional
     fun getExperimentPosts(input : GetExperimentPostsUseCase.Input): List<GetExperimentPostsUseCase.Output> {
+        validateFilter(input)
         return getExperimentPostsUseCase.execute(input)
     }
 
@@ -42,6 +48,28 @@ class ExperimentPostService(
             is GetExperimentPostCountsByRegionUseCase.Input -> getExperimentPostCountsByRegionUseCase.execute(input)
             is GetExperimentPostCountsByAreaUseCase.Input -> getExperimentPostCountsByAreaUseCase.execute(input)
             else -> throw IllegalArgumentException("Invalid input type: ${input::class.java.simpleName}")
+        }
+    }
+
+    fun validateFilter(input: GetExperimentPostsUseCase.Input) {
+        val locationInfo = input.customFilter.locationTarget
+
+        if (locationInfo?.areas != null) {
+            val isAll = locationInfo.areas.any { it.isAll() }
+
+            if (isAll && locationInfo.areas.size != 1)
+                throw ExperimentAreaSelectionException()
+
+            if (locationInfo.areas.size > 5)
+                throw ExperimentAreaOverflowException()
+
+            val selectedRegion = locationInfo.region
+            if (selectedRegion != null) {
+                val validAreas = Area.findByRegion(selectedRegion).map { it.name }
+                if (locationInfo.areas.map { it.name }.any { it !in validAreas }) {
+                    throw ExperimentAreaInCorrectException()
+                }
+            }
         }
     }
 }

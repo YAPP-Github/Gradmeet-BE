@@ -153,14 +153,14 @@ object ExperimentPostMapper {
     }
 
     fun toUseCaseCustomFilter(
-        method: MatchType?,
+        matchType: MatchType?,
         gender: GenderType?,
         age: Int?,
         region: Region?,
         areas: List<Area>?,
         recruitDone: Boolean?, ): GetExperimentPostsUseCase.CustomFilter {
         return GetExperimentPostsUseCase.CustomFilter(
-            method = method,
+            matchType = matchType,
             studyTarget = GetExperimentPostsUseCase.StudyTarget(
                 gender = gender,
                 age = age
