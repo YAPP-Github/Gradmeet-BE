@@ -3,7 +3,7 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.AuthService
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.infrastructure.database.entity.enums.RoleType
-import com.dobby.backend.presentation.api.dto.request.auth.google.GoogleOauthLoginRequest
+import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse

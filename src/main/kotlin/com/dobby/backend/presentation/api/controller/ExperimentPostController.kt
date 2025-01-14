@@ -6,7 +6,11 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
-import com.dobby.backend.presentation.api.dto.response.expirement.*
+import com.dobby.backend.presentation.api.dto.response.experiment.*
+import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperimentPostResponse
+import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostApplyMethodResponse
+import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostCountsResponse
+import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

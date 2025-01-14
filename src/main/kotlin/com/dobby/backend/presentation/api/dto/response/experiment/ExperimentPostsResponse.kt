@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.response.expirement
+package com.dobby.backend.presentation.api.dto.response.experiment
 data class ExperimentPostsResponse (
     val postInfo: PostInfo,
     val recuritDone: Boolean

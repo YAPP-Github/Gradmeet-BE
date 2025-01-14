@@ -1,4 +1,4 @@
-package com.dobby.backend.presentation.api.dto.response.expirement
+package com.dobby.backend.presentation.api.dto.response.experiment
 
 import io.swagger.v3.oas.annotations.media.Schema
 

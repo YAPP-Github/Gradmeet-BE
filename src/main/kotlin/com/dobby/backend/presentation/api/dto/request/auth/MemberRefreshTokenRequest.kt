@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank
 
 @Schema(description = "토큰 갱신 요청 DTO")
 data class MemberRefreshTokenRequest(
-    @field:NotBlank
+    @NotBlank
     @Schema(description = "리프레시 토큰", example = "")
     val refreshToken: String,
 )

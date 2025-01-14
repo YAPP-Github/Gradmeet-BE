@@ -13,7 +13,7 @@ data class Participant(
     val birthDate: LocalDate,
     val basicAddressInfo: AddressInfo,
     val additionalAddressInfo: AddressInfo?,
-    val preferType: MatchType?
+    val matchType: MatchType?
 ) {
 
     data class AddressInfo(
@@ -28,7 +28,7 @@ data class Participant(
             birthDate: LocalDate,
             basicAddressInfo: AddressInfo,
             additionalAddressInfo: AddressInfo?,
-            preferType: MatchType?
+            matchType: MatchType?
         ) = Participant(
             id = 0,
             member = member,
@@ -36,7 +36,7 @@ data class Participant(
             birthDate = birthDate,
             basicAddressInfo = basicAddressInfo,
             additionalAddressInfo = additionalAddressInfo,
-            preferType = preferType
+            matchType = matchType
         )
     }
 }

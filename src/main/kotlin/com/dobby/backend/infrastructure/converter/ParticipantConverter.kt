@@ -25,7 +25,7 @@ object ParticipantConverter {
             birthDate = entity.birthDate,
             basicAddressInfo = entity.basicAddressInfo.toModel(),
             additionalAddressInfo = entity.additionalAddressInfo?.toModel(),
-            preferType = entity.preferType
+            matchType = entity.matchType
         )
     }
 
@@ -45,7 +45,7 @@ object ParticipantConverter {
             member = memberEntity,
             gender = participant.gender,
             birthDate = participant.birthDate,
-            preferType = participant.preferType,
+            matchType = participant.matchType,
             basicAddressInfo = participant.basicAddressInfo.toEntity(),
             additionalAddressInfo = participant.additionalAddressInfo?.toEntity()
         )
