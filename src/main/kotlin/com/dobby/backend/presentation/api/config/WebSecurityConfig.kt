@@ -26,7 +26,7 @@ class WebSecurityConfig {
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/auth/**", "/v1/members/signup/**", "/v1/emails/**",
-            "/v1/experiment-posts/{postId}/**", "/v1/experiment-posts/counts")
+            "/v1/experiment-posts/{postId}/**", "/v1/experiment-posts/counts", "/v1/experiment-posts/search")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
