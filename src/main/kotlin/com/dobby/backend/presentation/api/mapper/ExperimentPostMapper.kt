@@ -1,10 +1,13 @@
 package com.dobby.backend.presentation.api.mapper
 
+import com.dobby.backend.application.usecase.experiment.RequestExperimentPostPreSignedUrlUseCase
 import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
+import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.presentation.api.dto.response.expirement.*
 import com.dobby.backend.util.getCurrentMemberId
 
@@ -143,6 +146,18 @@ object ExperimentPostMapper {
             phoneNum = output.phoneNum,
             formUrl = output.formUrl,
             content = output.content
+        )
+    }
+
+    fun toRequestPreSignedUrlUseCaseInput(request: PreSignedUrlRequest): RequestExperimentPostPreSignedUrlUseCase.Input {
+        return RequestExperimentPostPreSignedUrlUseCase.Input(
+            fileName = request.fileName
+        )
+    }
+
+    fun toRequestPreSignedUrlResponse(output: RequestExperimentPostPreSignedUrlUseCase.Output): PreSignedUrlResponse {
+        return PreSignedUrlResponse(
+            preSignedUrl = output.preSignedUrl
         )
     }
 }
