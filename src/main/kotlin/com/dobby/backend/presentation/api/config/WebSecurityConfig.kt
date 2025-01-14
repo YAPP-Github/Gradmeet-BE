@@ -25,7 +25,8 @@ class WebSecurityConfig {
         jwtTokenProvider: JwtTokenProvider,
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
-        .securityMatcher("/v1/auth/**", "/v1/members/signup/**", "/v1/emails/**")
+        .securityMatcher("/v1/auth/**", "/v1/members/signup/**", "/v1/emails/**",
+            "/v1/experiment-posts/counts", "/v1/experiment-posts/{postId}/**")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
@@ -33,7 +34,8 @@ class WebSecurityConfig {
         }
         .authorizeHttpRequests {
             it.requestMatchers("/v1/auth/**").permitAll()
-            it.requestMatchers("/v1/members/signup/**", "/v1/emails/**").permitAll()
+            it.requestMatchers("/v1/members/signup/**", "/v1/emails/**",
+                "/v1/experiment-posts/counts", "/v1/experiment-posts/{postId}/**").permitAll()
             it.anyRequest().authenticated()
         }
         .build()
