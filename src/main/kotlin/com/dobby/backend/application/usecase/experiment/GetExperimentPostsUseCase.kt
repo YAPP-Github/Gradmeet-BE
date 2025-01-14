@@ -16,13 +16,38 @@ class GetExperimentPostsUseCase (
     private val experimentPostGateway: ExperimentPostGateway
 ): UseCase<GetExperimentPostsUseCase.Input, List<GetExperimentPostsUseCase.Output>>{
     data class Input (
-
         @Schema(description = "커스텀 필터")
         val customFilter: CustomFilter,
 
         @Schema(description = "페이지네이션")
         val pagination: Pagination
-    )
+    ) {
+        fun toDomainFilter(): com.dobby.backend.domain.model.experiment.CustomFilter {
+            return com.dobby.backend.domain.model.experiment.CustomFilter(
+                method = customFilter.method,
+                studyTarget = this.customFilter.studyTarget?.let {
+                    com.dobby.backend.domain.model.experiment.StudyTarget(
+                        gender = it.gender,
+                        age = it.age
+                    )
+                },
+                locationTarget = this.customFilter.locationTarget?.let {
+                    com.dobby.backend.domain.model.experiment.LocationTarget(
+                        region = it.region,
+                        areas = it.areas
+                    )
+                },
+                recruitDone = this.customFilter.recruitDone
+            )
+        }
+
+        fun toDomainPagination(): com.dobby.backend.domain.model.experiment.Pagination {
+            return com.dobby.backend.domain.model.experiment.Pagination(
+                page = this.pagination.page,
+                count = this.pagination.count
+            )
+        }
+    }
 
     data class CustomFilter(
         @Schema(description = "진행 방식 필터")
@@ -108,7 +133,7 @@ class GetExperimentPostsUseCase (
         } ?: emptyList()
     }
 
-    private fun validateFilter(input: Input) {
+   public fun validateFilter(input: Input) {
         val locationInfo = input.customFilter.locationTarget
 
         if (locationInfo?.areas != null) {
@@ -130,31 +155,4 @@ class GetExperimentPostsUseCase (
         }
     }
 
-    private fun Input.toDomainFilter(): com.dobby.backend.domain.model.experiment.CustomFilter {
-        return com.dobby.backend.domain.model.experiment.CustomFilter(
-            method = customFilter.method,
-            studyTarget = this.customFilter.studyTarget?.let {
-                com.dobby.backend.domain.model.experiment.StudyTarget(
-                    gender = it.gender,
-                    age = it.age
-                )
-            },
-            locationTarget = this.customFilter.locationTarget?.let {
-                com.dobby.backend.domain.model.experiment.LocationTarget(
-                    region = it.region,
-                    areas = it.areas
-                )
-            },
-            recruitDone = this.customFilter.recruitDone
-        )
-    }
-
-    private fun Input.toDomainPagination(): com.dobby.backend.domain.model.experiment.Pagination{
-        return com.dobby.backend.domain.model.experiment.Pagination(
-            page = this.pagination.page,
-            count = this.pagination.count
-        )
-    }
 }
-
-
