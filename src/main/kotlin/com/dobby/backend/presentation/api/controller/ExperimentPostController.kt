@@ -49,7 +49,7 @@ class ExperimentPostController (
         return ExperimentPostMapper.toRequestPreSignedUrlResponse(output)
     }
 
-    @PostMapping("/{postId}")
+    @PostMapping("/{postId}/details")
     @Operation(
         summary = "특정 공고 상세 정보 조회 API",
         description = "특정 공고 상세 정보를 반환합니다"
