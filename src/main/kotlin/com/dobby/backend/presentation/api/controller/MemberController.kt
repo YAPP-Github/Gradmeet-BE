@@ -49,7 +49,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers")
+    @GetMapping("/researchers/me")
     @Operation(
         summary = "연구자 기본 정보 렌더링",
         description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
@@ -61,7 +61,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @GetMapping("/participants")
+    @GetMapping("/participants/me")
     @Operation(
         summary = "참여자 회원 기본 정보 렌더링",
         description = "참여자의 기본 정보를 반환합니다."
