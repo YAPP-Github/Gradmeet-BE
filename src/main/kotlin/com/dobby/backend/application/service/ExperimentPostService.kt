@@ -10,6 +10,7 @@ import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.domain.exception.ExperimentAreaSelectionException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -52,24 +53,22 @@ class ExperimentPostService(
     }
 
     fun validateFilter(input: GetExperimentPostsUseCase.Input) {
-        val locationInfo = input.customFilter.locationTarget
+        val locationInfo = input.customFilter.locationTarget ?: return
 
-        if (locationInfo?.areas != null) {
-            val isAll = locationInfo.areas.any { it.isAll() }
+        locationInfo.areas?.let { validateLocationAreaCount(it) }
+        validateRegion(locationInfo)
+    }
 
-            if (isAll && locationInfo.areas.size != 1)
-                throw ExperimentAreaSelectionException()
+    private fun validateLocationAreaCount(areas: List<Area>) {
+        if (areas.size > 5) throw ExperimentAreaOverflowException()
+    }
 
-            if (locationInfo.areas.size > 5)
-                throw ExperimentAreaOverflowException()
+    private fun validateRegion(locationInfo: GetExperimentPostsUseCase.LocationTargetInput){
+        val region = locationInfo.region?: return
+        val validAreas = Area.findByRegion(region).map { it.name }
 
-            val selectedRegion = locationInfo.region
-            if (selectedRegion != null) {
-                val validAreas = Area.findByRegion(selectedRegion).map { it.name }
-                if (locationInfo.areas.map { it.name }.any { it !in validAreas }) {
-                    throw ExperimentAreaInCorrectException()
-                }
-            }
+        if(locationInfo.areas?.map {it.name }?.any {it !in validAreas } == true) {
+            throw ExperimentAreaInCorrectException()
         }
     }
 }
