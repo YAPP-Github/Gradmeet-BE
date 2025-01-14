@@ -2,10 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.mapper.ExperimentMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.LocationTarget
-import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
