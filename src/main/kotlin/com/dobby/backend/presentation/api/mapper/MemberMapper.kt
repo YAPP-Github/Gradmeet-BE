@@ -1,11 +1,10 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
-import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
-import com.dobby.backend.application.usecase.member.GetParticipantInfoUseCase
+import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase
+import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
 
@@ -110,6 +109,54 @@ object MemberMapper {
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
             matchType = output.matchType
+        )
+    }
+
+    fun toGetMyExperimentPosts(
+        pagination: GetMyExperimentPostUseCase.PaginationInput
+    ): GetMyExperimentPostUseCase.Input {
+        return GetMyExperimentPostUseCase.Input(
+            memberId = getCurrentMemberId(),
+            pagination = pagination
+        )
+    }
+
+    fun toGetMyExperimentPostsResponse(
+        output: List<GetMyExperimentPostUseCase.Output>,
+        page: Int,
+        totalCount: Int,
+    ): PaginatedResponse<MyExperimentPostResponse> {
+        val isLast = (page * output.size >= totalCount)
+
+        return PaginatedResponse(
+            content = output.map { post ->
+                MyExperimentPostResponse(
+                    experimentPostId = post.experimentPostId,
+                    title = post.title,
+                    content = post.content,
+                    views = post.views,
+                    recruitDone = post.recruitDone,
+                    uploadDate = post.uploadDate
+                )
+            },
+            page = page,
+            size = output.size,
+            isLast = isLast
+        )
+    }
+
+    fun toUseCasePagination(
+        page: Int, count: Int
+    ) : GetMyExperimentPostUseCase.PaginationInput {
+        return GetMyExperimentPostUseCase.PaginationInput(
+            page = page,
+            count = count,
+        )
+    }
+
+    fun toGetTotalMyExperimentPostCountUseCaseInput(): GetTotalMyExperimentPostCountUseCase.Input {
+        return GetTotalMyExperimentPostCountUseCase.Input(
+            memberId = getCurrentMemberId()
         )
     }
 }
