@@ -40,6 +40,21 @@ class ExperimentPostCustomRepositoryImpl (
             .fetch()
     }
 
+    override fun findExperimentPostsByMemberIdWithPagination(
+        memberId: Long,
+        pagination: Pagination
+    ): List<ExperimentPostEntity>? {
+        val post = QExperimentPostEntity.experimentPostEntity
+
+        return jpaQueryFactory.selectFrom(post)
+            .join(post.member).fetchJoin()
+            .where(post.member.id.eq(memberId))
+            .offset((pagination.page - 1L) * pagination.count)
+            .limit(pagination.count.toLong())
+            .orderBy(post.createdAt.desc())
+            .fetch()
+    }
+
     private fun matchTypeEq(post: QExperimentPostEntity, matchType: MatchType?): BooleanExpression? {
         return matchType?.let {
             if(it == MatchType.ALL) null else post.matchType.eq(it)
@@ -69,5 +84,4 @@ class ExperimentPostCustomRepositoryImpl (
     private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
         return recruitDone?.let { post.recruitDone.eq(it) }
     }
-
 }

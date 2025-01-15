@@ -55,4 +55,18 @@ class ExperimentPostGatewayImpl(
     override fun countExperimentPostGroupedByRegion(): List<Tuple> {
         return experimentPostRepository.countExperimentPostGroupedByRegion()
     }
+
+    override fun findExperimentPostsByMemberIdWithPagination(
+        memberId: Long,
+        pagination: Pagination
+    ): List<ExperimentPost>? {
+        return experimentPostCustomRepository.findExperimentPostsByMemberIdWithPagination(
+            memberId,
+            pagination
+        )?.map { it.toDomain() }
+    }
+
+    override fun countExperimentPostsByMemberId(memberId: Long): Int {
+        return experimentPostRepository.countByMemberId(memberId)
+    }
 }
