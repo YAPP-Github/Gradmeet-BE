@@ -1,16 +1,13 @@
 package com.dobby.backend.application.service
 
+import com.dobby.backend.application.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
 import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
-import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
 import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
-import com.dobby.backend.domain.exception.ExperimentAreaSelectionException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -22,6 +19,7 @@ class ExperimentPostService(
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
+    private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -70,5 +68,9 @@ class ExperimentPostService(
         if(locationInfo.areas?.map {it.name }?.any {it !in validAreas } == true) {
             throw ExperimentAreaInCorrectException()
         }
+    }
+
+    fun generatePreSignedUrl(input: GenerateExperimentPostPreSignedUrlUseCase.Input): GenerateExperimentPostPreSignedUrlUseCase.Output {
+        return generateExperimentPostPreSignedUrlUseCase.execute(input)
     }
 }
