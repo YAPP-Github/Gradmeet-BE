@@ -29,7 +29,7 @@ class ExperimentPostService(
     }
 
     @Transactional
-    fun getExperimentPosts(input : GetExperimentPostsUseCase.Input): List<GetExperimentPostsUseCase.Output> {
+    fun getExperimentPosts(input: GetExperimentPostsUseCase.Input): List<GetExperimentPostsUseCase.Output> {
         validateFilter(input)
         return getExperimentPostsUseCase.execute(input)
     }

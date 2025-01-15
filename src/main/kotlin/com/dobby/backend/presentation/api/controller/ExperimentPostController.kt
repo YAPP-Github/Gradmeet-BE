@@ -94,7 +94,7 @@ class ExperimentPostController (
     ): List<ExperimentPostsResponse> {
         val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitDone)
         val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
-        val input = ExperimentPostMapper.toExperimentPostsUseCaseInput(customFilter, pagination)
+        val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val output = experimentPostService.getExperimentPosts(input)
         return output.map { ExperimentPostMapper.toGetExperimentPostsResponse(it) }
     }

@@ -43,7 +43,7 @@ class GetExperimentPostsUseCase (
     )
 
     data class PostInfoOutput(
-        val postId: Long,
+        val experimentPostId: Long,
         val title: String,
         val views: Int,
         val univName: String,
@@ -66,7 +66,7 @@ class GetExperimentPostsUseCase (
         return posts?.map { post ->
             Output(
                 postInfo = PostInfoOutput(
-                    postId = post.id,
+                    experimentPostId = post.id,
                     title = post.title,
                     views = post.views,
                     univName = post.univName,
