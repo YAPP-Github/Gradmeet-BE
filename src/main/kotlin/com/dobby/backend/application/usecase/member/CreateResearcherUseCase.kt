@@ -7,7 +7,7 @@ import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.infrastructure.database.entity.enum.*
+import com.dobby.backend.infrastructure.database.entity.enums.*
 import java.time.LocalDateTime
 
 class CreateResearcherUseCase(

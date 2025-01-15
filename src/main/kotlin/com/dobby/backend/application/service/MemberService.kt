@@ -3,7 +3,7 @@ package com.dobby.backend.application.service
 import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

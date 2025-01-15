@@ -5,7 +5,7 @@ import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
+import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 
 class VerifyResearcherEmailUseCase(
     private val verificationGateway: VerificationGateway

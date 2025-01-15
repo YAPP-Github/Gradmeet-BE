@@ -5,7 +5,7 @@ import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
-import com.dobby.backend.presentation.api.dto.response.expirement.ExperimentPostDetailResponse
+import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
 
 class GetExperimentPostDetailUseCase(
     private val experimentPostGateway: ExperimentPostGateway

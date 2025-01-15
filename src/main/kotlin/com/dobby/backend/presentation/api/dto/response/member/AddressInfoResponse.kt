@@ -1,8 +1,8 @@
 package com.dobby.backend.presentation.api.dto.response.member
 
 import com.dobby.backend.domain.model.member.Participant
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "주소 정보 반환 DTO")

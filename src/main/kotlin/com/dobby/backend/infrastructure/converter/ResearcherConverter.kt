@@ -2,7 +2,7 @@ package com.dobby.backend.infrastructure.converter
 
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 

@@ -1,8 +1,8 @@
 package com.dobby.backend.presentation.api.dto.request.signup
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import com.dobby.backend.presentation.api.dto.response.member.AddressInfoResponse
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email

@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.signup
 
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
