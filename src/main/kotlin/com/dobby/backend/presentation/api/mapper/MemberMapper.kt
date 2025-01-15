@@ -7,6 +7,7 @@ import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupReq
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
+import com.dobby.backend.util.isLastPage
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
@@ -126,8 +127,6 @@ object MemberMapper {
         page: Int,
         totalCount: Int,
     ): PaginatedResponse<MyExperimentPostResponse> {
-        val isLast = (page * output.size >= totalCount)
-
         return PaginatedResponse(
             content = output.map { post ->
                 MyExperimentPostResponse(
@@ -141,7 +140,7 @@ object MemberMapper {
             },
             page = page,
             size = output.size,
-            isLast = isLast
+            isLast = isLastPage(totalCount, output.size, page),
         )
     }
 

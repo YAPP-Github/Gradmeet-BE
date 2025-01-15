@@ -87,10 +87,10 @@ class MemberController(
     ): PaginatedResponse<MyExperimentPostResponse> {
         val pagination = MemberMapper.toUseCasePagination(page, count)
         val input = MemberMapper.toGetMyExperimentPosts(pagination)
-        val output = memberService.getMyExperimentPosts(input)
+        val posts = memberService.getMyExperimentPosts(input)
+
         val totalCountInput = MemberMapper.toGetTotalMyExperimentPostCountUseCaseInput()
         val totalCount = memberService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-
-        return MemberMapper.toGetMyExperimentPostsResponse(output, page, totalCount)
+        return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount)
     }
 }
