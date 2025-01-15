@@ -13,5 +13,5 @@ interface ExperimentPostCustomRepository {
         pagination: Pagination
     ): List<ExperimentPostEntity>?
 
-    fun markExpiredExperimentsAsDone(currentDate : LocalDate): Long;
+    fun updateExperimentPostStatus(currentDate : LocalDate): Long
 }

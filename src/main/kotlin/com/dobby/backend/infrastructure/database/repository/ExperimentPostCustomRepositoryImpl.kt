@@ -72,7 +72,7 @@ class ExperimentPostCustomRepositoryImpl (
     }
 
     @Override
-    override fun markExpiredExperimentsAsDone(currentDate: LocalDate): Long {
+    override fun updateExperimentPostStatus(currentDate: LocalDate): Long {
         val experimentPost = QExperimentPostEntity.experimentPostEntity
 
         return jpaQueryFactory.update(experimentPost)
