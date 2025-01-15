@@ -4,6 +4,8 @@ import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
 import com.dobby.backend.application.usecase.member.GetParticipantInfoUseCase
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.*
@@ -44,9 +46,10 @@ object MemberMapper {
                 region = req.basicAddressInfo.region,
                 area = req.basicAddressInfo.area
             ),
-            additionalAddressInfo = req.additionalAddressInfo?.let {
-                CreateParticipantUseCase.AddressInfo(region = it.region, area = it.area)
-            },
+            additionalAddressInfo = CreateParticipantUseCase.AddressInfo(
+                region = req.additionalAddressInfo?.region ?: Region.NONE,
+                area = req.additionalAddressInfo?.area ?: Area.NONE
+            ),
             matchType = req.matchType
         )
     }
