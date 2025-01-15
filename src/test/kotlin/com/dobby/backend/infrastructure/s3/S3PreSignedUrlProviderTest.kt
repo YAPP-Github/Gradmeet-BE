@@ -3,6 +3,7 @@ package com.dobby.backend.infrastructure.s3
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidInputException
+import com.dobby.backend.infrastructure.config.properties.S3Properties
 import com.dobby.backend.util.generateULID
 import io.kotest.core.spec.style.BehaviorSpec
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -17,8 +18,13 @@ import kotlin.test.assertNotNull
 class S3PreSignedUrlProviderTest : BehaviorSpec({
 
     val amazonS3Client = mock(AmazonS3::class.java)
-    val provider = S3PreSignedUrlProvider(amazonS3Client)
-    provider.bucket = "test-bucket"
+    val s3Properties = mock(S3Properties::class.java)
+    val s3Config = mock(S3Properties.S3::class.java)
+
+    `when`(s3Properties.s3).thenReturn(s3Config)
+    `when`(s3Config.bucket).thenReturn("test-bucket")
+    `when`(s3Properties.s3.bucket).thenReturn("test-bucket")
+    val provider = S3PreSignedUrlProvider(amazonS3Client, s3Properties)
 
     given("이미지 파일 이름이 주어지고") {
         val imageName = "test_image.jpg"

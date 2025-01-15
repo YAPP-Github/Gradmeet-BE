@@ -7,18 +7,17 @@ import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidInputException
+import com.dobby.backend.infrastructure.config.properties.S3Properties
 import com.dobby.backend.util.generateULID
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class S3PreSignedUrlProvider(
     private val amazonS3Client: AmazonS3,
+    properties: S3Properties
 ) {
-
-    @Value("\${cloud.aws.s3.bucket}")
-    lateinit var bucket: String
+    private val bucket: String = properties.s3.bucket
 
     fun getExperimentPostPreSignedUrl(fileName: String): String {
         val generatePreSignedUrlRequest = getGenerateImagePreSignedUrlRequest("experiment-post", fileName)
