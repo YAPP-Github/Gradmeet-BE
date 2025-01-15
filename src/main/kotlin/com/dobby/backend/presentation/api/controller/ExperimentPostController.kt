@@ -44,9 +44,9 @@ class ExperimentPostController (
     fun requestPreSignedUrl(
         @RequestBody @Valid request: PreSignedUrlRequest
     ): PreSignedUrlResponse {
-        val input = ExperimentPostMapper.toRequestPreSignedUrlUseCaseInput(request)
-        val output = experimentPostService.requestPreSignedUrl(input)
-        return ExperimentPostMapper.toRequestPreSignedUrlResponse(output)
+        val input = ExperimentPostMapper.toGeneratePreSignedUrlUseCaseInput(request)
+        val output = experimentPostService.generatePreSignedUrl(input)
+        return ExperimentPostMapper.toGeneratePreSignedUrlResponse(output)
     }
 
     @PostMapping("/{postId}/details")

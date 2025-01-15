@@ -1,6 +1,6 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.experiment.RequestExperimentPostPreSignedUrlUseCase
+import com.dobby.backend.application.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
 import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
@@ -15,7 +15,7 @@ class ExperimentPostService(
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
-    private val requestExperimentPostPreSignedUrlUseCase: RequestExperimentPostPreSignedUrlUseCase
+    private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -40,7 +40,7 @@ class ExperimentPostService(
         }
     }
 
-    fun requestPreSignedUrl(input: RequestExperimentPostPreSignedUrlUseCase.Input): RequestExperimentPostPreSignedUrlUseCase.Output {
-        return requestExperimentPostPreSignedUrlUseCase.execute(input)
+    fun generatePreSignedUrl(input: GenerateExperimentPostPreSignedUrlUseCase.Input): GenerateExperimentPostPreSignedUrlUseCase.Output {
+        return generateExperimentPostPreSignedUrlUseCase.execute(input)
     }
 }

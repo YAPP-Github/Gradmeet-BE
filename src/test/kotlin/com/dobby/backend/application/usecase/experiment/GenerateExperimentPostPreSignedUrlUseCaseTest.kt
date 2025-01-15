@@ -7,10 +7,10 @@ import io.mockk.mockk
 import com.dobby.backend.domain.gateway.S3Gateway
 import io.kotest.assertions.throwables.shouldThrow
 
-class RequestExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({
+class GenerateExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({
 
     val s3Gateway = mockk<S3Gateway>()
-    val useCase = RequestExperimentPostPreSignedUrlUseCase(s3Gateway)
+    val useCase = GenerateExperimentPostPreSignedUrlUseCase(s3Gateway)
 
     given("유효한 파일 이름이 주어졌을 때") {
         val fileName = "test-file.jpg"
@@ -19,7 +19,7 @@ class RequestExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({
         `when`("getExperimentPostPreSignedUrl이 호출되면") {
             every { s3Gateway.getExperimentPostPreSignedUrl(fileName) } returns expectedPreSignedUrl
 
-            val result = useCase.execute(RequestExperimentPostPreSignedUrlUseCase.Input(fileName))
+            val result = useCase.execute(GenerateExperimentPostPreSignedUrlUseCase.Input(fileName))
 
             then("올바른 PreSigned URL이 반환된다") {
                 result.preSignedUrl shouldBe expectedPreSignedUrl
@@ -35,7 +35,7 @@ class RequestExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({
 
             then("예외가 발생한다") {
                 val exception = shouldThrow<IllegalArgumentException> {
-                    useCase.execute(RequestExperimentPostPreSignedUrlUseCase.Input(fileName))
+                    useCase.execute(GenerateExperimentPostPreSignedUrlUseCase.Input(fileName))
                 }
                 exception.message shouldBe "Invalid file name"
             }
@@ -50,7 +50,7 @@ class RequestExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({
 
             then("예외가 발생한다") {
                 val exception = shouldThrow<IllegalArgumentException> {
-                    useCase.execute(RequestExperimentPostPreSignedUrlUseCase.Input(fileName))
+                    useCase.execute(GenerateExperimentPostPreSignedUrlUseCase.Input(fileName))
                 }
                 exception.message shouldBe "Invalid file name"
             }
