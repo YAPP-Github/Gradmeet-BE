@@ -5,3 +5,6 @@ open class ExperimentPostException(
 ) : DomainException(errorCode)
 
 class ExperimentPostNotFoundException : ExperimentPostException(ErrorCode.EXPERIMENT_POST_NOT_FOUND)
+class ExperimentAreaSelectionException: ExperimentPostException(ErrorCode.EXPERIMENT_POST_SINGLE_SELECTION_ERROR)
+class ExperimentAreaOverflowException: ExperimentPostException(ErrorCode.EXPERIMENT_POST_AREA_SELECTION_LIMIT)
+class ExperimentAreaInCorrectException: ExperimentPostException(ErrorCode.EXPERIMENT_POST_AREA_INCORRECT)

@@ -8,12 +8,12 @@ import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -71,8 +71,12 @@ class CreateExperimentPostUseCase(
         val postId: Long,
         val title: String,
         val views: Int,
-        val univName: String,
-        val reward: String,
+        val univName: String?,
+        val reward: String?,
+        val durationInfo: DurationInfo?,
+    )
+
+    data class DurationInfo(
         val startDate: LocalDate?,
         val endDate: LocalDate?
     )
@@ -95,8 +99,10 @@ class CreateExperimentPostUseCase(
                 title = savedExperimentPost.title,
                 views = savedExperimentPost.views,
                 univName = savedExperimentPost.univName,
-                startDate = savedExperimentPost.startDate,
-                endDate = savedExperimentPost.endDate,
+                durationInfo = DurationInfo(
+                    startDate = savedExperimentPost.startDate,
+                    endDate = savedExperimentPost.endDate
+                ),
                 reward = savedExperimentPost.reward
             )
         )

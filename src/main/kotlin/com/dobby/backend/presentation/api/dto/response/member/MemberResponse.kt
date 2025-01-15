@@ -1,8 +1,8 @@
 package com.dobby.backend.presentation.api.dto.response.member
 
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "사용자 DTO")

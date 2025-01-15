@@ -1,7 +1,6 @@
 package com.dobby.backend.infrastructure.converter
 
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 
 object MemberConverter {

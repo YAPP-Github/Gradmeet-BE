@@ -6,17 +6,17 @@ import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDate
 import java.time.LocalDateTime
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 
 class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
     val experimentPostGateway = mockk<ExperimentPostGateway>()
@@ -52,7 +52,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             startDate = LocalDate.now(),
             endDate = LocalDate.now(),
             leadResearcher = "Lead",
-            matchType = MatchType.HYBRID,
+            matchType = MatchType.ALL,
             reward = "네이버페이 1000원",
             count = 10,
             timeRequired = TimeSlot.ABOUT_1H,

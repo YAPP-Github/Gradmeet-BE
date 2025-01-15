@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enum.areaInfo
+package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 
 import java.security.InvalidParameterException
 

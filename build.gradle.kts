@@ -34,10 +34,6 @@ repositories {
 	maven{url = uri("https://jitpack.io") }
 }
 
-kapt {
-	includeCompileClasspath = false
-}
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") {
 		exclude(group = "org.hibernate", module = "hibernate-core")
@@ -107,7 +103,7 @@ allOpen {
 }
 
 // querydsl
-val generated = file("src/main/generated")
+val generated = file("build/generated/querydsl")
 tasks.withType<JavaCompile> {
 	options.generatedSourceOutputDirectory.set(generated)
 }
@@ -125,6 +121,7 @@ tasks.named("clean") {
 }
 
 kapt {
+	includeCompileClasspath = true
 	generateStubs = true
 }
 
