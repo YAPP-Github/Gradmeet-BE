@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enum.areaInfo
+package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 
 enum class Area (val region: Region, val displayName: String){
     // 서울
@@ -300,6 +300,10 @@ enum class Area (val region: Region, val displayName: String){
     companion object {
         fun findByRegion(region : Region) : List<Area> {
             return values().filter { it.region == region }
+        }
+
+        fun Area.isAll(): Boolean {
+            return this.displayName.endsWith("_ALL")
         }
     }
 }

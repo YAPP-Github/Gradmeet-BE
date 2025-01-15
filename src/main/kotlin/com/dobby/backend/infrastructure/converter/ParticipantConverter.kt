@@ -2,7 +2,6 @@ package com.dobby.backend.infrastructure.converter
 
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.member.AddressInfo as EntityAddressInfo
@@ -26,7 +25,7 @@ object ParticipantConverter {
             birthDate = entity.birthDate,
             basicAddressInfo = entity.basicAddressInfo.toModel(),
             additionalAddressInfo = entity.additionalAddressInfo?.toModel(),
-            preferType = entity.preferType
+            matchType = entity.matchType
         )
     }
 
@@ -46,7 +45,7 @@ object ParticipantConverter {
             member = memberEntity,
             gender = participant.gender,
             birthDate = participant.birthDate,
-            preferType = participant.preferType,
+            matchType = participant.matchType,
             basicAddressInfo = participant.basicAddressInfo.toEntity(),
             additionalAddressInfo = participant.additionalAddressInfo?.toEntity()
         )

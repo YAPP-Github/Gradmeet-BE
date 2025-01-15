@@ -1,10 +1,10 @@
-package com.dobby.backend.presentation.api.dto.response.expirement
+package com.dobby.backend.presentation.api.dto.response.experiment
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.TimeSlot
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 
@@ -61,7 +61,7 @@ data class ExperimentPostDetailResponse(
         val reward: String,
 
         @Schema(description = "참여 횟수", example = "10")
-        val count: Int,
+        val count: Int?,
 
         @Schema(description = "소요 시간 (nullable)", example = "ABOUT_1H", nullable = true)
         val timeRequired: TimeSlot?

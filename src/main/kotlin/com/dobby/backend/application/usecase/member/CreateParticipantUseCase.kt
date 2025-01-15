@@ -6,9 +6,9 @@ import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Participant
-import com.dobby.backend.infrastructure.database.entity.enum.*
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.*
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -26,7 +26,7 @@ class CreateParticipantUseCase (
         val birthDate: LocalDate,
         var basicAddressInfo: AddressInfo,
         var additionalAddressInfo: AddressInfo?,
-        var preferType: MatchType,
+        var matchType: MatchType,
     )
     data class AddressInfo(
         val region: Region,
@@ -89,7 +89,7 @@ class CreateParticipantUseCase (
             additionalAddressInfo = input.additionalAddressInfo?.let {
                 Participant.AddressInfo(region = it.region, area = it.area)
             },
-            preferType = input.preferType
+            matchType = input.matchType
         )
     }
 }

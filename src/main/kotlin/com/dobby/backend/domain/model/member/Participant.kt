@@ -1,9 +1,9 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 
 data class Participant(
@@ -13,7 +13,7 @@ data class Participant(
     val birthDate: LocalDate,
     val basicAddressInfo: AddressInfo,
     val additionalAddressInfo: AddressInfo?,
-    val preferType: MatchType?
+    val matchType: MatchType?
 ) {
 
     data class AddressInfo(
@@ -28,7 +28,7 @@ data class Participant(
             birthDate: LocalDate,
             basicAddressInfo: AddressInfo,
             additionalAddressInfo: AddressInfo?,
-            preferType: MatchType?
+            matchType: MatchType?
         ) = Participant(
             id = 0,
             member = member,
@@ -36,7 +36,7 @@ data class Participant(
             birthDate = birthDate,
             basicAddressInfo = basicAddressInfo,
             additionalAddressInfo = additionalAddressInfo,
-            preferType = preferType
+            matchType = matchType
         )
     }
 }

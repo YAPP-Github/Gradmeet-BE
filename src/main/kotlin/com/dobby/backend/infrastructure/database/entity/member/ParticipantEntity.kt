@@ -1,10 +1,10 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
-import com.dobby.backend.infrastructure.database.entity.enum.MatchType
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enum.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.model.member.Participant
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -41,10 +41,35 @@ class ParticipantEntity (
     )
     val additionalAddressInfo: AddressInfo?,
 
-    @Column(name = "prefer_type", nullable = true)
+    @Column(name = "match_type", nullable = true)
     @Enumerated(EnumType.STRING)
-    var preferType: MatchType?,
-)
+    var matchType: MatchType?,
+) {
+
+    fun toDomain() = Participant(
+        id = id,
+        member = member.toDomain(),
+        gender = gender,
+        birthDate = birthDate,
+        basicAddressInfo = basicAddressInfo.toDomain(),
+        additionalAddressInfo = additionalAddressInfo?.toDomain(),
+        matchType = matchType
+    )
+
+    companion object {
+        fun fromDomain(participant: Participant) = with(participant) {
+            ParticipantEntity(
+                id = id,
+                member = MemberEntity.fromDomain(member),
+                gender = gender,
+                birthDate = birthDate,
+                basicAddressInfo = AddressInfo.fromDomain(basicAddressInfo), // 수정: AddressInfo.fromDomain() 사용
+                additionalAddressInfo = additionalAddressInfo?.let { AddressInfo.fromDomain(it) }, // 수정
+                matchType = matchType
+            )
+        }
+    }
+}
 
 @Embeddable
 data class AddressInfo(
@@ -55,4 +80,16 @@ data class AddressInfo(
     @Enumerated(EnumType.STRING)
     @Column(name = "area", nullable = false)
     val area: Area
-)
+) {
+    fun toDomain() = Participant.AddressInfo(
+        region = region,
+        area = area
+    )
+
+    companion object {
+        fun fromDomain(addressInfo: Participant.AddressInfo) = AddressInfo(
+            region = addressInfo.region,
+            area = addressInfo.area
+        )
+    }
+}

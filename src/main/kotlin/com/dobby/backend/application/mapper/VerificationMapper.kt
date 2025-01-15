@@ -3,7 +3,7 @@ package com.dobby.backend.application.mapper
 import com.dobby.backend.application.usecase.member.email.EmailCodeSendUseCase
 import com.dobby.backend.application.usecase.member.email.EmailVerificationUseCase
 import com.dobby.backend.infrastructure.database.entity.VerificationEntity
-import com.dobby.backend.infrastructure.database.entity.enum.VerificationStatus
+import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
 
 object VerificationMapper {

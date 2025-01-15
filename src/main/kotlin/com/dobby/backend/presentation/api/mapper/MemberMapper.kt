@@ -3,11 +3,10 @@ package com.dobby.backend.presentation.api.mapper
 import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
 import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
+import com.dobby.backend.application.usecase.member.GetParticipantInfoUseCase
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.response.expirement.DefaultInfoResponse
-import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
-import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
+import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
 
 object MemberMapper {
@@ -48,7 +47,7 @@ object MemberMapper {
             additionalAddressInfo = req.additionalAddressInfo?.let {
                 CreateParticipantUseCase.AddressInfo(region = it.region, area = it.area)
             },
-            preferType = req.preferType
+            matchType = req.matchType
         )
     }
 
@@ -84,16 +83,33 @@ object MemberMapper {
         }
     }
 
-    fun toDefaultInfoUseCaseInput(): GetResearcherInfoUseCase.Input {
+    fun toGetResearcherInfoUseCaseInput(): GetResearcherInfoUseCase.Input {
         return GetResearcherInfoUseCase.Input(
             memberId = getCurrentMemberId()
         )
     }
 
-    fun toDefaultInfoResponse(response: GetResearcherInfoUseCase.Output): DefaultInfoResponse {
-        return DefaultInfoResponse(
+    fun toResearcherInfoResponse(response: GetResearcherInfoUseCase.Output): ResearcherInfoResponse {
+        return ResearcherInfoResponse(
             leadResearcher = response.leadResearcher,
             univName = response.univName
+        )
+    }
+
+    fun toGetParticipantInfoUseCaseInput(): GetParticipantInfoUseCase.Input {
+        return GetParticipantInfoUseCase.Input(
+            memberId = getCurrentMemberId()
+        )
+    }
+
+    fun toParticipantInfoResponse(output: GetParticipantInfoUseCase.Output): ParticipantInfoResponse {
+        return ParticipantInfoResponse(
+            memberInfo = MemberResponse.fromDomain(output.member),
+            gender = output.gender,
+            birthDate = output.birthDate,
+            basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
+            additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
+            matchType = output.matchType
         )
     }
 }

@@ -1,6 +1,6 @@
 package com.dobby.backend.domain.model.experiment
 
-import com.dobby.backend.infrastructure.database.entity.enum.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 
 data class TargetGroup(
     val id: Long,

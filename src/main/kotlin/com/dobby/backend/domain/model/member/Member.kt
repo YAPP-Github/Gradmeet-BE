@@ -1,8 +1,8 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.infrastructure.database.entity.enum.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enum.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import java.time.LocalDateTime
 
 data class Member(

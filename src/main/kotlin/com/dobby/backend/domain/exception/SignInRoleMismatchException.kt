@@ -1,6 +1,6 @@
 package com.dobby.backend.domain.exception
 
-import com.dobby.backend.infrastructure.database.entity.enum.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import org.springframework.http.HttpStatus
 
 class SignInRoleMismatchException(

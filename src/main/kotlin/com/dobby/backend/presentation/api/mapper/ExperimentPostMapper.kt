@@ -5,9 +5,13 @@ import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseC
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
-import com.dobby.backend.presentation.api.dto.request.expirement.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
-import com.dobby.backend.presentation.api.dto.response.expirement.*
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.presentation.api.dto.request.experiment.*
+import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.util.getCurrentMemberId
 
 object ExperimentPostMapper {
@@ -34,7 +38,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toApplyMethodInfo(dto: com.dobby.backend.presentation.api.dto.request.expirement.ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
+    private fun toApplyMethodInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
             formUrl = dto.formUrl,
@@ -42,7 +46,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toTargetGroupInfo(dto: com.dobby.backend.presentation.api.dto.request.expirement.TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
+    private fun toTargetGroupInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
         return CreateExperimentPostUseCase.TargetGroupInfo(
             startAge = dto.startAge,
             endAge = dto.endAge,
@@ -51,7 +55,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toImageListInfo(dto: com.dobby.backend.presentation.api.dto.request.expirement.ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
+    private fun toImageListInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
             images = dto.images
         )
@@ -68,8 +72,10 @@ object ExperimentPostMapper {
             postId = input.postId,
             title = input.title,
             views = input.views,
-            startDate = input.startDate,
-            endDate = input.endDate,
+            durationInfo = DurationInfo(
+                startDate = input.durationInfo?.startDate,
+                endDate = input.durationInfo?.endDate
+            ),
             reward = input.reward,
             univName = input.univName
         )
@@ -147,6 +153,64 @@ object ExperimentPostMapper {
             content = output.content
         )
     }
+
+    fun toUseCaseCustomFilter(
+        matchType: MatchType?,
+        gender: GenderType?,
+        age: Int?,
+        region: Region?,
+        areas: List<Area>?,
+        recruitDone: Boolean?, ): GetExperimentPostsUseCase.CustomFilterInput {
+        return GetExperimentPostsUseCase.CustomFilterInput(
+            matchType = matchType,
+            studyTarget = GetExperimentPostsUseCase.StudyTargetInput(
+                gender = gender,
+                age = age
+            ),
+            locationTarget = GetExperimentPostsUseCase.LocationTargetInput(
+                region = region,
+                areas = areas
+            ),
+            recruitDone = recruitDone
+        )
+    }
+
+    fun toUseCasePagination(
+        page: Int, count: Int) : GetExperimentPostsUseCase.PaginationInput {
+        return GetExperimentPostsUseCase.PaginationInput(
+            page=  page,
+            count = count,
+        )
+    }
+
+    fun toExperimentPostsUseCaseInput(
+        customFilter: GetExperimentPostsUseCase.CustomFilterInput,
+        pagination: GetExperimentPostsUseCase.PaginationInput
+    ): GetExperimentPostsUseCase.Input {
+        return GetExperimentPostsUseCase.Input(
+            customFilter = customFilter,
+            pagination = pagination
+        )
+    }
+
+    fun toGetExperimentPostsResponse(output: GetExperimentPostsUseCase.Output): ExperimentPostsResponse {
+        return ExperimentPostsResponse(
+            postInfo = PostInfo(
+                postId = output.postInfo.postId,
+                title = output.postInfo.title,
+                views = output.postInfo.views,
+                univName = output.postInfo.univName,
+                reward = output.postInfo.reward,
+                durationInfo = DurationInfo(
+                    startDate = output.postInfo.durationInfo?.startDate,
+                    endDate = output.postInfo.durationInfo?.endDate
+                )
+            ),
+            recuritDone = output.postInfo.recruitDone
+        )
+    }
+
+
 
     fun toGeneratePreSignedUrlUseCaseInput(request: PreSignedUrlRequest): GenerateExperimentPostPreSignedUrlUseCase.Input {
         return GenerateExperimentPostPreSignedUrlUseCase.Input(
