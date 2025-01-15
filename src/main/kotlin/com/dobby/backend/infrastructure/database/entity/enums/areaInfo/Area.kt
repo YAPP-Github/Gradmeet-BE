@@ -1,6 +1,9 @@
 package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 
 enum class Area (val region: Region, val displayName: String){
+    // 기본값
+    NONE(Region.NONE, "NONE"),
+
     // 서울
     SEOUL_ALL(Region.SEOUL, "SEOUL_ALL"),
     GEUMCHEONGU(Region.SEOUL, "GEUMCHEONGU"),
