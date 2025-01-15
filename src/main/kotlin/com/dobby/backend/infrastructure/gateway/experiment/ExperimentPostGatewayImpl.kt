@@ -58,11 +58,13 @@ class ExperimentPostGatewayImpl(
 
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
-        pagination: Pagination
+        pagination: Pagination,
+        order: String
     ): List<ExperimentPost>? {
         return experimentPostCustomRepository.findExperimentPostsByMemberIdWithPagination(
             memberId,
-            pagination
+            pagination,
+            order
         )?.map { it.toDomain() }
     }
 

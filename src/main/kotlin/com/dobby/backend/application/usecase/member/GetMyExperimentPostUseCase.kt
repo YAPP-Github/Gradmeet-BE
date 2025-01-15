@@ -17,6 +17,7 @@ class GetMyExperimentPostUseCase(
     data class PaginationInput(
         val page: Int = 1,
         val count: Int = 6,
+        val order: String = "DESC"
     )
 
     data class Output(
@@ -31,7 +32,8 @@ class GetMyExperimentPostUseCase(
     override fun execute(input: Input): List<Output> {
         val posts = experimentPostGateway.findExperimentPostsByMemberIdWithPagination(
             memberId = input.memberId,
-            pagination = MemberMapper.toDomainPagination(input.pagination)
+            pagination = MemberMapper.toDomainPagination(input.pagination),
+            order = input.pagination.order
         )
 
         return posts?.map { post ->

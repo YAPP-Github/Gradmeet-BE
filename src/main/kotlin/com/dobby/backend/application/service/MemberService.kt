@@ -7,6 +7,7 @@ import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.security.InvalidParameterException
 
 @Service
 class MemberService(
@@ -42,7 +43,15 @@ class MemberService(
     }
 
     fun getMyExperimentPosts(input: GetMyExperimentPostUseCase.Input): List<GetMyExperimentPostUseCase.Output> {
+        validateSortOrder(input.pagination.order)
         return getMyExperimentPostUseCase.execute(input)
+    }
+
+    private fun validateSortOrder(sortOrder: String): String {
+        return when (sortOrder) {
+            "ASC", "DESC" -> sortOrder
+            else -> throw InvalidParameterException("Invalid sort order. Please use 'ASC' or 'DESC'")
+        }
     }
 
     fun getMyExperimentPostsCount(input: GetTotalMyExperimentPostCountUseCase.Input): GetTotalMyExperimentPostCountUseCase.Output {

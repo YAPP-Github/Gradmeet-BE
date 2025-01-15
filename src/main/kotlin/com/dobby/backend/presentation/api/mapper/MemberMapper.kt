@@ -145,11 +145,12 @@ object MemberMapper {
     }
 
     fun toUseCasePagination(
-        page: Int, count: Int
+        page: Int, count: Int, order: String
     ) : GetMyExperimentPostUseCase.PaginationInput {
         return GetMyExperimentPostUseCase.PaginationInput(
             page = page,
             count = count,
+            order = order
         )
     }
 

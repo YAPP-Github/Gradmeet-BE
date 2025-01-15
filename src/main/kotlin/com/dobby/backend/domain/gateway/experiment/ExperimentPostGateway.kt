@@ -14,6 +14,6 @@ interface ExperimentPostGateway {
     fun countExperimentPosts(): Int
     fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple>
     fun countExperimentPostGroupedByRegion(): List<Tuple>
-    fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination): List<ExperimentPost>?
+    fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
     fun countExperimentPostsByMemberId(memberId: Long): Int
 }

@@ -83,9 +83,10 @@ class MemberController(
     )
     fun getMyExperimentPosts(
         @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "6") count: Int
+        @RequestParam(defaultValue = "6") count: Int,
+        @RequestParam(defaultValue = "DESC") order: String
     ): PaginatedResponse<MyExperimentPostResponse> {
-        val pagination = MemberMapper.toUseCasePagination(page, count)
+        val pagination = MemberMapper.toUseCasePagination(page, count, order)
         val input = MemberMapper.toGetMyExperimentPosts(pagination)
         val posts = memberService.getMyExperimentPosts(input)
 

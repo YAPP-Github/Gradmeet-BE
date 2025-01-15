@@ -9,6 +9,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Comp
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.entity.experiment.QExperimentPostEntity
+import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
@@ -42,7 +43,8 @@ class ExperimentPostCustomRepositoryImpl (
 
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
-        pagination: Pagination
+        pagination: Pagination,
+        order: String
     ): List<ExperimentPostEntity>? {
         val post = QExperimentPostEntity.experimentPostEntity
 
@@ -51,7 +53,7 @@ class ExperimentPostCustomRepositoryImpl (
             .where(post.member.id.eq(memberId))
             .offset((pagination.page - 1L) * pagination.count)
             .limit(pagination.count.toLong())
-            .orderBy(post.createdAt.desc())
+            .orderBy(getOrderClause(order))
             .fetch()
     }
 
@@ -83,5 +85,14 @@ class ExperimentPostCustomRepositoryImpl (
 
     private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
         return recruitDone?.let { post.recruitDone.eq(it) }
+    }
+
+    private fun getOrderClause(order: String): OrderSpecifier<*> {
+        val post = QExperimentPostEntity.experimentPostEntity
+        return if (order == "ASC") {
+            post.createdAt.asc()
+        } else {
+            post.createdAt.desc()
+        }
     }
 }
