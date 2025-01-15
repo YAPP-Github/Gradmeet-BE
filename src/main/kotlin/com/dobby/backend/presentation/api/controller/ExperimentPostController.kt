@@ -1,6 +1,8 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.ExperimentPostService
+import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
+import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -38,7 +40,21 @@ class ExperimentPostController (
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
     }
 
-    @PostMapping("/{postId}")
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PostMapping("/image-upload-request")
+    @Operation(
+        summary = "공고 사진 S3 Presigned Url 요청",
+        description = "S3 Presigned Url을 요청합니다."
+    )
+    fun requestPreSignedUrl(
+        @RequestBody @Valid request: PreSignedUrlRequest
+    ): PreSignedUrlResponse {
+        val input = ExperimentPostMapper.toGeneratePreSignedUrlUseCaseInput(request)
+        val output = experimentPostService.generatePreSignedUrl(input)
+        return ExperimentPostMapper.toGeneratePreSignedUrlResponse(output)
+    }
+
+    @PostMapping("/{postId}/details")
     @Operation(
         summary = "특정 공고 상세 정보 조회 API",
         description = "특정 공고 상세 정보를 반환합니다"

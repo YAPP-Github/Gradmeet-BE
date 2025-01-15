@@ -4,6 +4,8 @@ import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
+import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -36,7 +38,8 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toApplyMethodInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
+
+    private fun toApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
             formUrl = dto.formUrl,
@@ -44,7 +47,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toTargetGroupInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
+    private fun toTargetGroupInfo(dto: TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
         return CreateExperimentPostUseCase.TargetGroupInfo(
             startAge = dto.startAge,
             endAge = dto.endAge,
@@ -53,7 +56,8 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toImageListInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
+
+    private fun toImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
             images = dto.images
         )
@@ -202,6 +206,7 @@ object ExperimentPostMapper {
                 durationInfo = DurationInfo(
                     startDate = output.postInfo.durationInfo?.startDate,
                     endDate = output.postInfo.durationInfo?.endDate
+
                 )
             ),
             recuritDone = output.postInfo.recruitDone
@@ -209,4 +214,15 @@ object ExperimentPostMapper {
     }
 
 
+    fun toGeneratePreSignedUrlUseCaseInput(request: PreSignedUrlRequest): GenerateExperimentPostPreSignedUrlUseCase.Input {
+        return GenerateExperimentPostPreSignedUrlUseCase.Input(
+            fileName = request.fileName
+        )
+    }
+
+    fun toGeneratePreSignedUrlResponse(output: GenerateExperimentPostPreSignedUrlUseCase.Output): PreSignedUrlResponse {
+        return PreSignedUrlResponse(
+            preSignedUrl = output.preSignedUrl
+        )
+    }
 }
