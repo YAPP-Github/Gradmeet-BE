@@ -4,6 +4,8 @@ import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
+import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -202,11 +204,25 @@ object ExperimentPostMapper {
                 univName = output.postInfo.univName,
                 reward = output.postInfo.reward,
                 durationInfo = DurationInfo(
-                    startDate = output.postInfo.durationInfo?.startDate,
-                    endDate = output.postInfo.durationInfo?.endDate
+                    startDate = output.postInfo.durationInfo.startDate,
+                    endDate = output.postInfo.durationInfo.endDate
                 )
             ),
             recuritDone = output.postInfo.recruitDone
+        )
+    }
+
+
+
+    fun toGeneratePreSignedUrlUseCaseInput(request: PreSignedUrlRequest): GenerateExperimentPostPreSignedUrlUseCase.Input {
+        return GenerateExperimentPostPreSignedUrlUseCase.Input(
+            fileName = request.fileName
+        )
+    }
+
+    fun toGeneratePreSignedUrlResponse(output: GenerateExperimentPostPreSignedUrlUseCase.Output): PreSignedUrlResponse {
+        return PreSignedUrlResponse(
+            preSignedUrl = output.preSignedUrl
         )
     }
 }
