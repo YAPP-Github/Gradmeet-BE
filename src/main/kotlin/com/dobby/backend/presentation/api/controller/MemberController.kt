@@ -60,7 +60,6 @@ class MemberController(
         return MemberMapper.toResearcherInfoResponse(output)
     }
 
-    @PreAuthorize("hasRole('PARTICIPANT')")
     @GetMapping("/participants/me")
     @Operation(
         summary = "참여자 회원 기본 정보 렌더링",
