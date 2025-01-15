@@ -38,7 +38,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toApplyMethodInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
+    private fun toApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
             formUrl = dto.formUrl,
@@ -46,7 +46,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toTargetGroupInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
+    private fun toTargetGroupInfo(dto: TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
         return CreateExperimentPostUseCase.TargetGroupInfo(
             startAge = dto.startAge,
             endAge = dto.endAge,
@@ -55,7 +55,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toImageListInfo(dto: com.dobby.backend.presentation.api.dto.request.experiment.ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
+    private fun toImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
             images = dto.images
         )
@@ -202,8 +202,8 @@ object ExperimentPostMapper {
                 univName = output.postInfo.univName,
                 reward = output.postInfo.reward,
                 durationInfo = DurationInfo(
-                    startDate = output.postInfo.durationInfo?.startDate,
-                    endDate = output.postInfo.durationInfo?.endDate
+                    startDate = output.postInfo.durationInfo.startDate,
+                    endDate = output.postInfo.durationInfo.endDate
                 )
             ),
             recuritDone = output.postInfo.recruitDone
