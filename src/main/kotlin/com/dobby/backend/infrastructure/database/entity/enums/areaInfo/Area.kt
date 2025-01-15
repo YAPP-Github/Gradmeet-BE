@@ -1,9 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 
 enum class Area (val region: Region, val displayName: String){
-    // 기본값
-    NONE(Region.NONE, "NONE"),
-
     // 서울
     SEOUL_ALL(Region.SEOUL, "SEOUL_ALL"),
     GEUMCHEONGU(Region.SEOUL, "GEUMCHEONGU"),
@@ -298,7 +295,10 @@ enum class Area (val region: Region, val displayName: String){
 
     // 제주특별자치도
     JEJU_SEOGWIPOSI(Region.JEJU, "JEJU_SEOGWIPOSI"),
-    JEJU_JEJUSI(Region.JEJU, "JEJU_JEJUSI");
+    JEJU_JEJUSI(Region.JEJU, "JEJU_JEJUSI"),
+
+    // 기본값
+    NONE(Region.NONE, "NONE"),;
 
     companion object {
         fun findByRegion(region : Region) : List<Area> {

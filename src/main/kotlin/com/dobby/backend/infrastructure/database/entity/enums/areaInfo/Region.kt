@@ -3,7 +3,6 @@ package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 import java.security.InvalidParameterException
 
 enum class Region(val displayName: String) {
-    NONE("NONE"),
     SEOUL("SEOUL"),
     GYEONGGI("GYEONGGI"),
     INCHEON("INCHEON"),
@@ -20,7 +19,8 @@ enum class Region(val displayName: String) {
     GWANGJU("GWANGJU"),
     JEONNAM("JEONNAM"),
     JEONBUK("JEONBUK"),
-    JEJU("JEJU");
+    JEJU("JEJU"),
+    NONE("NONE"),;
 
     fun getAreas(): List<Area> {
         return Area.findByRegion(this)
