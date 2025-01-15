@@ -3,6 +3,7 @@ package com.dobby.backend.infrastructure.s3
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidInputException
+import com.dobby.backend.infrastructure.config.properties.S3Properties
 import com.dobby.backend.util.generateULID
 import io.kotest.core.spec.style.BehaviorSpec
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -17,8 +18,13 @@ import kotlin.test.assertNotNull
 class S3PreSignedUrlProviderTest : BehaviorSpec({
 
     val amazonS3Client = mock(AmazonS3::class.java)
-    val provider = S3PreSignedUrlProvider(amazonS3Client)
-    provider.bucket = "test-bucket"
+    val s3Properties = mock(S3Properties::class.java)
+    val s3Config = mock(S3Properties.S3::class.java)
+
+    `when`(s3Properties.s3).thenReturn(s3Config)
+    `when`(s3Config.bucket).thenReturn("test-bucket")
+    `when`(s3Properties.s3.bucket).thenReturn("test-bucket")
+    val provider = S3PreSignedUrlProvider(amazonS3Client, s3Properties)
 
     given("이미지 파일 이름이 주어지고") {
         val imageName = "test_image.jpg"
@@ -27,10 +33,10 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
         `when`("S3에서 PreSigned URL을 생성하면") {
             `when`(amazonS3Client.generatePresignedUrl(any(GeneratePresignedUrlRequest::class.java))).thenReturn(mockPresignedUrl)
 
-            then("PreSignedUrlResponse가 반환된다") {
-                val response = provider.getPreSignedUrl(imageName)
-                assertNotNull(response)
-                assertEquals(mockPresignedUrl.toString(), response.url)
+            then("PreSigned URL이 반환된다") {
+                val preSignedUrl = provider.getExperimentPostPreSignedUrl(imageName)
+                assertNotNull(preSignedUrl)
+                assertEquals(mockPresignedUrl.toString(), preSignedUrl)
             }
         }
     }
@@ -40,7 +46,7 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
 
         then("InvalidInputException이 발생한다") {
             assertFailsWith<InvalidInputException> {
-                provider.getPreSignedUrl(imageName)
+                provider.getExperimentPostPreSignedUrl(imageName)
             }
         }
     }
