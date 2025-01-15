@@ -4,6 +4,7 @@ import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 interface ExperimentPostCustomRepository {
@@ -12,4 +13,5 @@ interface ExperimentPostCustomRepository {
         pagination: Pagination
     ): List<ExperimentPostEntity>?
 
+    fun markExpiredExperimentsAsDone(currentDate : LocalDate): Long;
 }

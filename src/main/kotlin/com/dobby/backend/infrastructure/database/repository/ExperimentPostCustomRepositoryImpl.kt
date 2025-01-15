@@ -12,6 +12,7 @@ import com.dobby.backend.infrastructure.database.entity.experiment.QExperimentPo
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 class ExperimentPostCustomRepositoryImpl (
@@ -70,4 +71,16 @@ class ExperimentPostCustomRepositoryImpl (
         return recruitDone?.let { post.recruitDone.eq(it) }
     }
 
+    @Override
+    override fun markExpiredExperimentsAsDone(currentDate: LocalDate): Long {
+        val experimentPost = QExperimentPostEntity.experimentPostEntity
+
+        return jpaQueryFactory.update(experimentPost)
+            .set(experimentPost.recruitDone, true)
+            .where(
+                experimentPost.endDate.lt(currentDate)
+                    .and(experimentPost.recruitDone.eq(false))
+            )
+            .execute()
+    }
 }
