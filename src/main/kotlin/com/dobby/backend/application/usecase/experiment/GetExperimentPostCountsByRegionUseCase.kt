@@ -25,7 +25,7 @@ class GetExperimentPostCountsByRegionUseCase(
     override fun execute(input: Input): Output {
         val total = experimentPostGateway.countExperimentPosts()
 
-        val allRegions = Region.values()
+        val allRegions = Region.values().filter { it != Region.NONE }
         val regionData = experimentPostGateway.countExperimentPostGroupedByRegion()
         val regionDataMap = regionData.associateBy { it.get(0, Region::class.java) }
 
