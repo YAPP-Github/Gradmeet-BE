@@ -1,6 +1,5 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase
 import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
@@ -114,16 +113,16 @@ object MemberMapper {
     }
 
     fun toGetMyExperimentPosts(
-        pagination: GetMyExperimentPostUseCase.PaginationInput
-    ): GetMyExperimentPostUseCase.Input {
-        return GetMyExperimentPostUseCase.Input(
+        pagination: GetMyExperimentPostsUseCase.PaginationInput
+    ): GetMyExperimentPostsUseCase.Input {
+        return GetMyExperimentPostsUseCase.Input(
             memberId = getCurrentMemberId(),
             pagination = pagination
         )
     }
 
     fun toGetMyExperimentPostsResponse(
-        output: List<GetMyExperimentPostUseCase.Output>,
+        output: List<GetMyExperimentPostsUseCase.Output>,
         page: Int,
         totalCount: Int,
     ): PaginatedResponse<MyExperimentPostResponse> {
@@ -146,8 +145,8 @@ object MemberMapper {
 
     fun toUseCasePagination(
         page: Int, count: Int, order: String
-    ) : GetMyExperimentPostUseCase.PaginationInput {
-        return GetMyExperimentPostUseCase.PaginationInput(
+    ) : GetMyExperimentPostsUseCase.PaginationInput {
+        return GetMyExperimentPostsUseCase.PaginationInput(
             page = page,
             count = count,
             order = order

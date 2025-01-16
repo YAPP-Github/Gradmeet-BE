@@ -5,9 +5,9 @@ import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import java.time.LocalDate
 
-class GetMyExperimentPostUseCase(
+class GetMyExperimentPostsUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetMyExperimentPostUseCase.Input, List<GetMyExperimentPostUseCase.Output>> {
+): UseCase<GetMyExperimentPostsUseCase.Input, List<GetMyExperimentPostsUseCase.Output>> {
 
     data class Input(
         val memberId: Long,

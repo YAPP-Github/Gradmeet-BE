@@ -17,7 +17,7 @@ class MemberService(
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
-    private val getMyExperimentPostUseCase: GetMyExperimentPostUseCase,
+    private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getTotalMyExperimentPostCountUseCase: GetTotalMyExperimentPostCountUseCase
 ) {
     @Transactional
@@ -43,9 +43,9 @@ class MemberService(
         return getParticipantInfoUseCase.execute(input)
     }
 
-    fun getMyExperimentPosts(input: GetMyExperimentPostUseCase.Input): List<GetMyExperimentPostUseCase.Output> {
+    fun getMyExperimentPosts(input: GetMyExperimentPostsUseCase.Input): List<GetMyExperimentPostsUseCase.Output> {
         validateSortOrder(input.pagination.order)
-        return getMyExperimentPostUseCase.execute(input)
+        return getMyExperimentPostsUseCase.execute(input)
     }
 
     private fun validateSortOrder(sortOrder: String): String {
