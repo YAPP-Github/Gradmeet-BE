@@ -13,6 +13,7 @@ import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 class ExperimentPostCustomRepositoryImpl (
@@ -85,6 +86,19 @@ class ExperimentPostCustomRepositoryImpl (
 
     private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
         return recruitDone?.let { post.recruitDone.eq(it) }
+    }
+
+    @Override
+    override fun updateExperimentPostStatus(currentDate: LocalDate): Long {
+        val experimentPost = QExperimentPostEntity.experimentPostEntity
+
+        return jpaQueryFactory.update(experimentPost)
+            .set(experimentPost.recruitDone, true)
+            .where(
+                experimentPost.endDate.lt(currentDate)
+                    .and(experimentPost.recruitDone.eq(false))
+            )
+            .execute()
     }
 
     private fun getOrderClause(order: String): OrderSpecifier<*> {

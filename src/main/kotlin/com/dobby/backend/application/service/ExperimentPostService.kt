@@ -10,6 +10,7 @@ import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class ExperimentPostService(
@@ -19,7 +20,8 @@ class ExperimentPostService(
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
-    private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase
+    private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
+    private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -40,6 +42,11 @@ class ExperimentPostService(
     @Transactional
     fun getExperimentPostApplyMethod(input: GetExperimentPostApplyMethodUseCase.Input): GetExperimentPostApplyMethodUseCase.Output {
         return getExperimentPostApplyMethodUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateExpiredExperimentPosts(input: UpdateExpiredExperimentPostUseCase.Input): UpdateExpiredExperimentPostUseCase.Output  {
+        return updateExpiredExperimentPostUseCase.execute(input)
     }
 
     fun getExperimentPostCounts(input: Any): Any {
@@ -69,7 +76,6 @@ class ExperimentPostService(
             throw ExperimentAreaInCorrectException()
         }
     }
-
     fun generatePreSignedUrl(input: GenerateExperimentPostPreSignedUrlUseCase.Input): GenerateExperimentPostPreSignedUrlUseCase.Output {
         return generateExperimentPostPreSignedUrlUseCase.execute(input)
     }
