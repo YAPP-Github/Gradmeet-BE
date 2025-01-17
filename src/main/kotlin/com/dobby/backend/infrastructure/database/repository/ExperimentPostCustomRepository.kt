@@ -12,4 +12,9 @@ interface ExperimentPostCustomRepository {
         pagination: Pagination
     ): List<ExperimentPostEntity>?
 
+    fun findExperimentPostsByMemberIdWithPagination(
+        memberId: Long,
+        pagination: Pagination,
+        order: String
+    ): List<ExperimentPostEntity>?
 }
