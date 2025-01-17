@@ -6,8 +6,8 @@ import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
 import com.dobby.backend.application.usecase.member.GetParticipantInfoUseCase
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
 
@@ -18,7 +18,6 @@ object MemberMapper {
             provider = req.provider,
             contactEmail = req.contactEmail,
             univEmail = req.univEmail,
-            emailVerified = req.emailVerified,
             univName = req.univName,
             name = req.name,
             major = req.major,

@@ -20,7 +20,6 @@ class CreateResearcherUseCase(
         val provider: ProviderType,
         val contactEmail: String,
         val univEmail : String,
-        val emailVerified: Boolean,
         val univName: String,
         val name : String,
         val major: String,
@@ -74,7 +73,7 @@ class CreateResearcherUseCase(
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,
-            emailVerified = input.emailVerified,
+            emailVerified = true,
             major = input.major,
             labInfo = input.labInfo
         )

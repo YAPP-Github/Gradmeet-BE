@@ -2,8 +2,8 @@ package com.dobby.backend.presentation.api.mapper
 
 import com.dobby.backend.application.usecase.member.email.EmailCodeSendUseCase
 import com.dobby.backend.application.usecase.member.email.EmailVerificationUseCase
-import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
-import com.dobby.backend.presentation.api.dto.request.signup.EmailVerificationRequest
+import com.dobby.backend.presentation.api.dto.request.member.EmailSendRequest
+import com.dobby.backend.presentation.api.dto.request.member.EmailVerificationRequest
 import com.dobby.backend.presentation.api.dto.response.member.EmailSendResponse
 import com.dobby.backend.presentation.api.dto.response.member.EmailVerificationResponse
 
