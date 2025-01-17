@@ -9,7 +9,6 @@ import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostRe
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
-import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
