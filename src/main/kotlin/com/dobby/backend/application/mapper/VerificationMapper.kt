@@ -4,7 +4,7 @@ import com.dobby.backend.application.usecase.member.email.EmailCodeSendUseCase
 import com.dobby.backend.application.usecase.member.email.EmailVerificationUseCase
 import com.dobby.backend.infrastructure.database.entity.VerificationEntity
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
-import com.dobby.backend.presentation.api.dto.request.signup.EmailSendRequest
+import com.dobby.backend.presentation.api.dto.request.member.EmailSendRequest
 
 object VerificationMapper {
     fun toEntity(req: EmailSendRequest, code : String): VerificationEntity {

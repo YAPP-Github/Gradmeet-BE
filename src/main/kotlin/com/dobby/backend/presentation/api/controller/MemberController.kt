@@ -2,10 +2,10 @@ package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.application.service.PaginationService
-import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
+import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
