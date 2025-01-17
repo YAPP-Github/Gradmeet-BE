@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.resource.NoResourceFoundException
 import org.springframework.web.util.BindErrorUtils
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.security.InvalidParameterException
 
 @RestControllerAdvice
