@@ -206,7 +206,7 @@ object ExperimentPostMapper {
                     endDate = output.postInfo.durationInfo.endDate
                 )
             ),
-            recuritDone = output.postInfo.recruitDone
+            recruitDone = output.postInfo.recruitDone
         )
     }
 
