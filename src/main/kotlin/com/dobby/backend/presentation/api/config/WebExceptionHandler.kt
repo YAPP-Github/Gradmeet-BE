@@ -1,9 +1,12 @@
 package com.dobby.backend.presentation.api.config
 
 import com.dobby.backend.domain.exception.*
+import com.dobby.backend.domain.gateway.AlertGateway
 import com.dobby.backend.presentation.api.dto.response.ErrorResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -18,7 +21,10 @@ import org.springframework.web.util.BindErrorUtils
 import java.security.InvalidParameterException
 
 @RestControllerAdvice
-class WebExceptionHandler {
+class WebExceptionHandler(
+    private val alertGateway: AlertGateway
+) {
+    private val logger: Logger = LoggerFactory.getLogger(WebExceptionHandler::class.java)
 
     @ExceptionHandler(value = [DomainException::class])
     fun handleDomainException(
@@ -92,6 +98,18 @@ class WebExceptionHandler {
                     errorCode = errorCode,
                 )
             )
+    }
+
+    @ExceptionHandler(value = [Throwable::class])
+    fun handleUnhandledException(
+        exception: Exception,
+        request: HttpServletRequest
+    ): ResponseEntity<ErrorResponse> {
+        alertGateway.sendError(exception, request)
+        logger.error("[UnhandledException] " + exception.stackTraceToString())
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ErrorResponse.fromErrorCode(ErrorCode.UNKNOWN_SERVER_ERROR))
     }
 
     @ExceptionHandler(value = [AuthenticationException::class])
