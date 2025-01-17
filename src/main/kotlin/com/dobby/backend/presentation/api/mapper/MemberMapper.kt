@@ -6,7 +6,6 @@ import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupReq
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
-import com.dobby.backend.util.isLastPage
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
@@ -155,8 +154,8 @@ object MemberMapper {
         )
     }
 
-    fun toGetTotalMyExperimentPostCountUseCaseInput(): GetTotalMyExperimentPostCountUseCase.Input {
-        return GetTotalMyExperimentPostCountUseCase.Input(
+    fun toGetTotalMyExperimentPostCountUseCaseInput(): GetMyExperimentPostTotalCountUseCase.Input {
+        return GetMyExperimentPostTotalCountUseCase.Input(
             memberId = getCurrentMemberId()
         )
     }

@@ -3,9 +3,9 @@ package com.dobby.backend.application.usecase.member
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 
-class GetTotalMyExperimentPostCountUseCase(
+class GetMyExperimentPostTotalCountUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetTotalMyExperimentPostCountUseCase.Input, GetTotalMyExperimentPostCountUseCase.Output> {
+): UseCase<GetMyExperimentPostTotalCountUseCase.Input, GetMyExperimentPostTotalCountUseCase.Output> {
 
     data class Input(
         val memberId: Long

@@ -1,6 +1,6 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.member.GetTotalMyExperimentPostCountUseCase
+import com.dobby.backend.application.usecase.member.GetMyExperimentPostTotalCountUseCase
 import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
@@ -18,7 +18,7 @@ class MemberService(
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
-    private val getTotalMyExperimentPostCountUseCase: GetTotalMyExperimentPostCountUseCase
+    private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -55,7 +55,7 @@ class MemberService(
         }
     }
 
-    fun getMyExperimentPostsCount(input: GetTotalMyExperimentPostCountUseCase.Input): GetTotalMyExperimentPostCountUseCase.Output {
-        return getTotalMyExperimentPostCountUseCase.execute(GetTotalMyExperimentPostCountUseCase.Input(input.memberId))
+    fun getMyExperimentPostsCount(input: GetMyExperimentPostTotalCountUseCase.Input): GetMyExperimentPostTotalCountUseCase.Output {
+        return getMyExperimentPostTotalCountUseCase.execute(GetMyExperimentPostTotalCountUseCase.Input(input.memberId))
     }
 }
