@@ -64,7 +64,3 @@ class UpdateExperimentPostUseCaseTest : BehaviorSpec({
         }
     }
 })
-
-
-
-
