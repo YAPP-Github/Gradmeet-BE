@@ -43,6 +43,7 @@ class MemberService(
         return getParticipantInfoUseCase.execute(input)
     }
 
+    @Transactional
     fun getMyExperimentPosts(input: GetMyExperimentPostsUseCase.Input): List<GetMyExperimentPostsUseCase.Output> {
         validateSortOrder(input.pagination.order)
         return getMyExperimentPostsUseCase.execute(input)
