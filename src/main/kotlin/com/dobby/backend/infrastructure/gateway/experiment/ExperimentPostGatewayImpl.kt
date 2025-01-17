@@ -11,6 +11,7 @@ import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustom
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostRepository
 import jakarta.persistence.Tuple
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 
 @Component
 class ExperimentPostGatewayImpl(
@@ -56,6 +57,9 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countExperimentPostGroupedByRegion()
     }
 
+    override fun updateExperimentPostStatus(currentDate: LocalDate): Long {
+        return experimentPostCustomRepository.updateExperimentPostStatus(currentDate)
+    }
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
         pagination: Pagination,
