@@ -2,7 +2,7 @@ package com.dobby.backend.infrastructure.gateway.discord
 
 import com.dobby.backend.domain.gateway.AlertGateway
 import com.dobby.backend.infrastructure.feign.discord.DiscordFeignClient
-import com.dobby.backend.presentation.api.dto.request.DiscordMessage
+import com.dobby.backend.presentation.api.dto.request.DiscordMessageRequest
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
 import java.io.PrintWriter
@@ -18,11 +18,11 @@ class AlertGatewayImpl(
         sendMessage(createMessage(e, request))
     }
 
-    private fun createMessage(e: Exception, request: HttpServletRequest): DiscordMessage {
-        return DiscordMessage(
+    private fun createMessage(e: Exception, request: HttpServletRequest): DiscordMessageRequest {
+        return DiscordMessageRequest(
             content = "# 🚨 에러 발생 비이이이이사아아아앙",
             embeds = listOf(
-                DiscordMessage.Embed(
+                DiscordMessageRequest.Embed(
                     title = "ℹ️ 에러 정보",
                     description = """
                         ### 🕖 발생 시간
@@ -58,7 +58,7 @@ class AlertGatewayImpl(
         return stringWriter.toString()
     }
 
-    private fun sendMessage(request: DiscordMessage) {
+    private fun sendMessage(request: DiscordMessageRequest) {
         discordFeignClient.sendMessage(request)
     }
 }
