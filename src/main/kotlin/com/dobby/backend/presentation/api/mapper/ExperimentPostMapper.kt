@@ -211,7 +211,7 @@ object ExperimentPostMapper {
 
                 )
             ),
-            recuritDone = output.postInfo.recruitDone
+            recruitDone = output.postInfo.recruitDone
         )
     }
 
