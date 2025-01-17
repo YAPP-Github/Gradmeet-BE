@@ -1,10 +1,9 @@
-package com.dobby.backend.presentation.api.dto.request.signup
+package com.dobby.backend.presentation.api.dto.request.member
 
 import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
 
 data class ResearcherSignupRequest(
     @Email(message = "OAuth 이메일이 유효하지 않습니다.")
@@ -25,10 +24,6 @@ data class ResearcherSignupRequest(
     @NotBlank(message = "학교 이메일은 공백일 수 없습니다.")
     @Schema(description = "대학교 이메일")
     val univEmail : String,
-
-    @NotNull(message = "이메일 인증 여부는 공백일 수 없습니다.")
-    @Schema(description = "이메일 인증 여부")
-    var emailVerified: Boolean,
 
     @NotBlank(message = "이름은 공백일 수 없습니다.")
     @Schema(description = "이름")

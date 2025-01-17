@@ -9,12 +9,13 @@ import java.time.LocalDate
 
 interface ExperimentPostGateway {
     fun save(experimentPost: ExperimentPost): ExperimentPost
-    fun findExperimentPostsByCustomFilter(
-        customFilter: CustomFilter, pagination:Pagination): List<ExperimentPost>?
+    fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
     fun findById(experimentPostId: Long): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
     fun countExperimentPosts(): Int
     fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple>
     fun countExperimentPostGroupedByRegion(): List<Tuple>
     fun updateExperimentPostStatus(todayDate : LocalDate) : Long
+    fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
+    fun countExperimentPostsByMemberId(memberId: Long): Int
 }

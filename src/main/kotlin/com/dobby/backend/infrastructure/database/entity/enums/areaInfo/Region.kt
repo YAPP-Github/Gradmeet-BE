@@ -19,7 +19,8 @@ enum class Region(val displayName: String) {
     GWANGJU("GWANGJU"),
     JEONNAM("JEONNAM"),
     JEONBUK("JEONBUK"),
-    JEJU("JEJU");
+    JEJU("JEJU"),
+    NONE("NONE"),;
 
     fun getAreas(): List<Area> {
         return Area.findByRegion(this)

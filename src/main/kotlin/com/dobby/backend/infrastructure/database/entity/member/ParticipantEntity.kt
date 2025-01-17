@@ -36,10 +36,10 @@ class ParticipantEntity (
 
     @Embedded
     @AttributeOverrides(
-        AttributeOverride(name = "region", column = Column(name = "optional_region", nullable = true)),
-        AttributeOverride(name = "area", column = Column(name = "optional_area", nullable = true))
+        AttributeOverride(name = "region", column = Column(name = "optional_region", nullable = false)),
+        AttributeOverride(name = "area", column = Column(name = "optional_area", nullable = false))
     )
-    val additionalAddressInfo: AddressInfo?,
+    val additionalAddressInfo: AddressInfo,
 
     @Column(name = "match_type", nullable = true)
     @Enumerated(EnumType.STRING)
@@ -52,7 +52,7 @@ class ParticipantEntity (
         gender = gender,
         birthDate = birthDate,
         basicAddressInfo = basicAddressInfo.toDomain(),
-        additionalAddressInfo = additionalAddressInfo?.toDomain(),
+        additionalAddressInfo = additionalAddressInfo.toDomain(),
         matchType = matchType
     )
 
@@ -63,8 +63,8 @@ class ParticipantEntity (
                 member = MemberEntity.fromDomain(member),
                 gender = gender,
                 birthDate = birthDate,
-                basicAddressInfo = AddressInfo.fromDomain(basicAddressInfo), // 수정: AddressInfo.fromDomain() 사용
-                additionalAddressInfo = additionalAddressInfo?.let { AddressInfo.fromDomain(it) }, // 수정
+                basicAddressInfo = AddressInfo.fromDomain(basicAddressInfo),
+                additionalAddressInfo = AddressInfo.fromDomain(additionalAddressInfo),
                 matchType = matchType
             )
         }
