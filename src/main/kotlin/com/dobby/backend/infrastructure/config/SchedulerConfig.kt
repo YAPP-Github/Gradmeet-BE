@@ -4,6 +4,7 @@ import com.dobby.backend.infrastructure.scheduler.ExpiredExperimentPostJob
 import org.quartz.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.util.*
 
 @Configuration
 class SchedulerConfig {
@@ -22,6 +23,7 @@ class SchedulerConfig {
             .withIdentity("expired_experiment_post_trigger")
             .withSchedule(
                 CronScheduleBuilder.dailyAtHourAndMinute(0, 0)
+                    .inTimeZone(TimeZone.getTimeZone("Asia/Seoul"))
             )
             .build()
     }
