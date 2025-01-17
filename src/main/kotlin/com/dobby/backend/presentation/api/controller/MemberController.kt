@@ -1,6 +1,7 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.MemberService
+import com.dobby.backend.application.service.PaginationService
 import com.dobby.backend.presentation.api.dto.request.signup.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.signup.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/members")
 class MemberController(
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val paginationService: PaginationService
 ) {
     @PostMapping("/signup/participant")
     @Operation(
@@ -92,6 +94,11 @@ class MemberController(
 
         val totalCountInput = MemberMapper.toGetTotalMyExperimentPostCountUseCaseInput()
         val totalCount = memberService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-        return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount)
+        val isLast = paginationService.isLastPage(
+            totalElements = totalCount,
+            pageSize = count,
+            currentPage = page
+        )
+        return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }

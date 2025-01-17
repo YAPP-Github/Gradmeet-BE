@@ -125,6 +125,7 @@ object MemberMapper {
         output: List<GetMyExperimentPostsUseCase.Output>,
         page: Int,
         totalCount: Int,
+        isLast: Boolean
     ): PaginatedResponse<MyExperimentPostResponse> {
         return PaginatedResponse(
             content = output.map { post ->
@@ -139,7 +140,8 @@ object MemberMapper {
             },
             page = page,
             size = output.size,
-            isLast = isLastPage(totalCount, output.size, page),
+            totalCount = totalCount,
+            isLast = isLast
         )
     }
 
