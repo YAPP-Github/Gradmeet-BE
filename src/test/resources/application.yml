@@ -49,3 +49,6 @@ cloud:
     credentials:
       access-key: test
       secret-key: test
+
+discord:
+  webhook-url: test
