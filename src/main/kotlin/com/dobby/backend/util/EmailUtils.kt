@@ -29,7 +29,8 @@ object EmailUtils{
             "postech.edu",
             "kaist.edu",
             "handong.edu",
-            "ewhain.net"
+            "ewhain.net",
+            "g.skku.edu"
         )
         return email.endsWith(".ac.kr") || eduDomains.any { email.endsWith(it) }
     }
