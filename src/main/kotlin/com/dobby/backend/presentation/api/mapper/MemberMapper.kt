@@ -139,7 +139,7 @@ object MemberMapper {
                     title = post.title,
                     content = post.content,
                     views = post.views,
-                    recruitDone = post.recruitDone,
+                    recruitStatus = post.recruitStatus,
                     uploadDate = post.uploadDate
                 )
             },

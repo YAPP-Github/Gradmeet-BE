@@ -39,7 +39,7 @@ fun ExperimentPost.toDetailResponse(memberId: Long?): ExperimentPostDetailRespon
         uploadDate = this.createdAt.toLocalDate(),
         uploaderName = this.member.name,
         views = this.views,
-        recruitDone = this.recruitDone,
+        recruitStatus = this.recruitStatus,
         summary = this.toSummaryResponse(),
         targetGroup = this.targetGroup.toResponse(),
         address = this.toAddressResponse(),

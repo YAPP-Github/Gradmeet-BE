@@ -78,8 +78,8 @@ class ExperimentPostEntity(
     @Column(name = "alarm_agree", nullable = false)
     val alarmAgree: Boolean,
 
-    @Column(name = "recruit_done", nullable = false)
-    val recruitDone: Boolean = false,
+    @Column(name = "recruit_status", nullable = false)
+    val recruitStatus: Boolean = true,
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "experiment_image_id")
@@ -111,7 +111,7 @@ class ExperimentPostEntity(
         area = area,
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
-        recruitDone = recruitDone,
+        recruitStatus = recruitStatus,
         images = images.map { it.toDomain() },
         createdAt = createdAt,
         updatedAt = updatedAt
@@ -139,7 +139,7 @@ class ExperimentPostEntity(
                 area = area,
                 detailedAddress = detailedAddress,
                 alarmAgree = alarmAgree,
-                recruitDone = recruitDone,
+                recruitStatus = recruitStatus,
                 images = images.map { ExperimentImageEntity.fromDomain(it) },
                 createdAt = createdAt,
                 updatedAt = updatedAt

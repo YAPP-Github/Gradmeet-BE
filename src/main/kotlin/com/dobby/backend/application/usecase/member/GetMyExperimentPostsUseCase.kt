@@ -25,7 +25,7 @@ class GetMyExperimentPostsUseCase(
         val title: String,
         val content: String,
         val views: Int,
-        val recruitDone: Boolean,
+        val recruitStatus: Boolean,
         val uploadDate: LocalDate
     )
 
@@ -42,7 +42,7 @@ class GetMyExperimentPostsUseCase(
                 title = post.title,
                 content = post.content,
                 views = post.views,
-                recruitDone = post.recruitDone,
+                recruitStatus = post.recruitStatus,
                 uploadDate = post.createdAt.toLocalDate()
             )
         } ?: emptyList()

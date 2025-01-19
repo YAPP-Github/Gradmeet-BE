@@ -22,7 +22,7 @@ object ExperimentMapper {
                     areas = it.areas
                 )
             },
-            recruitDone = customFilter.recruitDone
+            recruitStatus = customFilter.recruitStatus
         )
     }
 

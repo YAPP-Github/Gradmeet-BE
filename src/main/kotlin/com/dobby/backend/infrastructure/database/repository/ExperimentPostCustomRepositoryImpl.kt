@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.entity.experiment.QExperimentPostEntity
 import com.querydsl.core.types.OrderSpecifier
@@ -24,6 +25,10 @@ class ExperimentPostCustomRepositoryImpl (
         pagination: Pagination
     ): List<ExperimentPostEntity>? {
         val post = QExperimentPostEntity.experimentPostEntity
+        val recruitStatusCondition = when (customFilter.recruitStatus) {
+            RecruitStatus.ALL -> null
+            RecruitStatus.OPEN -> post.recruitStatus.eq(true)
+        }
 
         return jpaQueryFactory.selectFrom(post)
             .join(post.targetGroup).fetchJoin()
@@ -34,7 +39,7 @@ class ExperimentPostCustomRepositoryImpl (
                 ageBetween(post, customFilter.studyTarget?.age),
                 regionEq(post, customFilter.locationTarget?.region),
                 areasIn(post, customFilter.locationTarget?.areas),
-                recruitDoneEq(post, customFilter.recruitDone)
+                recruitStatusCondition
             )
             .offset((pagination.page - 1L) * pagination.count)
             .limit(pagination.count.toLong())
@@ -84,8 +89,8 @@ class ExperimentPostCustomRepositoryImpl (
         }
     }
 
-    private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
-        return recruitDone?.let { post.recruitDone.eq(it) }
+    private fun recruitStatusEq(post: QExperimentPostEntity, recruitStatus: Boolean?): BooleanExpression? {
+        return recruitStatus?.let { post.recruitStatus.eq(it) }
     }
 
     @Override
@@ -93,10 +98,10 @@ class ExperimentPostCustomRepositoryImpl (
         val experimentPost = QExperimentPostEntity.experimentPostEntity
 
         return jpaQueryFactory.update(experimentPost)
-            .set(experimentPost.recruitDone, true)
+            .set(experimentPost.recruitStatus, true)
             .where(
                 experimentPost.endDate.lt(currentDate)
-                    .and(experimentPost.recruitDone.eq(false))
+                    .and(experimentPost.recruitStatus.eq(false))
             )
             .execute()
     }

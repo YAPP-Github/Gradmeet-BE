@@ -45,21 +45,38 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countByRegion(region)
     }
 
+    override fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int {
+        return experimentPostRepository.countByRegionAndRecruitStatus(region, recruitStatus)
+    }
+
     override fun countExperimentPosts(): Int {
         return experimentPostRepository.count().toInt()
+    }
+
+    override fun countExperimentPostsByRecruitStatus(recruitStatus: Boolean): Int {
+        return experimentPostRepository.countByRecruitStatus(recruitStatus)
     }
 
     override fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple> {
         return experimentPostRepository.countExperimentPostByRegionGroupedByArea(region)
     }
 
+    override fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<Tuple> {
+        return experimentPostRepository.countExperimentPostByRegionAndRecruitStatusGroupedByArea(region, recruitStatus)
+    }
+
     override fun countExperimentPostGroupedByRegion(): List<Tuple> {
         return experimentPostRepository.countExperimentPostGroupedByRegion()
+    }
+
+    override fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple> {
+        return experimentPostRepository.countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus)
     }
 
     override fun updateExperimentPostStatus(currentDate: LocalDate): Long {
         return experimentPostCustomRepository.updateExperimentPostStatus(currentDate)
     }
+
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
         pagination: Pagination,

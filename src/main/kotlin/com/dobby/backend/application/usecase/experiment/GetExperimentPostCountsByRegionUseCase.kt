@@ -3,13 +3,15 @@ package com.dobby.backend.application.usecase.experiment
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 
 class GetExperimentPostCountsByRegionUseCase(
     private val experimentPostGateway: ExperimentPostGateway
 ) : UseCase<GetExperimentPostCountsByRegionUseCase.Input, GetExperimentPostCountsByRegionUseCase.Output> {
 
     data class Input(
-        val region: String?
+        val region: String?,
+        val recruitStatus: RecruitStatus
     )
 
     data class Output(
@@ -23,10 +25,16 @@ class GetExperimentPostCountsByRegionUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val total = experimentPostGateway.countExperimentPosts()
+        val total = when (input.recruitStatus) {
+            RecruitStatus.ALL -> experimentPostGateway.countExperimentPosts()
+            RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostsByRecruitStatus(true)
+        }
 
         val allRegions = Region.values().filter { it != Region.NONE }
-        val regionData = experimentPostGateway.countExperimentPostGroupedByRegion()
+        val regionData = when (input.recruitStatus) {
+            RecruitStatus.ALL -> experimentPostGateway.countExperimentPostGroupedByRegion()
+            RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostsByRecruitStatusGroupedByRegion(true)
+        }
         val regionDataMap = regionData.associateBy { it.get(0, Region::class.java) }
 
         val area = allRegions.map { region ->

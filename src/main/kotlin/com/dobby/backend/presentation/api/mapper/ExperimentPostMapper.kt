@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -98,7 +99,7 @@ object ExperimentPostMapper {
             uploadDate = response.experimentPostDetailResponse.uploadDate,
             uploaderName = response.experimentPostDetailResponse.uploaderName,
             views = response.experimentPostDetailResponse.views,
-            recruitDone = response.experimentPostDetailResponse.recruitDone,
+            recruitStatus = response.experimentPostDetailResponse.recruitStatus,
             summary = response.experimentPostDetailResponse.summary,
             targetGroup = response.experimentPostDetailResponse.targetGroup,
             address = response.experimentPostDetailResponse.address,
@@ -108,11 +109,11 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetExperimentPostCountsUseCaseInput(region: String?): Any {
+    fun toGetExperimentPostCountsUseCaseInput(region: String?, recruitStatus: RecruitStatus): Any {
         return if (region == null) {
-            GetExperimentPostCountsByRegionUseCase.Input(region = null)
+            GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus)
         } else {
-            GetExperimentPostCountsByAreaUseCase.Input(region = region)
+            GetExperimentPostCountsByAreaUseCase.Input(region = region, recruitStatus)
         }
     }
 
@@ -165,7 +166,7 @@ object ExperimentPostMapper {
         age: Int?,
         region: Region?,
         areas: List<Area>?,
-        recruitDone: Boolean?
+        recruitStatus: RecruitStatus
     ): GetExperimentPostsUseCase.CustomFilterInput {
         return GetExperimentPostsUseCase.CustomFilterInput(
             matchType = matchType,
@@ -177,7 +178,7 @@ object ExperimentPostMapper {
                 region = region,
                 areas = areas
             ),
-            recruitDone = recruitDone
+            recruitStatus = recruitStatus
         )
     }
 
@@ -214,7 +215,7 @@ object ExperimentPostMapper {
 
                 )
             ),
-            recruitDone = output.postInfo.recruitDone
+            recruitStatus = output.postInfo.recruitStatus
         )
     }
 
