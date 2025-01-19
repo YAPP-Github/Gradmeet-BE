@@ -33,7 +33,7 @@ class GetExperimentPostCountsByRegionUseCase(
         val allRegions = Region.values().filter { it != Region.NONE }
         val regionData = when (input.recruitStatus) {
             RecruitStatus.ALL -> experimentPostGateway.countExperimentPostGroupedByRegion()
-            RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostGroupedByRegionAndRecruitStatus(true)
+            RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostsByRecruitStatusGroupedByRegion(true)
         }
         val regionDataMap = regionData.associateBy { it.get(0, Region::class.java) }
 

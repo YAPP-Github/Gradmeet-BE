@@ -69,8 +69,8 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countExperimentPostGroupedByRegion()
     }
 
-    override fun countExperimentPostGroupedByRegionAndRecruitStatus(recruitStatus: Boolean): List<Tuple> {
-        return experimentPostRepository.countExperimentPostGroupedByRegionAndRecruitStatus(recruitStatus)
+    override fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple> {
+        return experimentPostRepository.countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus)
     }
 
     override fun updateExperimentPostStatus(currentDate: LocalDate): Long {

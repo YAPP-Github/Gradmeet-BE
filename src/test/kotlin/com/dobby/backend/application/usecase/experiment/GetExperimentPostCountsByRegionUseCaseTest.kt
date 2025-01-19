@@ -1,6 +1,7 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByRegionUseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -11,7 +12,7 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
     val experimentPostGateway = mockk<ExperimentPostGateway>()
     val getExperimentPostCountsByRegionUseCase = GetExperimentPostCountsByRegionUseCase(experimentPostGateway)
 
-    given("유효한 지역 정보가 주어졌을 때") {
+    given("유효한 지역 이름이 주어졌을 때") {
         val regionData = listOf(
             mockk<Tuple>().apply {
                 every { get(0, Region::class.java) } returns Region.SEOUL
@@ -26,8 +27,26 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.countExperimentPosts() } returns 20
         every { experimentPostGateway.countExperimentPostGroupedByRegion() } returns regionData
 
-        `when`("execute가 호출되면") {
-            val input = GetExperimentPostCountsByRegionUseCase.Input(region = null)
+        `when`("모든 공고를 조회하는 execute가 호출되면") {
+            val input = GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus = RecruitStatus.ALL)
+            val result = getExperimentPostCountsByRegionUseCase.execute(input)
+
+            then("전체 공고 개수가 반환된다") {
+                result.total shouldBe 20
+            }
+
+            then("지역별 공고 개수가 반환된다") {
+                result.area.size shouldBe 17
+                result.area.find { it.name == "SEOUL" }?.count shouldBe 5
+                result.area.find { it.name == "GYEONGGI" }?.count shouldBe 10
+            }
+        }
+
+        every { experimentPostGateway.countExperimentPostsByRecruitStatus(true) } returns 20
+        every { experimentPostGateway.countExperimentPostsByRecruitStatusGroupedByRegion(true) } returns regionData
+
+        `when`("모집중인 공고를 조회하는 execute가 호출되면") {
+            val input = GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus = RecruitStatus.OPEN)
             val result = getExperimentPostCountsByRegionUseCase.execute(input)
 
             then("전체 공고 개수가 반환된다") {
@@ -58,7 +77,7 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.countExperimentPostGroupedByRegion() } returns regionData
 
         `when`("execute가 호출되면") {
-            val input = GetExperimentPostCountsByRegionUseCase.Input(region = null)
+            val input = GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus = RecruitStatus.ALL)
             val result = getExperimentPostCountsByRegionUseCase.execute(input)
 
             then("전체 공고 개수는 20이어야 한다") {
@@ -79,7 +98,7 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
         val invalidRegionName = "INVALID_REGION"
 
         `when`("execute가 호출되면") {
-            val input = GetExperimentPostCountsByRegionUseCase.Input(region = invalidRegionName)
+            val input = GetExperimentPostCountsByRegionUseCase.Input(region = invalidRegionName, recruitStatus = RecruitStatus.ALL)
 
             then("null이 반환된다") {
                 val result = runCatching { getExperimentPostCountsByRegionUseCase.execute(input) }.exceptionOrNull()
