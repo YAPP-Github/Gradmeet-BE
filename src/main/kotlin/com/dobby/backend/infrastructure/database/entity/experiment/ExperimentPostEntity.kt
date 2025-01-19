@@ -79,7 +79,7 @@ class ExperimentPostEntity(
     val alarmAgree: Boolean,
 
     @Column(name = "recruit_status", nullable = false)
-    val recruitStatus: Boolean = false,
+    val recruitStatus: Boolean = true,
 
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "experiment_image_id")
