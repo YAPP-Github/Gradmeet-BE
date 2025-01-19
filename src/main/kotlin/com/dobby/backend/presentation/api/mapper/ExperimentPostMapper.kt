@@ -13,6 +13,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.util.getCurrentMemberId
+import com.dobby.backend.util.getCurrentMemberIdOrNull
 
 object ExperimentPostMapper {
     fun toCreatePostUseCaseInput(request: CreateExperimentPostRequest): CreateExperimentPostUseCase.Input {
@@ -85,7 +86,8 @@ object ExperimentPostMapper {
 
     fun toGetExperimentPostDetailUseCaseInput(experimentPostId: Long): GetExperimentPostDetailUseCase.Input {
         return GetExperimentPostDetailUseCase.Input(
-            experimentPostId = experimentPostId
+            experimentPostId = experimentPostId,
+            memberId = getCurrentMemberIdOrNull()
         )
     }
 
@@ -101,7 +103,8 @@ object ExperimentPostMapper {
             targetGroup = response.experimentPostDetailResponse.targetGroup,
             address = response.experimentPostDetailResponse.address,
             content = response.experimentPostDetailResponse.content,
-            imageList = response.experimentPostDetailResponse.imageList
+            imageList = response.experimentPostDetailResponse.imageList,
+            isAuthor = response.experimentPostDetailResponse.isAuthor
         )
     }
 

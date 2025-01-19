@@ -4,6 +4,7 @@ import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.exception.UnauthorizedException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.config.filter.JwtAuthenticationFilter
+import com.dobby.backend.presentation.api.config.filter.JwtOptionalAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -18,6 +19,10 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 @Configuration
 @EnableMethodSecurity
 class WebSecurityConfig {
+    /**
+     * Configures the security for authentication-related APIs, including login and signup.
+     * These endpoints are publicly accessible without authentication.
+     */
     @Bean
     @Order(1)
     fun authSecurityFilterChain(
@@ -25,23 +30,56 @@ class WebSecurityConfig {
         jwtTokenProvider: JwtTokenProvider,
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
-        .securityMatcher("/v1/auth/**", "/v1/members/signup/**", "/v1/emails/**",
-            "/v1/experiment-posts/{postId}/details", "/v1/experiment-posts/counts", "/v1/experiment-posts/search")
+        .securityMatcher("/v1/auth/**",
+            "/v1/members/signup/**", "/v1/emails/**",
+            "/v1/experiment-posts/counts", "/v1/experiment-posts/search")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/v1/auth/**").permitAll()
-            it.requestMatchers("/v1/members/signup/**", "/v1/emails/**",
-                "/v1/experiment-posts/{postId}/details", "/v1/experiment-posts/counts", "/v1/experiment-posts/search").permitAll()
+            it.requestMatchers(
+                "/v1/auth/**",
+                "/v1/members/signup/**", "/v1/emails/**",
+                "/v1/experiment-posts/counts", "/v1/experiment-posts/search"
+            ).permitAll()
             it.anyRequest().authenticated()
         }
         .build()
 
+    /**
+     * Configures security for the specific API endpoint.
+     * This endpoint is publicly accessible, but if a JWT is provided, it will extract the memberId.
+     */
     @Bean
     @Order(2)
+    fun publicApiSecurityFilterChain(
+        httpSecurity: HttpSecurity,
+        jwtTokenProvider: JwtTokenProvider,
+        handlerExceptionResolver: HandlerExceptionResolver
+    ): SecurityFilterChain = httpSecurity
+        .securityMatcher("/v1/experiment-posts/{postId}/details")
+        .csrf { it.disable() }
+        .cors(Customizer.withDefaults())
+        .sessionManagement {
+            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        }
+        .authorizeHttpRequests {
+            it.requestMatchers("/v1/experiment-posts/{postId}/details").permitAll()
+        }
+        .addFilterBefore(
+            JwtOptionalAuthenticationFilter(jwtTokenProvider, handlerExceptionResolver),
+            UsernamePasswordAuthenticationFilter::class.java
+        )
+        .build()
+
+    /**
+     * Configures security for the remaining APIs.
+     * Applies JWT authentication to all APIs except for the ones specified above.
+     */
+    @Bean
+    @Order(3)
     fun securityFilterChain(
         httpSecurity: HttpSecurity,
         jwtTokenProvider: JwtTokenProvider,
@@ -69,8 +107,12 @@ class WebSecurityConfig {
         }
         .build()
 
+    /**
+     * Configures security for Swagger UI and OpenAPI documentation.
+     * These endpoints are publicly accessible without authentication.
+     */
     @Bean
-    @Order(3)
+    @Order(4)
     fun swaggerSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
         .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
         .csrf { it.disable() }
