@@ -104,7 +104,7 @@ class ExperimentPostController (
         @RequestParam(required = false) age: Int?,
         @RequestParam(required = false) region: Region?,
         @RequestParam(required = false) areas: List<Area>?,
-        @RequestParam(required = false) recruitStatus: Boolean?,
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: String,
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
     ): List<ExperimentPostsResponse> {

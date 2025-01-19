@@ -15,6 +15,7 @@ import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -31,7 +32,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 24),
             locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU, Area.MAPOGU)),
-            recruitStatus = false
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
@@ -108,7 +109,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = null,
             locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
-            recruitStatus = false
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
@@ -182,7 +183,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 24),
             locationTarget = LocationTargetInput(region = Region.SEOUL, areas = null),
-            recruitStatus = false
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
@@ -255,7 +256,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = StudyTargetInput(gender = GenderType.FEMALE, age = 30),
             locationTarget = LocationTargetInput(region = Region.GYEONGGI, areas = listOf(Area.GWANGMYEONGSI)),
-            recruitStatus = false
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
@@ -328,7 +329,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = null,
             locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
-            recruitStatus = false
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)
@@ -402,7 +403,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             studyTarget = null,
             locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
-            recruitStatus = true
+            recruitStatus = RecruitStatus.ALL
         )
         val pagination = PaginationInput(page = 1, count = 6)
         val input = Input(customFilter, pagination)

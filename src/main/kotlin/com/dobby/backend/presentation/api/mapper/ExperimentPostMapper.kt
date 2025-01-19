@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -162,7 +163,7 @@ object ExperimentPostMapper {
         age: Int?,
         region: Region?,
         areas: List<Area>?,
-        recruitStatus: Boolean?
+        recruitStatus: String
     ): GetExperimentPostsUseCase.CustomFilterInput {
         return GetExperimentPostsUseCase.CustomFilterInput(
             matchType = matchType,
@@ -174,7 +175,7 @@ object ExperimentPostMapper {
                 region = region,
                 areas = areas
             ),
-            recruitStatus = recruitStatus
+            recruitStatus = RecruitStatus.fromString(recruitStatus)
         )
     }
 
