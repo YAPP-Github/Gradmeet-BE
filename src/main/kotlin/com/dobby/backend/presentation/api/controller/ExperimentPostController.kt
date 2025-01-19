@@ -73,9 +73,10 @@ class ExperimentPostController (
         description = "지역 별로 등록된 공고 수를 조회합니다"
     )
     fun getExperimentPostCounts(
-        @RequestParam(required = false) region: String?
+        @RequestParam(required = false) region: String?,
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: String
     ): ExperimentPostCountsResponse {
-        val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region)
+        val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region, recruitStatus)
         val output = experimentPostService.getExperimentPostCounts(input)
         return ExperimentPostMapper.toGetExperimentPostCountsResponse(output)
     }

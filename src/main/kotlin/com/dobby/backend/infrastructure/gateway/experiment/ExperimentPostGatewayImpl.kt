@@ -6,6 +6,7 @@ import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.infrastructure.converter.ExperimentPostConverter
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustomRepository
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostRepository
@@ -49,12 +50,20 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.count().toInt()
     }
 
+    override fun countExperimentPostsByRecruitStatus(recruitStatus: Boolean): Int {
+        return experimentPostRepository.countByRecruitStatus(recruitStatus)
+    }
+
     override fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple> {
         return experimentPostRepository.countExperimentPostByRegionGroupedByArea(region)
     }
 
     override fun countExperimentPostGroupedByRegion(): List<Tuple> {
         return experimentPostRepository.countExperimentPostGroupedByRegion()
+    }
+
+    override fun countExperimentPostGroupedByRegionAndRecruitStatus(recruitStatus: Boolean): List<Tuple> {
+        return experimentPostRepository.countExperimentPostGroupedByRegionAndRecruitStatus(recruitStatus)
     }
 
     override fun updateExperimentPostStatus(currentDate: LocalDate): Long {
