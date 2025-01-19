@@ -41,7 +41,10 @@ data class ExperimentPostDetailResponse(
     val content: String,
 
     @Schema(description = "이미지 목록", example = "[\"https://bucket/image1.webp\", \"https://bucket/image2.webp\"]")
-    val imageList: List<String>
+    val imageList: List<String>,
+
+    @Schema(description = "글쓴이 여부", example = "true")
+    val isAuthor: Boolean
 ) {
     @Schema(description = "실험 공고 요약 정보")
     data class SummaryResponse(

@@ -12,7 +12,8 @@ class GetExperimentPostDetailUseCase(
 ) : UseCase<GetExperimentPostDetailUseCase.Input, GetExperimentPostDetailUseCase.Output> {
 
     data class Input(
-        val experimentPostId: Long
+        val experimentPostId: Long,
+        val memberId: Long?
     )
 
     data class Output(
@@ -26,12 +27,12 @@ class GetExperimentPostDetailUseCase(
         experimentPostGateway.save(experimentPost)
 
         return Output(
-            experimentPostDetailResponse = experimentPost.toDetailResponse()
+            experimentPostDetailResponse = experimentPost.toDetailResponse(input.memberId)
         )
     }
 }
 
-fun ExperimentPost.toDetailResponse(): ExperimentPostDetailResponse {
+fun ExperimentPost.toDetailResponse(memberId: Long?): ExperimentPostDetailResponse {
     return ExperimentPostDetailResponse(
         experimentPostId = this.id,
         title = this.title,
@@ -43,7 +44,8 @@ fun ExperimentPost.toDetailResponse(): ExperimentPostDetailResponse {
         targetGroup = this.targetGroup.toResponse(),
         address = this.toAddressResponse(),
         content = this.content,
-        imageList = this.images.map { it.imageUrl }
+        imageList = this.images.map { it.imageUrl },
+        isAuthor = this.member.id == memberId
     )
 }
 
