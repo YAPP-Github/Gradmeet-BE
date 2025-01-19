@@ -12,10 +12,14 @@ interface ExperimentPostGateway {
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
     fun findById(experimentPostId: Long): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
+    fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
     fun countExperimentPosts(): Int
+    fun countExperimentPostsByRecruitStatus(recruitStatus: Boolean): Int
     fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple>
+    fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<Tuple>
     fun countExperimentPostGroupedByRegion(): List<Tuple>
-    fun updateExperimentPostStatus(todayDate : LocalDate) : Long
+    fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple>
+    fun updateExperimentPostStatus(currentDate : LocalDate) : Long
     fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
     fun countExperimentPostsByMemberId(memberId: Long): Int
 }

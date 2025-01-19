@@ -49,7 +49,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             updatedAt = LocalDateTime.now(),
             member = member,
             views = 100,
-            recruitDone = false,
+            recruitStatus = false,
             startDate = LocalDate.now(),
             endDate = LocalDate.now(),
             leadResearcher = "Lead",

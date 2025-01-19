@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import java.time.LocalDate
 
 class GetExperimentPostsUseCase (
@@ -20,7 +21,7 @@ class GetExperimentPostsUseCase (
         val matchType : MatchType?,
         val studyTarget: StudyTargetInput?,
         val locationTarget: LocationTargetInput?,
-        val recruitDone: Boolean?,
+        val recruitStatus: RecruitStatus,
     )
 
     data class StudyTargetInput(
@@ -48,7 +49,7 @@ class GetExperimentPostsUseCase (
         val views: Int,
         val univName: String,
         val reward: String,
-        val recruitDone: Boolean,
+        val recruitStatus: Boolean,
         val durationInfo: DurationInfoOutput
     )
 
@@ -71,7 +72,7 @@ class GetExperimentPostsUseCase (
                     views = post.views,
                     univName = post.univName,
                     reward = post.reward,
-                    recruitDone = post.recruitDone,
+                    recruitStatus = post.recruitStatus,
                     durationInfo = DurationInfoOutput(
                         startDate = post.startDate,
                         endDate = post.endDate

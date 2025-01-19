@@ -4,6 +4,7 @@ import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import jakarta.persistence.Tuple
 
 class GetExperimentPostCountsByAreaUseCase(
@@ -11,7 +12,8 @@ class GetExperimentPostCountsByAreaUseCase(
 ) : UseCase<GetExperimentPostCountsByAreaUseCase.Input, GetExperimentPostCountsByAreaUseCase.Output> {
 
     data class Input(
-        val region: String
+        val region: String,
+        val recruitStatus: RecruitStatus
     )
 
     data class Output(
@@ -27,8 +29,15 @@ class GetExperimentPostCountsByAreaUseCase(
     override fun execute(input: Input): Output {
         val region = Region.fromDisplayName(input.region)
 
-        val total = experimentPostGateway.countExperimentPostsByRegion(region)
-        val regionData = region.let { experimentPostGateway.countExperimentPostByRegionGroupedByArea(it) }
+        val total = when (input.recruitStatus) {
+            RecruitStatus.ALL -> experimentPostGateway.countExperimentPostsByRegion(region)
+            RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostsByRegionAndRecruitStatus(region, true)
+        }
+
+        val regionData = when (input.recruitStatus) {
+            RecruitStatus.ALL -> region.let { experimentPostGateway.countExperimentPostByRegionGroupedByArea(it) }
+            RecruitStatus.OPEN -> region.let { experimentPostGateway.countExperimentPostByRegionAndRecruitStatusGroupedByArea(it, true) }
+        }
         val areaCounts = getAreaCounts(region, regionData)
 
         return Output(total, areaCounts)

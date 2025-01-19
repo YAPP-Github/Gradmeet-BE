@@ -4,12 +4,13 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 
 data class CustomFilter(
     val matchType: MatchType?,
     val studyTarget: StudyTarget?,
     val locationTarget: LocationTarget?,
-    val recruitDone: Boolean?
+    val recruitStatus: RecruitStatus
 )
 data class StudyTarget(
     val gender: GenderType?,

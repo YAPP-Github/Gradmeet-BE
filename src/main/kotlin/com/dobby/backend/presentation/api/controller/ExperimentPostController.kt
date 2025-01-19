@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperimentPostResponse
@@ -73,9 +74,10 @@ class ExperimentPostController (
         description = "지역 별로 등록된 공고 수를 조회합니다"
     )
     fun getExperimentPostCounts(
-        @RequestParam(required = false) region: String?
+        @RequestParam(required = false) region: String?,
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus
     ): ExperimentPostCountsResponse {
-        val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region)
+        val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region, recruitStatus)
         val output = experimentPostService.getExperimentPostCounts(input)
         return ExperimentPostMapper.toGetExperimentPostCountsResponse(output)
     }
@@ -104,11 +106,11 @@ class ExperimentPostController (
         @RequestParam(required = false) age: Int?,
         @RequestParam(required = false) region: Region?,
         @RequestParam(required = false) areas: List<Area>?,
-        @RequestParam(required = false) recruitDone: Boolean?,
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus,
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
     ): List<ExperimentPostsResponse> {
-        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitDone)
+        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitStatus)
         val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val output = experimentPostService.getExperimentPosts(input)

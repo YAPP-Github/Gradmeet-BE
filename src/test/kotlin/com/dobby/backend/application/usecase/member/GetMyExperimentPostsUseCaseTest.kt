@@ -50,7 +50,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now(),
                 member = member,
                 views = 100,
-                recruitDone = false,
+                recruitStatus = false,
                 startDate = LocalDate.now(),
                 endDate = LocalDate.now(),
                 leadResearcher = "임지수",
@@ -75,7 +75,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now(),
                 member = member,
                 views = 150,
-                recruitDone = true,
+                recruitStatus = true,
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusWeeks(2),
                 leadResearcher = "임지수 연구자",
@@ -100,7 +100,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now(),
                 member = member,
                 views = 200,
-                recruitDone = false,
+                recruitStatus = false,
                 startDate = LocalDate.now(),
                 endDate = LocalDate.now().plusDays(10),
                 leadResearcher = "Dr. Lim",
@@ -131,19 +131,19 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 result[0].title shouldBe "야뿌들의 평균 식사량 체크 테스트"
                 result[0].content shouldBe "야뿌들의 한끼 식사량을 체크하는 테스트입니다."
                 result[0].views shouldBe 100
-                result[0].recruitDone shouldBe false
+                result[0].recruitStatus shouldBe false
 
                 result[1].experimentPostId shouldBe 2L
                 result[1].title shouldBe "다음 세대 인공지능을 위한 연구"
                 result[1].content shouldBe "다음 세대의 AI를 위한 실험 연구입니다."
                 result[1].views shouldBe 150
-                result[1].recruitDone shouldBe true
+                result[1].recruitStatus shouldBe true
 
                 result[2].experimentPostId shouldBe 3L
                 result[2].title shouldBe "소셜 미디어 연구 참가자 모집"
                 result[2].content shouldBe "소셜 미디어에 대한 연구에 참여할 모집입니다."
                 result[2].views shouldBe 200
-                result[2].recruitDone shouldBe false
+                result[2].recruitStatus shouldBe false
             }
         }
     }
