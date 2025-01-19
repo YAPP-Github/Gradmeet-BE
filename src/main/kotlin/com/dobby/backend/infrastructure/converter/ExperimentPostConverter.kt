@@ -1,6 +1,5 @@
 package com.dobby.backend.infrastructure.converter
 
-import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.experiment.ApplyMethodEntity
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
@@ -31,6 +30,7 @@ object ExperimentPostConverter{
             matchType = entity.matchType,
             targetGroup = entity.targetGroup.toDomain(),
             images = emptyList(), // 이미지 업로드 부분 보류,
+            recruitStatus = entity.recruitStatus,
             createdAt = entity.createdAt,
             updatedAt = entity.updatedAt
         )

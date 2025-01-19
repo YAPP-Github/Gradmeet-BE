@@ -154,6 +154,7 @@ class CreateExperimentPostUseCase(
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
             images = emptyList(), // 이미지 업로드 보류
+            recruitStatus = true,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )

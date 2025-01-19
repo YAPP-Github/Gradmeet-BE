@@ -28,7 +28,7 @@ data class ExperimentPost(
     val area: Area,
     val detailedAddress: String?,
     val alarmAgree: Boolean,
-    val recruitStatus: Boolean = true,
+    val recruitStatus: Boolean,
     val images: List<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
@@ -83,7 +83,7 @@ data class ExperimentPost(
             area = area,
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
-            recruitStatus = true,
+            recruitStatus = recruitStatus,
             images = images,
             createdAt = createdAt,
             updatedAt = updatedAt
