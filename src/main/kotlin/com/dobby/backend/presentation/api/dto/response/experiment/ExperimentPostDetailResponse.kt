@@ -26,7 +26,7 @@ data class ExperimentPostDetailResponse(
     val views: Int,
 
     @Schema(description = "모집 완료 여부", example = "true")
-    val recruitDone: Boolean,
+    val recruitStatus: Boolean,
 
     @Schema(description = "요약 정보", example = "실험 공고의 요약(주요) 정보")
     val summary: SummaryResponse,

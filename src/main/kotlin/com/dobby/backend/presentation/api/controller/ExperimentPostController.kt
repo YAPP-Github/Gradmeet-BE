@@ -104,11 +104,11 @@ class ExperimentPostController (
         @RequestParam(required = false) age: Int?,
         @RequestParam(required = false) region: Region?,
         @RequestParam(required = false) areas: List<Area>?,
-        @RequestParam(required = false) recruitDone: Boolean?,
+        @RequestParam(required = false) recruitStatus: Boolean?,
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
     ): List<ExperimentPostsResponse> {
-        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitDone)
+        val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitStatus)
         val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val output = experimentPostService.getExperimentPosts(input)

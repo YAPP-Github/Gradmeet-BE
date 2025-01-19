@@ -34,7 +34,7 @@ class ExperimentPostCustomRepositoryImpl (
                 ageBetween(post, customFilter.studyTarget?.age),
                 regionEq(post, customFilter.locationTarget?.region),
                 areasIn(post, customFilter.locationTarget?.areas),
-                recruitDoneEq(post, customFilter.recruitDone)
+                recruitStatusEq(post, customFilter.recruitStatus)
             )
             .offset((pagination.page - 1L) * pagination.count)
             .limit(pagination.count.toLong())
@@ -84,8 +84,8 @@ class ExperimentPostCustomRepositoryImpl (
         }
     }
 
-    private fun recruitDoneEq(post: QExperimentPostEntity, recruitDone: Boolean?): BooleanExpression? {
-        return recruitDone?.let { post.recruitDone.eq(it) }
+    private fun recruitStatusEq(post: QExperimentPostEntity, recruitStatus: Boolean?): BooleanExpression? {
+        return recruitStatus?.let { post.recruitStatus.eq(it) }
     }
 
     @Override
@@ -93,10 +93,10 @@ class ExperimentPostCustomRepositoryImpl (
         val experimentPost = QExperimentPostEntity.experimentPostEntity
 
         return jpaQueryFactory.update(experimentPost)
-            .set(experimentPost.recruitDone, true)
+            .set(experimentPost.recruitStatus, true)
             .where(
                 experimentPost.endDate.lt(currentDate)
-                    .and(experimentPost.recruitDone.eq(false))
+                    .and(experimentPost.recruitStatus.eq(false))
             )
             .execute()
     }

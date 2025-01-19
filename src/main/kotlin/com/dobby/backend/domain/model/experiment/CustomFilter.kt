@@ -9,7 +9,7 @@ data class CustomFilter(
     val matchType: MatchType?,
     val studyTarget: StudyTarget?,
     val locationTarget: LocationTarget?,
-    val recruitDone: Boolean?
+    val recruitStatus: Boolean?
 )
 data class StudyTarget(
     val gender: GenderType?,

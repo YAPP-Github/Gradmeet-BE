@@ -96,7 +96,7 @@ object ExperimentPostMapper {
             uploadDate = response.experimentPostDetailResponse.uploadDate,
             uploaderName = response.experimentPostDetailResponse.uploaderName,
             views = response.experimentPostDetailResponse.views,
-            recruitDone = response.experimentPostDetailResponse.recruitDone,
+            recruitStatus = response.experimentPostDetailResponse.recruitStatus,
             summary = response.experimentPostDetailResponse.summary,
             targetGroup = response.experimentPostDetailResponse.targetGroup,
             address = response.experimentPostDetailResponse.address,
@@ -162,7 +162,7 @@ object ExperimentPostMapper {
         age: Int?,
         region: Region?,
         areas: List<Area>?,
-        recruitDone: Boolean?
+        recruitStatus: Boolean?
     ): GetExperimentPostsUseCase.CustomFilterInput {
         return GetExperimentPostsUseCase.CustomFilterInput(
             matchType = matchType,
@@ -174,7 +174,7 @@ object ExperimentPostMapper {
                 region = region,
                 areas = areas
             ),
-            recruitDone = recruitDone
+            recruitStatus = recruitStatus
         )
     }
 
@@ -211,7 +211,7 @@ object ExperimentPostMapper {
 
                 )
             ),
-            recruitDone = output.postInfo.recruitDone
+            recruitStatus = output.postInfo.recruitStatus
         )
     }
 

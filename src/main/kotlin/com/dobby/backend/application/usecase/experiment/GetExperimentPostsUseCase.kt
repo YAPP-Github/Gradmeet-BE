@@ -20,7 +20,7 @@ class GetExperimentPostsUseCase (
         val matchType : MatchType?,
         val studyTarget: StudyTargetInput?,
         val locationTarget: LocationTargetInput?,
-        val recruitDone: Boolean?,
+        val recruitStatus: Boolean?,
     )
 
     data class StudyTargetInput(
@@ -48,7 +48,7 @@ class GetExperimentPostsUseCase (
         val views: Int,
         val univName: String,
         val reward: String,
-        val recruitDone: Boolean,
+        val recruitStatus: Boolean,
         val durationInfo: DurationInfoOutput
     )
 
@@ -71,7 +71,7 @@ class GetExperimentPostsUseCase (
                     views = post.views,
                     univName = post.univName,
                     reward = post.reward,
-                    recruitDone = post.recruitDone,
+                    recruitStatus = post.recruitStatus,
                     durationInfo = DurationInfoOutput(
                         startDate = post.startDate,
                         endDate = post.endDate

@@ -23,7 +23,7 @@ class ExperimentMapperTest : BehaviorSpec({
                 region = Region.SEOUL,
                 areas = listOf(Area.GANGNAMGU)
             ),
-            recruitDone = false
+            recruitStatus = false
         )
 
         `when`("toDomainFilter 메서드가 호출되면") {
@@ -43,8 +43,8 @@ class ExperimentMapperTest : BehaviorSpec({
                 result.locationTarget?.areas shouldBe listOf(Area.GANGNAMGU)
             }
 
-            then("recruitDone이 올바르게 매핑되어야 한다") {
-                result.recruitDone shouldBe false
+            then("recruitStatus이 올바르게 매핑되어야 한다") {
+                result.recruitStatus shouldBe false
             }
         }
     }

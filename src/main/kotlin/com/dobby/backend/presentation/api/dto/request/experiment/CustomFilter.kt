@@ -17,7 +17,7 @@ data class CustomFilter (
     val locationTarget: LocationTarget?,
 
     @Schema(description = "공고 상태 필터 - false이면 모집 중인 공고만 확인 가능")
-    val recruitDone: Boolean?,
+    val recruitStatus: Boolean?,
 )
 
 data class StudyTarget (
