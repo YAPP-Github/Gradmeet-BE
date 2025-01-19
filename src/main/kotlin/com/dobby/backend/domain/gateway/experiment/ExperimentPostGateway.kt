@@ -4,7 +4,6 @@ import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import jakarta.persistence.Tuple
 import java.time.LocalDate
 
@@ -13,9 +12,11 @@ interface ExperimentPostGateway {
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
     fun findById(experimentPostId: Long): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
+    fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
     fun countExperimentPosts(): Int
     fun countExperimentPostsByRecruitStatus(recruitStatus: Boolean): Int
     fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple>
+    fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<Tuple>
     fun countExperimentPostGroupedByRegion(): List<Tuple>
     fun countExperimentPostGroupedByRegionAndRecruitStatus(recruitStatus: Boolean): List<Tuple>
     fun updateExperimentPostStatus(currentDate : LocalDate) : Long

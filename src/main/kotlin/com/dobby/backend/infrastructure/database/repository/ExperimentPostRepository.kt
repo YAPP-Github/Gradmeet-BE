@@ -10,8 +10,13 @@ import org.springframework.data.repository.query.Param
 interface ExperimentPostRepository : JpaRepository<ExperimentPostEntity, Long> {
     fun countByRegion(region: Region): Int
 
+    fun countByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
+
     @Query("SELECT e.area, COUNT(e) FROM experiment_post e WHERE e.region = :region GROUP BY e.area")
     fun countExperimentPostByRegionGroupedByArea(@Param("region") region: Region): List<Tuple>
+
+    @Query("SELECT e.area, COUNT(e) FROM experiment_post e WHERE e.region = :region AND e.recruitStatus = :recruitStatus GROUP BY e.area")
+    fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<Tuple>
 
     @Query("SELECT e.region, COUNT(e) FROM experiment_post e GROUP BY e.region")
     fun countExperimentPostGroupedByRegion(): List<Tuple>
