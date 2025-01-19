@@ -27,6 +27,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
         val member = mockk<Member>()
         every { member.name } returns "임도비"
+        every { member.id } returns 1L
 
         val targetGroup = mockk<TargetGroup>()
         every { targetGroup.id } returns 1L
@@ -70,17 +71,38 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.findById(experimentPostId) } returns experimentPost
         every { experimentPostGateway.save(experimentPost) } returns experimentPost
 
-        `when`("execute가 호출되면") {
-            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId)
+        `when`("내가 작성한 공고를 대상으로 execute가 호출되면") {
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = member.id)
             val initialViews = experimentPost.views
             val result = getExperimentPostDetailUseCase.execute(input)
 
-            then("experimentPostDetailResponse가 반환된다") {
+            then("isAuthor가 true인 experimentPostDetailResponse가 반환된다") {
                 result.experimentPostDetailResponse.title shouldBe experimentPost.title
+                result.experimentPostDetailResponse.isAuthor shouldBe true
             }
 
             then("views가 증가했는지 확인한다") {
                 experimentPost.views shouldBe (initialViews + 1)
+            }
+        }
+
+        `when`("다른 사람이 작성한 공고를 대상으로 execute가 호출되면") {
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = 2L)
+            val result = getExperimentPostDetailUseCase.execute(input)
+
+            then("isAuthor가 false인 experimentPostDetailResponse가 반환된다") {
+                result.experimentPostDetailResponse.title shouldBe experimentPost.title
+                result.experimentPostDetailResponse.isAuthor shouldBe false
+            }
+        }
+
+        `when`("로그인하지 않은 사람이 execute가 호출하면") {
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
+            val result = getExperimentPostDetailUseCase.execute(input)
+
+            then("isAuthor가 false인 experimentPostDetailResponse가 반환된다") {
+                result.experimentPostDetailResponse.title shouldBe experimentPost.title
+                result.experimentPostDetailResponse.isAuthor shouldBe false
             }
         }
     }
@@ -91,7 +113,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.findById(invalidExperimentPostId) } returns null
 
         `when`("execute가 호출되면") {
-            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = invalidExperimentPostId)
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = invalidExperimentPostId, memberId = 1L)
 
             then("ExperimentPostNotFoundException이 발생한다") {
                 val exception = runCatching { getExperimentPostDetailUseCase.execute(input) }.exceptionOrNull()
