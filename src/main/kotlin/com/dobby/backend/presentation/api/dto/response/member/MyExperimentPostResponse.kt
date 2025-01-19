@@ -16,7 +16,7 @@ data class MyExperimentPostResponse(
     @Schema(description = "조회수", example = "123")
     val views: Int,
 
-    @Schema(description = "모집 완료 여부", example = "false")
+    @Schema(description = "모집 상태 여부", example = "false")
     val recruitStatus: Boolean,
 
     @Schema(description = "업로드 날짜", example = "2025-01-01")
