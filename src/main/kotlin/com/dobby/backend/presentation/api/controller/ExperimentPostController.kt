@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperimentPostResponse
@@ -74,7 +75,7 @@ class ExperimentPostController (
     )
     fun getExperimentPostCounts(
         @RequestParam(required = false) region: String?,
-        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: String
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus
     ): ExperimentPostCountsResponse {
         val input = ExperimentPostMapper.toGetExperimentPostCountsUseCaseInput(region, recruitStatus)
         val output = experimentPostService.getExperimentPostCounts(input)
@@ -105,7 +106,7 @@ class ExperimentPostController (
         @RequestParam(required = false) age: Int?,
         @RequestParam(required = false) region: Region?,
         @RequestParam(required = false) areas: List<Area>?,
-        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: String,
+        @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus,
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
     ): List<ExperimentPostsResponse> {

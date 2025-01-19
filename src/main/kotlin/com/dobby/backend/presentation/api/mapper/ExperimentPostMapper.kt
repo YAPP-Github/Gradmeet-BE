@@ -106,11 +106,11 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetExperimentPostCountsUseCaseInput(region: String?, recruitStatus: String): Any {
+    fun toGetExperimentPostCountsUseCaseInput(region: String?, recruitStatus: RecruitStatus): Any {
         return if (region == null) {
-            GetExperimentPostCountsByRegionUseCase.Input(region = null, RecruitStatus.fromString(recruitStatus))
+            GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus)
         } else {
-            GetExperimentPostCountsByAreaUseCase.Input(region = region, RecruitStatus.fromString(recruitStatus))
+            GetExperimentPostCountsByAreaUseCase.Input(region = region, recruitStatus)
         }
     }
 
@@ -163,7 +163,7 @@ object ExperimentPostMapper {
         age: Int?,
         region: Region?,
         areas: List<Area>?,
-        recruitStatus: String
+        recruitStatus: RecruitStatus
     ): GetExperimentPostsUseCase.CustomFilterInput {
         return GetExperimentPostsUseCase.CustomFilterInput(
             matchType = matchType,
@@ -175,7 +175,7 @@ object ExperimentPostMapper {
                 region = region,
                 areas = areas
             ),
-            recruitStatus = RecruitStatus.fromString(recruitStatus)
+            recruitStatus = recruitStatus
         )
     }
 
