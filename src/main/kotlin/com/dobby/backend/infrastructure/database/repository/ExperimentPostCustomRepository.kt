@@ -14,9 +14,12 @@ interface ExperimentPostCustomRepository {
     ): List<ExperimentPostEntity>?
 
     fun updateExperimentPostStatus(currentDate : LocalDate): Long
+
     fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
         pagination: Pagination,
         order: String
     ): List<ExperimentPostEntity>?
+
+    fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
 }
