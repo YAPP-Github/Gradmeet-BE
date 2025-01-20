@@ -10,7 +10,6 @@ import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class ExperimentPostService(
@@ -21,7 +20,8 @@ class ExperimentPostService(
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
     private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
-    private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase
+    private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase,
+    private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -78,5 +78,9 @@ class ExperimentPostService(
     }
     fun generatePreSignedUrl(input: GenerateExperimentPostPreSignedUrlUseCase.Input): GenerateExperimentPostPreSignedUrlUseCase.Output {
         return generateExperimentPostPreSignedUrlUseCase.execute(input)
+    }
+
+    fun getTotalExperimentPostCount(input: GetExperimentPostTotalCountByCustomFilterUseCase.Input): Int {
+        return getExperimentPostTotalCountByCustomFilterUseCase.execute(input)
     }
 }
