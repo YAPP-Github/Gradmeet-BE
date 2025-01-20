@@ -165,4 +165,24 @@ object MemberMapper {
             memberId = getCurrentMemberId()
         )
     }
+
+    fun toUpdateExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateExperimentPostRecruitStatusUseCase.Input {
+        return UpdateExperimentPostRecruitStatusUseCase.Input(
+            memberId = getCurrentMemberId(),
+            postId = postId
+        )
+    }
+
+    fun toMyExperimentPostResponse(output: UpdateExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
+        return output.experimentPost.let {
+            MyExperimentPostResponse(
+                experimentPostId = it.id,
+                title = it.title,
+                content = it.content,
+                views = it.views,
+                recruitStatus = it.recruitStatus,
+                uploadDate = it.createdAt.toLocalDate()
+            )
+        }
+    }
 }
