@@ -27,4 +27,6 @@ interface ExperimentPostRepository : JpaRepository<ExperimentPostEntity, Long> {
 
     @Query("SELECT e.region, COUNT(e) FROM experiment_post e WHERE e.recruitStatus = :recruitStatus GROUP BY e.region")
     fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple>
+
+    fun findByMemberIdAndId(memberId: Long, postId: Long): ExperimentPostEntity?
 }

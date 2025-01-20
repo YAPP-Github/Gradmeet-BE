@@ -22,4 +22,5 @@ interface ExperimentPostGateway {
     fun updateExperimentPostStatus(currentDate : LocalDate) : Long
     fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
     fun countExperimentPostsByMemberId(memberId: Long): Int
+    fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost?
 }
