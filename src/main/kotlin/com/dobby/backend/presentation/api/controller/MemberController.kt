@@ -93,11 +93,7 @@ class MemberController(
 
         val totalCountInput = MemberMapper.toGetTotalMyExperimentPostCountUseCaseInput()
         val totalCount = memberService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-        val isLast = paginationService.isLastPage(
-            totalElements = totalCount,
-            pageSize = count,
-            currentPage = page
-        )
+        val isLast = paginationService.isLastPage(totalCount, count, page)
         return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }
