@@ -45,5 +45,5 @@ data class ApplyMethodInfo(
 )
 
 data class ImageListInfo(
-    val images: List<String> = emptyList()
+    val images: List<String>?
 )

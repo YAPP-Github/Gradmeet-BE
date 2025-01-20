@@ -1,12 +1,15 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.ErrorCode
+import com.dobby.backend.domain.exception.ExperimentPostException
 import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
+import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
@@ -60,7 +63,7 @@ class CreateExperimentPostUseCase(
     )
 
     data class ImageListInfo(
-        val images: List<String> = emptyList()
+        val images: List<String> = mutableListOf()
     )
 
     data class Output(
@@ -88,10 +91,24 @@ class CreateExperimentPostUseCase(
             throw PermissionDeniedException()
         }
 
+        if (input.imageListInfo.images.size > 3) {
+            throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
+        }
+
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
-        val experimentPost = createExperimentPost(member, input, targetGroup, applyMethod)
-        val savedExperimentPost = experimentPostGateway.save(experimentPost)
+        var tmpExperimentPost = createExperimentPost(
+            member,
+            input,
+            targetGroup,
+            applyMethod
+        )
+        tmpExperimentPost = experimentPostGateway.save(tmpExperimentPost)
+
+        val experimentImages = createImageListInfo(input.imageListInfo, tmpExperimentPost)
+        tmpExperimentPost.images = experimentImages
+
+        val savedExperimentPost = experimentPostGateway.save(tmpExperimentPost)
 
         return Output(
             PostInfo(
@@ -127,11 +144,21 @@ class CreateExperimentPostUseCase(
         )
     }
 
+    private fun createImageListInfo(imageListInfo: ImageListInfo, experimentPost: ExperimentPost): List<ExperimentImage> {
+        return imageListInfo.images.map {imageUrl ->
+            ExperimentImage (
+                id = 0L,
+                experimentPost = experimentPost,
+                imageUrl = imageUrl
+            )
+        }
+    }
+
     private fun createExperimentPost(
         member: Member,
         input: Input,
         targetGroup: TargetGroup,
-        applyMethod: ApplyMethod
+        applyMethod: ApplyMethod,
     ): ExperimentPost {
         return ExperimentPost(
             member = member,
@@ -153,10 +180,10 @@ class CreateExperimentPostUseCase(
             area = input.area,
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
-            images = emptyList(), // 이미지 업로드 보류
             recruitStatus = true,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            images = mutableListOf()
         )
     }
 }

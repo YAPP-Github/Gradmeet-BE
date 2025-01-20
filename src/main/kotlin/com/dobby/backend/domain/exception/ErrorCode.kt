@@ -85,4 +85,5 @@ enum class ErrorCode(
     EXPERIMENT_POST_SINGLE_SELECTION_ERROR("EP002", "You can only select one Area_ALL selection", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_AREA_SELECTION_LIMIT("EP003", "You can only select up to 5 Area options in 1 Region.", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_AREA_INCORRECT("EP004", "Selected Area doesn't belong to correct Region.", HttpStatus.BAD_REQUEST),
+    EXPERIMENT_POST_IMAGE_SIZE_LIMIT("EP005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST),
 }

@@ -81,9 +81,8 @@ class ExperimentPostEntity(
     @Column(name = "recruit_status", nullable = false)
     val recruitStatus: Boolean = true,
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "experiment_image_id")
-    val images: List<ExperimentImageEntity>,
+    @OneToMany(mappedBy = "experimentPost", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var images: MutableList<ExperimentImageEntity> = mutableListOf(),
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,
@@ -140,7 +139,7 @@ class ExperimentPostEntity(
                 detailedAddress = detailedAddress,
                 alarmAgree = alarmAgree,
                 recruitStatus = recruitStatus,
-                images = images.map { ExperimentImageEntity.fromDomain(it) },
+                images = images.map { ExperimentImageEntity.fromDomain(it) }.toMutableList(),
                 createdAt = createdAt,
                 updatedAt = updatedAt
             )

@@ -29,7 +29,7 @@ data class ExperimentPost(
     val detailedAddress: String?,
     val alarmAgree: Boolean,
     val recruitStatus: Boolean,
-    val images: List<ExperimentImage>,
+    var images: List<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {

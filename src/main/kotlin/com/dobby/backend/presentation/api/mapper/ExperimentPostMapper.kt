@@ -61,7 +61,7 @@ object ExperimentPostMapper {
 
     private fun toImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
-            images = dto.images
+            images = dto.images?: emptyList()
         )
     }
 
@@ -210,8 +210,8 @@ object ExperimentPostMapper {
                 univName = output.postInfo.univName,
                 reward = output.postInfo.reward,
                 durationInfo = DurationInfo(
-                    startDate = output.postInfo.durationInfo?.startDate,
-                    endDate = output.postInfo.durationInfo?.endDate
+                    startDate = output.postInfo.durationInfo.startDate,
+                    endDate = output.postInfo.durationInfo.endDate
 
                 )
             ),
