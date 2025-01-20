@@ -28,7 +28,7 @@ data class ExperimentPost(
     val area: Area,
     val detailedAddress: String?,
     val alarmAgree: Boolean,
-    val recruitStatus: Boolean,
+    var recruitStatus: Boolean,
     val images: List<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
@@ -36,6 +36,16 @@ data class ExperimentPost(
     fun incrementViews() {
         this.views += 1
         this.updatedAt = LocalDateTime.now()
+    }
+
+    fun updateRecruitStatus(
+        recruitStatus: Boolean = this.recruitStatus,
+        updatedAt: LocalDateTime = this.updatedAt
+    ): ExperimentPost {
+        return this.copy(
+            recruitStatus = recruitStatus,
+            updatedAt = updatedAt
+        )
     }
 
     companion object {
