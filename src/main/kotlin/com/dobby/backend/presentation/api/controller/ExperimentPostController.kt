@@ -118,8 +118,8 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val posts = experimentPostService.getExperimentPosts(input)
 
-        val totalCountInput = ExperimentPostMapper.toGetTotalExperimentPostCountUseCaseInput(customFilter)
-        val totalCount = experimentPostService.getTotalExperimentPostCount(totalCountInput)
+        val totalCountInput = ExperimentPostMapper.toGetExperimentPostTotalCountUseCaseInput(customFilter)
+        val totalCount = experimentPostService.getExperimentPostTotalCount(totalCountInput)
         val isLast = paginationService.isLastPage(totalCount, page, count)
         return ExperimentPostMapper.toGetExperimentPostsResponse(posts, page, totalCount, isLast)
     }

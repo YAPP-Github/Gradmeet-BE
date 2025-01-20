@@ -80,7 +80,7 @@ class ExperimentPostService(
         return generateExperimentPostPreSignedUrlUseCase.execute(input)
     }
 
-    fun getTotalExperimentPostCount(input: GetExperimentPostTotalCountByCustomFilterUseCase.Input): Int {
+    fun getExperimentPostTotalCount(input: GetExperimentPostTotalCountByCustomFilterUseCase.Input): Int {
         return getExperimentPostTotalCountByCustomFilterUseCase.execute(input)
     }
 }

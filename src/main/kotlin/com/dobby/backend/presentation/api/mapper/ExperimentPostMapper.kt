@@ -244,7 +244,7 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetTotalExperimentPostCountUseCaseInput(customFilter: GetExperimentPostsUseCase.CustomFilterInput): GetExperimentPostTotalCountByCustomFilterUseCase.Input {
+    fun toGetExperimentPostTotalCountUseCaseInput(customFilter: GetExperimentPostsUseCase.CustomFilterInput): GetExperimentPostTotalCountByCustomFilterUseCase.Input {
         return GetExperimentPostTotalCountByCustomFilterUseCase.Input(
             matchType = customFilter.matchType,
             studyTarget = customFilter.studyTarget?.let {
