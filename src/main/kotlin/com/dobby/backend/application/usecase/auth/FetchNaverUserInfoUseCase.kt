@@ -34,7 +34,7 @@ class FetchNaverUserInfoUseCase(
     override fun execute(input: Input): Output {
         val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state).accessToken
         val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
-        val email = userInfo?.email
+        val email = userInfo?.response?.email
         val member = email?.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
         return if (member != null) {
