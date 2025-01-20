@@ -92,4 +92,8 @@ class ExperimentPostGatewayImpl(
     override fun countExperimentPostsByMemberId(memberId: Long): Int {
         return experimentPostRepository.countByMemberId(memberId)
     }
+
+    override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
+        return experimentPostCustomRepository.countExperimentPostsByCustomFilter(customFilter)
+    }
 }
