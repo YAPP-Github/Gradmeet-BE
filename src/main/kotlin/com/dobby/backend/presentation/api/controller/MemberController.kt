@@ -107,11 +107,11 @@ class MemberController(
         summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
         description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
     )
-    fun updateExperimentPostRecruitStatus(
+    fun updateMyExperimentPostRecruitStatus(
         @PathVariable postId: Long
     ): MyExperimentPostResponse {
-        val input = MemberMapper.toUpdateExperimentPostRecruitStatusUseCaseInput(postId)
-        val output = memberService.updateExperimentPostRecruitStatus(input)
+        val input = MemberMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
+        val output = memberService.updateMyExperimentPostRecruitStatus(input)
         return MemberMapper.toMyExperimentPostResponse(output)
     }
 }

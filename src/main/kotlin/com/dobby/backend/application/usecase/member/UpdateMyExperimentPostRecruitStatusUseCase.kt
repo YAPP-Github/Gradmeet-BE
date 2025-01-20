@@ -7,9 +7,9 @@ import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import java.time.LocalDateTime
 
-class UpdateExperimentPostRecruitStatusUseCase(
+class UpdateMyExperimentPostRecruitStatusUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<UpdateExperimentPostRecruitStatusUseCase.Input, UpdateExperimentPostRecruitStatusUseCase.Output> {
+): UseCase<UpdateMyExperimentPostRecruitStatusUseCase.Input, UpdateMyExperimentPostRecruitStatusUseCase.Output> {
 
     data class Input(
         val memberId: Long,

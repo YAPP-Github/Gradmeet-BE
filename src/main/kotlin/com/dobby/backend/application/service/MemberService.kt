@@ -19,7 +19,7 @@ class MemberService(
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
-    private val updateExperimentPostRecruitStatusUseCase: UpdateExperimentPostRecruitStatusUseCase
+    private val updateMyExperimentPostRecruitStatusUseCase: UpdateMyExperimentPostRecruitStatusUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -62,7 +62,7 @@ class MemberService(
     }
 
     @Transactional
-    fun updateExperimentPostRecruitStatus(input: UpdateExperimentPostRecruitStatusUseCase.Input): UpdateExperimentPostRecruitStatusUseCase.Output {
-        return updateExperimentPostRecruitStatusUseCase.execute(input)
+    fun updateMyExperimentPostRecruitStatus(input: UpdateMyExperimentPostRecruitStatusUseCase.Input): UpdateMyExperimentPostRecruitStatusUseCase.Output {
+        return updateMyExperimentPostRecruitStatusUseCase.execute(input)
     }
 }
