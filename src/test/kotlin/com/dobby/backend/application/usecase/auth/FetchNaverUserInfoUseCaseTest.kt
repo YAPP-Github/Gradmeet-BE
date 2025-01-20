@@ -8,6 +8,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResponse
+import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverUserResponse
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -45,7 +46,9 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
         val mockNaverTokenResponse = NaverTokenResponse("mock-access-token")
         every { naverAuthGateway.getAccessToken(any(), any()) } returns mockNaverTokenResponse
         every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockk {
-            every { email } returns "test@example.com"
+            every { response } returns NaverUserResponse(
+                email = "test@example.com"
+            )
         }
 
         every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
