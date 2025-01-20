@@ -23,4 +23,5 @@ interface ExperimentPostGateway {
     fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
     fun countExperimentPostsByMemberId(memberId: Long): Int
     fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost?
+    fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
 }

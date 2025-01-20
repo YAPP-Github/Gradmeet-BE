@@ -38,7 +38,6 @@ spring:
             client-secret: ${NAVER_CLIENT_SECRET}
             scope:
               - email
-              - profile
             client-name: Naver
         provider:
           google:

@@ -98,4 +98,8 @@ class ExperimentPostGatewayImpl(
             .findByMemberIdAndId(memberId, postId)
             ?.let(ExperimentPostEntity::toDomain)
     }
+
+    override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
+        return experimentPostCustomRepository.countExperimentPostsByCustomFilter(customFilter)
+    }
 }

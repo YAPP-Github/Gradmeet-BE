@@ -63,6 +63,26 @@ class ExperimentPostCustomRepositoryImpl (
             .fetch()
     }
 
+    override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
+        val post = QExperimentPostEntity.experimentPostEntity
+        val recruitStatusCondition = when (customFilter.recruitStatus) {
+            RecruitStatus.ALL -> null
+            RecruitStatus.OPEN -> post.recruitStatus.eq(true)
+        }
+
+        return jpaQueryFactory.select(post.count())
+            .from(post)
+            .where(
+                matchTypeEq(post, customFilter.matchType),
+                genderEq(post, customFilter.studyTarget?.gender),
+                ageBetween(post, customFilter.studyTarget?.age),
+                regionEq(post, customFilter.locationTarget?.region),
+                areasIn(post, customFilter.locationTarget?.areas),
+                recruitStatusCondition
+            )
+            .fetchOne()?.toInt() ?: 0
+    }
+
     private fun matchTypeEq(post: QExperimentPostEntity, matchType: MatchType?): BooleanExpression? {
         return matchType?.let {
             if(it == MatchType.ALL) null else post.matchType.eq(it)
@@ -87,10 +107,6 @@ class ExperimentPostCustomRepositoryImpl (
         return areas?.takeIf { it.isNotEmpty() && !it.any { area -> area.isAll() } }?.let {
             post.area.`in`(it)
         }
-    }
-
-    private fun recruitStatusEq(post: QExperimentPostEntity, recruitStatus: Boolean?): BooleanExpression? {
-        return recruitStatus?.let { post.recruitStatus.eq(it) }
     }
 
     @Override
