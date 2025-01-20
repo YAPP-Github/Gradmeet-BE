@@ -102,7 +102,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers/me/experiment-posts/{postId}/recruit-status")
+    @PutMapping("/researchers/me/experiment-posts/{postId}/recruit-status")
     @Operation(
         summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
         description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
