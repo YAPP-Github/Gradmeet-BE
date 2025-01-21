@@ -6,8 +6,8 @@ import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenRequest
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
-import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
+import com.dobby.backend.presentation.api.mapper.AuthMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -19,26 +19,15 @@ import org.springframework.web.bind.annotation.*
 class AuthController(
     private val authService: AuthService
 ) {
-
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
     fun signInWithGoogle(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: GoogleOauthLoginRequest
     ): OauthLoginResponse {
-        val result = authService.getGoogleUserInfo(request.authorizationCode)
-        return OauthLoginResponse(
-            isRegistered = result.isRegistered,
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            memberInfo = MemberResponse(
-                memberId = result.memberId,
-                name = result.name,
-                oauthEmail = result.oauthEmail,
-                role = result.role,
-                provider = result.provider,
-            )
-        )
+        val input = AuthMapper.toGoogleOauthLoginInput(request)
+        val output = authService.getGoogleUserInfo(input)
+        return AuthMapper.toGoogleOauthLoginResponse(output)
     }
 
     @PostMapping("/login/naver")
@@ -47,19 +36,9 @@ class AuthController(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: NaverOauthLoginRequest
     ): OauthLoginResponse {
-        val result = authService.getNaverUserInfo(request.authorizationCode, request.state)
-        return OauthLoginResponse(
-            isRegistered = result.isRegistered,
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            memberInfo = MemberResponse(
-                memberId = result.memberId,
-                name = result.name,
-                oauthEmail = result.oauthEmail,
-                role = result.role,
-                provider = result.provider,
-            )
-        )
+        val input = AuthMapper.toNaverOauthLoginInput(request)
+        val output = authService.getNaverUserInfo(input)
+        return AuthMapper.toNaverOauthLoginResponse(output)
     }
 
     @Operation(summary = "테스트용 토큰 강제 발급", description = "memberId로 테스트용 토큰을 발급합니다")
@@ -67,11 +46,9 @@ class AuthController(
     fun forceToken(
         @RequestParam memberId: Long
     ): TestMemberSignInResponse {
-        val result = authService.forceToken(memberId)
-        return TestMemberSignInResponse(
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken
-        )
+        val input = AuthMapper.toForceTokenInput(memberId)
+        val output = authService.forceToken(input)
+        return AuthMapper.toTestMemberSignInResponse(output)
     }
 
     @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")
@@ -79,12 +56,8 @@ class AuthController(
     fun signInWithRefreshToken(
         @RequestBody @Valid request: MemberRefreshTokenRequest,
     ): OauthLoginResponse {
-        val result = authService.signInWithRefreshToken(request.refreshToken)
-        return OauthLoginResponse(
-            isRegistered = false,
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            memberInfo = MemberResponse.fromDomain(result.member)
-        )
+        val input = AuthMapper.toSignInWithRefreshTokenInput(request)
+        val output = authService.signInWithRefreshToken(input)
+        return AuthMapper.toSignInWithRefreshTokenResponse(output)
     }
 }
