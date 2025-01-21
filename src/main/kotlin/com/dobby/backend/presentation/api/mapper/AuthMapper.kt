@@ -76,7 +76,7 @@ object AuthMapper {
 
     fun toSignInWithRefreshTokenResponse(output: GenerateTokenWithRefreshTokenUseCase.Output): OauthLoginResponse {
         return OauthLoginResponse(
-            isRegistered = false,
+            isRegistered = true,
             accessToken = output.accessToken,
             refreshToken = output.refreshToken,
             memberInfo = MemberResponse(
