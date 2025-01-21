@@ -19,23 +19,22 @@ class FetchNaverUserInfoUseCase(
         val state: String
     )
 
-    // TODO: 테스트 후, oauthEmail not null 처리
     data class Output(
         val isRegistered: Boolean,
         val accessToken: String?,
         val refreshToken: String?,
         val memberId: Long?,
         val name: String?,
-        val oauthEmail: String?,
+        val oauthEmail: String,
         val role: RoleType?,
         val provider: ProviderType
     )
 
     override fun execute(input: Input): Output {
         val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state).accessToken
-        val userInfo = oauthToken?.let { naverAuthGateway.getUserInfo(it) }
-        val email = userInfo?.response?.email
-        val member = email?.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
+        val userInfo = naverAuthGateway.getUserInfo(oauthToken)
+        val email = userInfo.response.email
+        val member = email.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
         return if (member != null) {
             val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
