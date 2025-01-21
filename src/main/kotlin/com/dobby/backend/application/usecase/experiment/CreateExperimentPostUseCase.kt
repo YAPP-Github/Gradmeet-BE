@@ -97,30 +97,35 @@ class CreateExperimentPostUseCase(
 
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
-        var tmpExperimentPost = createExperimentPost(
+        var experimentPost = createExperimentPost(
             member,
             input,
             targetGroup,
             applyMethod
         )
-        tmpExperimentPost = experimentPostGateway.save(tmpExperimentPost)
 
-        val experimentImages = createImageListInfo(input.imageListInfo, tmpExperimentPost)
-        tmpExperimentPost.images = experimentImages
+        val experimentImages = input.imageListInfo.images.map { imageUrl ->
+            ExperimentImage(
+                id = 0L,
+                experimentPost = null,
+                imageUrl = imageUrl
+            )
+        }
 
-        val savedExperimentPost = experimentPostGateway.save(tmpExperimentPost)
+        experimentPost = experimentPost.withImages(experimentImages)
+        experimentPostGateway.save(experimentPost)
 
         return Output(
             PostInfo(
-                postId = savedExperimentPost.id,
-                title = savedExperimentPost.title,
-                views = savedExperimentPost.views,
-                univName = savedExperimentPost.univName,
+                postId = experimentPost.id,
+                title = experimentPost.title,
+                views = experimentPost.views,
+                univName = experimentPost.univName,
                 durationInfo = DurationInfo(
-                    startDate = savedExperimentPost.startDate,
-                    endDate = savedExperimentPost.endDate
+                    startDate = experimentPost.startDate,
+                    endDate = experimentPost.endDate
                 ),
-                reward = savedExperimentPost.reward
+                reward = experimentPost.reward
             )
         )
     }
@@ -144,23 +149,13 @@ class CreateExperimentPostUseCase(
         )
     }
 
-    private fun createImageListInfo(imageListInfo: ImageListInfo, experimentPost: ExperimentPost): List<ExperimentImage> {
-        return imageListInfo.images.map {imageUrl ->
-            ExperimentImage (
-                id = 0L,
-                experimentPost = experimentPost,
-                imageUrl = imageUrl
-            )
-        }
-    }
-
     private fun createExperimentPost(
         member: Member,
         input: Input,
         targetGroup: TargetGroup,
         applyMethod: ApplyMethod,
     ): ExperimentPost {
-        return ExperimentPost(
+        return  ExperimentPost(
             member = member,
             leadResearcher = member.name,
             id = 0L,
@@ -181,9 +176,9 @@ class CreateExperimentPostUseCase(
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
             recruitStatus = true,
+            images = listOf(),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            images = mutableListOf()
         )
     }
 }
