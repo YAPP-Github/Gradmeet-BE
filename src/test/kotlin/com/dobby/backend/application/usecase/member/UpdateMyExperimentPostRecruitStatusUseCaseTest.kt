@@ -1,0 +1,153 @@
+package com.dobby.backend.application.usecase.member
+
+import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
+import com.dobby.backend.domain.exception.ExperimentPostRecruitStatusException
+import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.backend.domain.model.experiment.ApplyMethod
+import com.dobby.backend.domain.model.experiment.ExperimentPost
+import com.dobby.backend.domain.model.experiment.TargetGroup
+import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
+import java.time.LocalDateTime
+
+class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
+
+    val experimentPostGateway = mockk<ExperimentPostGateway>()
+    val useCase = UpdateMyExperimentPostRecruitStatusUseCase(experimentPostGateway)
+
+    given("유효한 memberId와 postId가 주어졌을 때") {
+        val memberId = 1L
+        val postId = 1L
+
+        val targetGroup = mockk<TargetGroup>()
+        every { targetGroup.id } returns 1L
+        every { targetGroup.startAge } returns 18
+        every { targetGroup.endAge } returns 30
+        every { targetGroup.genderType } returns GenderType.ALL
+        every { targetGroup.otherCondition } returns "특별한 조건 없음"
+
+        val applyMethod = mockk<ApplyMethod>()
+        every { applyMethod.id } returns 1L
+        every { applyMethod.phoneNum } returns "010-1234-5678"
+        every { applyMethod.formUrl } returns "http://apply.com/form"
+        every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
+
+        val post = ExperimentPost(
+            id = postId,
+            member = mockk(),
+            targetGroup = targetGroup,
+            applyMethod = applyMethod,
+            views = 0,
+            title = "야뿌의 한 끼 식사량을 알아봅시다",
+            content = "과연 야뿌는 한 끼에 얼마나 먹을까요?",
+            leadResearcher = "서버 지수",
+            reward = "서버 개발자의 사랑",
+            startDate = null,
+            endDate = null,
+            timeRequired = TimeSlot.ABOUT_1H,
+            count = 10,
+            matchType = mockk(),
+            univName = "야뿌대학교",
+            region = Region.SEOUL,
+            area = Area.GANGNAMGU,
+            detailedAddress = "서버학과 연구소",
+            alarmAgree = true,
+            recruitStatus = true,
+            images = emptyList(),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+
+        every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns post
+        every { experimentPostGateway.save(any()) } returns post.copy(recruitStatus = false)
+
+        `when`("useCase의 execute가 호출되면") {
+            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+            val result = useCase.execute(input)
+
+            then("모집 상태가 false로 업데이트된 experimentPost가 반환된다") {
+                result.experimentPost.recruitStatus shouldBe false
+            }
+        }
+    }
+
+    given("모집 상태가 이미 false인 post가 주어졌을 때") {
+        val memberId = 1L
+        val postId = 1L
+
+        val targetGroup = mockk<TargetGroup>()
+        every { targetGroup.id } returns 1L
+        every { targetGroup.startAge } returns 18
+        every { targetGroup.endAge } returns 30
+        every { targetGroup.genderType } returns GenderType.ALL
+        every { targetGroup.otherCondition } returns "특별한 조건 없음"
+
+        val applyMethod = mockk<ApplyMethod>()
+        every { applyMethod.id } returns 1L
+        every { applyMethod.phoneNum } returns "010-1234-5678"
+        every { applyMethod.formUrl } returns "http://apply.com/form"
+        every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
+
+        val post = ExperimentPost(
+            id = postId,
+            member = mockk(),
+            targetGroup = targetGroup,
+            applyMethod = applyMethod,
+            views = 0,
+            title = "야뿌의 한 끼 식사량을 알아봅시다",
+            content = "과연 야뿌는 한 끼에 얼마나 먹을까요?",
+            leadResearcher = "서버 지수",
+            reward = "서버 개발자의 사랑",
+            startDate = null,
+            endDate = null,
+            timeRequired = TimeSlot.ABOUT_1H,
+            count = 10,
+            matchType = mockk(),
+            univName = "야뿌대학교",
+            region = Region.SEOUL,
+            area = Area.GANGNAMGU,
+            detailedAddress = "서버학과 연구소",
+            alarmAgree = true,
+            recruitStatus = false,
+            images = emptyList(),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
+
+        every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns post
+
+        `when`("execute가 호출되면") {
+            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+
+            then("ExperimentPostRecruitStatusException이 발생한다") {
+                shouldThrow<ExperimentPostRecruitStatusException> {
+                    useCase.execute(input)
+                }
+            }
+        }
+    }
+
+    given("존재하지 않는 memberId와 postId가 주어졌을 때") {
+        val memberId = 999L
+        val postId = 999L
+
+        every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns null
+
+        `when`("execute가 호출되면") {
+            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+
+            then("ExperimentPostNotFoundException이 발생한다") {
+                shouldThrow<ExperimentPostNotFoundException> {
+                    useCase.execute(input)
+                }
+            }
+        }
+    }
+})

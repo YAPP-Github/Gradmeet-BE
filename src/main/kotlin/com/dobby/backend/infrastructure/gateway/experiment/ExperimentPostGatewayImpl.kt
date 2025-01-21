@@ -93,6 +93,12 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countByMemberId(memberId)
     }
 
+    override fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost? {
+        return experimentPostRepository
+            .findByMemberIdAndId(memberId, postId)
+            ?.let(ExperimentPostEntity::toDomain)
+    }
+
     override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
         return experimentPostCustomRepository.countExperimentPostsByCustomFilter(customFilter)
     }

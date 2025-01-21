@@ -57,6 +57,7 @@ object ExperimentPostConverter{
             timeRequired = model.timeRequired,
             matchType = model.matchType,
             images = emptyList(), // 이미지 업로드 부분 보류,
+            recruitStatus = model.recruitStatus,
             createdAt = model.createdAt,
             updatedAt = model.updatedAt
         )
