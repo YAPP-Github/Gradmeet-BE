@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.auth
 
+import com.dobby.backend.domain.exception.MemberNotFoundException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import com.dobby.backend.domain.gateway.auth.TokenGateway
@@ -7,6 +8,7 @@ import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -26,7 +28,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
 
         every { tokenGateway.generateAccessToken(member) } returns accessToken
         every { tokenGateway.generateRefreshToken(member) } returns refreshToken
-        every { memberGateway.getById(1) } returns member
+        every { memberGateway.findById(1) } returns member
 
         `when`("execute가 호출되면") {
             val input = GenerateTestTokenUseCase.Input(member.id)
@@ -35,6 +37,18 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
             then("생성된 accessToken과 refreshToken이 반환되어야 한다") {
                 result.accessToken shouldBe accessToken
                 result.refreshToken shouldBe refreshToken
+            }
+        }
+
+        every { memberGateway.findById(2) } returns null
+
+        `when`("존재하지 않는 회원 ID가 주어졌을 때") {
+            val input = GenerateTestTokenUseCase.Input(2)
+
+            then("MemberNotFoundException 예외가 던져져야 한다") {
+                shouldThrow<MemberNotFoundException> {
+                    generateTestTokenUseCase.execute(input)
+                }
             }
         }
     }

@@ -25,7 +25,7 @@ class NaverAuthGatewayImpl(
         )
     }
 
-    override fun getUserInfo(accessToken: String): NaverInfoResponse? {
+    override fun getUserInfo(accessToken: String): NaverInfoResponse {
         return naverUserInfoFeignClient.getUserInfo("Bearer $accessToken")
     }
 }

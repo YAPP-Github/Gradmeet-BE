@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -22,7 +23,8 @@ import java.security.InvalidParameterException
 
 @RestControllerAdvice
 class WebExceptionHandler(
-    private val alertGateway: AlertGateway
+    private val alertGateway: AlertGateway,
+    private val environment: Environment,
 ) {
     private val logger: Logger = LoggerFactory.getLogger(WebExceptionHandler::class.java)
 
@@ -105,7 +107,8 @@ class WebExceptionHandler(
         exception: Exception,
         request: HttpServletRequest
     ): ResponseEntity<ErrorResponse> {
-        alertGateway.sendError(exception, request)
+        if (isProductionOrDevelopmentInstance()) alertGateway.sendError(exception, request)
+
         logger.error("[UnhandledException] " + exception.stackTraceToString())
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -138,4 +141,8 @@ class WebExceptionHandler(
         errorCode = errorCode,
         data = data,
     )
+
+    private fun isProductionOrDevelopmentInstance(): Boolean {
+        return environment.activeProfiles.contains("prod") || environment.activeProfiles.contains("dev")
+    }
 }
