@@ -98,8 +98,7 @@ class ExperimentPostEntity(
         image.experimentPost = this
         _images.add(image)
     }
-
-
+    
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
         member = member.toDomain(),
