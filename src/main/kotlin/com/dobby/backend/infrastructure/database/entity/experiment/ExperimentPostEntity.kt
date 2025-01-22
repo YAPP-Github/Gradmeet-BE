@@ -100,7 +100,11 @@ class ExperimentPostEntity(
     }
 
     fun removeImage(image: ExperimentImageEntity) {
-        val removed = _images.removeIf { it.id == image.id }
+        val removed = _images.removeIf {
+            val shouldRemove = it.id == image.id
+            if (shouldRemove) it.experimentPost = null
+            shouldRemove
+        }
         require(removed)
     }
 
