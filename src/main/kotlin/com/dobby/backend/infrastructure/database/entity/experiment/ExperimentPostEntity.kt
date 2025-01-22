@@ -81,9 +81,8 @@ class ExperimentPostEntity(
     @Column(name = "recruit_status", nullable = false)
     var recruitStatus: Boolean,
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "experiment_image_id")
-    val images: List<ExperimentImageEntity>,
+    @OneToMany(mappedBy = "experimentPost", cascade = [CascadeType.ALL], orphanRemoval = true)
+    private val _images: MutableList<ExperimentImageEntity> = mutableListOf(),
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,
@@ -91,6 +90,33 @@ class ExperimentPostEntity(
     @Column(name = "updated_at", nullable = false)
     var updatedAt: LocalDateTime
 ) {
+    val images: List<ExperimentImageEntity>
+        get() = _images.toList()
+
+    fun addImage(image: ExperimentImageEntity) {
+        require(image.imageUrl.isNotBlank())
+        image.experimentPost = this
+        _images.add(image)
+    }
+
+    fun removeImage(image: ExperimentImageEntity) {
+        val removed = _images.removeIf {
+            val shouldRemove = it.id == image.id
+            if (shouldRemove) it.experimentPost = null
+            shouldRemove
+        }
+        require(removed)
+    }
+
+    fun updateImageList(newImages: List<ExperimentImageEntity>) {
+        val newIds = newImages.map { it.id }.toSet()
+        val existingIds = _images.map { it.id }.toSet()
+
+        newImages.filter { it.id !in existingIds }
+            .forEach { addImage(it) }
+        _images.removeIf { it.id !in newIds }
+    }
+
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
         member = member.toDomain(),
@@ -112,38 +138,41 @@ class ExperimentPostEntity(
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
         recruitStatus = recruitStatus,
-        images = images.map { it.toDomain() },
+        images = _images.map { it.toDomainWithoutPost() },
         createdAt = createdAt,
         updatedAt = updatedAt
     )
 
     companion object {
-        fun fromDomain(experimentPost: ExperimentPost): ExperimentPostEntity = with(experimentPost) {
-            ExperimentPostEntity(
-                id = id,
-                member = MemberEntity.fromDomain(member),
-                targetGroup = TargetGroupEntity.fromDomain(targetGroup),
-                applyMethod = ApplyMethodEntity.fromDomain(applyMethod),
-                views = views,
-                title = title,
-                content = content,
-                leadResearcher = leadResearcher,
-                reward = reward,
-                startDate = startDate,
-                endDate = endDate,
-                timeRequired = timeRequired,
-                count = count,
-                matchType = matchType,
-                univName = univName,
-                region = region,
-                area = area,
-                detailedAddress = detailedAddress,
-                alarmAgree = alarmAgree,
-                recruitStatus = recruitStatus,
-                images = images.map { ExperimentImageEntity.fromDomain(it) },
-                createdAt = createdAt,
-                updatedAt = updatedAt
+        fun fromDomain(experimentPost: ExperimentPost): ExperimentPostEntity {
+            val entity = ExperimentPostEntity(
+                id = experimentPost.id,
+                member = MemberEntity.fromDomain(experimentPost.member),
+                targetGroup = TargetGroupEntity.fromDomain(experimentPost.targetGroup),
+                applyMethod = ApplyMethodEntity.fromDomain(experimentPost.applyMethod),
+                views = experimentPost.views,
+                title = experimentPost.title,
+                content = experimentPost.content,
+                leadResearcher = experimentPost.leadResearcher,
+                reward = experimentPost.reward,
+                startDate = experimentPost.startDate,
+                endDate = experimentPost.endDate,
+                timeRequired = experimentPost.timeRequired,
+                count = experimentPost.count,
+                matchType = experimentPost.matchType,
+                univName = experimentPost.univName,
+                region = experimentPost.region,
+                area = experimentPost.area,
+                detailedAddress = experimentPost.detailedAddress,
+                alarmAgree = experimentPost.alarmAgree,
+                recruitStatus = experimentPost.recruitStatus,
+                createdAt = experimentPost.createdAt,
+                updatedAt = experimentPost.updatedAt
             )
+            experimentPost.images.forEach { image ->
+                entity.addImage(ExperimentImageEntity.fromDomain(image))
+            }
+            return entity
         }
     }
 }

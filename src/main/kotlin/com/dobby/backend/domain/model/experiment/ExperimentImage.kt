@@ -2,7 +2,7 @@ package com.dobby.backend.domain.model.experiment
 
 data class ExperimentImage(
     val id: Long,
-    val experimentPost: ExperimentPost,
+    val experimentPost: ExperimentPost?,
     val imageUrl: String
 ) {
     companion object {
