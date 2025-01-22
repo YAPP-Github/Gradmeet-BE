@@ -67,9 +67,12 @@ object ExperimentPostMapper {
     }
 
     fun toCreateExperimentPostResponse(response: CreateExperimentPostUseCase.Output): CreateExperimentPostResponse{
-        return CreateExperimentPostResponse(
-            postInfo = toPostInfo(response.postInfo)
+        println("Mapping to Response: $response") // 매핑 전 데이터 출력
+        val responseDto= CreateExperimentPostResponse(
+             postInfo = toPostInfo(response.postInfo)
         )
+        println("Mapped Response: $responseDto") // 매핑 후 데이터 출력
+        return responseDto;
     }
 
     private fun toPostInfo(input: CreateExperimentPostUseCase.PostInfo): PostInfo{

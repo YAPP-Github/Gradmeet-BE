@@ -113,19 +113,20 @@ class CreateExperimentPostUseCase(
         }
 
         experimentPost = experimentPost.withImages(experimentImages)
-        experimentPostGateway.save(experimentPost)
+        val savedExperimentPost = experimentPostGateway.save(experimentPost)
+        println("Saved Experiment Post ID = ${savedExperimentPost.id}")
 
         return Output(
             PostInfo(
-                postId = experimentPost.id,
-                title = experimentPost.title,
-                views = experimentPost.views,
-                univName = experimentPost.univName,
+                postId = savedExperimentPost.id,
+                title = savedExperimentPost.title,
+                views = savedExperimentPost.views,
+                univName = savedExperimentPost.univName,
                 durationInfo = DurationInfo(
-                    startDate = experimentPost.startDate,
-                    endDate = experimentPost.endDate
+                    startDate = savedExperimentPost.startDate,
+                    endDate = savedExperimentPost.endDate
                 ),
-                reward = experimentPost.reward
+                reward = savedExperimentPost.reward
             )
         )
     }
