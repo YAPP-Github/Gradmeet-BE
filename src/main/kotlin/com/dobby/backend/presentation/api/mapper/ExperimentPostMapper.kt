@@ -62,13 +62,13 @@ object ExperimentPostMapper {
 
     private fun toImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
-            images = dto.images
+            images = dto.images?: emptyList()
         )
     }
 
     fun toCreateExperimentPostResponse(response: CreateExperimentPostUseCase.Output): CreateExperimentPostResponse{
         return CreateExperimentPostResponse(
-            postInfo = toPostInfo(response.postInfo)
+             postInfo = toPostInfo(response.postInfo)
         )
     }
 
@@ -202,7 +202,8 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetExperimentPostsResponse(
+
+   fun toGetExperimentPostsResponse(
         output: List<GetExperimentPostsUseCase.Output>,
         page: Int,
         totalCount: Int,

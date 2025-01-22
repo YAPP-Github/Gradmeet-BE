@@ -33,6 +33,9 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
+    fun withImages(newImages: List<ExperimentImage>): ExperimentPost {
+        return this.copy(images = this.images + newImages)
+    }
     fun incrementViews() {
         this.views += 1
         this.updatedAt = LocalDateTime.now()
@@ -70,7 +73,7 @@ data class ExperimentPost(
             detailedAddress: String,
             alarmAgree: Boolean,
             recruitStatus: Boolean,
-            images: List<ExperimentImage>,
+            images: List<ExperimentImage> = listOf(),
             createdAt: LocalDateTime = LocalDateTime.now(),
             updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(
