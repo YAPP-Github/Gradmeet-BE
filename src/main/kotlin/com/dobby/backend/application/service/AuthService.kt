@@ -14,68 +14,21 @@ class AuthService(
     private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
     private val generateTestTokenUseCase: GenerateTestTokenUseCase,
 ) {
-    fun getGoogleUserInfo(authorizationCode: String): FetchGoogleUserInfoUseCase.Output {
-        val result = fetchGoogleUserInfoUseCase.execute(
-            FetchGoogleUserInfoUseCase.Input(
-                authorizationCode = authorizationCode
-            )
-        )
-        return FetchGoogleUserInfoUseCase.Output(
-            isRegistered = result.isRegistered,
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            memberId = result.memberId,
-            name = result.name,
-            oauthEmail = result.oauthEmail,
-            role = result.role,
-            provider = result.provider,
-        )
+    fun getGoogleUserInfo(input: FetchGoogleUserInfoUseCase.Input): FetchGoogleUserInfoUseCase.Output {
+        return fetchGoogleUserInfoUseCase.execute(input)
     }
 
-    fun getNaverUserInfo(authorizationCode: String, state: String): FetchNaverUserInfoUseCase.Output {
-        val result = fetchNaverUserInfoUseCase.execute(
-            FetchNaverUserInfoUseCase.Input(
-                authorizationCode = authorizationCode,
-                state = state
-            )
-        )
-        return FetchNaverUserInfoUseCase.Output(
-            isRegistered = result.isRegistered,
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            memberId = result.memberId,
-            name = result.name,
-            oauthEmail = result.oauthEmail,
-            role = result.role,
-            provider = result.provider,
-        )
+    fun getNaverUserInfo(input: FetchNaverUserInfoUseCase.Input): FetchNaverUserInfoUseCase.Output {
+        return fetchNaverUserInfoUseCase.execute(input)
     }
 
     @Transactional
-    fun forceToken(memberId: Long): GenerateTestTokenUseCase.Output {
-        val result = generateTestTokenUseCase.execute(
-            GenerateTestTokenUseCase.Input(
-                memberId = memberId
-            )
-        )
-        return GenerateTestTokenUseCase.Output(
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            member = result.member
-        )
+    fun forceToken(input: GenerateTestTokenUseCase.Input): GenerateTestTokenUseCase.Output {
+        return generateTestTokenUseCase.execute(input)
     }
 
     @Transactional
-    fun signInWithRefreshToken(refreshToken: String): GenerateTokenWithRefreshTokenUseCase.Output {
-        val result = generateTokenWithRefreshTokenUseCase.execute(
-            GenerateTokenWithRefreshTokenUseCase.Input(
-                refreshToken = refreshToken,
-            )
-        )
-        return GenerateTokenWithRefreshTokenUseCase.Output(
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            member = result.member
-        )
+    fun signInWithRefreshToken(input: GenerateTokenWithRefreshTokenUseCase.Input): GenerateTokenWithRefreshTokenUseCase.Output {
+        return generateTokenWithRefreshTokenUseCase.execute(input)
     }
 }

@@ -66,20 +66,20 @@ object ExperimentPostConverter{
                 alarmAgree = model.alarmAgree,
                 detailedAddress = model.detailedAddress,
                 timeRequired = model.timeRequired,
+                recruitStatus = model.recruitStatus,
                 matchType = model.matchType,
                 createdAt = model.createdAt,
                 updatedAt = model.updatedAt
         )
+            val imageEntities = model.images.map { image ->
+                ExperimentImageEntity(
+                    id = image.id,
+                    imageUrl = image.imageUrl,
+                    experimentPost = experimentPostEntity
+                )
+            }
+            imageEntities.forEach { experimentPostEntity.addImage(it) }
 
-        val imageEntities = model.images.map { image ->
-            ExperimentImageEntity(
-                id = image.id,
-                imageUrl = image.imageUrl,
-                experimentPost = experimentPostEntity
-            )
-        }
-        imageEntities.forEach { experimentPostEntity.addImage(it) }
-
-        return experimentPostEntity
+            return experimentPostEntity
     }
 }

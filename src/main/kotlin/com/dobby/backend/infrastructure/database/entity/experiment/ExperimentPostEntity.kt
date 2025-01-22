@@ -79,7 +79,7 @@ class ExperimentPostEntity(
     val alarmAgree: Boolean,
 
     @Column(name = "recruit_status", nullable = false)
-    val recruitStatus: Boolean = true,
+    var recruitStatus: Boolean,
 
     @OneToMany(mappedBy = "experimentPost", cascade = [CascadeType.ALL], orphanRemoval = true)
     private val _images: MutableList<ExperimentImageEntity> = mutableListOf(),
