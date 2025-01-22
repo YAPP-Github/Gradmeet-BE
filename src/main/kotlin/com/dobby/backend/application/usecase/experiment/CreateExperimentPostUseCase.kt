@@ -114,7 +114,6 @@ class CreateExperimentPostUseCase(
 
         experimentPost = experimentPost.withImages(experimentImages)
         val savedExperimentPost = experimentPostGateway.save(experimentPost)
-        println("Saved Experiment Post ID = ${savedExperimentPost.id}")
 
         return Output(
             PostInfo(

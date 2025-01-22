@@ -17,10 +17,17 @@ class ExperimentImageEntity(
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
 ) {
+
     fun toDomain(): ExperimentImage = ExperimentImage(
         id = id,
         experimentPost = experimentPost?.toDomain(),
         imageUrl = imageUrl
+    )
+
+    fun toDomainWithoutPost(): ExperimentImage = ExperimentImage(
+        id = id,
+        imageUrl = imageUrl,
+        experimentPost = null
     )
 
     companion object {

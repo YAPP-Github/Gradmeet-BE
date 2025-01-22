@@ -134,7 +134,7 @@ class ExperimentPostEntity(
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
         recruitStatus = recruitStatus,
-        images = _images.map { it.toDomain() },
+        images = _images.map { it.toDomainWithoutPost() },
         createdAt = createdAt,
         updatedAt = updatedAt
     )
