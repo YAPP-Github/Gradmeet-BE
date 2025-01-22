@@ -58,7 +58,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "야뿌 테스트 내용",
             count = 10,
             detailedAddress = "앨리스랩",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "야뿌랩실 선행 연구원",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
@@ -135,7 +135,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "Test content",
             count = 10,
             detailedAddress = "Test Address",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "Test Researcher",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
@@ -209,7 +209,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "Test content",
             count = 10,
             detailedAddress = "Test Address",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "Test Researcher",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
@@ -282,7 +282,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "Test content",
             count = 10,
             detailedAddress = "Test Address",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "Test Researcher",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
@@ -313,13 +313,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 ExperimentMapper.toDomainFilter(input.customFilter),
                 ExperimentMapper.toDomainPagination(input.pagination)
             )
-        } returns emptyList()
+        } returns mutableListOf()
 
         `when`("execute가 호출되면") {
             val result = useCase.execute(input)
 
             then("결과가 비어있음") {
-                result shouldBe emptyList()
+                result shouldBe mutableListOf()
             }
         }
     }
@@ -355,7 +355,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "Test content",
             count = 10,
             detailedAddress = "Test Address",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "Test Researcher",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
@@ -429,7 +429,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             content = "Test content",
             count = 10,
             detailedAddress = "Test Address",
-            images = emptyList(),
+            images = mutableListOf(),
             leadResearcher = "Test Researcher",
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
