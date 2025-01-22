@@ -20,9 +20,9 @@ object ExperimentPostMapper {
     fun toCreatePostUseCaseInput(request: CreateExperimentPostRequest): CreateExperimentPostUseCase.Input {
         return CreateExperimentPostUseCase.Input(
             memberId = getCurrentMemberId(),
-            applyMethodInfo = toApplyMethodInfo(request.applyMethodInfo),
-            targetGroupInfo = toTargetGroupInfo(request.targetGroupInfo),
-            imageListInfo = toImageListInfo(request.imageListInfo),
+            applyMethodInfo = tocCreateApplyMethodInfo(request.applyMethodInfo),
+            targetGroupInfo = toCreateTargetGroupInfo(request.targetGroupInfo),
+            imageListInfo = toCreateImageListInfo(request.imageListInfo),
             title = request.title,
             content = request.content,
             alarmAgree = request.alarmAgree,
@@ -41,7 +41,7 @@ object ExperimentPostMapper {
     }
 
 
-    private fun toApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
+    private fun tocCreateApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
             formUrl = dto.formUrl,
@@ -49,7 +49,7 @@ object ExperimentPostMapper {
         )
     }
 
-    private fun toTargetGroupInfo(dto: TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
+    private fun toCreateTargetGroupInfo(dto: TargetGroupInfo): CreateExperimentPostUseCase.TargetGroupInfo {
         return CreateExperimentPostUseCase.TargetGroupInfo(
             startAge = dto.startAge,
             endAge = dto.endAge,
@@ -58,20 +58,19 @@ object ExperimentPostMapper {
         )
     }
 
-
-    private fun toImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
+    private fun toCreateImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
-            images = dto.images
+            images = dto.images?: emptyList()
         )
     }
 
     fun toCreateExperimentPostResponse(response: CreateExperimentPostUseCase.Output): CreateExperimentPostResponse{
         return CreateExperimentPostResponse(
-            postInfo = toPostInfo(response.postInfo)
+             postInfo = toCreatePostInfo(response.postInfo)
         )
     }
 
-    private fun toPostInfo(input: CreateExperimentPostUseCase.PostInfo): PostInfo{
+    private fun toCreatePostInfo(input: CreateExperimentPostUseCase.PostInfo): PostInfo{
         return PostInfo(
             experimentPostId = input.postId,
             title = input.title,
@@ -84,6 +83,75 @@ object ExperimentPostMapper {
             univName = input.univName
         )
     }
+
+
+    private fun toUpdateApplyMethodInfo(dto: ApplyMethodInfo): UpdateExperimentPostUseCase.ApplyMethodInfo {
+        return UpdateExperimentPostUseCase.ApplyMethodInfo(
+            content = dto.content,
+            formUrl = dto.formUrl,
+            phoneNum = dto.phoneNum
+        )
+    }
+
+    private fun toUpdateTargetGroupInfo(dto: TargetGroupInfo): UpdateExperimentPostUseCase.TargetGroupInfo {
+        return UpdateExperimentPostUseCase.TargetGroupInfo(
+            startAge = dto.startAge,
+            endAge = dto.endAge,
+            genderType = dto.genderType,
+            otherCondition = dto.otherCondition
+        )
+    }
+
+    private fun toUpdateImageListInfo(dto: ImageListInfo): UpdateExperimentPostUseCase.ImageListInfo {
+        return UpdateExperimentPostUseCase.ImageListInfo(
+            images = dto.images?: emptyList()
+        )
+    }
+
+
+    private fun toUpdatePostInfo(input: UpdateExperimentPostUseCase.PostInfo): PostInfo{
+        return PostInfo(
+            experimentPostId = input.postId,
+            title = input.title,
+            views = input.views,
+            durationInfo = DurationInfo(
+                startDate = input.durationInfo?.startDate,
+                endDate = input.durationInfo?.endDate
+            ),
+            reward = input.reward,
+            univName = input.univName
+        )
+    }
+
+    fun toUpdateExperimentPostInput(request: UpdateExperimentPostRequest, postId: Long): UpdateExperimentPostUseCase.Input {
+        return UpdateExperimentPostUseCase.Input(
+            experimentPostId = postId,
+            memberId = getCurrentMemberId(),
+                applyMethodInfo = toUpdateApplyMethodInfo(request.applyMethodInfo),
+                targetGroupInfo = toUpdateTargetGroupInfo(request.targetGroupInfo),
+                imageListInfo = toUpdateImageListInfo(request.imageListInfo),
+                title = request.title,
+                content = request.content,
+                univName = request.univName,
+                count = request.count,
+                area = request.area,
+                timeRequired = request.timeRequired,
+                reward = request.reward,
+                startDate = request.startDate,
+                endDate = request.endDate,
+                matchType = request.matchType,
+                detailedAddress = request.detailedAddress,
+                leadResearcher = request.leadResearcher,
+            )
+    }
+
+    fun toUpdateExperimentPostResponse(response: UpdateExperimentPostUseCase.Output): UpdateExperimentPostResponse{
+        val responseDto= UpdateExperimentPostResponse(
+            postInfo = toUpdatePostInfo(response.postInfo)
+        )
+        return responseDto
+    }
+
 
     fun toGetExperimentPostDetailUseCaseInput(experimentPostId: Long): GetExperimentPostDetailUseCase.Input {
         return GetExperimentPostDetailUseCase.Input(

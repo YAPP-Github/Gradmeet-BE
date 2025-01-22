@@ -11,23 +11,29 @@ class ExperimentImageEntity(
     val id: Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "experiment_post_id", nullable = false)
-    val experimentPost: ExperimentPostEntity,
+    @JoinColumn(name = "experiment_post_id")
+    var experimentPost: ExperimentPostEntity? = null,
 
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
 ) {
     fun toDomain(): ExperimentImage = ExperimentImage(
         id = id,
-        experimentPost = experimentPost.toDomain(),
+        experimentPost = experimentPost?.toDomain(),
         imageUrl = imageUrl
+    )
+
+    fun toDomainWithoutPost(): ExperimentImage = ExperimentImage(
+        id = id,
+        imageUrl = imageUrl,
+        experimentPost = null
     )
 
     companion object {
         fun fromDomain(experimentImage: ExperimentImage): ExperimentImageEntity = with(experimentImage) {
             ExperimentImageEntity(
                 id = id,
-                experimentPost = ExperimentPostEntity.fromDomain(experimentPost),
+                experimentPost = experimentPost?.let { ExperimentPostEntity.fromDomain(it) },
                 imageUrl = imageUrl
             )
         }

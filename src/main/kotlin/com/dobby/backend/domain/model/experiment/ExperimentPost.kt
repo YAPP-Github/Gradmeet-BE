@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.model.experiment
 
+import com.dobby.backend.application.usecase.experiment.UpdateExperimentPostUseCase
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
@@ -14,22 +15,22 @@ data class ExperimentPost(
     val targetGroup: TargetGroup,
     val applyMethod: ApplyMethod,
     var views: Int,
-    val title: String,
-    val content: String,
+    var title: String,
+    var content: String,
     var leadResearcher: String,
-    val reward: String,
-    val startDate: LocalDate?,
-    val endDate: LocalDate?,
+    var reward: String,
+    var startDate: LocalDate?,
+    var endDate: LocalDate?,
     val timeRequired: TimeSlot?,
-    val count: Int,
-    val matchType: MatchType,
-    val univName: String,
+    var count: Int,
+    var matchType: MatchType,
+    var univName: String,
     val region: Region,
     val area: Area,
-    val detailedAddress: String?,
+    var detailedAddress: String?,
     val alarmAgree: Boolean,
-    val recruitStatus: Boolean,
-    val images: List<ExperimentImage>,
+    var recruitStatus: Boolean,
+    var images: MutableList<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
@@ -38,6 +39,46 @@ data class ExperimentPost(
         this.updatedAt = LocalDateTime.now()
     }
 
+    fun updateRecruitStatus(
+        recruitStatus: Boolean = this.recruitStatus,
+        updatedAt: LocalDateTime = this.updatedAt
+    ): ExperimentPost {
+        return this.copy(
+            recruitStatus = recruitStatus,
+            updatedAt = updatedAt
+        )
+    }
+    
+    fun updateImages(newImages: List<ExperimentImage>) {
+        images.clear()
+        images.addAll(newImages)
+        updatedAt = LocalDateTime.now()
+    }
+
+    fun updateDetails(
+        targetGroupInfo: UpdateExperimentPostUseCase.TargetGroupInfo?,
+        applyMethodInfo: UpdateExperimentPostUseCase.ApplyMethodInfo?,
+        updatedAt: LocalDateTime
+    ) {
+        targetGroupInfo?.let {
+            targetGroup.update(
+                startAge = it.startAge,
+                endAge = it.endAge,
+                genderType = it.genderType,
+                otherCondition = it.otherCondition
+            )
+        }
+
+        applyMethodInfo?.let {
+            applyMethod.update(
+                content = it.content,
+                formUrl = it.formUrl,
+                phoneNum = it.phoneNum
+            )
+        }
+
+        this.updatedAt = updatedAt
+    }
     companion object {
         fun newExperimentPost(
             id: Long,
@@ -84,7 +125,7 @@ data class ExperimentPost(
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
             recruitStatus = recruitStatus,
-            images = images,
+            images = images.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt
         )

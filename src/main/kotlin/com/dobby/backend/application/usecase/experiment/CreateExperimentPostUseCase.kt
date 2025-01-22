@@ -5,6 +5,7 @@ import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
+import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.domain.model.member.Member
@@ -90,7 +91,22 @@ class CreateExperimentPostUseCase(
 
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
-        val experimentPost = createExperimentPost(member, input, targetGroup, applyMethod)
+        val experimentPost = createExperimentPost(
+            member,
+            input,
+            targetGroup,
+            applyMethod
+        )
+
+        val experimentImages = input.imageListInfo.images.map { imageUrl ->
+            ExperimentImage(
+                id = 0L,
+                experimentPost = null,
+                imageUrl = imageUrl
+            )
+        }
+
+        experimentPost.updateImages(experimentImages)
         val savedExperimentPost = experimentPostGateway.save(experimentPost)
 
         return Output(
@@ -153,8 +169,8 @@ class CreateExperimentPostUseCase(
             area = input.area,
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
-            images = emptyList(), // 이미지 업로드 보류
             recruitStatus = true,
+            images = mutableListOf(),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
