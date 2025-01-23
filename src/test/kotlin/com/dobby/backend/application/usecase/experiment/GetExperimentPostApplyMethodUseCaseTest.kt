@@ -56,7 +56,7 @@ class GetExperimentPostApplyMethodUseCaseTest : BehaviorSpec({
             detailedAddress = "건국대학교 공학관",
             content = "야뿌들의 한끼 식사량을 체크하는 테스트입니다.",
             alarmAgree = false,
-            images = emptyList()
+            images = mutableListOf()
         )
 
         every { experimentPostGateway.findById(experimentPostId) } returns mockExperimentPost

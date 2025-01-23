@@ -60,7 +60,7 @@ class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
             detailedAddress = "서버학과 연구소",
             alarmAgree = true,
             recruitStatus = true,
-            images = emptyList(),
+            images = mutableListOf(),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
@@ -116,7 +116,7 @@ class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
             detailedAddress = "서버학과 연구소",
             alarmAgree = true,
             recruitStatus = false,
-            images = emptyList(),
+            images = mutableListOf(),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )

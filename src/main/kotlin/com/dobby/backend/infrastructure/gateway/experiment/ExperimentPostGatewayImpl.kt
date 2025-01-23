@@ -77,6 +77,10 @@ class ExperimentPostGatewayImpl(
         return experimentPostCustomRepository.updateExperimentPostStatus(currentDate)
     }
 
+    override fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost {
+        return experimentPostCustomRepository.updateExperimentPost(experimentPost)
+    }
+
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
         pagination: Pagination,
