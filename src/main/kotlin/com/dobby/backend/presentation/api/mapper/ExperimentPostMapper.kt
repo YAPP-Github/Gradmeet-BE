@@ -21,7 +21,7 @@ object ExperimentPostMapper {
     fun toCreatePostUseCaseInput(request: CreateExperimentPostRequest): CreateExperimentPostUseCase.Input {
         return CreateExperimentPostUseCase.Input(
             memberId = getCurrentMemberId(),
-            applyMethodInfo = tocCreateApplyMethodInfo(request.applyMethodInfo),
+            applyMethodInfo = toCreateApplyMethodInfo(request.applyMethodInfo),
             targetGroupInfo = toCreateTargetGroupInfo(request.targetGroupInfo),
             imageListInfo = toCreateImageListInfo(request.imageListInfo),
             title = request.title,
@@ -42,7 +42,7 @@ object ExperimentPostMapper {
     }
 
 
-    private fun tocCreateApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
+    private fun toCreateApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
             formUrl = dto.formUrl,

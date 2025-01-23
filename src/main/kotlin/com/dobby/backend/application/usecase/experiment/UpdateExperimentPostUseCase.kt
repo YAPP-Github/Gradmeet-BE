@@ -136,8 +136,16 @@ class UpdateExperimentPostUseCase (
         val existingPost =
             experimentPostGateway.findExperimentPostByMemberIdAndPostId(input.memberId, input.experimentPostId)
                 ?: throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_NOT_FOUND)
+        if(existingPost.member.id != input.memberId) throw ExperimentPostException(ErrorCode.PERMISSION_DENIED)
+
+        input.imageListInfo?.let {
+            if(it.images.size > 3) {
+                throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
+            }
+        }
 
         if (existingPost.endDate?.isBefore(LocalDate.now()) == true) throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_CANNOT_UPDATE_DATE)
+
         return existingPost
     }
 }
