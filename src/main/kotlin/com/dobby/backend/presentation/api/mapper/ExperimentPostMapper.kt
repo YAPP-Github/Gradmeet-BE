@@ -273,16 +273,14 @@ object ExperimentPostMapper {
     }
 
     fun toExperimentPostResponse(output: UpdateExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
-        return output.experimentPost.let {
-            MyExperimentPostResponse(
-                experimentPostId = it.id,
-                title = it.title,
-                content = it.content,
-                views = it.views,
-                recruitStatus = it.recruitStatus,
-                uploadDate = it.createdAt.toLocalDate()
-            )
-        }
+        return MyExperimentPostResponse(
+            experimentPostId = output.experimentPost.id,
+            title = output.experimentPost.title,
+            content = output.experimentPost.content,
+            views = output.experimentPost.views,
+            recruitStatus = output.experimentPost.recruitStatus,
+            uploadDate = output.experimentPost.createdAt.toLocalDate()
+        )
     }
 
     fun toGetMyExperimentPostsResponse(
