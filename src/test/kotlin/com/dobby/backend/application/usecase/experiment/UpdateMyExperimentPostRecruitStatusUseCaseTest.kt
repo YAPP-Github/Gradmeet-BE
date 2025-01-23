@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.usecase.experiment.UpdateMyExperimentPostRecruitStatusUseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.exception.ExperimentPostRecruitStatusException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway

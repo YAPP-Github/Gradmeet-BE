@@ -18,7 +18,6 @@ import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPost
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
-import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

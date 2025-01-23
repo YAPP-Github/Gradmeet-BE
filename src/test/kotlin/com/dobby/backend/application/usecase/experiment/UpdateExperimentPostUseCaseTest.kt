@@ -1,9 +1,9 @@
-import com.dobby.backend.application.usecase.experiment.UpdateExpiredExperimentPostUseCase
+package com.dobby.backend.application.usecase.experiment
+
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

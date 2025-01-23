@@ -6,7 +6,6 @@ import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCas
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
-
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost

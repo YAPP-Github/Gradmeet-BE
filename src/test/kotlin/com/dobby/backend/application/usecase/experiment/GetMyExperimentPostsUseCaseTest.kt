@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostsUseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
