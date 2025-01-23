@@ -102,4 +102,8 @@ class ExperimentPostGatewayImpl(
     override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
         return experimentPostCustomRepository.countExperimentPostsByCustomFilter(customFilter)
     }
+
+    override fun delete(post: ExperimentPost) {
+        experimentPostRepository.delete(ExperimentPostConverter.toEntity(post))
+    }
 }

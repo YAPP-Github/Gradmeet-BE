@@ -24,4 +24,5 @@ interface ExperimentPostGateway {
     fun countExperimentPostsByMemberId(memberId: Long): Int
     fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost?
     fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
+    fun delete(post: ExperimentPost)
 }
