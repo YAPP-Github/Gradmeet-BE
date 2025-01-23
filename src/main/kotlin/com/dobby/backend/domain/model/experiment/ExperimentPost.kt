@@ -48,7 +48,7 @@ data class ExperimentPost(
             updatedAt = updatedAt
         )
     }
-    
+
     fun updateImages(newImages: List<ExperimentImage>) {
         images.clear()
         images.addAll(newImages)
@@ -79,6 +79,7 @@ data class ExperimentPost(
 
         this.updatedAt = updatedAt
     }
+
     companion object {
         fun newExperimentPost(
             id: Long,
@@ -101,7 +102,7 @@ data class ExperimentPost(
             detailedAddress: String,
             alarmAgree: Boolean,
             recruitStatus: Boolean,
-            images: List<ExperimentImage>,
+            images: List<ExperimentImage> = listOf(),
             createdAt: LocalDateTime = LocalDateTime.now(),
             updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(

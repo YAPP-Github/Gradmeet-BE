@@ -1,6 +1,7 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.ExperimentPostService
+import com.dobby.backend.application.service.PaginationService
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
@@ -10,6 +11,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.request.experiment.UpdateExperimentPostRequest
+import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperimentPostResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostApplyMethodResponse
@@ -26,7 +28,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/experiment-posts")
 class ExperimentPostController (
-    private val experimentPostService: ExperimentPostService
+    private val experimentPostService: ExperimentPostService,
+    private val paginationService: PaginationService
 ){
     @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping
@@ -125,11 +128,15 @@ class ExperimentPostController (
         @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus,
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "6") count: Int
-    ): List<ExperimentPostsResponse> {
+    ): PaginatedResponse<ExperimentPostResponse> {
         val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitStatus)
         val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
-        val output = experimentPostService.getExperimentPosts(input)
-        return output.map { ExperimentPostMapper.toGetExperimentPostsResponse(it) }
+        val posts = experimentPostService.getExperimentPosts(input)
+
+        val totalCountInput = ExperimentPostMapper.toGetExperimentPostTotalCountUseCaseInput(customFilter)
+        val totalCount = experimentPostService.getExperimentPostTotalCount(totalCountInput)
+        val isLast = paginationService.isLastPage(totalCount, page, count)
+        return ExperimentPostMapper.toGetExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }

@@ -40,7 +40,7 @@ object ExperimentPostConverter{
             ExperimentImage(
                 id = experimentImageEntity.id,
                 imageUrl = experimentImageEntity.imageUrl,
-                experimentPost = baseExperimentPost // 이미지에 ExperimentPost 설정
+                experimentPost = baseExperimentPost
             )
         }
         return baseExperimentPost.copy(images = experimentImages.toMutableList())
@@ -79,7 +79,6 @@ object ExperimentPostConverter{
             )
         }
         imageEntities.forEach { experimentPostEntity.addImage(it) }
-
         return experimentPostEntity
     }
 }

@@ -17,6 +17,7 @@ class ExperimentImageEntity(
     @Column(name = "image_url", nullable = false)
     val imageUrl: String,
 ) {
+
     fun toDomain(): ExperimentImage = ExperimentImage(
         id = id,
         experimentPost = experimentPost?.toDomain(),

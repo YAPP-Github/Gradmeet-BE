@@ -98,7 +98,26 @@ class ExperimentPostEntity(
         image.experimentPost = this
         _images.add(image)
     }
-    
+
+
+    fun removeImage(image: ExperimentImageEntity) {
+        val removed = _images.removeIf {
+            val shouldRemove = it.id == image.id
+            if (shouldRemove) it.experimentPost = null
+            shouldRemove
+        }
+        require(removed)
+    }
+
+    fun updateImageList(newImages: List<ExperimentImageEntity>) {
+        val newIds = newImages.map { it.id }.toSet()
+        val existingIds = _images.map { it.id }.toSet()
+
+        newImages.filter { it.id !in existingIds }
+            .forEach { addImage(it) }
+        _images.removeIf { it.id !in newIds }
+    }
+
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
         member = member.toDomain(),

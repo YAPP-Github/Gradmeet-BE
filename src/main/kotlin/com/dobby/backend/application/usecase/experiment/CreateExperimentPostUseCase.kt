@@ -1,6 +1,8 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.ErrorCode
+import com.dobby.backend.domain.exception.ExperimentPostException
 import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
@@ -61,7 +63,7 @@ class CreateExperimentPostUseCase(
     )
 
     data class ImageListInfo(
-        val images: List<String> = emptyList()
+        val images: List<String> = mutableListOf()
     )
 
     data class Output(
@@ -89,9 +91,13 @@ class CreateExperimentPostUseCase(
             throw PermissionDeniedException()
         }
 
+        if (input.imageListInfo.images.size > 3) {
+            throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
+        }
+
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
-        val experimentPost = createExperimentPost(
+        var experimentPost = createExperimentPost(
             member,
             input,
             targetGroup,
@@ -147,9 +153,9 @@ class CreateExperimentPostUseCase(
         member: Member,
         input: Input,
         targetGroup: TargetGroup,
-        applyMethod: ApplyMethod
+        applyMethod: ApplyMethod,
     ): ExperimentPost {
-        return ExperimentPost(
+        return  ExperimentPost(
             member = member,
             leadResearcher = member.name,
             id = 0L,
@@ -172,7 +178,7 @@ class CreateExperimentPostUseCase(
             recruitStatus = true,
             images = mutableListOf(),
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
         )
     }
 }

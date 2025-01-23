@@ -5,5 +5,5 @@ import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResp
 
 interface NaverAuthGateway {
     fun getAccessToken(authorizationCode: String, state: String): NaverTokenResponse
-    fun getUserInfo(accessToken: String): NaverInfoResponse?
+    fun getUserInfo(accessToken: String): NaverInfoResponse
 }

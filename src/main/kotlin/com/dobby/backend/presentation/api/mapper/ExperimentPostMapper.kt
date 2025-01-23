@@ -12,6 +12,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.*
+import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.util.getCurrentMemberId
 import com.dobby.backend.util.getCurrentMemberIdOrNull
@@ -269,21 +270,34 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetExperimentPostsResponse(output: GetExperimentPostsUseCase.Output): ExperimentPostsResponse {
-        return ExperimentPostsResponse(
-            postInfo = PostInfo(
-                experimentPostId = output.postInfo.experimentPostId,
-                title = output.postInfo.title,
-                views = output.postInfo.views,
-                univName = output.postInfo.univName,
-                reward = output.postInfo.reward,
-                durationInfo = DurationInfo(
-                    startDate = output.postInfo.durationInfo?.startDate,
-                    endDate = output.postInfo.durationInfo?.endDate
 
+   fun toGetExperimentPostsResponse(
+        output: List<GetExperimentPostsUseCase.Output>,
+        page: Int,
+        totalCount: Int,
+        isLast: Boolean
+    ): PaginatedResponse<ExperimentPostResponse> {
+        return PaginatedResponse(
+            content = output.map { post ->
+                ExperimentPostResponse(
+                    postInfo = PostInfo(
+                        experimentPostId = post.postInfo.experimentPostId,
+                        title = post.postInfo.title,
+                        views = post.postInfo.views,
+                        univName = post.postInfo.univName,
+                        reward = post.postInfo.reward,
+                        durationInfo = DurationInfo(
+                            startDate = post.postInfo.durationInfo.startDate,
+                            endDate = post.postInfo.durationInfo.endDate
+                        )
+                    ),
+                    recruitStatus = post.postInfo.recruitStatus
                 )
-            ),
-            recruitStatus = output.postInfo.recruitStatus
+            },
+            page = page,
+            size = output.size,
+            totalCount = totalCount,
+            isLast = isLast
         )
     }
 
@@ -296,6 +310,25 @@ object ExperimentPostMapper {
     fun toGeneratePreSignedUrlResponse(output: GenerateExperimentPostPreSignedUrlUseCase.Output): PreSignedUrlResponse {
         return PreSignedUrlResponse(
             preSignedUrl = output.preSignedUrl
+        )
+    }
+
+    fun toGetExperimentPostTotalCountUseCaseInput(customFilter: GetExperimentPostsUseCase.CustomFilterInput): GetExperimentPostTotalCountByCustomFilterUseCase.Input {
+        return GetExperimentPostTotalCountByCustomFilterUseCase.Input(
+            matchType = customFilter.matchType,
+            studyTarget = customFilter.studyTarget?.let {
+                GetExperimentPostsUseCase.StudyTargetInput(
+                    gender = it.gender,
+                    age = it.age
+                )
+            },
+            locationTarget = customFilter.locationTarget?.let {
+                GetExperimentPostsUseCase.LocationTargetInput(
+                    region = it.region,
+                    areas = it.areas
+                )
+            },
+            recruitStatus = customFilter.recruitStatus
         )
     }
 }
