@@ -4,11 +4,21 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 
 data class TargetGroup(
     val id: Long,
-    val startAge: Int?,
-    val endAge: Int?,
-    val genderType: GenderType,
-    val otherCondition: String?
+    var startAge: Int?,
+    var endAge: Int?,
+    var genderType: GenderType,
+    var otherCondition: String?
 ) {
+
+    fun update(startAge: Int?, endAge: Int?, genderType: GenderType?, otherCondition: String?){
+        this.startAge = startAge
+        this.endAge = endAge
+        this.otherCondition = otherCondition
+        if (genderType != null) {
+            this.genderType = genderType
+        }
+    }
+
     companion object {
         fun newTargetGroup(
             id: Long,

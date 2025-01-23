@@ -14,28 +14,25 @@ data class ExperimentPost(
     val targetGroup: TargetGroup,
     val applyMethod: ApplyMethod,
     var views: Int,
-    val title: String,
-    val content: String,
+    var title: String,
+    var content: String,
     var leadResearcher: String,
-    val reward: String,
-    val startDate: LocalDate?,
-    val endDate: LocalDate?,
-    val timeRequired: TimeSlot?,
-    val count: Int,
-    val matchType: MatchType,
-    val univName: String,
-    val region: Region,
-    val area: Area,
-    val detailedAddress: String?,
+    var reward: String,
+    var startDate: LocalDate?,
+    var endDate: LocalDate?,
+    var timeRequired: TimeSlot?,
+    var count: Int,
+    var matchType: MatchType,
+    var univName: String,
+    var region: Region,
+    var area: Area,
+    var detailedAddress: String?,
     val alarmAgree: Boolean,
     var recruitStatus: Boolean,
-    val images: List<ExperimentImage>,
+    var images: MutableList<ExperimentImage>,
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
-    fun withImages(newImages: List<ExperimentImage>): ExperimentPost {
-        return this.copy(images = this.images + newImages)
-    }
     fun incrementViews() {
         this.views += 1
         this.updatedAt = LocalDateTime.now()
@@ -50,6 +47,54 @@ data class ExperimentPost(
             updatedAt = updatedAt
         )
     }
+
+    fun update(
+        title: String?,
+        reward: String?,
+        startDate: LocalDate?,
+        endDate: LocalDate?,
+        content: String?,
+        count: Int?,
+        leadResearcher: String?,
+        detailedAddress: String?,
+        matchType: MatchType?,
+        univName: String?,
+        region: Region?,
+        area: Area?,
+        imageListInfo: List<String>?
+    ) {
+        title?.let { this.title = it }
+        reward?.let { this.reward = it }
+        startDate?.let { this.startDate = it }
+        endDate?.let { this.endDate = it }
+        content?.let { this.content = it }
+        count?.let { this.count = it }
+        leadResearcher?.let { this.leadResearcher = it }
+        detailedAddress?.let { this.detailedAddress = it }
+        matchType?.let { this.matchType = it }
+        univName?.let { this.univName = it }
+        region?.let { this.region = it }
+        area?.let { this.area = it }
+
+        imageListInfo?.let {
+            val newImages = it.map { imageUrl ->
+                val existingImage = this.images.find { existing -> existing.imageUrl == imageUrl }
+                ExperimentImage(
+                    id = existingImage?.id ?: 0L,
+                    experimentPost = this,
+                    imageUrl = imageUrl
+                )
+            }
+            this.updateImages(newImages)
+        }
+    }
+
+    fun updateImages(newImages: List<ExperimentImage>) {
+        images.clear()
+        images.addAll(newImages)
+        updatedAt = LocalDateTime.now()
+    }
+
 
     companion object {
         fun newExperimentPost(
@@ -97,7 +142,7 @@ data class ExperimentPost(
             detailedAddress = detailedAddress,
             alarmAgree = alarmAgree,
             recruitStatus = recruitStatus,
-            images = images,
+            images = images.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt
         )

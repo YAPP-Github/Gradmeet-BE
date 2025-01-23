@@ -11,13 +11,13 @@ class ApplyMethodEntity (
     val id: Long,
 
     @Column(name = "phone_num", length = 50)
-    val phoneNum: String?,
+    var phoneNum: String?,
 
     @Column(name = "form_url", length = 100)
-    val formUrl: String?,
+    var formUrl: String?,
 
     @Column(name = "content", nullable = false, length = 200)
-    val content: String,
+    var content: String,
 ) {
     fun toDomain(): ApplyMethod = ApplyMethod(
         id = id,

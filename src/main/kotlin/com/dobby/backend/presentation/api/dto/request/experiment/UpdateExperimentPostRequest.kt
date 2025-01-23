@@ -6,7 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 
-data class CreateExperimentPostRequest(
+data class UpdateExperimentPostRequest (
     val targetGroupInfo: TargetGroupInfo,
     val applyMethodInfo: ApplyMethodInfo,
     val imageListInfo: ImageListInfo,
@@ -27,5 +27,4 @@ data class CreateExperimentPostRequest(
     val reward: String,
     val title: String,
     val content: String,
-    val alarmAgree: Boolean
 )
