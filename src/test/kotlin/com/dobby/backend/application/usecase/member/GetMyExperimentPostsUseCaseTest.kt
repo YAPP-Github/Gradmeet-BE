@@ -66,7 +66,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 detailedAddress = "건국대학교 공학관",
                 content = "야뿌들의 한끼 식사량을 체크하는 테스트입니다.",
                 alarmAgree = false,
-                images = emptyList()
+                images = mutableListOf()
             ),
             ExperimentPost(
                 id = 2L,
@@ -91,7 +91,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 detailedAddress = "부산대학교 자연과학대학",
                 content = "다음 세대의 AI를 위한 실험 연구입니다.",
                 alarmAgree = true,
-                images = emptyList()
+                images = mutableListOf()
             ),
             ExperimentPost(
                 id = 3L,
@@ -116,7 +116,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 detailedAddress = "서울대학교 전산관",
                 content = "소셜 미디어에 대한 연구에 참여할 모집입니다.",
                 alarmAgree = false,
-                images = emptyList()
+                images = mutableListOf()
             )
         )
 

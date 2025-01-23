@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.backend.presentation.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperimentPostResponse
@@ -42,6 +43,21 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toCreatePostUseCaseInput(request)
         val output = experimentPostService.createNewExperimentPost(input)
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PutMapping("/{postId}")
+    @Operation(
+        summary = "공고 수정 API- 연구자 공고 수정",
+        description = "연구자가 본인이 올린 공고 글을 수정합니다."
+    )
+    fun updateExperimentPost(
+        @RequestBody @Valid request: UpdateExperimentPostRequest
+        , @PathVariable postId: Long
+    ): UpdateExperimentPostResponse {
+        val input = ExperimentPostMapper.toUpdateExperimentPostInput(request, postId)
+        val output = experimentPostService.updateExperimentPost(input)
+        return ExperimentPostMapper.toUpdateExperimentPostResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
