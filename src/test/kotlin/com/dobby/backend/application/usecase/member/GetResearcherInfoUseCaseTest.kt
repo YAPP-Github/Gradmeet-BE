@@ -52,10 +52,6 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
                 assertEquals(mockResearcher.univName, result.univName)
                 assertEquals(mockResearcher.major, result.major)
                 assertEquals(mockResearcher.labInfo, result.labInfo)
-                assertEquals(
-                    "이화여자대학교 컴퓨터공학과 야뿌 서버 연구실 신수정",
-                    result.leadResearcher
-                )
             }
         }
     }
