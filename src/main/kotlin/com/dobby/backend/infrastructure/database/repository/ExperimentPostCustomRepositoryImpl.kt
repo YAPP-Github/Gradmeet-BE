@@ -118,10 +118,10 @@ class ExperimentPostCustomRepositoryImpl (
         val experimentPost = QExperimentPostEntity.experimentPostEntity
 
         return jpaQueryFactory.update(experimentPost)
-            .set(experimentPost.recruitStatus, true)
+            .set(experimentPost.recruitStatus, false)
             .where(
                 experimentPost.endDate.lt(currentDate)
-                    .and(experimentPost.recruitStatus.eq(false))
+                    .and(experimentPost.recruitStatus.eq(true))
             )
             .execute()
     }
