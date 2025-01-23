@@ -3,6 +3,9 @@ package com.dobby.backend.application.usecase.member
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ResearcherNotFoundException
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
+import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
+import io.swagger.v3.oas.annotations.media.Schema
 
 class GetResearcherInfoUseCase(
     private val researcherGateway: ResearcherGateway
@@ -12,20 +15,23 @@ class GetResearcherInfoUseCase(
     )
 
     data class Output(
+        val member : Member,
+        val univEmail: String,
         val univName: String,
-        val leadResearcher: String,
+        val major: String,
+        val labInfo: String?,
     )
 
     override fun execute(input: Input): Output {
         val researcher = researcherGateway.findByMemberId(input.memberId)
             ?: throw ResearcherNotFoundException()
 
-        val leadResearcher = researcher.univName +" "+ researcher.major+
-                " " +researcher.labInfo+ " " +researcher.member.name
-
         return Output(
-            univName =researcher.univName,
-            leadResearcher = leadResearcher
+            member = researcher.member,
+            univEmail = researcher.univEmail,
+            univName = researcher.univName,
+            major = researcher.major,
+            labInfo = researcher.labInfo,
         )
     }
 }
