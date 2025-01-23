@@ -96,18 +96,4 @@ class MemberController(
         val isLast = paginationService.isLastPage(totalCount, count, page)
         return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
-
-    @PreAuthorize("hasRole('RESEARCHER')")
-    @PatchMapping("/researchers/me/experiment-posts/{postId}/recruit-status")
-    @Operation(
-        summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
-        description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
-    )
-    fun updateMyExperimentPostRecruitStatus(
-        @PathVariable postId: Long
-    ): MyExperimentPostResponse {
-        val input = MemberMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
-        val output = memberService.updateMyExperimentPostRecruitStatus(input)
-        return MemberMapper.toMyExperimentPostResponse(output)
-    }
 }

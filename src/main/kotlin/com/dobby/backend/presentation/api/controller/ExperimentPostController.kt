@@ -16,7 +16,9 @@ import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperime
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostCountsResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
+import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
+import com.dobby.backend.presentation.api.mapper.MemberMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -42,6 +44,20 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toCreatePostUseCaseInput(request)
         val output = experimentPostService.createNewExperimentPost(input)
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PatchMapping("/{postId}/recruit-status")
+    @Operation(
+        summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
+        description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
+    )
+    fun updateMyExperimentPostRecruitStatus(
+        @PathVariable postId: Long
+    ): MyExperimentPostResponse {
+        val input = ExperimentPostMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
+        val output = experimentPostService.updateMyExperimentPostRecruitStatus(input)
+        return MemberMapper.toMyExperimentPostResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")

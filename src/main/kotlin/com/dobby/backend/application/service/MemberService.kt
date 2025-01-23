@@ -1,5 +1,6 @@
 package com.dobby.backend.application.service
 
+import com.dobby.backend.application.usecase.experiment.UpdateMyExperimentPostRecruitStatusUseCase
 import com.dobby.backend.application.usecase.member.GetMyExperimentPostTotalCountUseCase
 import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
@@ -19,7 +20,6 @@ class MemberService(
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
-    private val updateMyExperimentPostRecruitStatusUseCase: UpdateMyExperimentPostRecruitStatusUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -59,10 +59,5 @@ class MemberService(
 
     fun getMyExperimentPostsCount(input: GetMyExperimentPostTotalCountUseCase.Input): GetMyExperimentPostTotalCountUseCase.Output {
         return getMyExperimentPostTotalCountUseCase.execute(GetMyExperimentPostTotalCountUseCase.Input(input.memberId))
-    }
-
-    @Transactional
-    fun updateMyExperimentPostRecruitStatus(input: UpdateMyExperimentPostRecruitStatusUseCase.Input): UpdateMyExperimentPostRecruitStatusUseCase.Output {
-        return updateMyExperimentPostRecruitStatusUseCase.execute(input)
     }
 }

@@ -14,6 +14,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.experiment.Recruit
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
+import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.util.getCurrentMemberId
 import com.dobby.backend.util.getCurrentMemberIdOrNull
 
@@ -203,7 +204,7 @@ object ExperimentPostMapper {
     }
 
 
-   fun toGetExperimentPostsResponse(
+    fun toGetExperimentPostsResponse(
         output: List<GetExperimentPostsUseCase.Output>,
         page: Int,
         totalCount: Int,
@@ -225,7 +226,7 @@ object ExperimentPostMapper {
                     ),
                     recruitStatus = post.postInfo.recruitStatus
                 )
-            },
+                                 },
             page = page,
             size = output.size,
             totalCount = totalCount,
@@ -262,5 +263,25 @@ object ExperimentPostMapper {
             },
             recruitStatus = customFilter.recruitStatus
         )
+    }
+
+    fun toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateMyExperimentPostRecruitStatusUseCase.Input {
+        return UpdateMyExperimentPostRecruitStatusUseCase.Input(
+            memberId = getCurrentMemberId(),
+            postId = postId
+        )
+    }
+
+    fun toMyExperimentPostResponse(output: UpdateMyExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
+        return output.experimentPost.let {
+            MyExperimentPostResponse(
+                experimentPostId = it.id,
+                title = it.title,
+                content = it.content,
+                views = it.views,
+                recruitStatus = it.recruitStatus,
+                uploadDate = it.createdAt.toLocalDate()
+            )
+        }
     }
 }

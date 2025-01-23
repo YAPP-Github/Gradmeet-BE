@@ -1,5 +1,6 @@
 package com.dobby.backend.presentation.api.mapper
 
+import com.dobby.backend.application.usecase.experiment.UpdateMyExperimentPostRecruitStatusUseCase
 import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
 import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
@@ -163,13 +164,6 @@ object MemberMapper {
     fun toGetTotalMyExperimentPostCountUseCaseInput(): GetMyExperimentPostTotalCountUseCase.Input {
         return GetMyExperimentPostTotalCountUseCase.Input(
             memberId = getCurrentMemberId()
-        )
-    }
-
-    fun toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateMyExperimentPostRecruitStatusUseCase.Input {
-        return UpdateMyExperimentPostRecruitStatusUseCase.Input(
-            memberId = getCurrentMemberId(),
-            postId = postId
         )
     }
 

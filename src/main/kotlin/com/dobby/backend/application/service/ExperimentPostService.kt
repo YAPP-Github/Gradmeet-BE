@@ -21,6 +21,7 @@ class ExperimentPostService(
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
     private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
     private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase,
+    private val updateMyExperimentPostRecruitStatusUseCase: UpdateMyExperimentPostRecruitStatusUseCase,
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase
 ) {
     @Transactional
@@ -47,6 +48,11 @@ class ExperimentPostService(
     @Transactional
     fun updateExpiredExperimentPosts(input: UpdateExpiredExperimentPostUseCase.Input): UpdateExpiredExperimentPostUseCase.Output  {
         return updateExpiredExperimentPostUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateMyExperimentPostRecruitStatus(input: UpdateMyExperimentPostRecruitStatusUseCase.Input): UpdateMyExperimentPostRecruitStatusUseCase.Output {
+        return updateMyExperimentPostRecruitStatusUseCase.execute(input)
     }
 
     fun getExperimentPostCounts(input: Any): Any {
