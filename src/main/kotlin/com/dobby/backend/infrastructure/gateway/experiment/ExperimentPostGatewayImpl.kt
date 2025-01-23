@@ -104,6 +104,6 @@ class ExperimentPostGatewayImpl(
     }
 
     override fun delete(post: ExperimentPost) {
-        experimentPostRepository.delete(ExperimentPostConverter.toEntity(post))
+        experimentPostRepository.delete(ExperimentPostEntity.fromDomain(post))
     }
 }
