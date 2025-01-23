@@ -85,6 +85,7 @@ class ExperimentPostService(
         return getExperimentPostTotalCountByCustomFilterUseCase.execute(input)
     }
 
+    @Transactional
     fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
         deleteExperimentPostUseCase.execute(input)
     }
