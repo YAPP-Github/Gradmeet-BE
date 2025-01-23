@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.member
+package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
@@ -7,9 +7,9 @@ import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import java.time.LocalDateTime
 
-class UpdateMyExperimentPostRecruitStatusUseCase(
+class UpdateExperimentPostRecruitStatusUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<UpdateMyExperimentPostRecruitStatusUseCase.Input, UpdateMyExperimentPostRecruitStatusUseCase.Output> {
+): UseCase<UpdateExperimentPostRecruitStatusUseCase.Input, UpdateExperimentPostRecruitStatusUseCase.Output> {
 
     data class Input(
         val memberId: Long,

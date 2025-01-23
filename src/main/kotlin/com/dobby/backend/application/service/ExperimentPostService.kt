@@ -5,11 +5,14 @@ import com.dobby.backend.application.usecase.experiment.*
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostTotalCountUseCase
+import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostsUseCase
 import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
 import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.security.InvalidParameterException
 
 @Service
 class ExperimentPostService(
@@ -22,8 +25,11 @@ class ExperimentPostService(
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
     private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
     private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase,
+    private val deleteExperimentPostUseCase: DeleteExperimentPostUseCase,
+    private val updateExperimentPostRecruitStatusUseCase: UpdateExperimentPostRecruitStatusUseCase,
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
-    private val deleteExperimentPostUseCase: DeleteExperimentPostUseCase
+    private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
+    private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -54,6 +60,11 @@ class ExperimentPostService(
     @Transactional
     fun updateExpiredExperimentPosts(input: UpdateExpiredExperimentPostUseCase.Input): UpdateExpiredExperimentPostUseCase.Output  {
         return updateExpiredExperimentPostUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateExperimentPostRecruitStatus(input: UpdateExperimentPostRecruitStatusUseCase.Input): UpdateExperimentPostRecruitStatusUseCase.Output {
+        return updateExperimentPostRecruitStatusUseCase.execute(input)
     }
 
     fun getExperimentPostCounts(input: Any): Any {
@@ -89,6 +100,23 @@ class ExperimentPostService(
 
     fun getExperimentPostTotalCount(input: GetExperimentPostTotalCountByCustomFilterUseCase.Input): Int {
         return getExperimentPostTotalCountByCustomFilterUseCase.execute(input)
+    }
+
+    @Transactional
+    fun getMyExperimentPosts(input: GetMyExperimentPostsUseCase.Input): List<GetMyExperimentPostsUseCase.Output> {
+        validateSortOrder(input.pagination.order)
+        return getMyExperimentPostsUseCase.execute(input)
+    }
+
+    fun getMyExperimentPostsCount(input: GetMyExperimentPostTotalCountUseCase.Input): GetMyExperimentPostTotalCountUseCase.Output {
+        return getMyExperimentPostTotalCountUseCase.execute(GetMyExperimentPostTotalCountUseCase.Input(input.memberId))
+    }
+
+    private fun validateSortOrder(sortOrder: String): String {
+        return when (sortOrder) {
+            "ASC", "DESC" -> sortOrder
+            else -> throw InvalidParameterException("Invalid sort order. Please use 'ASC' or 'DESC'")
+        }
     }
 
     @Transactional
