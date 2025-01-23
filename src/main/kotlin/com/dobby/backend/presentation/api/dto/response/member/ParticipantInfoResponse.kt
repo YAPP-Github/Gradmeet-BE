@@ -5,7 +5,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 
-@Schema(description = "공고 등록 시, 자동 입력에 필요한 연구자 정보 반환 DTO")
+@Schema(description = "공고 등록 시, 자동 입력에 필요한 참여자 정보 반환 DTO")
 data class ParticipantInfoResponse(
     @Schema(description = "사용자 기본 정보")
     val memberInfo: MemberResponse,
