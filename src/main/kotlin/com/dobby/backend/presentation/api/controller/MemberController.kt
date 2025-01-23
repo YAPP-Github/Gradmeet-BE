@@ -75,25 +75,4 @@ class MemberController(
         val output = memberService.getParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
     }
-
-    @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers/me/experiment-posts")
-    @Operation(
-        summary = "연구자가 작성한 실험 공고 리스트 조회",
-        description = "로그인한 연구자가 작성한 실험 공고 리스트를 반환합니다"
-    )
-    fun getMyExperimentPosts(
-        @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "6") count: Int,
-        @RequestParam(defaultValue = "DESC") order: String
-    ): PaginatedResponse<MyExperimentPostResponse> {
-        val pagination = MemberMapper.toUseCasePagination(page, count, order)
-        val input = MemberMapper.toGetMyExperimentPosts(pagination)
-        val posts = memberService.getMyExperimentPosts(input)
-
-        val totalCountInput = MemberMapper.toGetTotalMyExperimentPostCountUseCaseInput()
-        val totalCount = memberService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-        val isLast = paginationService.isLastPage(totalCount, count, page)
-        return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
-    }
 }

@@ -57,7 +57,7 @@ class ExperimentPostController (
     ): MyExperimentPostResponse {
         val input = ExperimentPostMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
         val output = experimentPostService.updateMyExperimentPostRecruitStatus(input)
-        return MemberMapper.toMyExperimentPostResponse(output)
+        return ExperimentPostMapper.toMyExperimentPostResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
@@ -138,5 +138,26 @@ class ExperimentPostController (
         val totalCount = experimentPostService.getExperimentPostTotalCount(totalCountInput)
         val isLast = paginationService.isLastPage(totalCount, page, count)
         return ExperimentPostMapper.toGetExperimentPostsResponse(posts, page, totalCount, isLast)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @GetMapping("/my-posts")
+    @Operation(
+        summary = "연구자가 작성한 실험 공고 리스트 조회",
+        description = "로그인한 연구자가 작성한 실험 공고 리스트를 반환합니다"
+    )
+    fun getMyExperimentPosts(
+        @RequestParam(defaultValue = "1") page: Int,
+        @RequestParam(defaultValue = "6") count: Int,
+        @RequestParam(defaultValue = "DESC") order: String
+    ): PaginatedResponse<MyExperimentPostResponse> {
+        val pagination = ExperimentPostMapper.toUseCasePagination(page, count, order)
+        val input = ExperimentPostMapper.toGetMyExperimentPosts(pagination)
+        val posts = experimentPostService.getMyExperimentPosts(input)
+
+        val totalCountInput = ExperimentPostMapper.toGetTotalMyExperimentPostCountUseCaseInput()
+        val totalCount = experimentPostService.getMyExperimentPostsCount(totalCountInput).totalPostCount
+        val isLast = paginationService.isLastPage(totalCount, count, page)
+        return ExperimentPostMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }

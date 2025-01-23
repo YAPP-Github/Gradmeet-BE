@@ -284,4 +284,54 @@ object ExperimentPostMapper {
             )
         }
     }
+
+    fun toGetMyExperimentPostsResponse(
+        output: List<GetMyExperimentPostsUseCase.Output>,
+        page: Int,
+        totalCount: Int,
+        isLast: Boolean
+    ): PaginatedResponse<MyExperimentPostResponse> {
+        return PaginatedResponse(
+            content = output.map { post ->
+                MyExperimentPostResponse(
+                    experimentPostId = post.experimentPostId,
+                    title = post.title,
+                    content = post.content,
+                    views = post.views,
+                    recruitStatus = post.recruitStatus,
+                    uploadDate = post.uploadDate
+                )
+            },
+            page = page,
+            size = output.size,
+            totalCount = totalCount,
+            isLast = isLast
+        )
+    }
+
+    fun toGetMyExperimentPosts(
+        pagination: GetMyExperimentPostsUseCase.PaginationInput
+    ): GetMyExperimentPostsUseCase.Input {
+        return GetMyExperimentPostsUseCase.Input(
+            memberId = getCurrentMemberId(),
+            pagination = pagination
+        )
+    }
+
+
+    fun toGetTotalMyExperimentPostCountUseCaseInput(): GetMyExperimentPostTotalCountUseCase.Input {
+        return GetMyExperimentPostTotalCountUseCase.Input(
+            memberId = getCurrentMemberId()
+        )
+    }
+
+    fun toUseCasePagination(
+        page: Int, count: Int, order: String
+    ) : GetMyExperimentPostsUseCase.PaginationInput {
+        return GetMyExperimentPostsUseCase.PaginationInput(
+            page = page,
+            count = count,
+            order = order
+        )
+    }
 }

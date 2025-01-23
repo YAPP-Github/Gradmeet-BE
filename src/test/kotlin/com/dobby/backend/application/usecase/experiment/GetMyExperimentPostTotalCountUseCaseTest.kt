@@ -1,5 +1,6 @@
-package com.dobby.backend.application.usecase.member
+package com.dobby.backend.application.usecase.experiment
 
+import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostTotalCountUseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
