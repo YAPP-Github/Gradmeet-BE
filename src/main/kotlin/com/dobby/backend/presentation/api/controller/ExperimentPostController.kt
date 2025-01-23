@@ -17,6 +17,7 @@ import com.dobby.backend.presentation.api.dto.response.experiment.CreateExperime
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostCountsResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
+import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -43,6 +44,20 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toCreatePostUseCaseInput(request)
         val output = experimentPostService.createNewExperimentPost(input)
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @DeleteMapping("/{postId}")
+    @Operation(
+        summary = "공고 삭제 API- 연구자 공고 삭제",
+        description = "연구자가 자신이 등록한 실험 공고를 삭제합니다."
+    )
+    fun deleteExperimentPost(
+        @PathVariable postId: Long
+    ): DefaultResponse {
+        val input = ExperimentPostMapper.toDeleteExperimentPostUseCaseInput(postId)
+        experimentPostService.deleteExperimentPost(input)
+        return DefaultResponse.ok()
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")

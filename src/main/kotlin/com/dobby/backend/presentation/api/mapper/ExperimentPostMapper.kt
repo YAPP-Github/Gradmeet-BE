@@ -272,7 +272,7 @@ object ExperimentPostMapper {
     }
 
 
-   fun toGetExperimentPostsResponse(
+    fun toGetExperimentPostsResponse(
         output: List<GetExperimentPostsUseCase.Output>,
         page: Int,
         totalCount: Int,
@@ -330,6 +330,13 @@ object ExperimentPostMapper {
                 )
             },
             recruitStatus = customFilter.recruitStatus
+        )
+    }
+
+    fun toDeleteExperimentPostUseCaseInput(postId: Long): DeleteExperimentPostUseCase.Input {
+        return DeleteExperimentPostUseCase.Input(
+            memberId = getCurrentMemberId(),
+            postId = postId
         )
     }
 }
