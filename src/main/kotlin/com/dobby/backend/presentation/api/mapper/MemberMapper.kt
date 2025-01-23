@@ -93,8 +93,12 @@ object MemberMapper {
 
     fun toResearcherInfoResponse(response: GetResearcherInfoUseCase.Output): ResearcherInfoResponse {
         return ResearcherInfoResponse(
-            leadResearcher = response.leadResearcher,
-            univName = response.univName
+            memberInfo = MemberResponse.fromDomain(response.member),
+            univEmail = response.univEmail,
+            univName = response.univName,
+            major = response.major,
+            labInfo = response.labInfo,
+            leadResearcher = response.leadResearcher
         )
     }
 
