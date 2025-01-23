@@ -1,4 +1,4 @@
-package com.dobby.backend.application.usecase.member
+package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.mapper.MemberMapper
 import com.dobby.backend.application.usecase.UseCase

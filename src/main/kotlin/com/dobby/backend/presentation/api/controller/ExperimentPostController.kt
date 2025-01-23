@@ -18,6 +18,7 @@ import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPost
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostCountsResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
+import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -44,6 +45,20 @@ class ExperimentPostController (
         val input = ExperimentPostMapper.toCreatePostUseCaseInput(request)
         val output = experimentPostService.createNewExperimentPost(input)
         return ExperimentPostMapper.toCreateExperimentPostResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PatchMapping("/{postId}/recruit-status")
+    @Operation(
+        summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
+        description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
+    )
+    fun updateExperimentPostRecruitStatus(
+        @PathVariable postId: Long
+    ): MyExperimentPostResponse {
+        val input = ExperimentPostMapper.toUpdateExperimentPostRecruitStatusUseCaseInput(postId)
+        val output = experimentPostService.updateExperimentPostRecruitStatus(input)
+        return ExperimentPostMapper.toExperimentPostResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
@@ -145,7 +160,7 @@ class ExperimentPostController (
         @RequestParam(defaultValue = "6") count: Int
     ): PaginatedResponse<ExperimentPostResponse> {
         val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitStatus)
-        val pagination = ExperimentPostMapper.toUseCasePagination(page, count)
+        val pagination = ExperimentPostMapper.toGetExperimentPostsUseCasePagination(page, count)
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val posts = experimentPostService.getExperimentPosts(input)
 
@@ -153,5 +168,26 @@ class ExperimentPostController (
         val totalCount = experimentPostService.getExperimentPostTotalCount(totalCountInput)
         val isLast = paginationService.isLastPage(totalCount, page, count)
         return ExperimentPostMapper.toGetExperimentPostsResponse(posts, page, totalCount, isLast)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @GetMapping("/my-posts")
+    @Operation(
+        summary = "연구자가 작성한 실험 공고 리스트 조회",
+        description = "로그인한 연구자가 작성한 실험 공고 리스트를 반환합니다"
+    )
+    fun getMyExperimentPosts(
+        @RequestParam(defaultValue = "1") page: Int,
+        @RequestParam(defaultValue = "6") count: Int,
+        @RequestParam(defaultValue = "DESC") order: String
+    ): PaginatedResponse<MyExperimentPostResponse> {
+        val pagination = ExperimentPostMapper.toGetMyExperimentPostsUseCasePagination(page, count, order)
+        val input = ExperimentPostMapper.toGetMyExperimentPosts(pagination)
+        val posts = experimentPostService.getMyExperimentPosts(input)
+
+        val totalCountInput = ExperimentPostMapper.toGetTotalMyExperimentPostCountUseCaseInput()
+        val totalCount = experimentPostService.getMyExperimentPostsCount(totalCountInput).totalPostCount
+        val isLast = paginationService.isLastPage(totalCount, count, page)
+        return ExperimentPostMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }

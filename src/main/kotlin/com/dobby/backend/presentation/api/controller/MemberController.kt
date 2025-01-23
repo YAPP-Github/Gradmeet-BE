@@ -2,8 +2,6 @@ package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.application.service.PaginationService
-import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
-import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
@@ -74,40 +72,5 @@ class MemberController(
         val input = MemberMapper.toGetParticipantInfoUseCaseInput()
         val output = memberService.getParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
-    }
-
-    @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers/me/experiment-posts")
-    @Operation(
-        summary = "연구자가 작성한 실험 공고 리스트 조회",
-        description = "로그인한 연구자가 작성한 실험 공고 리스트를 반환합니다"
-    )
-    fun getMyExperimentPosts(
-        @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "6") count: Int,
-        @RequestParam(defaultValue = "DESC") order: String
-    ): PaginatedResponse<MyExperimentPostResponse> {
-        val pagination = MemberMapper.toUseCasePagination(page, count, order)
-        val input = MemberMapper.toGetMyExperimentPosts(pagination)
-        val posts = memberService.getMyExperimentPosts(input)
-
-        val totalCountInput = MemberMapper.toGetTotalMyExperimentPostCountUseCaseInput()
-        val totalCount = memberService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-        val isLast = paginationService.isLastPage(totalCount, count, page)
-        return MemberMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
-    }
-
-    @PreAuthorize("hasRole('RESEARCHER')")
-    @PatchMapping("/researchers/me/experiment-posts/{postId}/recruit-status")
-    @Operation(
-        summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
-        description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
-    )
-    fun updateMyExperimentPostRecruitStatus(
-        @PathVariable postId: Long
-    ): MyExperimentPostResponse {
-        val input = MemberMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
-        val output = memberService.updateMyExperimentPostRecruitStatus(input)
-        return MemberMapper.toMyExperimentPostResponse(output)
     }
 }

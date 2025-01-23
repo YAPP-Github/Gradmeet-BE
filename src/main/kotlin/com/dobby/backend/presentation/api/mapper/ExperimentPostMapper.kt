@@ -14,6 +14,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.experiment.Recruit
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
+import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.util.getCurrentMemberId
 import com.dobby.backend.util.getCurrentMemberIdOrNull
 
@@ -252,7 +253,7 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toUseCasePagination(
+    fun toGetExperimentPostsUseCasePagination(
         page: Int, count: Int
     ) : GetExperimentPostsUseCase.PaginationInput {
         return GetExperimentPostsUseCase.PaginationInput(
@@ -294,7 +295,7 @@ object ExperimentPostMapper {
                     ),
                     recruitStatus = post.postInfo.recruitStatus
                 )
-            },
+                                 },
             page = page,
             size = output.size,
             totalCount = totalCount,
@@ -337,6 +338,74 @@ object ExperimentPostMapper {
         return DeleteExperimentPostUseCase.Input(
             memberId = getCurrentMemberId(),
             postId = postId
+        )
+    }
+
+    fun toUpdateExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateExperimentPostRecruitStatusUseCase.Input {
+        return UpdateExperimentPostRecruitStatusUseCase.Input(
+            memberId = getCurrentMemberId(),
+            postId = postId
+        )
+    }
+
+    fun toExperimentPostResponse(output: UpdateExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
+        return MyExperimentPostResponse(
+            experimentPostId = output.experimentPost.id,
+            title = output.experimentPost.title,
+            content = output.experimentPost.content,
+            views = output.experimentPost.views,
+            recruitStatus = output.experimentPost.recruitStatus,
+            uploadDate = output.experimentPost.createdAt.toLocalDate()
+        )
+    }
+
+    fun toGetMyExperimentPostsResponse(
+        output: List<GetMyExperimentPostsUseCase.Output>,
+        page: Int,
+        totalCount: Int,
+        isLast: Boolean
+    ): PaginatedResponse<MyExperimentPostResponse> {
+        return PaginatedResponse(
+            content = output.map { post ->
+                MyExperimentPostResponse(
+                    experimentPostId = post.experimentPostId,
+                    title = post.title,
+                    content = post.content,
+                    views = post.views,
+                    recruitStatus = post.recruitStatus,
+                    uploadDate = post.uploadDate
+                )
+            },
+            page = page,
+            size = output.size,
+            totalCount = totalCount,
+            isLast = isLast
+        )
+    }
+
+    fun toGetMyExperimentPosts(
+        pagination: GetMyExperimentPostsUseCase.PaginationInput
+    ): GetMyExperimentPostsUseCase.Input {
+        return GetMyExperimentPostsUseCase.Input(
+            memberId = getCurrentMemberId(),
+            pagination = pagination
+        )
+    }
+
+
+    fun toGetTotalMyExperimentPostCountUseCaseInput(): GetMyExperimentPostTotalCountUseCase.Input {
+        return GetMyExperimentPostTotalCountUseCase.Input(
+            memberId = getCurrentMemberId()
+        )
+    }
+
+    fun toGetMyExperimentPostsUseCasePagination(
+        page: Int, count: Int, order: String
+    ) : GetMyExperimentPostsUseCase.PaginationInput {
+        return GetMyExperimentPostsUseCase.PaginationInput(
+            page = page,
+            count = count,
+            order = order
         )
     }
 }
