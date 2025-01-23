@@ -21,7 +21,8 @@ class ExperimentPostService(
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
     private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
     private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase,
-    private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase
+    private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
+    private val deleteExperimentPostUseCase: DeleteExperimentPostUseCase
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -82,5 +83,9 @@ class ExperimentPostService(
 
     fun getExperimentPostTotalCount(input: GetExperimentPostTotalCountByCustomFilterUseCase.Input): Int {
         return getExperimentPostTotalCountByCustomFilterUseCase.execute(input)
+    }
+
+    fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
+        deleteExperimentPostUseCase.execute(input)
     }
 }
