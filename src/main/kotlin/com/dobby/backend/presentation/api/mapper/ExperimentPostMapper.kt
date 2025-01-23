@@ -265,14 +265,14 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateMyExperimentPostRecruitStatusUseCase.Input {
-        return UpdateMyExperimentPostRecruitStatusUseCase.Input(
+    fun toUpdateExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateExperimentPostRecruitStatusUseCase.Input {
+        return UpdateExperimentPostRecruitStatusUseCase.Input(
             memberId = getCurrentMemberId(),
             postId = postId
         )
     }
 
-    fun toMyExperimentPostResponse(output: UpdateMyExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
+    fun toExperimentPostResponse(output: UpdateExperimentPostRecruitStatusUseCase.Output): MyExperimentPostResponse {
         return output.experimentPost.let {
             MyExperimentPostResponse(
                 experimentPostId = it.id,

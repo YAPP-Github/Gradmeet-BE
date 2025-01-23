@@ -17,10 +17,10 @@ import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDateTime
 
-class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
+class UpdateExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
 
     val experimentPostGateway = mockk<ExperimentPostGateway>()
-    val useCase = UpdateMyExperimentPostRecruitStatusUseCase(experimentPostGateway)
+    val useCase = UpdateExperimentPostRecruitStatusUseCase(experimentPostGateway)
 
     given("유효한 memberId와 postId가 주어졌을 때") {
         val memberId = 1L
@@ -69,7 +69,7 @@ class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.save(any()) } returns post.copy(recruitStatus = false)
 
         `when`("useCase의 execute가 호출되면") {
-            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+            val input = UpdateExperimentPostRecruitStatusUseCase.Input(memberId, postId)
             val result = useCase.execute(input)
 
             then("모집 상태가 false로 업데이트된 experimentPost가 반환된다") {
@@ -124,7 +124,7 @@ class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns post
 
         `when`("execute가 호출되면") {
-            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+            val input = UpdateExperimentPostRecruitStatusUseCase.Input(memberId, postId)
 
             then("ExperimentPostRecruitStatusException이 발생한다") {
                 shouldThrow<ExperimentPostRecruitStatusException> {
@@ -141,7 +141,7 @@ class UpdateMyExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
         every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns null
 
         `when`("execute가 호출되면") {
-            val input = UpdateMyExperimentPostRecruitStatusUseCase.Input(memberId, postId)
+            val input = UpdateExperimentPostRecruitStatusUseCase.Input(memberId, postId)
 
             then("ExperimentPostNotFoundException이 발생한다") {
                 shouldThrow<ExperimentPostNotFoundException> {

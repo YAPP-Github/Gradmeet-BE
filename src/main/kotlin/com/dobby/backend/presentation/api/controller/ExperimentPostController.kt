@@ -51,12 +51,12 @@ class ExperimentPostController (
         summary = "연구자가 작성한 특정 실험 공고 모집 상태 수정",
         description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
     )
-    fun updateMyExperimentPostRecruitStatus(
+    fun updateExperimentPostRecruitStatus(
         @PathVariable postId: Long
     ): MyExperimentPostResponse {
-        val input = ExperimentPostMapper.toUpdateMyExperimentPostRecruitStatusUseCaseInput(postId)
-        val output = experimentPostService.updateMyExperimentPostRecruitStatus(input)
-        return ExperimentPostMapper.toMyExperimentPostResponse(output)
+        val input = ExperimentPostMapper.toUpdateExperimentPostRecruitStatusUseCaseInput(postId)
+        val output = experimentPostService.updateExperimentPostRecruitStatus(input)
+        return ExperimentPostMapper.toExperimentPostResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
