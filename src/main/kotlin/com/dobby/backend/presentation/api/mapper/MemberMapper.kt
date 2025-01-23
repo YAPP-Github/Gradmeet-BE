@@ -98,7 +98,6 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
-            leadResearcher = response.leadResearcher
         )
     }
 

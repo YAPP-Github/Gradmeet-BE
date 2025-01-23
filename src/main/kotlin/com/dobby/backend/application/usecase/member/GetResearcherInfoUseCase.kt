@@ -20,15 +20,11 @@ class GetResearcherInfoUseCase(
         val univName: String,
         val major: String,
         val labInfo: String?,
-        val leadResearcher: String,
     )
 
     override fun execute(input: Input): Output {
         val researcher = researcherGateway.findByMemberId(input.memberId)
             ?: throw ResearcherNotFoundException()
-
-        val leadResearcher = researcher.univName +" "+ researcher.major+
-                " " +researcher.labInfo+ " " +researcher.member.name
 
         return Output(
             member = researcher.member,
@@ -36,7 +32,6 @@ class GetResearcherInfoUseCase(
             univName = researcher.univName,
             major = researcher.major,
             labInfo = researcher.labInfo,
-            leadResearcher = leadResearcher
         )
     }
 }

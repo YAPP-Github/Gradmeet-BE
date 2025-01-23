@@ -18,7 +18,4 @@ data class ResearcherInfoResponse(
 
     @Schema(description = "연구실 정보")
     val labInfo: String?,
-
-    @Schema(description = "연구 책임")
-    val leadResearcher: String,
 )
