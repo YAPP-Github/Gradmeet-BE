@@ -1,6 +1,5 @@
 package com.dobby.backend.domain.model.experiment
 
-import com.dobby.backend.application.usecase.experiment.UpdateExperimentPostUseCase
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
@@ -21,12 +20,12 @@ data class ExperimentPost(
     var reward: String,
     var startDate: LocalDate?,
     var endDate: LocalDate?,
-    val timeRequired: TimeSlot?,
+    var timeRequired: TimeSlot?,
     var count: Int,
     var matchType: MatchType,
     var univName: String,
-    val region: Region,
-    val area: Area,
+    var region: Region,
+    var area: Area,
     var detailedAddress: String?,
     val alarmAgree: Boolean,
     var recruitStatus: Boolean,
@@ -49,36 +48,53 @@ data class ExperimentPost(
         )
     }
 
+    fun update(
+        title: String?,
+        reward: String?,
+        startDate: LocalDate?,
+        endDate: LocalDate?,
+        content: String?,
+        count: Int?,
+        leadResearcher: String?,
+        detailedAddress: String?,
+        matchType: MatchType?,
+        univName: String?,
+        region: Region?,
+        area: Area?,
+        imageListInfo: List<String>?
+    ) {
+        title?.let { this.title = it }
+        reward?.let { this.reward = it }
+        startDate?.let { this.startDate = it }
+        endDate?.let { this.endDate = it }
+        content?.let { this.content = it }
+        count?.let { this.count = it }
+        leadResearcher?.let { this.leadResearcher = it }
+        detailedAddress?.let { this.detailedAddress = it }
+        matchType?.let { this.matchType = it }
+        univName?.let { this.univName = it }
+        region?.let { this.region = it }
+        area?.let { this.area = it }
+
+        imageListInfo?.let {
+            val newImages = it.map { imageUrl ->
+                val existingImage = this.images.find { existing -> existing.imageUrl == imageUrl }
+                ExperimentImage(
+                    id = existingImage?.id ?: 0L,
+                    experimentPost = this,
+                    imageUrl = imageUrl
+                )
+            }
+            this.updateImages(newImages)
+        }
+    }
+
     fun updateImages(newImages: List<ExperimentImage>) {
         images.clear()
         images.addAll(newImages)
         updatedAt = LocalDateTime.now()
     }
 
-    fun updateDetails(
-        targetGroupInfo: UpdateExperimentPostUseCase.TargetGroupInfo?,
-        applyMethodInfo: UpdateExperimentPostUseCase.ApplyMethodInfo?,
-        updatedAt: LocalDateTime
-    ) {
-        targetGroupInfo?.let {
-            targetGroup.update(
-                startAge = it.startAge,
-                endAge = it.endAge,
-                genderType = it.genderType,
-                otherCondition = it.otherCondition
-            )
-        }
-
-        applyMethodInfo?.let {
-            applyMethod.update(
-                content = it.content,
-                formUrl = it.formUrl,
-                phoneNum = it.phoneNum
-            )
-        }
-
-        this.updatedAt = updatedAt
-    }
 
     companion object {
         fun newExperimentPost(

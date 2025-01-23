@@ -24,4 +24,5 @@ data class ApplyMethod(
             content = content
         )
     }
+
 }

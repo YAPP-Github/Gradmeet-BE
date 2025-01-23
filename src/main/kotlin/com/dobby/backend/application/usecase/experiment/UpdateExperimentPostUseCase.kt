@@ -1,15 +1,16 @@
 package com.dobby.backend.application.usecase.experiment
 
+import com.dobby.backend.application.mapper.ExperimentMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ErrorCode
 import com.dobby.backend.domain.exception.ExperimentPostException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 
 class UpdateExperimentPostUseCase (
@@ -30,6 +31,7 @@ class UpdateExperimentPostUseCase (
 
         val leadResearcher: String?,
         val univName: String?,
+        val region: Region?,
         val area: Area?,
         val detailedAddress : String?,
 
@@ -75,47 +77,8 @@ class UpdateExperimentPostUseCase (
 
     override fun execute(input: Input): Output {
         val existingPost = validate(input)
-
-        input.title?.let { existingPost.title = it }
-        input.reward?.let {existingPost.reward = it }
-        input.startDate?.let { existingPost.startDate = it }
-        input.endDate?.let { existingPost.endDate = it }
-        input.content?.let {existingPost.content = it }
-        input.count?.let { existingPost.count = it }
-        input.leadResearcher?.let { existingPost.leadResearcher = it }
-        input.detailedAddress?.let {existingPost.detailedAddress = it }
-        input.matchType?.let {existingPost.matchType = it}
-        input.univName?.let {existingPost.univName = it}
-
-        input.targetGroupInfo?.let {
-            existingPost.targetGroup.update(
-                startAge = it.startAge,
-                endAge = it.endAge,
-                genderType = it.genderType,
-                otherCondition = it.otherCondition
-            )
-        }
-
-        input.applyMethodInfo?.let {
-            existingPost.applyMethod.update(
-                content = it.content,
-                formUrl = it.formUrl,
-                phoneNum = it.phoneNum
-            )
-        }
-
-        input.imageListInfo?.let {
-            val newImages = it.images.map { imageUrl ->
-                val existingImage = existingPost.images.find { existing -> existing.imageUrl == imageUrl }
-                ExperimentImage(
-                    id = existingImage?.id ?: 0L,
-                    experimentPost = existingPost,
-                    imageUrl = imageUrl
-                )
-            }
-            existingPost.updateImages(newImages)
-        }
-        val updatedPost = experimentPostGateway.save(existingPost)
+        val experimentPost = ExperimentMapper.toDomain(input, existingPost)
+        val updatedPost = experimentPostGateway.updateExperimentPost(experimentPost)
 
         return Output(
             postInfo = PostInfo(
@@ -133,19 +96,32 @@ class UpdateExperimentPostUseCase (
     }
 
     private fun validate(input: Input): ExperimentPost {
-        val existingPost =
-            experimentPostGateway.findExperimentPostByMemberIdAndPostId(input.memberId, input.experimentPostId)
-                ?: throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_NOT_FOUND)
-        if(existingPost.member.id != input.memberId) throw ExperimentPostException(ErrorCode.PERMISSION_DENIED)
+        val existingPost = validateExistingPost(input)
+        validatePermission(existingPost, input)
+        validateNotExpired(existingPost)
+        validateImageCount(input)
+        return existingPost
+    }
 
+    private fun validateExistingPost(input: Input): ExperimentPost {
+        return experimentPostGateway.findExperimentPostByMemberIdAndPostId(input.memberId, input.experimentPostId)
+            ?: throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_NOT_FOUND)
+    }
+
+    private fun validatePermission(existingPost: ExperimentPost, input: Input) {
+        if(existingPost.member.id != input.memberId) throw ExperimentPostException(ErrorCode.PERMISSION_DENIED)
+    }
+
+
+    private fun validateNotExpired(existingPost: ExperimentPost){
+        if (!existingPost.recruitStatus) throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_CANNOT_UPDATE_DATE)
+    }
+
+    private fun validateImageCount(input: Input) {
         input.imageListInfo?.let {
             if(it.images.size > 3) {
                 throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
             }
         }
-
-        if (existingPost.endDate?.isBefore(LocalDate.now()) == true) throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_CANNOT_UPDATE_DATE)
-
-        return existingPost
     }
 }

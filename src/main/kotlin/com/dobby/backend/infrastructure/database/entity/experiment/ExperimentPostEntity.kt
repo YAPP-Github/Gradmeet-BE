@@ -109,14 +109,12 @@ class ExperimentPostEntity(
         require(removed)
     }
 
-    fun updateImageList(newImages: List<ExperimentImageEntity>) {
-        val newIds = newImages.map { it.id }.toSet()
-        val existingIds = _images.map { it.id }.toSet()
-
-        newImages.filter { it.id !in existingIds }
-            .forEach { addImage(it) }
-        _images.removeIf { it.id !in newIds }
+    fun updateImages(newImages: List<ExperimentImageEntity>) {
+        _images.clear()
+        _images.addAll(newImages)
+        updatedAt = LocalDateTime.now()
     }
+
 
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,

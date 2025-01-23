@@ -135,6 +135,7 @@ object ExperimentPostMapper {
                 content = request.content,
                 univName = request.univName,
                 count = request.count,
+                region = request.region,
                 area = request.area,
                 timeRequired = request.timeRequired,
                 reward = request.reward,
