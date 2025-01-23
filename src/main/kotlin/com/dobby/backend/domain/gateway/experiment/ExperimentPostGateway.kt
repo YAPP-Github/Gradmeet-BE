@@ -3,12 +3,16 @@ package com.dobby.backend.domain.gateway.experiment
 import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.domain.model.experiment.ExperimentPost
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import jakarta.persistence.Tuple
 import java.time.LocalDate
 
 interface ExperimentPostGateway {
     fun save(experimentPost: ExperimentPost): ExperimentPost
+    fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
     fun findById(experimentPostId: Long): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
@@ -24,4 +28,5 @@ interface ExperimentPostGateway {
     fun countExperimentPostsByMemberId(memberId: Long): Int
     fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost?
     fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
+    fun delete(post: ExperimentPost)
 }

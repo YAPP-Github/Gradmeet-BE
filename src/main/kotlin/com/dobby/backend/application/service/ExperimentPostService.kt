@@ -17,6 +17,7 @@ import java.security.InvalidParameterException
 @Service
 class ExperimentPostService(
     private val createExperimentPostUseCase: CreateExperimentPostUseCase,
+    private val updateExperimentPostUseCase: UpdateExperimentPostUseCase,
     private val getExperimentPostsUseCase: GetExperimentPostsUseCase,
     private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
@@ -24,6 +25,7 @@ class ExperimentPostService(
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
     private val generateExperimentPostPreSignedUrlUseCase: GenerateExperimentPostPreSignedUrlUseCase,
     private val updateExpiredExperimentPostUseCase: UpdateExpiredExperimentPostUseCase,
+    private val deleteExperimentPostUseCase: DeleteExperimentPostUseCase,
     private val updateExperimentPostRecruitStatusUseCase: UpdateExperimentPostRecruitStatusUseCase,
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
@@ -32,6 +34,11 @@ class ExperimentPostService(
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
         return createExperimentPostUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateExperimentPost(input: UpdateExperimentPostUseCase.Input): UpdateExperimentPostUseCase.Output{
+        return updateExperimentPostUseCase.execute(input)
     }
 
     @Transactional
@@ -110,5 +117,10 @@ class ExperimentPostService(
             "ASC", "DESC" -> sortOrder
             else -> throw InvalidParameterException("Invalid sort order. Please use 'ASC' or 'DESC'")
         }
+    }
+
+    @Transactional
+    fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
+        deleteExperimentPostUseCase.execute(input)
     }
 }

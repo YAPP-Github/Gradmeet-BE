@@ -7,9 +7,9 @@ import com.dobby.backend.domain.exception.PermissionDeniedException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
+import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
-import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
@@ -112,7 +112,7 @@ class CreateExperimentPostUseCase(
             )
         }
 
-        experimentPost = experimentPost.withImages(experimentImages)
+        experimentPost.updateImages(experimentImages)
         val savedExperimentPost = experimentPostGateway.save(experimentPost)
 
         return Output(
@@ -176,7 +176,7 @@ class CreateExperimentPostUseCase(
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
             recruitStatus = true,
-            images = listOf(),
+            images = mutableListOf(),
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
         )

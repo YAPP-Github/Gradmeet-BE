@@ -12,18 +12,19 @@ class TargetGroupEntity(
     val id: Long,
 
     @Column(name = "start_age")
-    val startAge: Int?,
+    var startAge: Int?,
 
     @Column(name = "end_age")
-    val endAge: Int?,
+    var endAge: Int?,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender_type", nullable = false)
-    val genderType: GenderType,
+    var genderType: GenderType,
 
     @Column(name = "other_condition", length = 300)
-    val otherCondition: String?,
+    var otherCondition: String?,
 ) {
+
     fun toDomain(): TargetGroup = TargetGroup(
         id = id,
         startAge = startAge,

@@ -33,53 +33,53 @@ class ExperimentPostEntity(
     var views: Int,
 
     @Column(name = "title", nullable = false, length = 70)
-    val title: String,
+    var title: String,
 
     @Column(name = "content", nullable = false, length = 5000)
-    val content: String,
+    var content: String,
 
     @Column(name = "lead_researcher", nullable = false, length = 150)
     var leadResearcher: String,
 
     @Column(name = "reward", nullable = false, length = 170)
-    val reward: String,
+    var reward: String,
 
     @Column(name = "start_date")
-    val startDate: LocalDate?,
+    var startDate: LocalDate?,
 
     @Column(name = "end_date")
-    val endDate: LocalDate?,
+    var endDate: LocalDate?,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "time_required")
-    val timeRequired: TimeSlot?,
+    var timeRequired: TimeSlot?,
 
     @Column(name = "count", nullable = false)
-    val count: Int,
+    var count: Int,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "match_type", nullable = false)
-    val matchType: MatchType,
+    var matchType: MatchType,
 
     @Column(name = "univ_name", length = 100, nullable = false)
-    val univName: String,
+    var univName: String,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "region", nullable = false)
-    val region: Region,
+    var region: Region,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "area", nullable = false)
-    val area: Area,
+    var area: Area,
 
     @Column(name = "detailed_address", length = 70)
-    val detailedAddress: String?,
+    var detailedAddress: String?,
 
     @Column(name = "alarm_agree", nullable = false)
-    val alarmAgree: Boolean,
+    var alarmAgree: Boolean,
 
     @Column(name = "recruit_status", nullable = false)
-    var recruitStatus: Boolean,
+    var recruitStatus: Boolean = true,
 
     @OneToMany(mappedBy = "experimentPost", cascade = [CascadeType.ALL], orphanRemoval = true)
     private val _images: MutableList<ExperimentImageEntity> = mutableListOf(),
@@ -99,6 +99,7 @@ class ExperimentPostEntity(
         _images.add(image)
     }
 
+
     fun removeImage(image: ExperimentImageEntity) {
         val removed = _images.removeIf {
             val shouldRemove = it.id == image.id
@@ -108,14 +109,12 @@ class ExperimentPostEntity(
         require(removed)
     }
 
-    fun updateImageList(newImages: List<ExperimentImageEntity>) {
-        val newIds = newImages.map { it.id }.toSet()
-        val existingIds = _images.map { it.id }.toSet()
-
-        newImages.filter { it.id !in existingIds }
-            .forEach { addImage(it) }
-        _images.removeIf { it.id !in newIds }
+    fun updateImages(newImages: List<ExperimentImageEntity>) {
+        _images.clear()
+        _images.addAll(newImages)
+        updatedAt = LocalDateTime.now()
     }
+
 
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,
@@ -138,7 +137,7 @@ class ExperimentPostEntity(
         detailedAddress = detailedAddress,
         alarmAgree = alarmAgree,
         recruitStatus = recruitStatus,
-        images = _images.map { it.toDomainWithoutPost() },
+        images = _images.map { it.toDomainWithoutPost() }.toMutableList(),
         createdAt = createdAt,
         updatedAt = updatedAt
     )

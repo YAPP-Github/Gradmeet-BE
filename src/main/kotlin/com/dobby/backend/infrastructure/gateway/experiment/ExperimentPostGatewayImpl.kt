@@ -77,6 +77,10 @@ class ExperimentPostGatewayImpl(
         return experimentPostCustomRepository.updateExperimentPostStatus(currentDate)
     }
 
+    override fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost {
+        return experimentPostCustomRepository.updateExperimentPost(experimentPost)
+    }
+
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: Long,
         pagination: Pagination,
@@ -101,5 +105,9 @@ class ExperimentPostGatewayImpl(
 
     override fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int {
         return experimentPostCustomRepository.countExperimentPostsByCustomFilter(customFilter)
+    }
+
+    override fun delete(post: ExperimentPost) {
+        experimentPostRepository.delete(ExperimentPostEntity.fromDomain(post))
     }
 }
