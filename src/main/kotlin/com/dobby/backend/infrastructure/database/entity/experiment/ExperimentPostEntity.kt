@@ -61,16 +61,16 @@ class ExperimentPostEntity(
     @Column(name = "match_type", nullable = false)
     var matchType: MatchType,
 
-    @Column(name = "univ_name", length = 100, nullable = false)
-    var univName: String,
+    @Column(name = "univ_name", length = 100)
+    var univName: String?,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "region", nullable = false)
-    var region: Region,
+    @Column(name = "region")
+    var region: Region?,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "area", nullable = false)
-    var area: Area,
+    @Column(name = "area")
+    var area: Area?,
 
     @Column(name = "detailed_address", length = 70)
     var detailedAddress: String?,
