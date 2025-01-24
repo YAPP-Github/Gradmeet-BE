@@ -89,5 +89,5 @@ enum class ErrorCode(
     EXPERIMENT_POST_IMAGE_SIZE_LIMIT("EP005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_RECRUIT_STATUS_ERROR("EP006", "This experiment post has already closed recruitment.", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_CANNOT_UPDATE_DATE("EP007", "You cannot update experiment post with past experiment dates.", HttpStatus.BAD_REQUEST),
-    EXPERIMENT_POST_CANNOT_UPDATE_ALARM("EP008", "The alarmAgree for the experiment post cannot be updated.", HttpStatus.BAD_REQUEST)
+    EXPERIMENT_POST_INVALID_ONLINE_REQUEST("EP008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST),
 }

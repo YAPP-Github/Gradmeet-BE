@@ -193,7 +193,9 @@ class CreateExperimentPostUseCase(
 
     private fun validateOnlineMatchType(input: Input){
         if(input.matchType == MatchType.ONLINE){
-            require(input.univName == null && input.region == null && input.area == null)
+            if(input.univName != null || input.region != null || input.area != null) {
+                throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_INVALID_ONLINE_REQUEST)
+            }
         }
     }
 }
