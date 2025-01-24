@@ -38,9 +38,9 @@ class CreateExperimentPostUseCase(
         val timeRequired: TimeSlot?,
 
         val leadResearcher: String,
-        val univName: String,
-        val region: Region,
-        val area: Area,
+        val univName: String?,
+        val region: Region?,
+        val area: Area?,
         val detailedAddress: String?,
 
         val reward: String,
@@ -86,14 +86,7 @@ class CreateExperimentPostUseCase(
 
     override fun execute(input: Input): Output {
         val member = memberGateway.getById(input.memberId)
-
-        if (member.role != RoleType.RESEARCHER) {
-            throw PermissionDeniedException()
-        }
-
-        if (input.imageListInfo.images.size > 3) {
-            throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
-        }
+        validate(input, member)
 
         val targetGroup = createTargetGroup(input.targetGroupInfo)
         val applyMethod = createApplyMethod(input.applyMethodInfo)
@@ -180,5 +173,29 @@ class CreateExperimentPostUseCase(
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
         )
+    }
+
+    private fun validate(input: Input, member: Member){
+        validateMemberRole(member)
+        validateImageListSize(input.imageListInfo)
+        validateOnlineMatchType(input)
+    }
+
+    private fun validateMemberRole(member :Member){
+        if(member.role != RoleType.RESEARCHER)
+            throw PermissionDeniedException()
+    }
+
+    private fun validateImageListSize(imageListInfo: ImageListInfo){
+        if(imageListInfo.images.size > 3)
+            throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT);
+    }
+
+    private fun validateOnlineMatchType(input: Input){
+        if(input.matchType == MatchType.ONLINE){
+            if(input.univName != null || input.region != null || input.area != null) {
+                throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_INVALID_ONLINE_REQUEST)
+            }
+        }
     }
 }
