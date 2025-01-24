@@ -47,7 +47,7 @@ class GetExperimentPostsUseCase (
         val experimentPostId: Long,
         val title: String,
         val views: Int,
-        val univName: String,
+        val univName: String?,
         val reward: String,
         val recruitStatus: Boolean,
         val durationInfo: DurationInfoOutput
