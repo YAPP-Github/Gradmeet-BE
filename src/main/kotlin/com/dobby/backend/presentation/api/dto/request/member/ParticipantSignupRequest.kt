@@ -48,5 +48,5 @@ data class ParticipantSignupRequest(
     var additionalAddressInfo: AddressInfoResponse?,
 
     @Schema(description = "선호 실험 진행 방식")
-    var matchType: MatchType,
+    var matchType: MatchType?,
 )

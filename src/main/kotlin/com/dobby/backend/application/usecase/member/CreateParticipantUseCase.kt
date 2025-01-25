@@ -26,7 +26,7 @@ class CreateParticipantUseCase (
         val birthDate: LocalDate,
         var basicAddressInfo: AddressInfo,
         var additionalAddressInfo: AddressInfo,
-        var matchType: MatchType,
+        var matchType: MatchType?,
     )
     data class AddressInfo(
         val region: Region,
