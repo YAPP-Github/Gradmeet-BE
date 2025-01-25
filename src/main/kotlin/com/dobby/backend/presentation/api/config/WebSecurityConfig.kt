@@ -32,7 +32,7 @@ class WebSecurityConfig {
     ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/auth/**",
             "/v1/members/signup/**", "/v1/emails/**",
-            "/v1/experiment-posts/counts", "/v1/experiment-posts/search")
+            "/v1/experiment-posts/counts", "/v1/experiment-posts/search", "/v1/experiment-posts/{postId}/apply-method")
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
@@ -42,7 +42,7 @@ class WebSecurityConfig {
             it.requestMatchers(
                 "/v1/auth/**",
                 "/v1/members/signup/**", "/v1/emails/**",
-                "/v1/experiment-posts/counts", "/v1/experiment-posts/search"
+                "/v1/experiment-posts/counts", "/v1/experiment-posts/search", "/v1/experiment-posts/{postId}/apply-method"
             ).permitAll()
             it.anyRequest().authenticated()
         }
