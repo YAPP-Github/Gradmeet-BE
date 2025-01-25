@@ -30,6 +30,7 @@ class MemberService(
         return createResearcherUseCase.execute(input)
     }
 
+    @Transactional
     fun getResearcherInfo(input: GetResearcherInfoUseCase.Input): GetResearcherInfoUseCase.Output {
         return getResearcherInfoUseCase.execute(input)
     }
