@@ -150,7 +150,7 @@ class CreateExperimentPostUseCase(
     ): ExperimentPost {
         return  ExperimentPost(
             member = member,
-            leadResearcher = member.name,
+            leadResearcher = input.leadResearcher,
             id = 0L,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
