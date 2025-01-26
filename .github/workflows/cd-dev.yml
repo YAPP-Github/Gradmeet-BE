@@ -41,9 +41,9 @@ jobs:
       - name: Deploy to Dev WAS Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.WAS_HOST }}
+          host: ${{ secrets.DEV_WAS_HOST }}
           username: ${{ secrets.WAS_USERNAME }}
-          key: ${{ secrets.WAS_KEY }}
+          key: ${{ secrets.DEV_WAS_KEY }}
           port: ${{ secrets.WAS_SSH_PORT }}
           script: |
             cd /home/ubuntu/25th-Web-Team-2-BE/
