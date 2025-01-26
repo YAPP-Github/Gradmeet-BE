@@ -2,6 +2,7 @@ package com.dobby.backend.infrastructure.converter
 
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.member.AddressInfo as EntityAddressInfo
@@ -16,7 +17,7 @@ object ParticipantConverter {
                 provider = entity.member.provider,
                 role = entity.member.role,
                 name = entity.member.name,
-                status = entity.member.status,
+                status = MemberStatus.ACTIVE,
                 createdAt = entity.member.createdAt,
                 updatedAt = entity.member.updatedAt
             ),
