@@ -17,7 +17,7 @@ object ParticipantConverter {
                 provider = entity.member.provider,
                 role = entity.member.role,
                 name = entity.member.name,
-                status = MemberStatus.ACTIVE,
+                status = entity.member.status,
                 createdAt = entity.member.createdAt,
                 updatedAt = entity.member.updatedAt
             ),
@@ -40,6 +40,7 @@ object ParticipantConverter {
             name = participant.member.name,
             createdAt = participant.member.createdAt,
             updatedAt = participant.member.updatedAt,
+            status = MemberStatus.ACTIVE,
         )
         return ParticipantEntity(
             id = participant.id,
