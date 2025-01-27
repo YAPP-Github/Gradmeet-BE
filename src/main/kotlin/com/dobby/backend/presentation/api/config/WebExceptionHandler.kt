@@ -107,7 +107,7 @@ class WebExceptionHandler(
         exception: Exception,
         request: HttpServletRequest
     ): ResponseEntity<ErrorResponse> {
-        if (isProductionOrDevelopmentInstance()) alertGateway.sendError(exception, request)
+        alertGateway.sendError(exception, request)
 
         logger.error("[UnhandledException] " + exception.stackTraceToString())
         return ResponseEntity
