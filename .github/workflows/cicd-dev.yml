@@ -21,8 +21,8 @@ jobs:
       - name: ✔️ create application.yml
         run: |
           cd ./src/main/resources
-          touch ./application-dev.yml
-          echo "${{ secrets.DEV_YML }}" >> ./application-dev.yml
+          touch ./application.yml
+          echo "${{ secrets.DEV_YML }}" >> ./application.yml
         shell: bash
 
       - name: ✔️ give executive authority to gradlew
@@ -34,8 +34,8 @@ jobs:
       - name: ✔️ build docker image and push to docker hub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build --build-arg SPRING_PROFILES_ACTIVE=dev -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:dev .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:dev
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
 
       - name: ✔️ send deploy.sh to EC2 development server
         uses: appleboy/scp-action@master
@@ -73,8 +73,8 @@ jobs:
           key: ${{ secrets.DEV_WAS_KEY }}
           script: |
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:dev
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             chmod 777 ./scripts/deploy.sh
             cp ./scripts/deploy.sh ./deploy.sh
-            ./deploy.sh dev
+            ./deploy.sh
             docker image prune -f
