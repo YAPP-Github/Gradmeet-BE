@@ -72,6 +72,7 @@ jobs:
           host: ${{ secrets.PROD_WAS_HOST }}
           key: ${{ secrets.PROD_WAS_KEY }}
           script: |
+            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             chmod 777 ./scripts/deploy.sh
             cp ./scripts/deploy.sh ./deploy.sh
