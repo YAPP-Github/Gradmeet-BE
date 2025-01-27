@@ -21,8 +21,8 @@ jobs:
       - name: ✔️ create application.yml
         run: |
           cd ./src/main/resources
-          touch ./application-prod.yml
-          echo "${{ secrets.PROD_YML }}" >> ./application-prod.yml
+          touch ./application.yml
+          echo "${{ secrets.PROD_YML }}" >> ./application.yml
         shell: bash
 
       - name: ✔️ give executive authority to gradlew
@@ -34,8 +34,8 @@ jobs:
       - name: ✔️ build docker image and push to docker hub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build --build-arg SPRING_PROFILES_ACTIVE=prod -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:prod .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:prod
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
 
       - name: ✔️ send deploy.sh to EC2 production server
         uses: appleboy/scp-action@master
@@ -73,8 +73,8 @@ jobs:
           key: ${{ secrets.PROD_WAS_KEY }}
           script: |
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:prod
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             chmod 777 ./scripts/deploy.sh
             cp ./scripts/deploy.sh ./deploy.sh
-            ./deploy.sh prod
+            ./deploy.sh
             docker image prune -f
