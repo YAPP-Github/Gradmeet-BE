@@ -18,15 +18,5 @@ class WebConfig(
             .allowedMethods("*")
             .allowedOrigins(*allowedOrigins.toTypedArray())
             .allowCredentials(true)
-
-        registry.addMapping("/swagger-ui/**")
-            .allowedMethods("*")
-            .allowedOrigins(*allowedOrigins.toTypedArray())
-            .allowCredentials(true)
-
-        registry.addMapping("/v3/api-docs/**")
-            .allowedMethods("*")
-            .allowedOrigins(*allowedOrigins.toTypedArray())
-            .allowCredentials(true)
     }
 }
