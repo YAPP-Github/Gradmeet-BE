@@ -2,7 +2,6 @@ package com.dobby.backend.presentation.api.config
 
 import com.dobby.backend.presentation.api.config.properties.AllowedOriginsProperties
 import lombok.RequiredArgsConstructor
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -18,6 +17,16 @@ class WebConfig(
         registry.addMapping("/**")
             .allowedMethods("*")
             .allowedOrigins(*allowedOrigins.toTypedArray())
-            .allowCredentials(true);
+            .allowCredentials(true)
+
+        registry.addMapping("/swagger-ui/**")
+            .allowedMethods("*")
+            .allowedOrigins(*allowedOrigins.toTypedArray())
+            .allowCredentials(true)
+
+        registry.addMapping("/v3/api-docs/**")
+            .allowedMethods("*")
+            .allowedOrigins(*allowedOrigins.toTypedArray())
+            .allowCredentials(true)
     }
 }
