@@ -71,3 +71,8 @@ cloud:
 
 discord:
   webhook-url: ${DISCORD_WEBHOOK_URL}
+
+cors:
+  allowed-origins:
+    - "http://localhost:3000"
+    - "http://localhost:3300"
