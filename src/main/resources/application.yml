@@ -78,3 +78,6 @@ cors:
   allowed-origins:
     - "http://localhost:3000"
     - "http://localhost:3300"
+
+swagger:
+  server-url: http://localhost:8080
