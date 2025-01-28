@@ -51,7 +51,13 @@ class CreateResearcherUseCase(
         return Output(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            memberInfo = SignupMapper.modelToResearcherRes(savedResearcher)
+            memberInfo = MemberResponse(
+                memberId = savedMember.id,
+                name = savedMember.name,
+                oauthEmail = savedMember.oauthEmail,
+                provider = savedMember.provider,
+                role = savedMember.role
+            )
         )
     }
 
@@ -77,8 +83,7 @@ class CreateResearcherUseCase(
             major = input.major,
             labInfo = input.labInfo
         )
-        val newResearcher = researcherGateway.save(researcher)
-        return newResearcher
+        return researcherGateway.save(researcher)
     }
 
 }
