@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration
 
 @OpenAPIDefinition(
     servers = [Server(
-        url = "/",
+        url = "\${swagger.server-url}",
         description = "Default Server URL"
     )],
     info = Info(
