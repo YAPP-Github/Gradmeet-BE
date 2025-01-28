@@ -15,16 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig(
-    private val allowedOriginsProperties: AllowedOriginsProperties
-) {
+class WebSecurityConfig() {
     /**
      * Configures the security for authentication-related APIs, including login and signup.
      * These endpoints are publicly accessible without authentication.
@@ -121,22 +116,10 @@ class WebSecurityConfig(
     @Order(4)
     fun swaggerSecurityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain = httpSecurity
         .securityMatcher("/swagger-ui/**", "/v3/api-docs/**")
-        .cors { it.configurationSource(corsConfigurationSource()) }
+        .cors(Customizer.withDefaults())
         .csrf { it.disable() }
         .authorizeHttpRequests {
             it.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
         }
         .build()
-
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = allowedOriginsProperties.allowedOrigins
-        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        configuration.allowCredentials = true
-        configuration.allowedHeaders = listOf("*")
-
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
 }
