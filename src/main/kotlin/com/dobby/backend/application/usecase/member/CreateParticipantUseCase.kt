@@ -59,10 +59,15 @@ class CreateParticipantUseCase (
         return Output(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            memberInfo = SignupMapper.modelToParticipantRes(newParticipant)
+            memberInfo = MemberResponse(
+                memberId = newMember.id,
+                name = newMember.name,
+                oauthEmail = newMember.oauthEmail,
+                provider = newMember.provider,
+                role = newMember.role
+            )
         )
     }
-
 
     private fun createParticipant(input: Input): Participant {
         val member = Member(

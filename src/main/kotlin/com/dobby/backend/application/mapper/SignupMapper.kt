@@ -15,15 +15,4 @@ object SignupMapper {
             role = newResearcher.member.role
         )
     }
-
-    fun modelToParticipantRes(newParticipant: Participant)
-    : CreateParticipantUseCase.MemberResponse {
-        return CreateParticipantUseCase.MemberResponse(
-            memberId = newParticipant.member.id,
-            name = newParticipant.member.name,
-            oauthEmail = newParticipant.member.oauthEmail,
-            provider = newParticipant.member.provider,
-            role = newParticipant.member.role
-        )
-    }
 }
