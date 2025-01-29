@@ -36,7 +36,7 @@ data object InvalidTokenValueException : ClientException("AU0005", "Invalid toke
  */
 data object EmailDomainNotFoundException : ClientException("VE0001", "Email domain not found", HttpStatus.BAD_REQUEST)
 data object EmailNotUnivException : ClientException("VE0002", "Email domain not found as university email", HttpStatus.BAD_REQUEST)
-data object VerifyInfoNotFoundException : ClientException("VE003", "Verification information is not found", HttpStatus.NOT_FOUND)
+data object VerifyInfoNotFoundException : ClientException("VE0003", "Verification information is not found", HttpStatus.NOT_FOUND)
 data object CodeNotCorrectException : ClientException("VE0004", "Verification code is not correct", HttpStatus.BAD_REQUEST)
 data object CodeExpiredException : ClientException("VE0005", "Verification code is expired", HttpStatus.BAD_REQUEST)
 data object EmailFormatInvalidException : ClientException("VE0006", "Email is invalid format", HttpStatus.BAD_REQUEST)
