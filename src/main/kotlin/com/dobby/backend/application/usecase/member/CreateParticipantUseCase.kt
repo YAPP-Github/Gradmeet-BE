@@ -69,20 +69,16 @@ class CreateParticipantUseCase (
     }
 
     private fun createParticipant(input: Input): Participant {
-        val member = Member(
-            id = 0L,
+        val member = Member.newMember(
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.PARTICIPANT,
             name = input.name,
-            status = MemberStatus.ACTIVE,
-            createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
 
-        return Participant(
-            id = 0L,
+        return Participant.newParticipant(
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,

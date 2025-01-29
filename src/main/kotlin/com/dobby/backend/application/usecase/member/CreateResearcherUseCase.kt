@@ -61,20 +61,16 @@ class CreateResearcherUseCase(
     }
 
     private fun createResearcher(input: Input): Researcher {
-        val member = Member(
-            id = 0L,
-            status = MemberStatus.ACTIVE,
+        val member = Member.newMember(
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.RESEARCHER,
             name = input.name,
-            createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
 
-        val researcher = Researcher(
-            id = 0L,
+        val researcher = Researcher.newResearcher(
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,

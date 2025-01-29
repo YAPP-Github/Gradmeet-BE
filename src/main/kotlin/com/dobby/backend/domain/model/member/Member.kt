@@ -19,24 +19,21 @@ data class Member(
 
     companion object {
         fun newMember(
-            id: Long,
             name: String,
             oauthEmail: String,
             contactEmail: String,
             provider: ProviderType,
-            status: MemberStatus,
             role: RoleType,
-            createdAt: LocalDateTime,
             updatedAt: LocalDateTime
         ) = Member(
-            id = id,
+            id = 0L,
             name = name,
             oauthEmail = oauthEmail,
             contactEmail = contactEmail,
             provider = provider,
             status = MemberStatus.ACTIVE,
             role = role,
-            createdAt = createdAt,
+            createdAt = LocalDateTime.now(),
             updatedAt = updatedAt
         )
     }
