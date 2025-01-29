@@ -46,7 +46,7 @@ data object EmailAlreadyVerifiedException : ClientException("VE007", "This email
  * Member error codes
  */
 data object MemberNotFoundException : ClientException("ME0001", "Member not found", HttpStatus.NOT_FOUND)
-data class SignInRoleMismatchException(val role: String) : ClientException("ME0002", "Already registered as another role: $role", HttpStatus.BAD_REQUEST)
+data class MemberRoleMismatchException(val role: String) : ClientException("ME0002", "Already registered as another role: $role", HttpStatus.BAD_REQUEST)
 data object ResearcherNotFoundException : ClientException("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND)
 data object ParticipantNotFoundException : ClientException("PA001", "Participant Not Found.", HttpStatus.NOT_FOUND)
 data object EmailNotValidateException : ClientException("SIGN_UP_003", "You should validate your school email first", HttpStatus.BAD_REQUEST)
