@@ -19,6 +19,10 @@ data class Verification(
         return verificationCode == inputCode
     }
 
+    fun complete(): Verification {
+        return this.copy(status = VerificationStatus.VERIFIED)
+    }
+
     companion object {
         fun newVerification(
            univEmail: String,

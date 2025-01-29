@@ -26,7 +26,7 @@ class EmailCodeSendUseCase(
         val code = EmailUtils.generateCode()
         reflectVerification(input, code)
 
-        sendVerificationEmail(input, code)
+        sendVerificationEmail(input.univEmail, code)
         return Output(
             isSuccess = true,
             message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요."
@@ -57,9 +57,9 @@ class EmailCodeSendUseCase(
         }
     }
 
-    private fun sendVerificationEmail(input: Input, code: String) {
+    private fun sendVerificationEmail(univEmail: String, code: String) {
         val content = EMAIL_CONTENT_TEMPLATE.format(code)
-        emailGateway.sendEmail(input.univEmail, EMAIL_SUBJECT, content)
+        emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
     }
 
     companion object {

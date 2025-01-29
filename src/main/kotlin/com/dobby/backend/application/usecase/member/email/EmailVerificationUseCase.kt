@@ -31,7 +31,8 @@ class EmailVerificationUseCase(
         if(info.isExpired())
             throw CodeExpiredException()
 
-        verificationGateway.updateStatus(info.univEmail, VerificationStatus.VERIFIED)
+        val updatedVerification = info.complete()
+        verificationGateway.save(updatedVerification)
 
         return Output(
             isSuccess = true,
