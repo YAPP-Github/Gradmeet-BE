@@ -30,7 +30,7 @@ class WebExceptionHandler(
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     protected fun handleMethodNotAllowedException(exception: HttpRequestMethodNotSupportedException): ExceptionResponseEntity {
-        log.warn("Handling MethodNotAllowedException: ${exception.message}")
+        log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
         return responseFactory.create(HttpStatus.METHOD_NOT_ALLOWED, InvalidRequestValueException)
     }
 

@@ -20,7 +20,7 @@ sealed class ClientException(code: String, message: String, httpStatus: HttpStat
  */
 data object UnAuthorizedException : ClientException("DB0002", "Unauthorized access", HttpStatus.UNAUTHORIZED)
 data object InvalidRequestValueException : ClientException("DB0003", "Missing or invalid input", HttpStatus.BAD_REQUEST)
-data object PermissionDeniedException : ClientException("AZ0001", "Permission denied", HttpStatus.FORBIDDEN)
+data object PermissionDeniedException : ClientException("DB0004", "Permission denied", HttpStatus.FORBIDDEN)
 
 /**
  * Authentication error codes
@@ -34,34 +34,34 @@ data object InvalidTokenValueException : ClientException("AU0005", "Invalid toke
 /**
  * Email Verification error codes
  */
-data object EmailDomainNotFoundException : ClientException("VE001", "Email domain not found", HttpStatus.BAD_REQUEST)
-data object EmailNotUnivException : ClientException("VER002", "Email domain not found as university email", HttpStatus.BAD_REQUEST)
-data object VerifyInfoNotFoundException : ClientException("VER003", "Verification information is not found", HttpStatus.NOT_FOUND)
-data object CodeNotCorrectException : ClientException("VER004", "Verification code is not correct", HttpStatus.BAD_REQUEST)
-data object CodeExpiredException : ClientException("VER005", "Verification code is expired", HttpStatus.BAD_REQUEST)
-data object EmailFormatInvalidException : ClientException("VE006", "Email is invalid format", HttpStatus.BAD_REQUEST)
-data object EmailAlreadyVerifiedException : ClientException("VE007", "This email is already verified", HttpStatus.CONFLICT)
+data object EmailDomainNotFoundException : ClientException("VE0001", "Email domain not found", HttpStatus.BAD_REQUEST)
+data object EmailNotUnivException : ClientException("VE0002", "Email domain not found as university email", HttpStatus.BAD_REQUEST)
+data object VerifyInfoNotFoundException : ClientException("VE003", "Verification information is not found", HttpStatus.NOT_FOUND)
+data object CodeNotCorrectException : ClientException("VE0004", "Verification code is not correct", HttpStatus.BAD_REQUEST)
+data object CodeExpiredException : ClientException("VE0005", "Verification code is expired", HttpStatus.BAD_REQUEST)
+data object EmailFormatInvalidException : ClientException("VE0006", "Email is invalid format", HttpStatus.BAD_REQUEST)
+data object EmailAlreadyVerifiedException : ClientException("VE0007", "This email is already verified", HttpStatus.CONFLICT)
 
 /**
  * Member error codes
  */
 data object MemberNotFoundException : ClientException("ME0001", "Member not found", HttpStatus.NOT_FOUND)
 data class MemberRoleMismatchException(val role: String) : ClientException("ME0002", "Already registered as another role: $role", HttpStatus.BAD_REQUEST)
-data object ResearcherNotFoundException : ClientException("RE001", "Researcher Not Found.", HttpStatus.NOT_FOUND)
-data object ParticipantNotFoundException : ClientException("PA001", "Participant Not Found.", HttpStatus.NOT_FOUND)
-data object EmailNotValidateException : ClientException("SIGN_UP_003", "You should validate your school email first", HttpStatus.BAD_REQUEST)
-data object SignupOauthEmailDuplicateException : ClientException("SIGN_UP_004", "You've already joined with requested oauth email", HttpStatus.CONFLICT)
+data object ResearcherNotFoundException : ClientException("ME0003", "Researcher Not Found.", HttpStatus.NOT_FOUND)
+data object ParticipantNotFoundException : ClientException("ME0004", "Participant Not Found.", HttpStatus.NOT_FOUND)
+data object EmailNotValidateException : ClientException("ME0005", "You should validate your school email first", HttpStatus.BAD_REQUEST)
+data object SignupOauthEmailDuplicateException : ClientException("ME0006", "You've already joined with requested oauth email", HttpStatus.CONFLICT)
 
 /**
  * Experiment error codes
  */
-data object ExperimentPostNotFoundException : ClientException("EP001", "Experiment Post Not Found.", HttpStatus.NOT_FOUND)
-data object ExperimentAreaOverflowException : ClientException("EP003", "You can only select up to 5 Area options in 1 Region.", HttpStatus.BAD_REQUEST)
-data object ExperimentAreaInCorrectException : ClientException("EP004", "Selected Area doesn't belong to correct Region.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostImageSizeException : ClientException("EP005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostRecruitStatusException : ClientException("EP006", "This experiment post has already closed recruitment.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostUpdateDateException : ClientException("EP007", "You cannot update experiment post with past experiment dates.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostInvalidOnlineRequestException : ClientException("EP008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostNotFoundException : ClientException("EP0001", "Experiment Post Not Found.", HttpStatus.NOT_FOUND)
+data object ExperimentAreaOverflowException : ClientException("EP0003", "You can only select up to 5 Area options in 1 Region.", HttpStatus.BAD_REQUEST)
+data object ExperimentAreaInCorrectException : ClientException("EP0004", "Selected Area doesn't belong to correct Region.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostImageSizeException : ClientException("EP0005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostRecruitStatusException : ClientException("EP0006", "This experiment post has already closed recruitment.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostUpdateDateException : ClientException("EP0007", "You cannot update experiment post with past experiment dates.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
 
 
 /**
