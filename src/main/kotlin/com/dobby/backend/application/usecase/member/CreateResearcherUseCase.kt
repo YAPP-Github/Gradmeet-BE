@@ -67,7 +67,6 @@ class CreateResearcherUseCase(
             provider = input.provider,
             role = RoleType.RESEARCHER,
             name = input.name,
-            updatedAt = LocalDateTime.now()
         )
 
         val researcher = Researcher.newResearcher(
