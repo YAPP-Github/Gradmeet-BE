@@ -4,6 +4,7 @@ import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTestTokenUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
+import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
@@ -12,9 +13,10 @@ import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenReq
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 
 object AuthMapper {
-    fun toGoogleOauthLoginInput(request: GoogleOauthLoginRequest): FetchGoogleUserInfoUseCase.Input {
+    fun toGoogleOauthLoginInput(request: GoogleOauthLoginRequest, role: RoleType): FetchGoogleUserInfoUseCase.Input {
         return FetchGoogleUserInfoUseCase.Input(
-            authorizationCode = request.authorizationCode
+            authorizationCode = request.authorizationCode,
+            role = role
         )
     }
 
@@ -33,10 +35,12 @@ object AuthMapper {
         )
     }
 
-    fun toNaverOauthLoginInput(request: NaverOauthLoginRequest): FetchNaverUserInfoUseCase.Input {
+    fun toNaverOauthLoginInput(request: NaverOauthLoginRequest, role: RoleType
+    ): FetchNaverUserInfoUseCase.Input {
         return FetchNaverUserInfoUseCase.Input(
             authorizationCode = request.authorizationCode,
-            state = request.state
+            state = request.state,
+            role = role
         )
     }
 
