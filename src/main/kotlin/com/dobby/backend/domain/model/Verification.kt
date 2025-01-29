@@ -1,9 +1,4 @@
 package com.dobby.backend.domain.model
-
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import java.time.LocalDateTime
 
