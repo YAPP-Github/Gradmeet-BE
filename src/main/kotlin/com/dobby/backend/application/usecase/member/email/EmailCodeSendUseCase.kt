@@ -56,19 +56,6 @@ class EmailCodeSendUseCase(
         }
     }
 
-
-    private fun createNewVerification(univEmail: String, code: String): Verification {
-        return Verification.newVerification(
-            univEmail = univEmail,
-            verificationCode = code,
-        )
-    }
-
-    private fun updateExistingVerification(verification: Verification, code: String): Verification {
-        verification.updateCode(code)
-        return verification
-    }
-
     private fun sendVerificationEmail(input: Input, code: String) {
         val content = EMAIL_CONTENT_TEMPLATE.format(code)
         emailGateway.sendEmail(input.univEmail, EMAIL_SUBJECT, content)

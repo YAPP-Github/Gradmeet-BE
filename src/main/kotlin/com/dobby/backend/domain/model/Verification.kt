@@ -24,11 +24,6 @@ data class Verification(
         return verificationCode == inputCode
     }
 
-    fun updateCode(newCode: String) {
-        this.verificationCode = newCode
-        this.expiresAt = LocalDateTime.now().plusMinutes(10)
-    }
-
     companion object {
         fun newVerification(
            univEmail: String,
