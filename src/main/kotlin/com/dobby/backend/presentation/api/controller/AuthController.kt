@@ -25,7 +25,7 @@ class AuthController(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: GoogleOauthLoginRequest
     ): OauthLoginResponse {
-        val input = AuthMapper.toGoogleOauthLoginInput(request)
+        val input = AuthMapper.toGoogleOauthLoginInput(request, role)
         val output = authService.getGoogleUserInfo(input)
         return AuthMapper.toGoogleOauthLoginResponse(output)
     }
@@ -36,7 +36,7 @@ class AuthController(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: NaverOauthLoginRequest
     ): OauthLoginResponse {
-        val input = AuthMapper.toNaverOauthLoginInput(request)
+        val input = AuthMapper.toNaverOauthLoginInput(request, role)
         val output = authService.getNaverUserInfo(input)
         return AuthMapper.toNaverOauthLoginResponse(output)
     }
