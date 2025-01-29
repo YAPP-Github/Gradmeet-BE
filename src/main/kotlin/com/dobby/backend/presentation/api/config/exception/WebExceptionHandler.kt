@@ -29,8 +29,8 @@ class WebExceptionHandler(
     private val log: Logger = LoggerFactory.getLogger(WebExceptionHandler::class.java)
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    protected fun handleMethodNotAllowedException(ex: HttpRequestMethodNotSupportedException): ExceptionResponseEntity {
-        log.warn(ex.message, ex)
+    protected fun handleMethodNotAllowedException(exception: HttpRequestMethodNotSupportedException): ExceptionResponseEntity {
+        log.warn("Handling MethodNotAllowedException: ${exception.message}")
         return responseFactory.create(HttpStatus.METHOD_NOT_ALLOWED, InvalidRequestValueException)
     }
 
@@ -42,21 +42,21 @@ class WebExceptionHandler(
             BindException::class
         ]
     )
-    protected fun handleBadRequestException(ex: Exception): ExceptionResponseEntity {
-        log.warn(ex.message, ex)
+    protected fun handleBadRequestException(exception: Exception): ExceptionResponseEntity {
+        log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
         return responseFactory.create(InvalidRequestValueException)
     }
 
     @ExceptionHandler(NoResourceFoundException::class)
-    protected fun handleNotFoundException(ex: NoResourceFoundException): ExceptionResponseEntity {
-        log.warn(ex.message, ex)
+    protected fun handleNotFoundException(exception: NoResourceFoundException): ExceptionResponseEntity {
+        log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
         return responseFactory.create(HttpStatus.NOT_FOUND, InvalidRequestValueException)
     }
 
     @ExceptionHandler(DobbyException::class)
-    protected fun handleDobbyException(ex: DobbyException): ExceptionResponseEntity {
-        log.warn(ex.message, ex)
-        return responseFactory.create(ex)
+    protected fun handleDobbyException(exception: DobbyException): ExceptionResponseEntity {
+        log.warn("Handling DobbyException: ${exception.code} - ${exception.message}")
+        return responseFactory.create(exception)
     }
 
     @ExceptionHandler(
@@ -68,7 +68,7 @@ class WebExceptionHandler(
     fun handleUnhandledException(
         exception: Exception,
         request: HttpServletRequest
-    ): ResponseEntity<ExceptionResponse> {
+    ): ExceptionResponseEntity {
         if (isProductionOrDevelopmentInstance()) {
             alertGateway.sendError(exception, request)
         }
