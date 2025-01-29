@@ -25,8 +25,6 @@ class EmailVerificationUseCase(
 
     override fun execute(input: Input): Output {
         val info = verificationGateway.findByUnivEmail(input.univEmail)
-
-
             ?: throw VerifyInfoNotFoundException()
 
         if(!info.verifyCode(input.inputCode))

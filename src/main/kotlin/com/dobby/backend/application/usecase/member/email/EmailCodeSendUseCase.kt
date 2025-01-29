@@ -45,10 +45,9 @@ class EmailCodeSendUseCase(
             if (existingInfo.status == VerificationStatus.VERIFIED) {
                 throw EmailAlreadyVerifiedException()
             }
-
-            existingInfo.updateCode(code)
-            verificationGateway.save(existingInfo)
-        } else {
+            verificationGateway.updateCode(existingInfo.univEmail, code)
+        }
+        else {
             val newVerification = Verification.newVerification(
                 univEmail = input.univEmail,
                 verificationCode = code

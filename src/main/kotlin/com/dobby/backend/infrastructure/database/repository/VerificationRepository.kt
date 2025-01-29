@@ -11,6 +11,20 @@ interface VerificationRepository : JpaRepository<VerificationEntity, Long> {
     fun findByUnivEmail(univEmail: String): VerificationEntity?
 
     @Modifying
+    @Query(
+        value = """
+        UPDATE verification 
+        SET verification_code = :code, 
+            updated_at = current_timestamp(6), 
+            expires_at = DATE_ADD(current_timestamp(6), INTERVAL 10 MINUTE) 
+        WHERE univ_email = :univEmail
+    """,
+        nativeQuery = true
+    )
+    fun updateCode(univEmail: String, code: String)
+
+
+    @Modifying
     @Query("UPDATE verification v SET v.status = :status WHERE v.univEmail = :univEmail")
     fun updateStatus(univEmail: String, status: VerificationStatus)
 }
