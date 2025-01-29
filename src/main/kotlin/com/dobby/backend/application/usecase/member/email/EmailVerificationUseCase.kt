@@ -27,13 +27,13 @@ class EmailVerificationUseCase(
     override fun execute(input: Input): Output {
         val info = verificationGateway.findByUnivEmail(
             input.univEmail)
-            ?: throw VerifyInfoNotFoundException()
+            ?: throw VerifyInfoNotFoundException
 
         if(input.inputCode != info.verificationCode)
-            throw CodeNotCorrectException()
+            throw CodeNotCorrectException
 
         if(info.expiresAt?.isBefore(LocalDateTime.now()) == true)
-            throw CodeExpiredException()
+            throw CodeExpiredException
 
         info.status = VerificationStatus.VERIFIED
         verificationGateway.save(info)

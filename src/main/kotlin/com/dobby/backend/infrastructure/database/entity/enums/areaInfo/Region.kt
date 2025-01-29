@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
 
-import java.security.InvalidParameterException
+import com.dobby.backend.domain.exception.InvalidRequestValueException
 
 enum class Region(val displayName: String) {
     SEOUL("SEOUL"),
@@ -31,7 +31,7 @@ enum class Region(val displayName: String) {
 
         fun fromDisplayName(typeKey: String): Region {
             return displayNameMap[typeKey]
-                ?: throw InvalidParameterException()
+                ?: throw InvalidRequestValueException
         }
     }
 }

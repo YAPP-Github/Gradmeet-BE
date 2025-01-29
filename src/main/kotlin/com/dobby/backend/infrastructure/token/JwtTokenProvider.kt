@@ -63,10 +63,10 @@ class JwtTokenProvider(
     fun parseAuthentication(accessToken: String): Authentication {
         try {
             val claims = jwtParser.parseEncryptedClaims(accessToken)
-            val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY] ?: throw InvalidTokenTypeException()
-            if (tokenType != ACCESS_TOKEN_TYPE_VALUE) throw InvalidTokenTypeException()
+            val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY] ?: throw InvalidTokenTypeException
+            if (tokenType != ACCESS_TOKEN_TYPE_VALUE) throw InvalidTokenTypeException
 
-            val memberId = claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw MemberNotFoundException()
+            val memberId = claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw MemberNotFoundException
             val authorities = claims.payload[AUTHORITIES_CLAIM_KEY]?.toString()
                 ?.split(",")
                 ?.map { SimpleGrantedAuthority(it) }
@@ -74,9 +74,9 @@ class JwtTokenProvider(
 
             return UsernamePasswordAuthenticationToken(memberId, accessToken, authorities)
         } catch (e: ExpiredJwtException) {
-            throw AuthenticationTokenExpiredException()
+            throw AuthenticationTokenExpiredException
         } catch (e: JwtException) {
-            throw AuthenticationTokenNotValidException()
+            throw AuthenticationTokenNotValidException
         }
     }
 
@@ -85,12 +85,12 @@ class JwtTokenProvider(
             val claims = jwtParser.parseEncryptedClaims(refreshToken)
             val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]
             if (tokenType != REFRESH_TOKEN_TYPE_VALUE) {
-                throw InvalidTokenTypeException()
+                throw InvalidTokenTypeException
             }
 
-            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException()
+            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException
         } catch (e: Exception) {
-            throw InvalidTokenValueException()
+            throw InvalidTokenValueException
         }
     }
 
@@ -99,12 +99,12 @@ class JwtTokenProvider(
             val claims = jwtParser.parseEncryptedClaims(accessToken)
             val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]
             if (tokenType != ACCESS_TOKEN_TYPE_VALUE) {
-                throw InvalidTokenTypeException()
+                throw InvalidTokenTypeException
             }
 
-            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException()
+            claims.payload[MEMBER_ID_CLAIM_KEY] as? String ?: throw InvalidTokenValueException
         } catch (e: Exception) {
-            throw InvalidTokenValueException()
+            throw InvalidTokenValueException
         }
     }
 

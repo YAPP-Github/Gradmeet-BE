@@ -2,8 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.mapper.ExperimentMapper
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.ErrorCode
-import com.dobby.backend.domain.exception.ExperimentPostException
+import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
@@ -105,22 +104,22 @@ class UpdateExperimentPostUseCase (
 
     private fun validateExistingPost(input: Input): ExperimentPost {
         return experimentPostGateway.findExperimentPostByMemberIdAndPostId(input.memberId, input.experimentPostId)
-            ?: throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_NOT_FOUND)
+            ?: throw ExperimentPostNotFoundException
     }
 
     private fun validatePermission(existingPost: ExperimentPost, input: Input) {
-        if(existingPost.member.id != input.memberId) throw ExperimentPostException(ErrorCode.PERMISSION_DENIED)
+        if(existingPost.member.id != input.memberId) throw PermissionDeniedException
     }
 
 
     private fun validateNotExpired(existingPost: ExperimentPost){
-        if (!existingPost.recruitStatus) throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_CANNOT_UPDATE_DATE)
+        if (!existingPost.recruitStatus) throw ExperimentPostUpdateDateException
     }
 
     private fun validateImageCount(input: Input) {
         input.imageListInfo?.let {
             if(it.images.size > 3) {
-                throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT)
+                throw ExperimentPostImageSizeException
             }
         }
     }

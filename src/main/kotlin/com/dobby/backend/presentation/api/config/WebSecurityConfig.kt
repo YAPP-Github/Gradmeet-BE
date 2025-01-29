@@ -1,11 +1,10 @@
 package com.dobby.backend.presentation.api.config
 
 import com.dobby.backend.domain.exception.PermissionDeniedException
-import com.dobby.backend.domain.exception.UnauthorizedException
+import com.dobby.backend.domain.exception.UnAuthorizedException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.config.filter.JwtAuthenticationFilter
 import com.dobby.backend.presentation.api.config.filter.JwtOptionalAuthenticationFilter
-import com.dobby.backend.presentation.api.config.properties.AllowedOriginsProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
 @EnableMethodSecurity
-class WebSecurityConfig() {
+class WebSecurityConfig {
     /**
      * Configures the security for authentication-related APIs, including login and signup.
      * These endpoints are publicly accessible without authentication.
@@ -101,9 +100,9 @@ class WebSecurityConfig() {
         )
         .exceptionHandling {
             it.accessDeniedHandler { request, response, exception ->
-                handlerExceptionResolver.resolveException(request, response, null, PermissionDeniedException())
+                handlerExceptionResolver.resolveException(request, response, null, PermissionDeniedException)
             }.authenticationEntryPoint { request, response, authException ->
-                handlerExceptionResolver.resolveException(request, response, null, UnauthorizedException())
+                handlerExceptionResolver.resolveException(request, response, null, UnAuthorizedException)
             }
         }
         .build()
