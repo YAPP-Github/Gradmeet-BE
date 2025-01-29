@@ -1,14 +1,11 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.CodeExpiredException
 import com.dobby.backend.domain.exception.CodeNotCorrectException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
-import java.time.LocalDateTime
-
 
 class EmailVerificationUseCase(
     private val verificationGateway: VerificationGateway
@@ -25,20 +22,19 @@ class EmailVerificationUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val info = verificationGateway.findByUnivEmail(
-            input.univEmail)
+        val info = verificationGateway.findByUnivEmail(input.univEmail)
             ?: throw VerifyInfoNotFoundException()
 
-        if(input.inputCode != info.verificationCode)
+        if(!info.verifyCode(input.inputCode))
             throw CodeNotCorrectException()
 
-        if(info.expiresAt?.isBefore(LocalDateTime.now()) == true)
+        if(info.isExpired())
             throw CodeExpiredException()
 
-        info.status = VerificationStatus.VERIFIED
-        verificationGateway.save(info)
+        val updatedVerification = info.complete()
+        verificationGateway.save(updatedVerification)
 
-        return VerificationMapper.toVerifyResDto(
+        return Output(
             isSuccess = true,
             message = "학교 메일 인증이 완료되었습니다."
         )

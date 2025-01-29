@@ -1,10 +1,9 @@
 package com.dobby.backend.domain.model
-
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import java.time.LocalDateTime
 
 data class Verification(
-    val verificationId: Long,
+    val id: Long,
     val univEmail: String,
     var verificationCode: String,
     var status: VerificationStatus = VerificationStatus.HOLD,
@@ -20,8 +19,21 @@ data class Verification(
         return verificationCode == inputCode
     }
 
-    fun updateCode(newCode: String) {
-        this.verificationCode = newCode
-        this.expiresAt = LocalDateTime.now().plusMinutes(10)
+    fun complete(): Verification {
+        return this.copy(status = VerificationStatus.VERIFIED)
+    }
+
+    companion object {
+        fun newVerification(
+           univEmail: String,
+           verificationCode: String,
+        ) = Verification(
+            id = 0L,
+            univEmail = univEmail,
+            verificationCode = verificationCode,
+            expiresAt = LocalDateTime.now().plusMinutes(10),
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
+        )
     }
 }
