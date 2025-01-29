@@ -6,7 +6,7 @@ import com.dobby.backend.infrastructure.database.entity.VerificationEntity
 object VerificationConverter {
     fun toModel(entity: VerificationEntity): Verification {
         return Verification(
-            verificationId = entity.id,
+            id = entity.id,
             univEmail = entity.univEmail,
             verificationCode = entity.verificationCode,
             status = entity.status,
@@ -18,7 +18,7 @@ object VerificationConverter {
 
     fun toEntity(model: Verification): VerificationEntity {
         return VerificationEntity(
-            id = model.verificationId ?: 0L,
+            id = 0L,
             univEmail = model.univEmail,
             verificationCode = model.verificationCode,
             status = model.status,

@@ -30,4 +30,8 @@ class VerificationGatewayImpl(
             .save(entity)
             .let(VerificationConverter::toModel)
     }
+
+    override fun updateStatus(univEmail: String, status: VerificationStatus) {
+        return verificationRepository.updateStatus(univEmail, status)
+    }
 }

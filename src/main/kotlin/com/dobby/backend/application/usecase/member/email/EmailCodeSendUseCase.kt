@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.mapper.VerificationMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.email.EmailGateway
@@ -8,7 +7,6 @@ import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import com.dobby.backend.util.EmailUtils
-import java.time.LocalDateTime
 
 class EmailCodeSendUseCase(
     private val verificationGateway: VerificationGateway,
@@ -29,7 +27,7 @@ class EmailCodeSendUseCase(
         reflectVerification(input, code)
 
         sendVerificationEmail(input, code)
-        return VerificationMapper.toSendResDto(
+        return Output(
             isSuccess = true,
             message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요."
         )
@@ -43,27 +41,27 @@ class EmailCodeSendUseCase(
     private fun reflectVerification(input: Input, code: String) {
         val existingInfo = verificationGateway.findByUnivEmail(input.univEmail)
 
-        val updatedVerification = when {
-            existingInfo == null ->
-                createNewVerification(input.univEmail, code)
-            existingInfo.status == VerificationStatus.VERIFIED
-                -> throw EmailAlreadyVerifiedException()
-            else
-                -> updateExistingVerification(existingInfo, code)
-        }
+        if (existingInfo != null) {
+            if (existingInfo.status == VerificationStatus.VERIFIED) {
+                throw EmailAlreadyVerifiedException()
+            }
 
-        verificationGateway.save(updatedVerification)
+            existingInfo.updateCode(code)
+            verificationGateway.save(existingInfo)
+        } else {
+            val newVerification = Verification.newVerification(
+                univEmail = input.univEmail,
+                verificationCode = code
+            )
+            verificationGateway.save(newVerification)
+        }
     }
 
+
     private fun createNewVerification(univEmail: String, code: String): Verification {
-        return Verification(
-            verificationId = 0,
+        return Verification.newVerification(
             univEmail = univEmail,
             verificationCode = code,
-            status = VerificationStatus.HOLD,
-            expiresAt = LocalDateTime.now().plusMinutes(10),
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
         )
     }
 
