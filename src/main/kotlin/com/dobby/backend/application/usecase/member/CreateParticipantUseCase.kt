@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
@@ -59,26 +58,26 @@ class CreateParticipantUseCase (
         return Output(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            memberInfo = SignupMapper.modelToParticipantRes(newParticipant)
+            memberInfo = MemberResponse(
+                memberId = newMember.id,
+                name = newMember.name,
+                oauthEmail = newMember.oauthEmail,
+                provider = newMember.provider,
+                role = newMember.role
+            )
         )
     }
 
-
     private fun createParticipant(input: Input): Participant {
-        val member = Member(
-            id = 0L,
+        val member = Member.newMember(
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.PARTICIPANT,
             name = input.name,
-            status = MemberStatus.ACTIVE,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
         )
 
-        return Participant(
-            id = 0L,
+        return Participant.newParticipant(
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,

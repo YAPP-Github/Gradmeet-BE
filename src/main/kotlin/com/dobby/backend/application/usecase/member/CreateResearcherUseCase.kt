@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.backend.application.mapper.SignupMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
@@ -51,25 +50,26 @@ class CreateResearcherUseCase(
         return Output(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            memberInfo = SignupMapper.modelToResearcherRes(savedResearcher)
+            memberInfo = MemberResponse(
+                memberId = savedMember.id,
+                name = savedMember.name,
+                oauthEmail = savedMember.oauthEmail,
+                provider = savedMember.provider,
+                role = savedMember.role
+            )
         )
     }
 
     private fun createResearcher(input: Input): Researcher {
-        val member = Member(
-            id = 0L,
-            status = MemberStatus.ACTIVE,
+        val member = Member.newMember(
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.RESEARCHER,
             name = input.name,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
         )
 
-        val researcher = Researcher(
-            id = 0L,
+        val researcher = Researcher.newResearcher(
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,
@@ -77,8 +77,7 @@ class CreateResearcherUseCase(
             major = input.major,
             labInfo = input.labInfo
         )
-        val newResearcher = researcherGateway.save(researcher)
-        return newResearcher
+        return researcherGateway.save(researcher)
     }
 
 }
