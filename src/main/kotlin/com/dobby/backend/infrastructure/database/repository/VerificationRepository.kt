@@ -26,9 +26,4 @@ interface VerificationRepository : JpaRepository<VerificationEntity, Long> {
         nativeQuery = true
     )
     fun updateCode(univEmail: String, code: String)
-
-
-    @Modifying
-    @Query("UPDATE verification v SET v.status = :status WHERE v.univEmail = :univEmail")
-    fun updateStatus(univEmail: String, status: VerificationStatus)
 }
