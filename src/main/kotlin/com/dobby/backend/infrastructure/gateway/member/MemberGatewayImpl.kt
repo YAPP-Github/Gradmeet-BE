@@ -3,7 +3,6 @@ package com.dobby.backend.infrastructure.gateway.member
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.converter.MemberConverter
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import org.springframework.stereotype.Component
@@ -38,8 +37,8 @@ class MemberGatewayImpl(
     }
 
     override fun save(savedMember: Member): Member {
-        val entity = MemberConverter.toEntity(savedMember)
-        val savedEntity = memberRepository.save(entity)
-        return MemberConverter.toModel(savedEntity)
+        val savedEntity= memberRepository
+            .save(MemberEntity.fromDomain(savedMember))
+        return savedEntity.toDomain()
     }
 }

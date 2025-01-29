@@ -30,7 +30,7 @@ data class Participant(
             additionalAddressInfo: AddressInfo,
             matchType: MatchType?
         ) = Participant(
-            id = 0,
+            id = 0L,
             member = member,
             gender = gender,
             birthDate = birthDate,
