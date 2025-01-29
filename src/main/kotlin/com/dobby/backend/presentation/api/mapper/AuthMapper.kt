@@ -35,10 +35,12 @@ object AuthMapper {
         )
     }
 
-    fun toNaverOauthLoginInput(request: NaverOauthLoginRequest): FetchNaverUserInfoUseCase.Input {
+    fun toNaverOauthLoginInput(request: NaverOauthLoginRequest, role: RoleType
+    ): FetchNaverUserInfoUseCase.Input {
         return FetchNaverUserInfoUseCase.Input(
             authorizationCode = request.authorizationCode,
-            state = request.state
+            state = request.state,
+            role = role
         )
     }
 

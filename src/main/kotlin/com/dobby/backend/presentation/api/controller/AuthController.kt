@@ -36,7 +36,7 @@ class AuthController(
         @RequestParam role : RoleType,
         @RequestBody @Valid request: NaverOauthLoginRequest
     ): OauthLoginResponse {
-        val input = AuthMapper.toNaverOauthLoginInput(request)
+        val input = AuthMapper.toNaverOauthLoginInput(request, role)
         val output = authService.getNaverUserInfo(input)
         return AuthMapper.toNaverOauthLoginResponse(output)
     }
