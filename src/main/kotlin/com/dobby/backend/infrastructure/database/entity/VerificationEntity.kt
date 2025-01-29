@@ -1,5 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity
 
+import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -36,5 +37,31 @@ class VerificationEntity (
         updatedAt ?: LocalDateTime.now()
         if(expiresAt == null)
             expiresAt = LocalDateTime.now().plusMinutes(10)
+    }
+
+    fun toDomain() : Verification {
+        return Verification(
+            id = id,
+            univEmail = univEmail,
+            verificationCode = verificationCode,
+            status = status,
+            expiresAt = expiresAt,
+            createdAt = createdAt,
+            updatedAt = updatedAt
+        )
+    }
+
+    companion object {
+        fun fromDomain(model: Verification) = with(model) {
+            VerificationEntity(
+                id =  id,
+                univEmail = univEmail,
+                verificationCode = verificationCode,
+                status = status,
+                expiresAt = expiresAt,
+                createdAt = createdAt,
+                updatedAt = updatedAt
+            )
+        }
     }
 }
