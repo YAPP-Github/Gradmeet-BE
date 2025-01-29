@@ -24,7 +24,6 @@ data class Member(
             contactEmail: String,
             provider: ProviderType,
             role: RoleType,
-            updatedAt: LocalDateTime
         ) = Member(
             id = 0L,
             name = name,
@@ -34,7 +33,7 @@ data class Member(
             status = MemberStatus.ACTIVE,
             role = role,
             createdAt = LocalDateTime.now(),
-            updatedAt = updatedAt
+            updatedAt = LocalDateTime.now()
         )
     }
 }

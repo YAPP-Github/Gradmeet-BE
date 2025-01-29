@@ -75,7 +75,6 @@ class CreateParticipantUseCase (
             provider = input.provider,
             role = RoleType.PARTICIPANT,
             name = input.name,
-            updatedAt = LocalDateTime.now()
         )
 
         return Participant.newParticipant(
