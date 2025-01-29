@@ -46,6 +46,7 @@ class EmailCodeSendUseCase(
                 throw EmailAlreadyVerifiedException()
             }
             verificationGateway.updateCode(existingInfo.univEmail, code)
+            return
         }
         else {
             val newVerification = Verification.newVerification(

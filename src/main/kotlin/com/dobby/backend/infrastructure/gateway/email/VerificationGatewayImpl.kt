@@ -36,7 +36,8 @@ class VerificationGatewayImpl(
     }
 
     override fun updateCode(univEmail: String, code: String){
-        return verificationRepository.updateCode(univEmail, code)
+        verificationRepository.updateCode(univEmail, code)
+        verificationRepository.flush()
     }
 
     override fun updateStatus(univEmail: String, status: VerificationStatus) {
