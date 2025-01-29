@@ -29,7 +29,7 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
     )
 
     given("Naver OAuth 요청이 들어왔을 때") {
-        val input = FetchNaverUserInfoUseCase.Input(authorizationCode = "valid-auth-code", state = "valid-state")
+        val input = FetchNaverUserInfoUseCase.Input(authorizationCode = "valid-auth-code", state = "valid-state", role = RoleType.PARTICIPANT)
         val mockMember = Member(
             id = 1L,
             oauthEmail = "test@example.com",

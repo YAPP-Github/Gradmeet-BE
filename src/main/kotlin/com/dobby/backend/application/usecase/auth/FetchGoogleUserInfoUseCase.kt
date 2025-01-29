@@ -1,6 +1,7 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.SignInRoleMismatchException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.gateway.auth.GoogleAuthGateway
@@ -15,7 +16,8 @@ class FetchGoogleUserInfoUseCase(
 ) : UseCase<FetchGoogleUserInfoUseCase.Input, FetchGoogleUserInfoUseCase.Output> {
 
     data class Input(
-        val authorizationCode: String
+        val authorizationCode: String,
+        val role: RoleType
     )
 
     data class Output(
@@ -38,6 +40,9 @@ class FetchGoogleUserInfoUseCase(
         return if (member != null) {
             val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
             val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
+
+            if(member.role != input.role)
+                throw SignInRoleMismatchException(member.role.toString())
 
             Output(
                 isRegistered = true,
