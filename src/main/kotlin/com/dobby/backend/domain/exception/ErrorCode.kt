@@ -55,7 +55,7 @@ enum class ErrorCode(
      * Signin error codes
      */
     SIGNIN_MEMBER_NOT_FOUND("SIGN_IN_001", "Member Not Found. Please signup. (Redirect URI must be /v1/auth/{role}/signup)", HttpStatus.NOT_FOUND),
-    SIGNIN_ROLE_MISMATCH("SIGN_IN_002", "Already registered member as %s. Please login as %s", HttpStatus.BAD_REQUEST),
+    SIGNIN_ROLE_MISMATCH("SIGN_IN_002", "Already registered as another role.", HttpStatus.BAD_REQUEST),
 
     /**
      * Email Verification error codes
@@ -89,5 +89,9 @@ enum class ErrorCode(
     EXPERIMENT_POST_IMAGE_SIZE_LIMIT("EP005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_RECRUIT_STATUS_ERROR("EP006", "This experiment post has already closed recruitment.", HttpStatus.BAD_REQUEST),
     EXPERIMENT_POST_CANNOT_UPDATE_DATE("EP007", "You cannot update experiment post with past experiment dates.", HttpStatus.BAD_REQUEST),
-    EXPERIMENT_POST_INVALID_ONLINE_REQUEST("EP008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST),
+    EXPERIMENT_POST_INVALID_ONLINE_REQUEST("EP008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST);
+
+    fun formatMessage(vararg args: Any): String {
+        return String.format(message, *args)
+    }
 }
