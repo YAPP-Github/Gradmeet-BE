@@ -47,14 +47,14 @@ jobs:
           source: "./scripts/deploy.sh"
           target: "/home/ubuntu/"
 
-      - name: ✔️ send docker-compose.yml to EC2 development server
+      - name: ✔️ send docker-compose-dev.yml to EC2 development server
         uses: appleboy/scp-action@master
         with:
           username: ubuntu
           host: ${{ secrets.DEV_WAS_HOST }}
           key: ${{ secrets.DEV_WAS_KEY }}
           port: ${{ secrets.WAS_SSH_PORT }}
-          source: "./docker-compose.yml"
+          source: "./docker-compose-dev.yml"
           target: "/home/ubuntu/"
 
   cd:

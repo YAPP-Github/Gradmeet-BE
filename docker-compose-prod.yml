@@ -2,7 +2,7 @@ version: '3.8'
 services:
   blue:
     container_name: blue
-    image: jisoo708/dobby
+    image: gradmeet/dobby:prod
     expose:
       - 8080
     ports:
@@ -11,7 +11,7 @@ services:
       - TZ=Asia/Seoul
   green:
     container_name: green
-    image: jisoo708/dobby
+    image: gradmeet/dobby:prod
     expose:
       - 8080
     ports:
