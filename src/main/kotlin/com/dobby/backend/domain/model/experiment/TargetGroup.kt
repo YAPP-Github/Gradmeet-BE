@@ -21,13 +21,12 @@ data class TargetGroup(
 
     companion object {
         fun newTargetGroup(
-            id: Long,
-            startAge: Int,
-            endAge: Int,
+            startAge: Int?,
+            endAge: Int?,
             genderType: GenderType,
-            otherCondition: String
+            otherCondition: String?
         ) = TargetGroup(
-            id = id,
+            id = 0L,
             startAge = startAge,
             endAge = endAge,
             genderType = genderType,

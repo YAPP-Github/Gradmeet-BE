@@ -86,14 +86,39 @@ class CreateExperimentPostUseCase(
         val member = memberGateway.getById(input.memberId)
         validate(input, member)
 
-        val targetGroup = createTargetGroup(input.targetGroupInfo)
-        val applyMethod = createApplyMethod(input.applyMethodInfo)
-        var experimentPost = createExperimentPost(
-            member,
-            input,
-            targetGroup,
-            applyMethod
+        val targetGroup = TargetGroup.newTargetGroup(
+            startAge = input.targetGroupInfo.startAge,
+            endAge = input.targetGroupInfo.endAge,
+            genderType = input.targetGroupInfo.genderType,
+            otherCondition = input.targetGroupInfo.otherCondition
         )
+
+        val applyMethod = ApplyMethod.newApplyMethod(
+            phoneNum = input.applyMethodInfo.phoneNum,
+            formUrl = input.applyMethodInfo.formUrl,
+            content = input.applyMethodInfo.content
+        )
+
+        val experimentPost = ExperimentPost.newExperimentPost(
+            member = member,
+            targetGroup = targetGroup,
+            applyMethod = applyMethod,
+            leadResearcher = input.leadResearcher,
+            title = input.title,
+            content = input.content,
+            reward = input.reward,
+            startDate = input.startDate,
+            endDate = input.endDate,
+            timeRequired = input.timeRequired,
+            count = input.count,
+            matchType = input.matchType,
+            univName = input.univName,
+            region = input.region,
+            area = input.area,
+            detailedAddress = input.detailedAddress,
+            alarmAgree = input.alarmAgree,
+            recruitStatus = true,
+            )
 
         val experimentImages = input.imageListInfo.images.map { imageUrl ->
             ExperimentImage(
@@ -118,58 +143,6 @@ class CreateExperimentPostUseCase(
                 ),
                 reward = savedExperimentPost.reward
             )
-        )
-    }
-
-    private fun createTargetGroup(targetGroupInfo: TargetGroupInfo): TargetGroup {
-        return TargetGroup(
-            id = 0L,
-            startAge = targetGroupInfo.startAge,
-            endAge = targetGroupInfo.endAge,
-            genderType = targetGroupInfo.genderType,
-            otherCondition = targetGroupInfo.otherCondition
-        )
-    }
-
-    private fun createApplyMethod(applyMethodInfo: ApplyMethodInfo): ApplyMethod {
-        return ApplyMethod(
-            id = 0L,
-            phoneNum = applyMethodInfo.phoneNum,
-            formUrl = applyMethodInfo.formUrl,
-            content = applyMethodInfo.content
-        )
-    }
-
-    private fun createExperimentPost(
-        member: Member,
-        input: Input,
-        targetGroup: TargetGroup,
-        applyMethod: ApplyMethod,
-    ): ExperimentPost {
-        return  ExperimentPost(
-            member = member,
-            leadResearcher = input.leadResearcher,
-            id = 0L,
-            targetGroup = targetGroup,
-            applyMethod = applyMethod,
-            views = 0,
-            title = input.title,
-            content = input.content,
-            reward = input.reward,
-            startDate = input.startDate,
-            endDate = input.endDate,
-            timeRequired = input.timeRequired,
-            count = input.count,
-            matchType = input.matchType,
-            univName = input.univName,
-            region = input.region,
-            area = input.area,
-            detailedAddress = input.detailedAddress,
-            alarmAgree = input.alarmAgree,
-            recruitStatus = true,
-            images = mutableListOf(),
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
         )
     }
 

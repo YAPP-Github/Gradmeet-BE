@@ -13,12 +13,11 @@ data class ApplyMethod(
     }
     companion object {
         fun newApplyMethod(
-            id: Long,
-            phoneNum: String,
-            formUrl: String,
+            phoneNum: String?,
+            formUrl: String?,
             content: String
         ) = ApplyMethod(
-            id = id,
+            id = 0L,
             phoneNum = phoneNum,
             formUrl = formUrl,
             content = content

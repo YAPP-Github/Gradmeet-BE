@@ -98,11 +98,9 @@ data class ExperimentPost(
 
     companion object {
         fun newExperimentPost(
-            id: Long,
             member: Member,
             targetGroup: TargetGroup,
             applyMethod: ApplyMethod,
-            views: Int,
             title: String,
             content: String,
             leadResearcher: String,
@@ -112,21 +110,19 @@ data class ExperimentPost(
             timeRequired: TimeSlot?,
             count: Int,
             matchType: MatchType,
-            univName: String,
-            region: Region,
-            area: Area,
-            detailedAddress: String,
+            univName: String?,
+            region: Region?,
+            area: Area?,
+            detailedAddress: String?,
             alarmAgree: Boolean,
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
-            createdAt: LocalDateTime = LocalDateTime.now(),
-            updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(
-            id = id,
+            id = 0L,
             member = member,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
-            views = views,
+            views = 0,
             title = title,
             content = content,
             leadResearcher = leadResearcher,
@@ -143,8 +139,8 @@ data class ExperimentPost(
             alarmAgree = alarmAgree,
             recruitStatus = recruitStatus,
             images = images.toMutableList(),
-            createdAt = createdAt,
-            updatedAt = updatedAt
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
     }
 }
