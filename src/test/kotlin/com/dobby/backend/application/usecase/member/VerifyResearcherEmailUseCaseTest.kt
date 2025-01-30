@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.member
 
+import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
@@ -37,6 +38,23 @@ class VerifyResearcherEmailUseCaseTest : BehaviorSpec ({
             then("VerifyInfoNotFoundException 예외가 발생해야 한다") {
                 shouldThrow<VerifyInfoNotFoundException> {
                     verifyResearcherUseCase.execute(invalidEmail)
+                }
+            }
+        }
+    }
+
+    given("이메일이 존재하지만 검증되지 않은 상태일 때") {
+        val unverifiedEmail = "unverified@ewhain.net"
+        val unverifiedInfo = mockk<Verification> {
+            every { status } returns VerificationStatus.HOLD
+        }
+
+        every { verificationGateway.findByUnivEmail(unverifiedEmail) } returns unverifiedInfo
+
+        `when`("useCase의 execute가 실행되면") {
+            then("EmailNotValidateException 예외가 발생해야 한다") {
+                shouldThrow<EmailNotValidateException> {
+                    verifyResearcherUseCase.execute(unverifiedEmail)
                 }
             }
         }
