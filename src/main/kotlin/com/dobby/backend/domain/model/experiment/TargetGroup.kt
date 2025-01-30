@@ -10,13 +10,14 @@ data class TargetGroup(
     var otherCondition: String?
 ) {
 
-    fun update(startAge: Int?, endAge: Int?, genderType: GenderType?, otherCondition: String?){
-        this.startAge = startAge
-        this.endAge = endAge
-        this.otherCondition = otherCondition
-        if (genderType != null) {
-            this.genderType = genderType
-        }
+    fun update(
+        startAge: Int?, endAge: Int?, genderType: GenderType?, otherCondition: String?): TargetGroup{
+        return this.copy(
+            startAge = startAge ?: this.startAge,
+            endAge = endAge ?: this.endAge,
+            otherCondition = otherCondition ?: this.otherCondition,
+            genderType = genderType ?: this.genderType
+        )
     }
 
     companion object {

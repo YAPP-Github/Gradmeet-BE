@@ -4,6 +4,7 @@ import com.dobby.backend.application.mapper.ExperimentMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.backend.domain.model.experiment.ExperimentImage
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
@@ -76,8 +77,38 @@ class UpdateExperimentPostUseCase (
 
     override fun execute(input: Input): Output {
         val existingPost = validate(input)
-        val experimentPost = ExperimentMapper.toDomain(input, existingPost)
-        val updatedPost = experimentPostGateway.updateExperimentPost(experimentPost)
+
+        val targetGroup = existingPost.targetGroup.update(
+            startAge = input.targetGroupInfo?.startAge,
+            endAge = input.targetGroupInfo?.endAge,
+            genderType = input.targetGroupInfo?.genderType,
+            otherCondition = input.targetGroupInfo?.otherCondition
+        )
+
+        val applyMethod = existingPost.applyMethod.update(
+            phoneNum = input.applyMethodInfo?.phoneNum,
+            formUrl = input.applyMethodInfo?.formUrl,
+            content = input.applyMethodInfo?.content
+        )
+
+        val experimentPost = existingPost.update(
+            applyMethod = applyMethod,
+            targetGroup = targetGroup,
+            title = input.title,
+            reward = input.reward,
+            startDate = input.startDate,
+            endDate = input.endDate,
+            content = input.content,
+            count = input.count,
+            leadResearcher = input.leadResearcher,
+            detailedAddress = input.detailedAddress,
+            matchType = input.matchType,
+            univName = input.univName,
+            region = input.region,
+            area = input.area,
+            imageListInfo = input.imageListInfo?.images
+        )
+        val updatedPost = experimentPostGateway.save(experimentPost)
 
         return Output(
             postInfo = PostInfo(
