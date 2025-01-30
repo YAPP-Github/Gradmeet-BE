@@ -1,5 +1,7 @@
 package com.dobby.backend.domain.model.experiment
 
+import com.dobby.backend.domain.exception.ExperimentPostImageSizeException
+import com.dobby.backend.domain.exception.ExperimentPostInvalidOnlineRequestException
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
@@ -33,6 +35,10 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
+    init {
+        validate()
+    }
+
     fun incrementViews() {
         this.views += 1
         this.updatedAt = LocalDateTime.now()
@@ -87,11 +93,14 @@ data class ExperimentPost(
             area = area ?: this.area,
             images = updatedImages.toMutableList(),
             updatedAt = LocalDateTime.now()
-        )
+        ).apply { validate() }
     }
 
 
     fun updateImages(newImages: List<ExperimentImage>) {
+        require(newImages.size <= 3) {
+            throw ExperimentPostImageSizeException
+        }
         images.clear()
         images.addAll(newImages)
         updatedAt = LocalDateTime.now()
@@ -144,5 +153,11 @@ data class ExperimentPost(
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now()
         )
+    }
+
+    private fun validate() {
+        if (matchType == MatchType.ONLINE && listOf(univName, region, area).any { it != null }) {
+            throw ExperimentPostInvalidOnlineRequestException
+        }
     }
 }

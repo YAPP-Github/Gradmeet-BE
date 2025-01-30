@@ -83,7 +83,7 @@ class CreateExperimentPostUseCase(
 
     override fun execute(input: Input): Output {
         val member = memberGateway.getById(input.memberId)
-        validate(input, member)
+        validateMemberRole(member)
 
         val targetGroup = TargetGroup.newTargetGroup(
             startAge = input.targetGroupInfo.startAge,
@@ -143,28 +143,8 @@ class CreateExperimentPostUseCase(
             )
         )
     }
-
-    private fun validate(input: Input, member: Member){
-        validateMemberRole(member)
-        validateImageListSize(input.imageListInfo)
-        validateOnlineMatchType(input)
-    }
-
     private fun validateMemberRole(member :Member){
         if(member.role != RoleType.RESEARCHER)
             throw PermissionDeniedException
-    }
-
-    private fun validateImageListSize(imageListInfo: ImageListInfo){
-        if(imageListInfo.images.size > 3)
-            throw ExperimentPostImageSizeException
-    }
-
-    private fun validateOnlineMatchType(input: Input){
-        if(input.matchType == MatchType.ONLINE){
-            if(input.univName != null || input.region != null || input.area != null) {
-                throw ExperimentPostInvalidOnlineRequestException
-            }
-        }
     }
 }
