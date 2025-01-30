@@ -4,7 +4,6 @@ import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.Pagination
-import com.dobby.backend.infrastructure.converter.ExperimentPostConverter
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustomRepository
@@ -19,9 +18,9 @@ class ExperimentPostGatewayImpl(
     private val experimentPostCustomRepository: ExperimentPostCustomRepository
 ): ExperimentPostGateway {
     override fun save(experimentPost: ExperimentPost): ExperimentPost {
-        val entity = ExperimentPostConverter.toEntity(experimentPost)
-        val savedEntity = experimentPostRepository.save(entity)
-        return ExperimentPostConverter.toModel(savedEntity)
+        val savedEntity = experimentPostRepository
+            .save(ExperimentPostEntity.fromDomain(experimentPost))
+        return savedEntity.toDomain()
     }
 
     override fun findExperimentPostsByCustomFilter(
