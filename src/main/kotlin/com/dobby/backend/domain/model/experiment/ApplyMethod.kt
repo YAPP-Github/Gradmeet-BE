@@ -6,19 +6,24 @@ data class ApplyMethod(
     var formUrl: String?,
     var content: String
 ) {
-    fun update(phoneNum: String?, formUrl: String?, content: String){
-        this.content = content
-        this.formUrl = formUrl
-        this.phoneNum = phoneNum
+    fun update(
+        phoneNum: String?, formUrl: String?, content: String?
+    ): ApplyMethod {
+        return this.copy(
+            phoneNum = phoneNum ?: this.phoneNum,
+            formUrl = formUrl ?: this.formUrl,
+            content = content ?: this.content
+        )
     }
+
+
     companion object {
         fun newApplyMethod(
-            id: Long,
-            phoneNum: String,
-            formUrl: String,
+            phoneNum: String?,
+            formUrl: String?,
             content: String
         ) = ApplyMethod(
-            id = id,
+            id = 0L,
             phoneNum = phoneNum,
             formUrl = formUrl,
             content = content
