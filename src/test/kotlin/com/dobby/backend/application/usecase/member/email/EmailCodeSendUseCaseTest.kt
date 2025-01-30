@@ -19,7 +19,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
     val emailGateway: EmailGateway = mockk()
     val emailCodeSendUseCase = EmailCodeSendUseCase(verificationGateway, emailGateway)
 
-    beforeTest {
+    beforeSpec {
         mockkObject(EmailUtils)
     }
 
