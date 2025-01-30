@@ -7,11 +7,10 @@ data class ExperimentImage(
 ) {
     companion object {
         fun newExperimentImage(
-            id: Long,
-            experimentPost: ExperimentPost,
+            experimentPost: ExperimentPost?,
             imageUrl: String
         ) = ExperimentImage(
-            id = id,
+            id = 0L,
             experimentPost = experimentPost,
             imageUrl = imageUrl
         )

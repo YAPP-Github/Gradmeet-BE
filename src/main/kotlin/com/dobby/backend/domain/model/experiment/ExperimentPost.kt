@@ -1,5 +1,7 @@
 package com.dobby.backend.domain.model.experiment
 
+import com.dobby.backend.domain.exception.ExperimentPostImageSizeException
+import com.dobby.backend.domain.exception.ExperimentPostInvalidOnlineRequestException
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
@@ -33,6 +35,10 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
+    init {
+        validate()
+    }
+
     fun incrementViews() {
         this.views += 1
         this.updatedAt = LocalDateTime.now()
@@ -49,6 +55,8 @@ data class ExperimentPost(
     }
 
     fun update(
+        targetGroup: TargetGroup?,
+        applyMethod: ApplyMethod?,
         title: String?,
         reward: String?,
         startDate: LocalDate?,
@@ -62,34 +70,37 @@ data class ExperimentPost(
         region: Region?,
         area: Area?,
         imageListInfo: List<String>?
-    ) {
-        title?.let { this.title = it }
-        reward?.let { this.reward = it }
-        startDate?.let { this.startDate = it }
-        endDate?.let { this.endDate = it }
-        content?.let { this.content = it }
-        count?.let { this.count = it }
-        leadResearcher?.let { this.leadResearcher = it }
-        detailedAddress?.let { this.detailedAddress = it }
-        matchType?.let { this.matchType = it }
-        univName?.let { this.univName = it }
-        region?.let { this.region = it }
-        area?.let { this.area = it }
+    ): ExperimentPost {
+        val updatedImages = imageListInfo?.map { imageUrl ->
+            val existingImage = this.images.find { it.imageUrl == imageUrl }
+            existingImage ?: ExperimentImage(id = 0L, experimentPost = this, imageUrl = imageUrl)
+        } ?: this.images
 
-        imageListInfo?.let {
-            val newImages = it.map { imageUrl ->
-                val existingImage = this.images.find { existing -> existing.imageUrl == imageUrl }
-                ExperimentImage(
-                    id = existingImage?.id ?: 0L,
-                    experimentPost = this,
-                    imageUrl = imageUrl
-                )
-            }
-            this.updateImages(newImages)
-        }
+        return this.copy(
+            targetGroup = targetGroup ?: this.targetGroup,
+            applyMethod = applyMethod ?: this.applyMethod,
+            title = title ?: this.title,
+            reward = reward ?: this.reward,
+            startDate = startDate ?: this.startDate,
+            endDate = endDate ?: this.endDate,
+            content = content ?: this.content,
+            count = count ?: this.count,
+            leadResearcher = leadResearcher ?: this.leadResearcher,
+            detailedAddress = detailedAddress ?: this.detailedAddress,
+            matchType = matchType ?: this.matchType,
+            univName = univName ?: this.univName,
+            region = region ?: this.region,
+            area = area ?: this.area,
+            images = updatedImages.toMutableList(),
+            updatedAt = LocalDateTime.now()
+        ).apply { validate() }
     }
 
+
     fun updateImages(newImages: List<ExperimentImage>) {
+        require(newImages.size <= 3) {
+            throw ExperimentPostImageSizeException
+        }
         images.clear()
         images.addAll(newImages)
         updatedAt = LocalDateTime.now()
@@ -98,11 +109,9 @@ data class ExperimentPost(
 
     companion object {
         fun newExperimentPost(
-            id: Long,
             member: Member,
             targetGroup: TargetGroup,
             applyMethod: ApplyMethod,
-            views: Int,
             title: String,
             content: String,
             leadResearcher: String,
@@ -112,21 +121,19 @@ data class ExperimentPost(
             timeRequired: TimeSlot?,
             count: Int,
             matchType: MatchType,
-            univName: String,
-            region: Region,
-            area: Area,
-            detailedAddress: String,
+            univName: String?,
+            region: Region?,
+            area: Area?,
+            detailedAddress: String?,
             alarmAgree: Boolean,
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
-            createdAt: LocalDateTime = LocalDateTime.now(),
-            updatedAt: LocalDateTime = LocalDateTime.now()
         ) = ExperimentPost(
-            id = id,
+            id = 0L,
             member = member,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
-            views = views,
+            views = 0,
             title = title,
             content = content,
             leadResearcher = leadResearcher,
@@ -143,8 +150,14 @@ data class ExperimentPost(
             alarmAgree = alarmAgree,
             recruitStatus = recruitStatus,
             images = images.toMutableList(),
-            createdAt = createdAt,
-            updatedAt = updatedAt
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
+    }
+
+    private fun validate() {
+        if (matchType == MatchType.ONLINE && listOf(univName, region, area).any { it != null }) {
+            throw ExperimentPostInvalidOnlineRequestException
+        }
     }
 }
