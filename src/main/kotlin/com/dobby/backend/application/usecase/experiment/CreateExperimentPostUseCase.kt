@@ -16,7 +16,6 @@ import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class CreateExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
@@ -121,8 +120,7 @@ class CreateExperimentPostUseCase(
             )
 
         val experimentImages = input.imageListInfo.images.map { imageUrl ->
-            ExperimentImage(
-                id = 0L,
+            ExperimentImage.newExperimentImage(
                 experimentPost = null,
                 imageUrl = imageUrl
             )

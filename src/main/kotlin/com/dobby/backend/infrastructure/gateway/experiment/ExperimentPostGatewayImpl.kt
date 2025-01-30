@@ -19,9 +19,9 @@ class ExperimentPostGatewayImpl(
     private val experimentPostCustomRepository: ExperimentPostCustomRepository
 ): ExperimentPostGateway {
     override fun save(experimentPost: ExperimentPost): ExperimentPost {
-        val entity = ExperimentPostConverter.toEntity(experimentPost)
-        val savedEntity = experimentPostRepository.save(entity)
-        return ExperimentPostConverter.toModel(savedEntity)
+        val savedEntity = experimentPostRepository
+            .save(ExperimentPostEntity.fromDomain(experimentPost))
+        return savedEntity.toDomain()
     }
 
     override fun findExperimentPostsByCustomFilter(
