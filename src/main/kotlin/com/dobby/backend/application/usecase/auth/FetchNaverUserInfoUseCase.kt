@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.SignInRoleMismatchException
+import com.dobby.backend.domain.exception.MemberRoleMismatchException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
@@ -43,7 +43,7 @@ class FetchNaverUserInfoUseCase(
             val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
 
             if(member.role != input.role)
-                throw SignInRoleMismatchException(member.role.toString())
+                throw MemberRoleMismatchException(member.role.toString())
 
             Output(
                 isRegistered = true,

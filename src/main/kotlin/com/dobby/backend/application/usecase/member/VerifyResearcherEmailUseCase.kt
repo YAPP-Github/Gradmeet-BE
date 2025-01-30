@@ -11,13 +11,13 @@ class VerifyResearcherEmailUseCase(
     private val verificationGateway: VerificationGateway
 ) : UseCase<String, Unit> {
 
-    override fun execute(input: String): Unit {
+    override fun execute(input: String) {
         val verification = verificationGateway
             .findByUnivEmail(input)
-            ?: throw VerifyInfoNotFoundException()
+            ?: throw VerifyInfoNotFoundException
 
         if (verification.status != VerificationStatus.VERIFIED) {
-            throw EmailNotValidateException()
+            throw EmailNotValidateException
         }
         return
     }

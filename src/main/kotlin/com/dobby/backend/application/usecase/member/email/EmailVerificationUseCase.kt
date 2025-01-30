@@ -5,7 +5,6 @@ import com.dobby.backend.domain.exception.CodeExpiredException
 import com.dobby.backend.domain.exception.CodeNotCorrectException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 
 class EmailVerificationUseCase(
     private val verificationGateway: VerificationGateway
@@ -23,13 +22,13 @@ class EmailVerificationUseCase(
 
     override fun execute(input: Input): Output {
         val info = verificationGateway.findByUnivEmail(input.univEmail)
-            ?: throw VerifyInfoNotFoundException()
+            ?: throw VerifyInfoNotFoundException
 
         if(!info.verifyCode(input.inputCode))
-            throw CodeNotCorrectException()
+            throw CodeNotCorrectException
 
         if(info.isExpired())
-            throw CodeExpiredException()
+            throw CodeExpiredException
 
         val updatedVerification = info.complete()
         verificationGateway.save(updatedVerification)

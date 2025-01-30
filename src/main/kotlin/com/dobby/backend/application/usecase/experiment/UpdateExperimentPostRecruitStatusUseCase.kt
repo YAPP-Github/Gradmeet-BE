@@ -24,7 +24,7 @@ class UpdateExperimentPostRecruitStatusUseCase(
         val post = experimentPostGateway.findExperimentPostByMemberIdAndPostId(
             memberId = input.memberId,
             postId = input.postId
-        ) ?: throw ExperimentPostNotFoundException()
+        ) ?: throw ExperimentPostNotFoundException
 
         validateRecruitStatus(post)
         val updatedPost = experimentPostGateway.save(
@@ -41,7 +41,7 @@ class UpdateExperimentPostRecruitStatusUseCase(
 
     private fun validateRecruitStatus(post: ExperimentPost) {
         if (!post.recruitStatus) {
-            throw ExperimentPostRecruitStatusException()
+            throw ExperimentPostRecruitStatusException
         }
     }
 }

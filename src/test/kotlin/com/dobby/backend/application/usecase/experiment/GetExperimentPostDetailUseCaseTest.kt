@@ -117,7 +117,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
             then("ExperimentPostNotFoundException이 발생한다") {
                 val exception = runCatching { getExperimentPostDetailUseCase.execute(input) }.exceptionOrNull()
-                exception shouldBe ExperimentPostNotFoundException()
+                exception shouldBe ExperimentPostNotFoundException
             }
         }
     }

@@ -31,7 +31,7 @@ class GetParticipantInfoUseCase(
         val memberId = input.memberId
         val member = memberGateway.getById(memberId)
         val participant = participantGateway.findByMemberId(memberId)
-            ?: throw ParticipantNotFoundException()
+            ?: throw ParticipantNotFoundException
 
         return Output(
             member = member,
