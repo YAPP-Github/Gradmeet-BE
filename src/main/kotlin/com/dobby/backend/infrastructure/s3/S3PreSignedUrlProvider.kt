@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.dobby.backend.domain.exception.InvalidInputException
+import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.infrastructure.config.properties.S3Properties
 import com.dobby.backend.util.generateULID
 import org.springframework.stereotype.Component
@@ -50,7 +50,7 @@ class S3PreSignedUrlProvider(
     private fun generateUniqueImageName(fileName: String): String {
         val lastDotIndex = fileName.lastIndexOf(".")
         if (lastDotIndex == -1 || lastDotIndex == fileName.length - 1) {
-            throw InvalidInputException()
+            throw InvalidRequestValueException
         }
         val ext = fileName.substring(lastDotIndex)
         return "${generateULID()}$ext"

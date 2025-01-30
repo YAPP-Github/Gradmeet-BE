@@ -22,7 +22,7 @@ class GetExperimentPostDetailUseCase(
 
     override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
-            ?: throw ExperimentPostNotFoundException()
+            ?: throw ExperimentPostNotFoundException
         experimentPost.incrementViews()
         experimentPostGateway.save(experimentPost)
 

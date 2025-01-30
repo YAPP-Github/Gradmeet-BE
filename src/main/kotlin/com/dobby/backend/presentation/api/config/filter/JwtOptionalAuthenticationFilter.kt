@@ -24,7 +24,7 @@ class JwtOptionalAuthenticationFilter(
             if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
                 val accessToken = if (authenticationHeader.startsWith("Bearer "))
                     authenticationHeader.substring(7)
-                else throw AuthenticationTokenNotValidException()
+                else throw AuthenticationTokenNotValidException
 
                 val authentication = jwtTokenProvider.parseAuthentication(accessToken)
                 SecurityContextHolder.getContext().authentication = authentication

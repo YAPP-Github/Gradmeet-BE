@@ -21,10 +21,10 @@ class JwtAuthenticationFilter(
     ) {
         try {
             val authenticationHeader =
-                request.getHeader("Authorization") ?: throw AuthenticationTokenNotFoundException()
+                request.getHeader("Authorization") ?: throw AuthenticationTokenNotFoundException
             val accessToken = if (authenticationHeader.startsWith("Bearer "))
                 authenticationHeader.substring(7)
-            else throw AuthenticationTokenNotValidException()
+            else throw AuthenticationTokenNotValidException
 
             val authentication = jwtTokenProvider.parseAuthentication(accessToken)
             SecurityContextHolder.getContext().authentication = authentication

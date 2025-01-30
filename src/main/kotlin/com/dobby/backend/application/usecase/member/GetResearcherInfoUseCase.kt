@@ -24,7 +24,7 @@ class GetResearcherInfoUseCase(
 
     override fun execute(input: Input): Output {
         val researcher = researcherGateway.findByMemberId(input.memberId)
-            ?: throw ResearcherNotFoundException()
+            ?: throw ResearcherNotFoundException
 
         return Output(
             member = researcher.member,

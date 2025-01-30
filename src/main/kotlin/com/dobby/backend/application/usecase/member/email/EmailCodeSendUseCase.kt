@@ -34,8 +34,8 @@ class EmailCodeSendUseCase(
     }
 
     private fun validateEmail(email : String){
-        if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException()
-        if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException()
+        if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
+        if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
     }
 
     private fun reflectVerification(input: Input, code: String) {
@@ -43,7 +43,7 @@ class EmailCodeSendUseCase(
 
         if (existingInfo != null) {
             if (existingInfo.status == VerificationStatus.VERIFIED) {
-                throw EmailAlreadyVerifiedException()
+                throw EmailAlreadyVerifiedException
             }
             verificationGateway.updateCode(existingInfo.univEmail, code)
             return
