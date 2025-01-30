@@ -16,7 +16,7 @@ class DeleteExperimentPostUseCase(
         val post = experimentPostGateway.findExperimentPostByMemberIdAndPostId(
             memberId = input.memberId,
             postId = input.postId
-        ) ?: throw ExperimentPostNotFoundException()
+        ) ?: throw ExperimentPostNotFoundException
 
         experimentPostGateway.delete(post)
     }

@@ -23,7 +23,7 @@ class GenerateTestTokenUseCase(
     override fun execute(input: Input): Output {
         val memberId = input.memberId
         val member = memberGateway.findById(memberId)
-            ?: throw MemberNotFoundException()
+            ?: throw MemberNotFoundException
 
         return Output(
             accessToken = tokenGateway.generateAccessToken(member),

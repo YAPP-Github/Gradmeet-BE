@@ -2,7 +2,7 @@ package com.dobby.backend.infrastructure.s3
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.dobby.backend.domain.exception.InvalidInputException
+import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.infrastructure.config.properties.S3Properties
 import com.dobby.backend.util.generateULID
 import io.kotest.core.spec.style.BehaviorSpec
@@ -44,8 +44,8 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
     given("파일 이름에 확장자가 없는 경우") {
         val imageName = "test_image" // 확장자가 없는 파일명
 
-        then("InvalidInputException이 발생한다") {
-            assertFailsWith<InvalidInputException> {
+        then("InvalidRequestValueException이 발생한다") {
+            assertFailsWith<InvalidRequestValueException> {
                 provider.getExperimentPostPreSignedUrl(imageName)
             }
         }

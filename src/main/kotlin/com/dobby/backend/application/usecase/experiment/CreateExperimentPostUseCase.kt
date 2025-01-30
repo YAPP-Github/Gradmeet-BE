@@ -1,9 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.ErrorCode
-import com.dobby.backend.domain.exception.ExperimentPostException
-import com.dobby.backend.domain.exception.PermissionDeniedException
+import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
@@ -183,18 +181,18 @@ class CreateExperimentPostUseCase(
 
     private fun validateMemberRole(member :Member){
         if(member.role != RoleType.RESEARCHER)
-            throw PermissionDeniedException()
+            throw PermissionDeniedException
     }
 
     private fun validateImageListSize(imageListInfo: ImageListInfo){
         if(imageListInfo.images.size > 3)
-            throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_IMAGE_SIZE_LIMIT);
+            throw ExperimentPostImageSizeException
     }
 
     private fun validateOnlineMatchType(input: Input){
         if(input.matchType == MatchType.ONLINE){
             if(input.univName != null || input.region != null || input.area != null) {
-                throw ExperimentPostException(ErrorCode.EXPERIMENT_POST_INVALID_ONLINE_REQUEST)
+                throw ExperimentPostInvalidOnlineRequestException
             }
         }
     }

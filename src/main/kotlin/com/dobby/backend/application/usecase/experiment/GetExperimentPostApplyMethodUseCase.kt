@@ -21,7 +21,7 @@ class GetExperimentPostApplyMethodUseCase(
 
     override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
-            ?: throw ExperimentPostNotFoundException()
+            ?: throw ExperimentPostNotFoundException
 
         return Output(
             applyMethodId = experimentPost.applyMethod.id,

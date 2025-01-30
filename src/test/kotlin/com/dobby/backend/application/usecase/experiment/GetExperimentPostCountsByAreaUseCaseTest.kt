@@ -1,4 +1,5 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByAreaUseCase
+import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
@@ -8,7 +9,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import jakarta.persistence.Tuple
-import java.security.InvalidParameterException
 
 class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
     val experimentPostGateway = mockk<ExperimentPostGateway>()
@@ -78,7 +78,7 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
 
             then("예외가 발생한다") {
                 val exception = runCatching { getExperimentPostCountsByAreaUseCase.execute(input) }.exceptionOrNull()
-                exception shouldBe InvalidParameterException()
+                exception shouldBe InvalidRequestValueException
             }
         }
     }

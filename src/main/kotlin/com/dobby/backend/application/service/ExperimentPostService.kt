@@ -9,10 +9,10 @@ import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostTotal
 import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostsUseCase
 import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
 import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
+import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.security.InvalidParameterException
 
 @Service
 class ExperimentPostService(
@@ -83,7 +83,7 @@ class ExperimentPostService(
     }
 
     private fun validateLocationAreaCount(areas: List<Area>) {
-        if (areas.size > 5) throw ExperimentAreaOverflowException()
+        if (areas.size > 5) throw ExperimentAreaOverflowException
     }
 
     private fun validateRegion(locationInfo: GetExperimentPostsUseCase.LocationTargetInput){
@@ -91,7 +91,7 @@ class ExperimentPostService(
         val validAreas = Area.findByRegion(region).map { it.name }
 
         if(locationInfo.areas?.map {it.name }?.any {it !in validAreas } == true) {
-            throw ExperimentAreaInCorrectException()
+            throw ExperimentAreaInCorrectException
         }
     }
     fun generatePreSignedUrl(input: GenerateExperimentPostPreSignedUrlUseCase.Input): GenerateExperimentPostPreSignedUrlUseCase.Output {
@@ -115,7 +115,7 @@ class ExperimentPostService(
     private fun validateSortOrder(sortOrder: String): String {
         return when (sortOrder) {
             "ASC", "DESC" -> sortOrder
-            else -> throw InvalidParameterException("Invalid sort order. Please use 'ASC' or 'DESC'")
+            else -> throw InvalidRequestValueException
         }
     }
 
