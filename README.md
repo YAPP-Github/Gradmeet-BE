@@ -31,9 +31,9 @@
 - 도메인 객체의 영속성 및 외부 시스템과의 인터페이스 (gateway)
 ```
 
-|             | presentation | infrastructure | application | support | domain |
+|             | presentation | infrastructure | application | util | domain |
 |-------------|---|---------|------|---------|--------|
-| 사용가능한 모듈 여부 | - | -       | -    | O       | -      |
+| 의존 가능 여부 | - | -       | -    | O       | -      |
 
 ### util: 유틸 패키지
 
@@ -42,9 +42,9 @@
 - TsidUtils 등
 ```
 
-|             | presentation | infrastructure | application | support | domain |
+|             | presentation | infrastructure | application | util | domain |
 |-------------|---|---------|------|---------|--------|
-| 사용가능한 모듈 여부 | - | -       | -    | -       | -      |
+| 의존 가능 여부 | - | -       | -    | -       | -      |
 
 ### application: 응용 서비스/UseCase 계층
 
@@ -53,9 +53,9 @@
 - 도메인 객체를 활용하여 애플리케이션의 주요 동작을 처리
 ```
 
-|             | presentation | infrastructure | application | support | domain |
+|             | presentation | infrastructure | application | util | domain |
 |-------------|---|---------|------|---------|--------|
-| 사용가능한 모듈 여부 | - | -       | -    | O       | O      |
+| 의존 가능 여부 | - | -       | -    | O       | O      |
 
 
 ### infrastructure : 외부 통신 계층
@@ -66,9 +66,9 @@
 - 도메인 계층과 직접 연결되지 않고 gateway(인터페이스)를 통해 접근
 ```
 
-|             | presentation | infrastructure | application | support | domain |
+|             | presentation | infrastructure | application | util | domain |
 |-------------|---|---------|------|---------|--------|
-| 사용가능한 모듈 여부 | - | -       | -    | O       | O      |
+| 의존 가능 여부 | - | -       | -    | O       | O      |
 
 ### presentation : 요청 처리 계층
 
@@ -78,9 +78,9 @@
 - Controller, Request/Response DTO, ExceptionHandler 등이 위치
 ```
 
-|             | presentation | infrastructure | application | support | domain |
+|             | presentation | infrastructure | application | util | domain |
 |-------------|---|---------|-------------|---------|--------|
-| 사용가능한 모듈 여부 | - | -       | O           | O       | O      |
+| 의존 가능 여부 | - | -       | O           | O       | O      |
 
 <br>
 
