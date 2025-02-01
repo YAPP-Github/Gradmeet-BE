@@ -5,7 +5,7 @@
 ![스크린샷 2025-01-30 오후 8.10.17.png](..%2F..%2F..%2FDesktop%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202025-01-30%20%EC%98%A4%ED%9B%84%208.10.17.png)
 <br>
 
-## ✨ Teck Stack
+## ✨ Tech Stack
 
 | IDE | IntelliJ                         |
 |:---|:---------------------------------|
@@ -21,7 +21,7 @@
 <br>
 
 
-##  📦 Package Structure
+## 📦 Package Structure
 
 ### domain: 도메인 계층
 
