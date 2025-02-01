@@ -8,7 +8,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.infrastructure.config.properties.S3Properties
-import com.dobby.backend.util.generateULID
+import com.dobby.backend.util.generateTSID
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -53,6 +53,6 @@ class S3PreSignedUrlProvider(
             throw InvalidRequestValueException
         }
         val ext = fileName.substring(lastDotIndex)
-        return "${generateULID()}$ext"
+        return "${generateTSID()}$ext"
     }
 }

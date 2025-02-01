@@ -4,9 +4,8 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.infrastructure.config.properties.S3Properties
-import com.dobby.backend.util.generateULID
+import com.dobby.backend.util.generateTSID
 import io.kotest.core.spec.style.BehaviorSpec
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
 import java.net.URL
@@ -51,12 +50,11 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
         }
     }
 
-    given("generateULID 함수가 호출되면") {
-        val ulid = generateULID()
+    given("generateTSID 함수가 호출되면") {
+        val tsid = generateTSID()
 
         then("ULID가 생성된다") {
-            assertNotNull(ulid)
-            assertTrue(ulid.isNotEmpty())
+            assertNotNull(tsid)
         }
     }
 })
