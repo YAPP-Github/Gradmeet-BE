@@ -7,8 +7,8 @@ import jakarta.persistence.*
 @Table(name = "researcher")
 class ResearcherEntity (
     @Id
-    @Column(name= "researcher_id")
-    val id: Long,
+    @Column(name= "researcher_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)

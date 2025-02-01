@@ -125,7 +125,7 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toUpdateExperimentPostInput(request: UpdateExperimentPostRequest, postId: Long): UpdateExperimentPostUseCase.Input {
+    fun toUpdateExperimentPostInput(request: UpdateExperimentPostRequest, postId: String): UpdateExperimentPostUseCase.Input {
         return UpdateExperimentPostUseCase.Input(
             experimentPostId = postId,
             memberId = getCurrentMemberId(),
@@ -156,7 +156,7 @@ object ExperimentPostMapper {
     }
 
 
-    fun toGetExperimentPostDetailUseCaseInput(experimentPostId: Long): GetExperimentPostDetailUseCase.Input {
+    fun toGetExperimentPostDetailUseCaseInput(experimentPostId: String): GetExperimentPostDetailUseCase.Input {
         return GetExperimentPostDetailUseCase.Input(
             experimentPostId = experimentPostId,
             memberId = getCurrentMemberIdOrNull()
@@ -216,7 +216,7 @@ object ExperimentPostMapper {
         }
     }
 
-    fun toGetExperimentPostApplyMethodUseCaseInput(experimentPostId: Long): GetExperimentPostApplyMethodUseCase.Input {
+    fun toGetExperimentPostApplyMethodUseCaseInput(experimentPostId: String): GetExperimentPostApplyMethodUseCase.Input {
         return GetExperimentPostApplyMethodUseCase.Input(
             experimentPostId = experimentPostId
         )
@@ -334,14 +334,14 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toDeleteExperimentPostUseCaseInput(postId: Long): DeleteExperimentPostUseCase.Input {
+    fun toDeleteExperimentPostUseCaseInput(postId: String): DeleteExperimentPostUseCase.Input {
         return DeleteExperimentPostUseCase.Input(
             memberId = getCurrentMemberId(),
             postId = postId
         )
     }
 
-    fun toUpdateExperimentPostRecruitStatusUseCaseInput(postId: Long): UpdateExperimentPostRecruitStatusUseCase.Input {
+    fun toUpdateExperimentPostRecruitStatusUseCaseInput(postId: String): UpdateExperimentPostRecruitStatusUseCase.Input {
         return UpdateExperimentPostRecruitStatusUseCase.Input(
             memberId = getCurrentMemberId(),
             postId = postId

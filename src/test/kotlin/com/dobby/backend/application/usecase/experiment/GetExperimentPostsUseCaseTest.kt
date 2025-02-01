@@ -37,7 +37,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "야뿌 피자 먹방 테스트",
             views = 10,
             univName = "야뿌 대학교",
@@ -47,7 +47,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -62,7 +62,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "야뿌 연구원",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -73,7 +73,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,
@@ -114,7 +114,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "Study Target Null Test",
             views = 10,
             univName = "Test University",
@@ -124,7 +124,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -139,7 +139,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "Test Member",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -150,7 +150,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,
@@ -188,7 +188,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "Location Target Null Test",
             views = 10,
             univName = "Test University",
@@ -198,7 +198,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -213,7 +213,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "Test Member",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -224,7 +224,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,
@@ -261,7 +261,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "Location Target Null Test",
             views = 10,
             univName = "Test University",
@@ -271,7 +271,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -286,7 +286,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "Test Member",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -297,7 +297,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,
@@ -334,7 +334,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "야뿌 피자 먹방 테스트",
             views = 10,
             univName = "Test University",
@@ -344,7 +344,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -359,7 +359,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "Test Member",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -370,7 +370,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,
@@ -408,7 +408,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         val input = Input(customFilter, pagination)
 
         val mockPost = ExperimentPost(
-            id = 1L,
+            id = "1",
             title = "야뿌 피자 먹방 테스트",
             views = 10,
             univName = "Test University",
@@ -418,7 +418,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             endDate = LocalDate.now().plusDays(10),
             alarmAgree = true,
             applyMethod = ApplyMethod(
-                id = 1L,
+                id = "1",
                 phoneNum = "123-456-7890",
                 formUrl = "https://example.googleform.com",
                 content = "구글 폼 참고하여 신청해주세요."
@@ -433,7 +433,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             matchType = MatchType.ALL,
             timeRequired = TimeSlot.ABOUT_1H,
             member = Member(
-                id = 1L,
+                id = "1",
                 name = "Test Member",
                 role = RoleType.RESEARCHER,
                 contactEmail = "researcher@example.com",
@@ -444,7 +444,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 updatedAt = LocalDateTime.now()
             ),
             targetGroup = TargetGroup(
-                id = 0L,
+                id = "0",
                 startAge = 20,
                 endAge = 29,
                 genderType = GenderType.FEMALE,

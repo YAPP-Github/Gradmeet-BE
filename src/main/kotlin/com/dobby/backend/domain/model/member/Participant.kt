@@ -8,7 +8,7 @@ import com.dobby.backend.util.generateTSID
 import java.time.LocalDate
 
 data class Participant(
-    val id: Long,
+    val id: String,
     val member: Member,
     val gender: GenderType,
     val birthDate: LocalDate,

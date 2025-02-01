@@ -12,7 +12,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class ExperimentPost(
-    val id: Long,
+    val id: String,
     val member: Member,
     val targetGroup: TargetGroup,
     val applyMethod: ApplyMethod,
@@ -74,7 +74,7 @@ data class ExperimentPost(
     ): ExperimentPost {
         val updatedImages = imageListInfo?.map { imageUrl ->
             val existingImage = this.images.find { it.imageUrl == imageUrl }
-            existingImage ?: ExperimentImage(id = 0L, experimentPost = this, imageUrl = imageUrl)
+            existingImage ?: ExperimentImage(id = "0", experimentPost = this, imageUrl = imageUrl)
         } ?: this.images
 
         return this.copy(

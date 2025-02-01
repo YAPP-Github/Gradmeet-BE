@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 
-interface VerificationRepository : JpaRepository<VerificationEntity, Long> {
+interface VerificationRepository : JpaRepository<VerificationEntity, String> {
     fun findByUnivEmailAndStatus(univEmail: String, verified: VerificationStatus): VerificationEntity?
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)

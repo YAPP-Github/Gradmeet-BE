@@ -64,7 +64,7 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             matchType = input.matchType
         )
 
-        val savedParticipant = participant.copy(member = member.copy(id = 1L))
+        val savedParticipant = participant.copy(member = member.copy(id = "1"))
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"
 

@@ -2,7 +2,7 @@ package com.dobby.backend.presentation.api.dto.response.experiment
 
 import java.time.LocalDate
 data class PostInfo(
-    val experimentPostId: Long,
+    val experimentPostId: String,
     val title: String,
     val views: Int,
     val univName: String?,

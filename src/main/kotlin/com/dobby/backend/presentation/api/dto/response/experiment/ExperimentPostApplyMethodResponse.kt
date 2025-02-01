@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 @Schema(description = "실험 공고 참여 방법 조회 응답 DTO")
 data class ExperimentPostApplyMethodResponse(
     @Schema(description = "참여 방법 Id", example = "1")
-    val applyMethodId: Long,
+    val applyMethodId: String,
 
     @Schema(description = "전화번호", example = "010-1234-5678")
     val phoneNum: String?,

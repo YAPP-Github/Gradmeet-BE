@@ -8,7 +8,7 @@ class GetMyExperimentPostTotalCountUseCase(
 ): UseCase<GetMyExperimentPostTotalCountUseCase.Input, GetMyExperimentPostTotalCountUseCase.Output> {
 
     data class Input(
-        val memberId: Long
+        val memberId: String
     )
 
     data class Output(

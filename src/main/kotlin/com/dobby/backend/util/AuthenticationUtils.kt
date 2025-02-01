@@ -2,8 +2,8 @@ package com.dobby.backend.util
 
 import org.springframework.security.core.context.SecurityContextHolder
 
-fun getCurrentMemberId() = SecurityContextHolder.getContext().authentication.name.toLong()
+fun getCurrentMemberId(): String = SecurityContextHolder.getContext().authentication.name
 
-fun getCurrentMemberIdOrNull(): Long? {
-    return SecurityContextHolder.getContext().authentication?.name?.takeIf { it != "anonymousUser" }?.toLong()
+fun getCurrentMemberIdOrNull(): String? {
+    return SecurityContextHolder.getContext().authentication?.name?.takeIf { it != "anonymousUser" }?.let { it }
 }

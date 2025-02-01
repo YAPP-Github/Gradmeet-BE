@@ -4,7 +4,7 @@ import com.dobby.backend.util.generateTSID
 
 
 data class Researcher(
-    val id: Long,
+    val id: String,
     var member: Member,
     val univEmail: String,
     val emailVerified: Boolean,

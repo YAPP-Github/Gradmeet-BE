@@ -23,12 +23,12 @@ class GetExperimentPostApplyMethodUseCaseTest : BehaviorSpec({
     val useCase = GetExperimentPostApplyMethodUseCase(experimentPostGateway)
 
     given("유효한 experimentPostId가 주어졌을 때") {
-        val experimentPostId = 1L
+        val experimentPostId = "1"
 
         val member = mockk<Member>()
         val targetGroup = mockk<TargetGroup>()
         val applyMethod = ApplyMethod(
-            id = 1L,
+            id = "1",
             phoneNum = "123-456-7890",
             formUrl = "https://example.com",
             content = "지원 방법에 대한 상세 설명"
@@ -75,7 +75,7 @@ class GetExperimentPostApplyMethodUseCaseTest : BehaviorSpec({
     }
 
     given("존재하지 않는 experimentPostId가 주어졌을 때") {
-        val invalidExperimentPostId = 999L
+        val invalidExperimentPostId = "999"
 
         every { experimentPostGateway.findById(invalidExperimentPostId) } returns null
 

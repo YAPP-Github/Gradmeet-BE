@@ -50,7 +50,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             labInfo = input.labInfo
         )
 
-        val savedMember = member.copy(id = 1L, status = MemberStatus.ACTIVE)
+        val savedMember = member.copy(id = "1", status = MemberStatus.ACTIVE)
         val savedResearcher = researcher.copy(member = savedMember)
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"

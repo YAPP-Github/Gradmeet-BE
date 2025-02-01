@@ -3,7 +3,7 @@ package com.dobby.backend.domain.model.experiment
 import com.dobby.backend.util.generateTSID
 
 data class ExperimentImage(
-    val id: Long,
+    val id: String,
     val experimentPost: ExperimentPost?,
     val imageUrl: String
 ) {

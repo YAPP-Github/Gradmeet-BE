@@ -4,5 +4,5 @@ import com.dobby.backend.domain.model.member.Participant
 
 interface ParticipantGateway {
     fun save(participant: Participant): Participant
-    fun findByMemberId(memberId: Long): Participant?
+    fun findByMemberId(memberId: String): Participant?
 }

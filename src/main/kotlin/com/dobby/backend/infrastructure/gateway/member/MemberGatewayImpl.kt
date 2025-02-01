@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component
 class MemberGatewayImpl(
     private val memberRepository: MemberRepository,
 ) : MemberGateway {
-    override fun getById(memberId: Long): Member {
+    override fun getById(memberId: String): Member {
         return memberRepository
             .getReferenceById(memberId)
             .let(MemberEntity::toDomain)
     }
 
-    override fun findById(memberId: Long): Member? {
+    override fun findById(memberId: String): Member? {
         return memberRepository
             .findById(memberId)
             .map(MemberEntity::toDomain)

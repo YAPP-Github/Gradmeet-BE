@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 @Schema(description = "사용자 DTO")
 data class MemberResponse(
     @Schema(description = "사용자 ID", example = "1")
-    val memberId: Long?,
+    val memberId: String?,
 
     @Schema(description = "이름", example = "야뿌")
     val name: String?,

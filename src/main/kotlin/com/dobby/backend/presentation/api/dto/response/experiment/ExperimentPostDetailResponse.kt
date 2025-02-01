@@ -11,7 +11,7 @@ import java.time.LocalDate
 @Schema(description = "실험 공고 상세 정보 조회 응답 DTO")
 data class ExperimentPostDetailResponse(
     @Schema(description = "실험 공고 ID", example = "1")
-    val experimentPostId: Long,
+    val experimentPostId: String,
 
     @Schema(description = "실험 공고 제목", example = "테스트 실험 공고")
     val title: String,

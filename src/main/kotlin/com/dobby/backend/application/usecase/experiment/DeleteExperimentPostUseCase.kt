@@ -8,8 +8,8 @@ class DeleteExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway
 ): UseCase<DeleteExperimentPostUseCase.Input, Unit> {
     data class Input(
-        val memberId: Long,
-        val postId: Long
+        val memberId: String,
+        val postId: String
     )
 
     override fun execute(input: Input) {

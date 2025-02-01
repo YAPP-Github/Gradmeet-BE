@@ -16,7 +16,7 @@ class ParticipantGatewayImpl(
         return savedEntity.toDomain()
     }
 
-    override fun findByMemberId(memberId: Long): Participant? {
+    override fun findByMemberId(memberId: String): Participant? {
         return participantRepository
             .findByMemberId(memberId)
             ?.let(ParticipantEntity::toDomain)

@@ -6,8 +6,8 @@ import jakarta.persistence.*
 @Entity(name = "apply_method")
 class ApplyMethodEntity (
     @Id
-    @Column(name = "apply_method_id")
-    val id: Long,
+    @Column(name = "apply_method_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @Column(name = "phone_num", length = 50)
     var phoneNum: String?,

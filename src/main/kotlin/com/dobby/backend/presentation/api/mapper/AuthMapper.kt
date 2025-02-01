@@ -59,7 +59,7 @@ object AuthMapper {
         )
     }
 
-    fun toForceTokenInput(input: Long): GenerateTestTokenUseCase.Input {
+    fun toForceTokenInput(input: String): GenerateTestTokenUseCase.Input {
         return GenerateTestTokenUseCase.Input(
             memberId = input
         )

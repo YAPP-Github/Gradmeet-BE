@@ -4,7 +4,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.util.generateTSID
 
 data class TargetGroup(
-    val id: Long,
+    val id: String,
     var startAge: Int?,
     var endAge: Int?,
     var genderType: GenderType,

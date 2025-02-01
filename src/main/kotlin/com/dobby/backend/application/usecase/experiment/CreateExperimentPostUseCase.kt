@@ -23,7 +23,7 @@ class CreateExperimentPostUseCase(
 ) : UseCase<CreateExperimentPostUseCase.Input, CreateExperimentPostUseCase.Output> {
 
     data class Input(
-        val memberId: Long,
+        val memberId: String,
         val targetGroupInfo: TargetGroupInfo,
         val applyMethodInfo: ApplyMethodInfo,
         val imageListInfo: ImageListInfo,
@@ -68,7 +68,7 @@ class CreateExperimentPostUseCase(
     )
 
     data class PostInfo(
-        val postId: Long,
+        val postId: String,
         val title: String,
         val views: Int,
         val univName: String?,

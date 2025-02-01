@@ -19,7 +19,7 @@ interface ExperimentPostCustomRepository {
     fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
 
     fun findExperimentPostsByMemberIdWithPagination(
-        memberId: Long,
+        memberId: String,
         pagination: Pagination,
         order: String
     ): List<ExperimentPostEntity>?

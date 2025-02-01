@@ -4,7 +4,7 @@ import com.dobby.backend.util.generateTSID
 import java.time.LocalDateTime
 
 data class Verification(
-    val id: Long,
+    val id: String,
     val univEmail: String,
     var verificationCode: String,
     var status: VerificationStatus = VerificationStatus.HOLD,

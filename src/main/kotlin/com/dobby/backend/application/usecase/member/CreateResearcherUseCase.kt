@@ -31,7 +31,7 @@ class CreateResearcherUseCase(
         val memberInfo: MemberResponse
     )
     data class MemberResponse(
-        val memberId: Long?,
+        val memberId: String?,
         val name: String?,
         val oauthEmail: String?,
         val provider: ProviderType?,

@@ -3,7 +3,7 @@ package com.dobby.backend.domain.model.experiment
 import com.dobby.backend.util.generateTSID
 
 data class ApplyMethod(
-    val id: Long,
+    val id: String,
     var phoneNum: String?,
     var formUrl: String?,
     var content: String

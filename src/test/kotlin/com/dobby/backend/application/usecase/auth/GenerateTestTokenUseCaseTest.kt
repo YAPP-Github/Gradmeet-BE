@@ -20,7 +20,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
     val generateTestTokenUseCase = GenerateTestTokenUseCase(tokenGateway, memberGateway)
 
     given("memberId가 주어졌을 때") {
-        val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+        val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
             status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
         val accessToken = "testAccessToken"
@@ -28,7 +28,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
 
         every { tokenGateway.generateAccessToken(member) } returns accessToken
         every { tokenGateway.generateRefreshToken(member) } returns refreshToken
-        every { memberGateway.findById(1) } returns member
+        every { memberGateway.findById("1") } returns member
 
         `when`("execute가 호출되면") {
             val input = GenerateTestTokenUseCase.Input(member.id)
@@ -40,10 +40,10 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
             }
         }
 
-        every { memberGateway.findById(2) } returns null
+        every { memberGateway.findById("2") } returns null
 
         `when`("존재하지 않는 회원 ID가 주어졌을 때") {
-            val input = GenerateTestTokenUseCase.Input(2)
+            val input = GenerateTestTokenUseCase.Input("2")
 
             then("MemberNotFoundException 예외가 던져져야 한다") {
                 shouldThrow<MemberNotFoundException> {

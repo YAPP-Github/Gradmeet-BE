@@ -12,8 +12,8 @@ import java.time.LocalDate
 @Table(name = "participant")
 class ParticipantEntity (
     @Id
-    @Column(name= "participant_id")
-    val id: Long,
+    @Column(name= "participant_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)

@@ -13,8 +13,8 @@ import java.time.LocalDateTime
 @Entity(name = "experiment_post")
 class ExperimentPostEntity(
     @Id
-    @Column(name = "experiment_post_id")
-    val id: Long,
+    @Column(name = "experiment_post_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

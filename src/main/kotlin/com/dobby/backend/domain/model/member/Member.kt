@@ -7,7 +7,7 @@ import com.dobby.backend.util.generateTSID
 import java.time.LocalDateTime
 
 data class Member(
-    val id: Long,
+    val id: String,
     val name: String,
     val oauthEmail: String,
     val contactEmail: String?,

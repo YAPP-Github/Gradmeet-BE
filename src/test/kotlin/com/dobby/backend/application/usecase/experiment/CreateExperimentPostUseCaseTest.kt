@@ -26,7 +26,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
 
     given("유효한 입력값이 주어졌을 때") {
         val validMember = Member(
-            id = 1L,
+            id = "1",
             role = RoleType.RESEARCHER,
             contactEmail = "christer10@naver.com",
             oauthEmail = "christer10@naver.com",
@@ -38,7 +38,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         val validInput = CreateExperimentPostUseCase.Input(
-            memberId = 1L,
+            memberId = "1",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
                 startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
             ),
@@ -69,14 +69,14 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         every { memberGateway.getById(validInput.memberId) } returns validMember
         every { experimentPostGateway.save(any()) } answers {
             val capturedExperimentPost = firstArg<ExperimentPost>()
-            capturedExperimentPost.copy(id = 100L) // DB에 저장된 ID 시뮬레이션
+            capturedExperimentPost.copy(id = "0") // DB에 저장된 ID 시뮬레이션
         }
 
         `when`("유즈케이스를 실행하면") {
             val result = createExperimentPostUseCase.execute(validInput)
 
             then("정상적으로 실험 게시글이 생성되어야 한다") {
-                result.postInfo.postId shouldBe 100L
+                result.postInfo.postId shouldBe "0"
                 result.postInfo.title shouldBe validInput.title
                 result.postInfo.univName shouldBe validInput.univName
                 result.postInfo.reward shouldBe validInput.reward
@@ -86,7 +86,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
 
     given("연구자가 아닌 사용자가 게시글을 생성하려고 하면") {
         val invalidMember =  Member(
-            id = 2L,
+            id = "0",
             role = RoleType.PARTICIPANT,
             contactEmail = "christer10@naver.com",
             oauthEmail = "christer10@naver.com",
@@ -98,7 +98,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
-            memberId = 2L,
+            memberId = "0",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
                 startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
             ),
@@ -139,7 +139,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
 
     given("이미지가 3장을 초과하면") {
         val validMember = Member(
-            id = 1L,
+            id = "3",
             role = RoleType.RESEARCHER,
             contactEmail = "christer10@naver.com",
             oauthEmail = "christer10@naver.com",
@@ -151,7 +151,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
-            memberId = 1L,
+            memberId = "3",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
                 startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
             ),
@@ -193,7 +193,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
 
     given("온라인 매칭인데 지역 정보가 입력된 경우") {
         val validMember = Member(
-            id = 1L,
+            id = "3",
             role = RoleType.RESEARCHER,
             contactEmail = "christer10@naver.com",
             oauthEmail = "christer10@naver.com",
@@ -205,7 +205,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
-            memberId = 1L,
+            memberId = "3",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
                 startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
             ),
