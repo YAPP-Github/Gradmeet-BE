@@ -53,7 +53,7 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
     given("generateTSID 함수가 호출되면") {
         val tsid = generateTSID()
 
-        then("ULID가 생성된다") {
+        then("TSID가 생성된다") {
             assertNotNull(tsid)
         }
     }
