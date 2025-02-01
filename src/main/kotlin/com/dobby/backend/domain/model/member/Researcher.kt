@@ -1,5 +1,7 @@
 package com.dobby.backend.domain.model.member
 
+import com.dobby.backend.util.generateTSID
+
 
 data class Researcher(
     val id: Long,
@@ -20,7 +22,7 @@ data class Researcher(
             major: String,
             labInfo: String?
         ) = Researcher(
-            id = 0L,
+            id = generateTSID(),
             member = member,
             univEmail = univEmail,
             emailVerified = emailVerified,

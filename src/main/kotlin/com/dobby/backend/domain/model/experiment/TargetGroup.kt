@@ -1,6 +1,7 @@
 package com.dobby.backend.domain.model.experiment
 
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.util.generateTSID
 
 data class TargetGroup(
     val id: Long,
@@ -27,7 +28,7 @@ data class TargetGroup(
             genderType: GenderType,
             otherCondition: String?
         ) = TargetGroup(
-            id = 0L,
+            id = generateTSID(),
             startAge = startAge,
             endAge = endAge,
             genderType = genderType,

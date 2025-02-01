@@ -4,6 +4,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.util.generateTSID
 import java.time.LocalDate
 
 data class Participant(
@@ -30,7 +31,7 @@ data class Participant(
             additionalAddressInfo: AddressInfo,
             matchType: MatchType?
         ) = Participant(
-            id = 0L,
+            id = generateTSID(),
             member = member,
             gender = gender,
             birthDate = birthDate,

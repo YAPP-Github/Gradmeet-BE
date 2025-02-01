@@ -7,6 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.util.generateTSID
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -129,7 +130,7 @@ data class ExperimentPost(
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
         ) = ExperimentPost(
-            id = 0L,
+            id = generateTSID(),
             member = member,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
