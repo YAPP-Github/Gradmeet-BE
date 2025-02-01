@@ -11,6 +11,7 @@ import com.dobby.backend.infrastructure.database.repository.ExperimentPostReposi
 import jakarta.persistence.Tuple
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Component
 class ExperimentPostGatewayImpl(
@@ -108,5 +109,12 @@ class ExperimentPostGatewayImpl(
 
     override fun delete(post: ExperimentPost) {
         experimentPostRepository.delete(ExperimentPostEntity.fromDomain(post))
+    }
+
+    override fun findMatchingExperimentPosts(): Map<String, List<ExperimentPost>?> {
+        val matchingPosts = experimentPostCustomRepository.findMatchingExperimentPostsForAllParticipants()
+        return matchingPosts.mapValues { (_, postEntities) ->
+            postEntities?.map { it.toDomain() }
+        }
     }
 }
