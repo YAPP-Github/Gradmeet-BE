@@ -209,19 +209,20 @@ class ExperimentPostCustomRepositoryImpl (
         entityManager.merge(experimentPost)
     }
 
+    private var lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
+
     @Override
     override fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>> {
         val experimentPost = QExperimentPostEntity.experimentPostEntity
         val targetGroup = QTargetGroupEntity.targetGroupEntity
         val participant = QParticipantEntity.participantEntity
 
+        val currentTime = LocalDateTime.now()
+
         val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
             .join(experimentPost.targetGroup, targetGroup).fetchJoin()
             .where(
-                experimentPost.createdAt.between(
-                    LocalDate.now().atStartOfDay(),
-                    LocalDate.now().plusDays(1).atStartOfDay().minusNanos(1)
-                ),
+                experimentPost.createdAt.between(lastProcessedTime, currentTime),
                 experimentPost.alarmAgree.isTrue
             )
             .fetch()
@@ -234,16 +235,17 @@ class ExperimentPostCustomRepositoryImpl (
                 val participantAge = currentYear - birthDate.year + 1
 
                 participant.id to todayPosts.filter { post ->
-                    val genderCondition = customGenderEq(post.targetGroup.genderType, participant.gender)
-                    val ageCondition = customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge)
-                    val addressCondition = customAddressInfoEq(
-                        post.region, post.area,
-                        participant.basicAddressInfo.region, participant.basicAddressInfo.area,
-                        participant.additionalAddressInfo.region, participant.additionalAddressInfo.area
-                    )
-                    val matchTypeCondition = customMatchTypeEq(post.matchType, participant.matchType)
-                    genderCondition && ageCondition && addressCondition && matchTypeCondition
-                }
+                    listOf(
+                        customGenderEq(post.targetGroup.genderType, participant.gender),
+                        customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
+                        customAddressInfoEq(
+                            post.region, post.area,
+                            participant.basicAddressInfo.region, participant.basicAddressInfo.area,
+                            participant.additionalAddressInfo.region, participant.additionalAddressInfo.area
+                        ),
+                        customMatchTypeEq(post.matchType, participant.matchType)
+                    ).all { it }
+                }.take(10)
             }
     }
     private fun customGenderEq(
