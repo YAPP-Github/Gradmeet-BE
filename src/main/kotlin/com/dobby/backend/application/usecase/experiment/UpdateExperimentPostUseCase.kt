@@ -140,7 +140,6 @@ class UpdateExperimentPostUseCase (
         if(existingPost.member.id != input.memberId) throw PermissionDeniedException
     }
 
-
     private fun validateNotExpired(existingPost: ExperimentPost){
         if (!existingPost.recruitStatus) throw ExperimentPostUpdateDateException
     }

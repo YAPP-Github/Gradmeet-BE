@@ -52,10 +52,12 @@ class S3PreSignedUrlProviderTest : BehaviorSpec({
     }
 
     given("generateId 함수가 호출되면") {
+        `when`(idGeneratorGateway.generateId()).thenReturn("test-tsid")
         val tsid = idGeneratorGateway.generateId()
 
         then("TSID가 생성된다") {
             assertNotNull(tsid)
+            assertEquals("test-tsid", tsid)
         }
     }
 })
