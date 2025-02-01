@@ -22,7 +22,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
     val useCase = GetMyExperimentPostsUseCase(experimentPostGateway)
 
     given("유효한 memberId와 pagination 정보가 주어졌을 때") {
-        val memberId = 1L
+        val memberId = "1"
         val paginationInput = GetMyExperimentPostsUseCase.PaginationInput(page = 1, count = 6, order = "DESC")
         val input = GetMyExperimentPostsUseCase.Input(memberId, paginationInput)
 
@@ -30,21 +30,21 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
         every { member.name } returns "임도비"
 
         val targetGroup = mockk<TargetGroup>()
-        every { targetGroup.id } returns 1L
+        every { targetGroup.id } returns "1"
         every { targetGroup.startAge } returns 18
         every { targetGroup.endAge } returns 30
         every { targetGroup.genderType } returns GenderType.ALL
         every { targetGroup.otherCondition } returns "특별한 조건 없음"
 
         val applyMethod = mockk<ApplyMethod>()
-        every { applyMethod.id } returns 1L
+        every { applyMethod.id } returns "1"
         every { applyMethod.phoneNum } returns "010-1234-5678"
         every { applyMethod.formUrl } returns "http://apply.com/form"
         every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
 
         val experimentPostList = listOf(
             ExperimentPost(
-                id = 1L,
+                id = "1",
                 title = "야뿌들의 평균 식사량 체크 테스트",
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now(),
@@ -69,7 +69,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 images = mutableListOf()
             ),
             ExperimentPost(
-                id = 2L,
+                id = "2",
                 title = "다음 세대 인공지능을 위한 연구",
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now(),
@@ -94,7 +94,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
                 images = mutableListOf()
             ),
             ExperimentPost(
-                id = 3L,
+                id = "3",
                 title = "소셜 미디어 연구 참가자 모집",
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now(),
@@ -127,19 +127,19 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
 
             then("정상적으로 experimentPost 정보가 반환된다") {
                 result.size shouldBe 3
-                result[0].experimentPostId shouldBe 1L
+                result[0].experimentPostId shouldBe "1"
                 result[0].title shouldBe "야뿌들의 평균 식사량 체크 테스트"
                 result[0].content shouldBe "야뿌들의 한끼 식사량을 체크하는 테스트입니다."
                 result[0].views shouldBe 100
                 result[0].recruitStatus shouldBe false
 
-                result[1].experimentPostId shouldBe 2L
+                result[1].experimentPostId shouldBe "2"
                 result[1].title shouldBe "다음 세대 인공지능을 위한 연구"
                 result[1].content shouldBe "다음 세대의 AI를 위한 실험 연구입니다."
                 result[1].views shouldBe 150
                 result[1].recruitStatus shouldBe true
 
-                result[2].experimentPostId shouldBe 3L
+                result[2].experimentPostId shouldBe "3"
                 result[2].title shouldBe "소셜 미디어 연구 참가자 모집"
                 result[2].content shouldBe "소셜 미디어에 대한 연구에 참여할 모집입니다."
                 result[2].views shouldBe 200
@@ -149,7 +149,7 @@ class GetMyExperimentPostsUseCaseTest : BehaviorSpec({
     }
 
     given("주어진 memberId에 해당하는 실험 공고가 없을 때") {
-        val memberId = 1L
+        val memberId = "1"
         val paginationInput = GetMyExperimentPostsUseCase.PaginationInput(page = 1, count = 6, order = "DESC")
         val input = GetMyExperimentPostsUseCase.Input(memberId, paginationInput)
 

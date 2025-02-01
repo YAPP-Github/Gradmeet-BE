@@ -44,7 +44,7 @@ class AuthController(
     @Operation(summary = "테스트용 토큰 강제 발급", description = "memberId로 테스트용 토큰을 발급합니다")
     @PostMapping("/force-token")
     fun forceToken(
-        @RequestParam memberId: Long
+        @RequestParam memberId: String
     ): TestMemberSignInResponse {
         val input = AuthMapper.toForceTokenInput(memberId)
         val output = authService.forceToken(input)

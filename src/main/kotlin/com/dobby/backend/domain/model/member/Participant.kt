@@ -7,7 +7,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 
 data class Participant(
-    val id: Long,
+    val id: String,
     val member: Member,
     val gender: GenderType,
     val birthDate: LocalDate,
@@ -23,6 +23,7 @@ data class Participant(
 
     companion object {
         fun newParticipant(
+            id: String,
             member: Member,
             gender: GenderType,
             birthDate: LocalDate,
@@ -30,7 +31,7 @@ data class Participant(
             additionalAddressInfo: AddressInfo,
             matchType: MatchType?
         ) = Participant(
-            id = 0L,
+            id = id,
             member = member,
             gender = gender,
             birthDate = birthDate,

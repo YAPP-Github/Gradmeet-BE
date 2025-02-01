@@ -23,21 +23,21 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
     val getExperimentPostDetailUseCase = GetExperimentPostDetailUseCase(experimentPostGateway)
 
     given("유효한 experimentPostId가 주어졌을 때") {
-        val experimentPostId = 1L
+        val experimentPostId = "1"
 
         val member = mockk<Member>()
         every { member.name } returns "임도비"
-        every { member.id } returns 1L
+        every { member.id } returns "1"
 
         val targetGroup = mockk<TargetGroup>()
-        every { targetGroup.id } returns 1L
+        every { targetGroup.id } returns "1"
         every { targetGroup.startAge } returns 18
         every { targetGroup.endAge } returns 30
         every { targetGroup.genderType } returns GenderType.ALL
         every { targetGroup.otherCondition } returns "특별한 조건 없음"
 
         val applyMethod = mockk<ApplyMethod>()
-        every { applyMethod.id } returns 1L
+        every { applyMethod.id } returns "1"
         every { applyMethod.phoneNum } returns "010-1234-5678"
         every { applyMethod.formUrl } returns "http://apply.com/form"
         every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
@@ -87,7 +87,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
         }
 
         `when`("다른 사람이 작성한 공고를 대상으로 execute가 호출되면") {
-            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = 2L)
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = "2")
             val result = getExperimentPostDetailUseCase.execute(input)
 
             then("isAuthor가 false인 experimentPostDetailResponse가 반환된다") {
@@ -108,12 +108,12 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
     }
 
     given("유효하지 않은 experimentPostId가 주어졌을 때") {
-        val invalidExperimentPostId = 999L
+        val invalidExperimentPostId = "999"
 
         every { experimentPostGateway.findById(invalidExperimentPostId) } returns null
 
         `when`("execute가 호출되면") {
-            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = invalidExperimentPostId, memberId = 1L)
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = invalidExperimentPostId, memberId = "1")
 
             then("ExperimentPostNotFoundException이 발생한다") {
                 val exception = runCatching { getExperimentPostDetailUseCase.execute(input) }.exceptionOrNull()

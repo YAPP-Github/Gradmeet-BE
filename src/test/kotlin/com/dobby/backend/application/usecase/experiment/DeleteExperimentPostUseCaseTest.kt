@@ -15,8 +15,8 @@ class DeleteExperimentPostUseCaseTest : BehaviorSpec({
     val deleteExperimentPostUseCase = DeleteExperimentPostUseCase(experimentPostGateway)
 
     given("게시글을 삭제할 때") {
-        val memberId = 1L
-        val postId = 2L
+        val memberId = "1"
+        val postId = "2"
         val input = DeleteExperimentPostUseCase.Input(memberId, postId)
 
         val existingPost = mockk<ExperimentPost>()
@@ -34,8 +34,8 @@ class DeleteExperimentPostUseCaseTest : BehaviorSpec({
     }
 
     given("게시글을 삭제하려는데 게시글이 존재하지 않는 경우") {
-        val memberId = 1L
-        val postId = 999L
+        val memberId = "1"
+        val postId = "999"
         val input = DeleteExperimentPostUseCase.Input(memberId, postId)
 
         every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns null

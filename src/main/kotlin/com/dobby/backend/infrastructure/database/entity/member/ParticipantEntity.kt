@@ -11,14 +11,13 @@ import java.time.LocalDate
 @Entity
 @Table(name = "participant")
 class ParticipantEntity (
+    @Id
+    @Column(name= "participant_id", columnDefinition = "CHAR(13)")
+    val id: String,
+
     @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "participant_id")
-    val id: Long,
 
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)

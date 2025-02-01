@@ -1,7 +1,6 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.MemberService
-import com.dobby.backend.application.service.PaginationService
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v1/members")
 class MemberController(
     private val memberService: MemberService,
-    private val paginationService: PaginationService
 ) {
     @PostMapping("/signup/participant")
     @Operation(

@@ -12,9 +12,8 @@ import java.time.LocalDateTime
 @Table(name = "member")
 class MemberEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    val id: Long = 0L,
+    @Column(name = "member_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @Column(name = "oauth_email", length = 100, nullable = false, unique = true)
     val oauthEmail: String,
