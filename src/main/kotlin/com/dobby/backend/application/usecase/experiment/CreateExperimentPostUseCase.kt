@@ -2,6 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
+import com.dobby.backend.domain.gateway.IdGeneratorGateway
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
@@ -19,7 +20,8 @@ import java.time.LocalDate
 
 class CreateExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
-    private val memberGateway: MemberGateway
+    private val memberGateway: MemberGateway,
+    private val idGeneratorGateway: IdGeneratorGateway
 ) : UseCase<CreateExperimentPostUseCase.Input, CreateExperimentPostUseCase.Output> {
 
     data class Input(
@@ -86,6 +88,7 @@ class CreateExperimentPostUseCase(
         validateMemberRole(member)
 
         val targetGroup = TargetGroup.newTargetGroup(
+            id = idGeneratorGateway.generateId(),
             startAge = input.targetGroupInfo.startAge,
             endAge = input.targetGroupInfo.endAge,
             genderType = input.targetGroupInfo.genderType,
@@ -93,12 +96,14 @@ class CreateExperimentPostUseCase(
         )
 
         val applyMethod = ApplyMethod.newApplyMethod(
+            id = idGeneratorGateway.generateId(),
             phoneNum = input.applyMethodInfo.phoneNum,
             formUrl = input.applyMethodInfo.formUrl,
             content = input.applyMethodInfo.content
         )
 
         val experimentPost = ExperimentPost.newExperimentPost(
+            id = idGeneratorGateway.generateId(),
             member = member,
             targetGroup = targetGroup,
             applyMethod = applyMethod,
@@ -121,6 +126,7 @@ class CreateExperimentPostUseCase(
 
         val experimentImages = input.imageListInfo.images.map { imageUrl ->
             ExperimentImage.newExperimentImage(
+                id = idGeneratorGateway.generateId(),
                 experimentPost = null,
                 imageUrl = imageUrl
             )

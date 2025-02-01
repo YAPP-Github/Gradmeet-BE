@@ -1,8 +1,5 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.util.generateTSID
-
-
 data class Researcher(
     val id: String,
     var member: Member,
@@ -15,6 +12,7 @@ data class Researcher(
 
     companion object {
         fun newResearcher(
+            id: String,
             member: Member,
             univEmail: String,
             emailVerified: Boolean,
@@ -22,7 +20,7 @@ data class Researcher(
             major: String,
             labInfo: String?
         ) = Researcher(
-            id = generateTSID(),
+            id = id,
             member = member,
             univEmail = univEmail,
             emailVerified = emailVerified,

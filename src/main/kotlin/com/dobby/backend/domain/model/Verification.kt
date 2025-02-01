@@ -1,6 +1,5 @@
 package com.dobby.backend.domain.model
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
-import com.dobby.backend.util.generateTSID
 import java.time.LocalDateTime
 
 data class Verification(
@@ -26,10 +25,11 @@ data class Verification(
 
     companion object {
         fun newVerification(
-           univEmail: String,
-           verificationCode: String,
+            id : String,
+            univEmail: String,
+            verificationCode: String,
         ) = Verification(
-            id = generateTSID(),
+            id = id,
             univEmail = univEmail,
             verificationCode = verificationCode,
             expiresAt = LocalDateTime.now().plusMinutes(10),

@@ -3,7 +3,6 @@ package com.dobby.backend.domain.model.member
 import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.RoleType
-import com.dobby.backend.util.generateTSID
 import java.time.LocalDateTime
 
 data class Member(
@@ -20,13 +19,14 @@ data class Member(
 
     companion object {
         fun newMember(
+            id: String,
             name: String,
             oauthEmail: String,
             contactEmail: String,
             provider: ProviderType,
             role: RoleType,
         ) = Member(
-            id = generateTSID(),
+            id = id,
             name = name,
             oauthEmail = oauthEmail,
             contactEmail = contactEmail,

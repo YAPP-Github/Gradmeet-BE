@@ -1,7 +1,5 @@
 package com.dobby.backend.domain.model.experiment
 
-import com.dobby.backend.util.generateTSID
-
 data class ApplyMethod(
     val id: String,
     var phoneNum: String?,
@@ -20,11 +18,12 @@ data class ApplyMethod(
 
     companion object {
         fun newApplyMethod(
+            id: String,
             phoneNum: String?,
             formUrl: String?,
             content: String
         ) = ApplyMethod(
-            id = generateTSID(),
+            id = id,
             phoneNum = phoneNum,
             formUrl = formUrl,
             content = content

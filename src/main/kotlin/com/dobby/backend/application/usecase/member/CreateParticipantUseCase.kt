@@ -1,6 +1,7 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.gateway.IdGeneratorGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
@@ -13,7 +14,8 @@ import java.time.LocalDateTime
 
 class CreateParticipantUseCase (
     private val participantGateway: ParticipantGateway,
-    private val tokenGateway: TokenGateway
+    private val tokenGateway: TokenGateway,
+    private val idGeneratorGateway: IdGeneratorGateway
 ): UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output>
 {
     data class Input (
@@ -70,6 +72,7 @@ class CreateParticipantUseCase (
 
     private fun createParticipant(input: Input): Participant {
         val member = Member.newMember(
+            id = idGeneratorGateway.generateId(),
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -78,6 +81,7 @@ class CreateParticipantUseCase (
         )
 
         return Participant.newParticipant(
+            id = idGeneratorGateway.generateId(),
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,

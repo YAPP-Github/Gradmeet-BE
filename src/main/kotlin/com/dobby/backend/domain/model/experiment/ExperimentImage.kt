@@ -1,7 +1,5 @@
 package com.dobby.backend.domain.model.experiment
 
-import com.dobby.backend.util.generateTSID
-
 data class ExperimentImage(
     val id: String,
     val experimentPost: ExperimentPost?,
@@ -9,10 +7,11 @@ data class ExperimentImage(
 ) {
     companion object {
         fun newExperimentImage(
+            id: String,
             experimentPost: ExperimentPost?,
             imageUrl: String
         ) = ExperimentImage(
-            id = generateTSID(),
+            id = id,
             experimentPost = experimentPost,
             imageUrl = imageUrl
         )
