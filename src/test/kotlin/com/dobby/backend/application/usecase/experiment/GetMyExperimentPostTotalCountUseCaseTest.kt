@@ -11,7 +11,7 @@ class GetMyExperimentPostTotalCountUseCaseTest : BehaviorSpec({
     val useCase = GetMyExperimentPostTotalCountUseCase(experimentPostGateway)
 
     given("유효한 memberId가 주어졌을 때") {
-        val memberId = 1L
+        val memberId = "1"
         val totalCount = 5
 
         every { experimentPostGateway.countExperimentPostsByMemberId(memberId) } returns totalCount
@@ -27,7 +27,7 @@ class GetMyExperimentPostTotalCountUseCaseTest : BehaviorSpec({
     }
 
     given("존재하지 않는 memberId가 주어졌을 때") {
-        val memberId = 999L
+        val memberId = "999"
         val totalCount = 0
 
         every { experimentPostGateway.countExperimentPostsByMemberId(memberId) } returns totalCount

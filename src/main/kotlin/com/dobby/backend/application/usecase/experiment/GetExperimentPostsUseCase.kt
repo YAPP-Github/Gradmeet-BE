@@ -44,7 +44,7 @@ class GetExperimentPostsUseCase (
     )
 
     data class PostInfoOutput(
-        val experimentPostId: Long,
+        val experimentPostId: String,
         val title: String,
         val views: Int,
         val univName: String?,

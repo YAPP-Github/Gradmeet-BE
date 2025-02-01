@@ -33,7 +33,7 @@ class ExperimentPostGatewayImpl(
         )?.map{ it.toDomain()}
     }
 
-    override fun findById(experimentPostId: Long): ExperimentPost? {
+    override fun findById(experimentPostId: String): ExperimentPost? {
         return experimentPostRepository
             .findById(experimentPostId)
             .orElse(null)
@@ -81,7 +81,7 @@ class ExperimentPostGatewayImpl(
     }
 
     override fun findExperimentPostsByMemberIdWithPagination(
-        memberId: Long,
+        memberId: String,
         pagination: Pagination,
         order: String
     ): List<ExperimentPost>? {
@@ -92,11 +92,11 @@ class ExperimentPostGatewayImpl(
         )?.map { it.toDomain() }
     }
 
-    override fun countExperimentPostsByMemberId(memberId: Long): Int {
+    override fun countExperimentPostsByMemberId(memberId: String): Int {
         return experimentPostRepository.countByMemberId(memberId)
     }
 
-    override fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost? {
+    override fun findExperimentPostByMemberIdAndPostId(memberId: String, postId: String): ExperimentPost? {
         return experimentPostRepository
             .findByMemberIdAndId(memberId, postId)
             ?.let(ExperimentPostEntity::toDomain)

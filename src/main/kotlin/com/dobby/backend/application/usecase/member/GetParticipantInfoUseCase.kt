@@ -15,7 +15,7 @@ class GetParticipantInfoUseCase(
     private val participantGateway: ParticipantGateway
 ) : UseCase<GetParticipantInfoUseCase.Input, GetParticipantInfoUseCase.Output>{
     data class Input(
-        val memberId: Long,
+        val memberId: String,
     )
 
     data class Output(

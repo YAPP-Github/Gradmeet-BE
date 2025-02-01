@@ -11,7 +11,7 @@ class GetResearcherInfoUseCase(
     private val researcherGateway: ResearcherGateway
 ) : UseCase<GetResearcherInfoUseCase.Input, GetResearcherInfoUseCase.Output>{
     data class Input(
-        val memberId: Long
+        val memberId: String
     )
 
     data class Output(

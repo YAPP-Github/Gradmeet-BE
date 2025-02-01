@@ -15,8 +15,8 @@ class UpdateExperimentPostUseCase (
     private val experimentPostGateway: ExperimentPostGateway
 ) : UseCase<UpdateExperimentPostUseCase.Input, UpdateExperimentPostUseCase.Output> {
     data class Input(
-        val experimentPostId: Long,
-        val memberId: Long,
+        val experimentPostId: String,
+        val memberId: String,
         val targetGroupInfo: TargetGroupInfo?,
         val applyMethodInfo: ApplyMethodInfo?,
         val imageListInfo: ImageListInfo?,
@@ -60,7 +60,7 @@ class UpdateExperimentPostUseCase (
     )
 
     data class PostInfo(
-        val postId: Long,
+        val postId: String,
         val title: String,
         val views: Int,
         val univName: String?,
@@ -139,7 +139,6 @@ class UpdateExperimentPostUseCase (
     private fun validatePermission(existingPost: ExperimentPost, input: Input) {
         if(existingPost.member.id != input.memberId) throw PermissionDeniedException
     }
-
 
     private fun validateNotExpired(existingPost: ExperimentPost){
         if (!existingPost.recruitStatus) throw ExperimentPostUpdateDateException

@@ -18,7 +18,7 @@ class VerifyResearcherEmailUseCaseTest : BehaviorSpec ({
     given("존재하는 이메일이 주어졌을 때") {
         val validEmail = "christer10@ewhain.net"
         val verifiedInfo = mockk<Verification> {
-            every { status  } returns VerificationStatus.VERIFIED
+            every { status } returns VerificationStatus.VERIFIED
         }
 
         every { verificationGateway.findByUnivEmail(validEmail) } returns verifiedInfo

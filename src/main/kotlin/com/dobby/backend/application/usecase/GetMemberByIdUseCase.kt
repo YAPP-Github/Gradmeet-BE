@@ -7,7 +7,7 @@ class GetMemberByIdUseCase(
     private val memberGateway: MemberGateway,
 ) : UseCase<GetMemberByIdUseCase.Input, Member> {
     data class Input(
-        val memberId: Long,
+        val memberId: String,
     )
 
     override fun execute(input: Input): Member {

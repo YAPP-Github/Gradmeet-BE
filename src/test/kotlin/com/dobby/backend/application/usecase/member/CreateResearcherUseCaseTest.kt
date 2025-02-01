@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.member
 
+import com.dobby.backend.domain.gateway.IdGeneratorGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
@@ -18,8 +19,9 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
     val memberGateway: MemberGateway = mockk()
     val researcherGateway: ResearcherGateway = mockk()
     val tokenGateway: TokenGateway = mockk()
+    val idGeneratorGateway: IdGeneratorGateway = mockk()
 
-    val createResearcherUseCase = CreateResearcherUseCase(memberGateway, researcherGateway, tokenGateway)
+    val createResearcherUseCase = CreateResearcherUseCase(memberGateway, researcherGateway, tokenGateway, idGeneratorGateway)
 
     given("유효한 입력을 받았을 때") {
         val input = CreateResearcherUseCase.Input(
@@ -34,6 +36,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
         )
 
         val member = Member.newMember(
+            id = "1",
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -42,6 +45,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
         )
 
         val researcher = Researcher.newResearcher(
+            id = "1",
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,
@@ -50,11 +54,12 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             labInfo = input.labInfo
         )
 
-        val savedMember = member.copy(id = 1L, status = MemberStatus.ACTIVE)
+        val savedMember = member.copy(id = "1", status = MemberStatus.ACTIVE)
         val savedResearcher = researcher.copy(member = savedMember)
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"
 
+        every { idGeneratorGateway.generateId() } returns "1"
         every { researcherGateway.save(any()) } returns savedResearcher
         every { memberGateway.save(any()) } returns savedMember
         every { tokenGateway.generateAccessToken(savedMember) } returns accessToken

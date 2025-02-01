@@ -10,7 +10,7 @@ class GetMyExperimentPostsUseCase(
 ): UseCase<GetMyExperimentPostsUseCase.Input, List<GetMyExperimentPostsUseCase.Output>> {
 
     data class Input(
-        val memberId: Long,
+        val memberId: String,
         val pagination: PaginationInput
     )
 
@@ -21,7 +21,7 @@ class GetMyExperimentPostsUseCase(
     )
 
     data class Output(
-        val experimentPostId: Long,
+        val experimentPostId: String,
         val title: String,
         val content: String,
         val views: Int,

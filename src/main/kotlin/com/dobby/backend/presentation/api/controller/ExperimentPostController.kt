@@ -54,7 +54,7 @@ class ExperimentPostController (
         description = "로그인한 연구자가 작성한 특정 실험 공고의 모집 상태를 변경합니다"
     )
     fun updateExperimentPostRecruitStatus(
-        @PathVariable postId: Long
+        @PathVariable postId: String
     ): MyExperimentPostResponse {
         val input = ExperimentPostMapper.toUpdateExperimentPostRecruitStatusUseCaseInput(postId)
         val output = experimentPostService.updateExperimentPostRecruitStatus(input)
@@ -68,7 +68,7 @@ class ExperimentPostController (
         description = "연구자가 자신이 등록한 실험 공고를 삭제합니다."
     )
     fun deleteExperimentPost(
-        @PathVariable postId: Long
+        @PathVariable postId: String
     ): DefaultResponse {
         val input = ExperimentPostMapper.toDeleteExperimentPostUseCaseInput(postId)
         experimentPostService.deleteExperimentPost(input)
@@ -83,7 +83,7 @@ class ExperimentPostController (
     )
     fun updateExperimentPost(
         @RequestBody @Valid request: UpdateExperimentPostRequest
-        , @PathVariable postId: Long
+        , @PathVariable postId: String
     ): UpdateExperimentPostResponse {
         val input = ExperimentPostMapper.toUpdateExperimentPostInput(request, postId)
         val output = experimentPostService.updateExperimentPost(input)
@@ -110,7 +110,7 @@ class ExperimentPostController (
         description = "특정 공고 상세 정보를 반환합니다"
     )
     fun getExperimentPostDetail(
-        @PathVariable postId: Long
+        @PathVariable postId: String
     ): ExperimentPostDetailResponse {
         val input = ExperimentPostMapper.toGetExperimentPostDetailUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostDetail(input)
@@ -137,7 +137,7 @@ class ExperimentPostController (
         description = "특정 공고의 지원 방법을 반환합니다."
     )
     fun getExperimentPostApplyMethod(
-        @PathVariable postId: Long
+        @PathVariable postId: String
     ): ExperimentPostApplyMethodResponse {
         val input = ExperimentPostMapper.toGetExperimentPostApplyMethodUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostApplyMethod(input)

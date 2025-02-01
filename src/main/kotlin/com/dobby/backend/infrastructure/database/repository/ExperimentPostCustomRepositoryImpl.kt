@@ -52,7 +52,7 @@ class ExperimentPostCustomRepositoryImpl (
     }
 
     override fun findExperimentPostsByMemberIdWithPagination(
-        memberId: Long,
+        memberId: String,
         pagination: Pagination,
         order: String
     ): List<ExperimentPostEntity>? {
@@ -181,7 +181,7 @@ class ExperimentPostCustomRepositoryImpl (
         return updatedEntity.toDomain()
     }
 
-    private fun updateImages(experimentPostId: Long, images: List<ExperimentImage>) {
+    private fun updateImages(experimentPostId: String, images: List<ExperimentImage>) {
         val experimentPost = entityManager.find(ExperimentPostEntity::class.java, experimentPostId)
             ?: throw IllegalStateException("ExperimentPost not found")
 
@@ -191,7 +191,7 @@ class ExperimentPostCustomRepositoryImpl (
 
         images.forEach { image ->
             val imageEntity = ExperimentImageEntity(
-                id = 0L,
+                id = "0",
                 imageUrl = image.imageUrl,
                 experimentPost = experimentPost
             )

@@ -3,7 +3,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import java.time.LocalDateTime
 
 data class Verification(
-    val id: Long,
+    val id: String,
     val univEmail: String,
     var verificationCode: String,
     var status: VerificationStatus = VerificationStatus.HOLD,
@@ -25,10 +25,11 @@ data class Verification(
 
     companion object {
         fun newVerification(
-           univEmail: String,
-           verificationCode: String,
+            id : String,
+            univEmail: String,
+            verificationCode: String,
         ) = Verification(
-            id = 0L,
+            id = id,
             univEmail = univEmail,
             verificationCode = verificationCode,
             expiresAt = LocalDateTime.now().plusMinutes(10),

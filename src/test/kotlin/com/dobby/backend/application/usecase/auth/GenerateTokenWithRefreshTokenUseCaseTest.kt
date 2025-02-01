@@ -19,7 +19,7 @@ class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
 
     given("유효한 리프레시 토큰이 주어졌을 때") {
         val validRefreshToken = "validRefreshToken"
-        val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+        val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
             status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
         val accessToken = "newAccessToken"
@@ -28,7 +28,7 @@ class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
         every { tokenGateway.extractMemberIdFromRefreshToken(validRefreshToken) } returns member.id.toString()
         every { tokenGateway.generateAccessToken(member) } returns accessToken
         every { tokenGateway.generateRefreshToken(member) } returns newRefreshToken
-        every { memberGateway.getById(1) } returns member
+        every { memberGateway.getById("1") } returns member
 
         `when`("execute가 호출되면") {
             val input = GenerateTokenWithRefreshTokenUseCase.Input(refreshToken = validRefreshToken)

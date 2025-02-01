@@ -42,7 +42,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
+	implementation("com.github.f4b6a3:tsid-creator:5.2.6")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")

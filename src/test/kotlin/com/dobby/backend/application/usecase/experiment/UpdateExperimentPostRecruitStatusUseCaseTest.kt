@@ -23,18 +23,18 @@ class UpdateExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
     val useCase = UpdateExperimentPostRecruitStatusUseCase(experimentPostGateway)
 
     given("유효한 memberId와 postId가 주어졌을 때") {
-        val memberId = 1L
-        val postId = 1L
+        val memberId = "1"
+        val postId = "1"
 
         val targetGroup = mockk<TargetGroup>()
-        every { targetGroup.id } returns 1L
+        every { targetGroup.id } returns "1"
         every { targetGroup.startAge } returns 18
         every { targetGroup.endAge } returns 30
         every { targetGroup.genderType } returns GenderType.ALL
         every { targetGroup.otherCondition } returns "특별한 조건 없음"
 
         val applyMethod = mockk<ApplyMethod>()
-        every { applyMethod.id } returns 1L
+        every { applyMethod.id } returns "1"
         every { applyMethod.phoneNum } returns "010-1234-5678"
         every { applyMethod.formUrl } returns "http://apply.com/form"
         every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
@@ -79,18 +79,18 @@ class UpdateExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
     }
 
     given("모집 상태가 이미 false인 post가 주어졌을 때") {
-        val memberId = 1L
-        val postId = 1L
+        val memberId = "1"
+        val postId = "1"
 
         val targetGroup = mockk<TargetGroup>()
-        every { targetGroup.id } returns 1L
+        every { targetGroup.id } returns "1"
         every { targetGroup.startAge } returns 18
         every { targetGroup.endAge } returns 30
         every { targetGroup.genderType } returns GenderType.ALL
         every { targetGroup.otherCondition } returns "특별한 조건 없음"
 
         val applyMethod = mockk<ApplyMethod>()
-        every { applyMethod.id } returns 1L
+        every { applyMethod.id } returns "1"
         every { applyMethod.phoneNum } returns "010-1234-5678"
         every { applyMethod.formUrl } returns "http://apply.com/form"
         every { applyMethod.content } returns "지원 방법에 대한 상세 설명"
@@ -135,8 +135,8 @@ class UpdateExperimentPostRecruitStatusUseCaseTest : BehaviorSpec({
     }
 
     given("존재하지 않는 memberId와 postId가 주어졌을 때") {
-        val memberId = 999L
-        val postId = 999L
+        val memberId = "999"
+        val postId = "999"
 
         every { experimentPostGateway.findExperimentPostByMemberIdAndPostId(memberId, postId) } returns null
 

@@ -20,7 +20,7 @@ class GenerateTokenWithRefreshTokenUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val memberId = tokenGateway.extractMemberIdFromRefreshToken(input.refreshToken).toLong()
+        val memberId = tokenGateway.extractMemberIdFromRefreshToken(input.refreshToken)
         val member = memberGateway.getById(memberId)
         return Output(
             accessToken = tokenGateway.generateAccessToken(member),

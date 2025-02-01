@@ -19,9 +19,9 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
         val researcherGateway = mockk<ResearcherGateway>()
         val useCase = GetResearcherInfoUseCase(researcherGateway)
 
-        val input = GetResearcherInfoUseCase.Input(memberId = 1L)
+        val input = GetResearcherInfoUseCase.Input(memberId = "1")
         val mockMember = Member(
-            id = 1L,
+            id = "1",
             name = "신수정",
             oauthEmail = "christer10@ewhain.net",
             contactEmail = "christer10@naver.com",
@@ -33,7 +33,7 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
         )
         val mockResearcher = Researcher(
             member = mockMember,
-            id = 1L,
+            id = "1",
             univEmail = "christer10@ewhain.net",
             univName = "이화여자대학교",
             major = "컴퓨터공학과",
@@ -60,7 +60,7 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
         val researcherGateway = mockk<ResearcherGateway>()
         val useCase = GetResearcherInfoUseCase(researcherGateway)
 
-        val input = GetResearcherInfoUseCase.Input(memberId = 2L)
+        val input = GetResearcherInfoUseCase.Input(memberId = "2")
 
         every { researcherGateway.findByMemberId(input.memberId) } returns null
 
