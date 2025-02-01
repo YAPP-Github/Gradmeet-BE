@@ -11,7 +11,7 @@ class ResearcherGatewayImpl(
     private val researcherRepository: ResearcherRepository
 ) : ResearcherGateway {
 
-    override fun findByMemberId(memberId: Long) : Researcher? {
+    override fun findByMemberId(memberId: String) : Researcher? {
         return researcherRepository
             .findByMemberId(memberId)
             ?.let(ResearcherEntity::toDomain)

@@ -25,7 +25,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
 
     init {
         given("회원 정보가 주어지고") {
-            val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+            val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
                 status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
@@ -41,7 +41,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
         }
 
         given("유효한 JWT 토큰이 주어지고") {
-            val member = Member(id = 1, oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+            val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
                 status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
@@ -55,7 +55,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
 
                 then("파싱된 멤버의 ID는 원래 멤버의 ID와 같아야 한다") {
                     extractedMemberId shouldNotBe null
-                    extractedMemberId shouldBe member.id.toString()
+                    extractedMemberId shouldBe member.id
                 }
 
                 then("파싱된 권한(role)은 원래 멤버의 역할과 같아야 한다") {

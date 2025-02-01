@@ -30,7 +30,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
     given("Google OAuth 요청이 들어왔을 때") {
         val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code", role = RoleType.PARTICIPANT)
         val mockMember = Member(
-            id = 1L,
+            id = "1",
             oauthEmail = "test@example.com",
             name = "Test User",
             status = MemberStatus.ACTIVE,
@@ -61,7 +61,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
                 result.isRegistered shouldBe true
                 result.accessToken shouldBe "mock-jwt-access-token"
                 result.refreshToken shouldBe "mock-jwt-refresh-token"
-                result.memberId shouldBe 1L
+                result.memberId shouldBe "1"
                 result.oauthEmail shouldBe "test@example.com"
             }
         }

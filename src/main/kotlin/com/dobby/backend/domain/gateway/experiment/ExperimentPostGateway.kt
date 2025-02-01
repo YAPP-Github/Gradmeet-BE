@@ -11,7 +11,7 @@ interface ExperimentPostGateway {
     fun save(experimentPost: ExperimentPost): ExperimentPost
     fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
-    fun findById(experimentPostId: Long): ExperimentPost?
+    fun findById(experimentPostId: String): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
     fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
     fun countExperimentPosts(): Int
@@ -21,9 +21,9 @@ interface ExperimentPostGateway {
     fun countExperimentPostGroupedByRegion(): List<Tuple>
     fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple>
     fun updateExperimentPostStatus(currentDate : LocalDate) : Long
-    fun findExperimentPostsByMemberIdWithPagination(memberId: Long, pagination: Pagination, order: String): List<ExperimentPost>?
-    fun countExperimentPostsByMemberId(memberId: Long): Int
-    fun findExperimentPostByMemberIdAndPostId(memberId: Long, postId: Long): ExperimentPost?
+    fun findExperimentPostsByMemberIdWithPagination(memberId: String, pagination: Pagination, order: String): List<ExperimentPost>?
+    fun countExperimentPostsByMemberId(memberId: String): Int
+    fun findExperimentPostByMemberIdAndPostId(memberId: String, postId: String): ExperimentPost?
     fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
     fun delete(post: ExperimentPost)
 }

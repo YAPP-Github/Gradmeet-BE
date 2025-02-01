@@ -22,7 +22,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
     val useCase = GetParticipantInfoUseCase(memberGateway, participantGateway)
 
     given("유효한 memberId가 주어졌을 때") {
-        val memberId = 1L
+        val memberId = "1"
 
         val member = mockk<Member>()
         val participant = mockk<Participant>()
@@ -53,7 +53,7 @@ class GetParticipantInfoUseCaseTest : BehaviorSpec({
     }
 
     given("존재하지 않는 participantId가 주어졌을 때") {
-        val memberId = 1L
+        val memberId = "1"
 
         val member = mockk<Member>()
 

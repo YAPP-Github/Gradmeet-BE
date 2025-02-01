@@ -31,7 +31,7 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
     given("Naver OAuth 요청이 들어왔을 때") {
         val input = FetchNaverUserInfoUseCase.Input(authorizationCode = "valid-auth-code", state = "valid-state", role = RoleType.PARTICIPANT)
         val mockMember = Member(
-            id = 1L,
+            id = "1",
             oauthEmail = "test@example.com",
             name = "Test User",
             status = MemberStatus.ACTIVE,
@@ -64,7 +64,7 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
                 result.isRegistered shouldBe true
                 result.accessToken shouldBe "mock-jwt-access-token"
                 result.refreshToken shouldBe "mock-jwt-refresh-token"
-                result.memberId shouldBe 1L
+                result.memberId shouldBe "1"
                 result.oauthEmail shouldBe "test@example.com"
             }
         }

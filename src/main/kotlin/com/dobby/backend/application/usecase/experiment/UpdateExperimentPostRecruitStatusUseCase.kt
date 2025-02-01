@@ -12,8 +12,8 @@ class UpdateExperimentPostRecruitStatusUseCase(
 ): UseCase<UpdateExperimentPostRecruitStatusUseCase.Input, UpdateExperimentPostRecruitStatusUseCase.Output> {
 
     data class Input(
-        val memberId: Long,
-        val postId: Long
+        val memberId: String,
+        val postId: String
     )
 
     data class Output(

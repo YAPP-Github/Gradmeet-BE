@@ -1,7 +1,7 @@
 package com.dobby.backend.domain.model.experiment
 
 data class ApplyMethod(
-    val id: Long,
+    val id: String,
     var phoneNum: String?,
     var formUrl: String?,
     var content: String
@@ -16,14 +16,14 @@ data class ApplyMethod(
         )
     }
 
-
     companion object {
         fun newApplyMethod(
+            id: String,
             phoneNum: String?,
             formUrl: String?,
             content: String
         ) = ApplyMethod(
-            id = 0L,
+            id = id,
             phoneNum = phoneNum,
             formUrl = formUrl,
             content = content

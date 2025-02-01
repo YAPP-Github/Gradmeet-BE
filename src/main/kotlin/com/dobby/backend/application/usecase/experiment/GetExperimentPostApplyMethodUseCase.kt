@@ -9,11 +9,11 @@ class GetExperimentPostApplyMethodUseCase(
 ): UseCase<GetExperimentPostApplyMethodUseCase.Input, GetExperimentPostApplyMethodUseCase.Output> {
 
     data class Input(
-        val experimentPostId: Long
+        val experimentPostId: String
     )
 
     data class Output(
-        val applyMethodId: Long,
+        val applyMethodId: String,
         val phoneNum: String?,
         val formUrl: String?,
         val content: String

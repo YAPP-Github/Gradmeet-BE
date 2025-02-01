@@ -1,6 +1,7 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.gateway.IdGeneratorGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
@@ -13,6 +14,7 @@ class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
     private val researcherGateway: ResearcherGateway,
     private val tokenGateway: TokenGateway,
+    private val idGeneratorGateway: IdGeneratorGateway
 ) : UseCase<CreateResearcherUseCase.Input, CreateResearcherUseCase.Output> {
     data class Input(
         val oauthEmail: String,
@@ -31,7 +33,7 @@ class CreateResearcherUseCase(
         val memberInfo: MemberResponse
     )
     data class MemberResponse(
-        val memberId: Long?,
+        val memberId: String?,
         val name: String?,
         val oauthEmail: String?,
         val provider: ProviderType?,
@@ -62,6 +64,7 @@ class CreateResearcherUseCase(
 
     private fun createResearcher(input: Input): Researcher {
         val member = Member.newMember(
+            id = idGeneratorGateway.generateId(),
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -70,6 +73,7 @@ class CreateResearcherUseCase(
         )
 
         val researcher = Researcher.newResearcher(
+            id = idGeneratorGateway.generateId(),
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,

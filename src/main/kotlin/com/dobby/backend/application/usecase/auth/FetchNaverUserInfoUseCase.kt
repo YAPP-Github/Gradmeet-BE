@@ -25,7 +25,7 @@ class FetchNaverUserInfoUseCase(
         val isRegistered: Boolean,
         val accessToken: String?,
         val refreshToken: String?,
-        val memberId: Long?,
+        val memberId: String?,
         val name: String?,
         val oauthEmail: String,
         val role: RoleType?,

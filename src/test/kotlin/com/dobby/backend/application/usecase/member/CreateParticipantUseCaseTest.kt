@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.member
 
+import com.dobby.backend.domain.gateway.IdGeneratorGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
@@ -19,8 +20,9 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
 
     val participantGateway: ParticipantGateway = mockk()
     val tokenGateway: TokenGateway = mockk()
+    val idGeneratorGateway: IdGeneratorGateway = mockk()
 
-    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, tokenGateway)
+    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, tokenGateway, idGeneratorGateway)
 
     given("유효한 입력을 받았을 때") {
         val input = CreateParticipantUseCase.Input(
@@ -42,6 +44,7 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
         )
 
         val member = Member.newMember(
+            id = "1",
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -50,6 +53,7 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
         )
 
         val participant = Participant.newParticipant(
+            id = "1",
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,
@@ -64,10 +68,11 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             matchType = input.matchType
         )
 
-        val savedParticipant = participant.copy(member = member.copy(id = 1L))
+        val savedParticipant = participant.copy(member = member.copy(id = "1"))
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"
 
+        every { idGeneratorGateway.generateId() } returns "1"
         every { participantGateway.save(any()) } returns savedParticipant
         every { tokenGateway.generateAccessToken(any()) } returns accessToken
         every { tokenGateway.generateRefreshToken(any()) } returns refreshToken

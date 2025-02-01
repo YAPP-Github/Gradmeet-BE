@@ -12,8 +12,8 @@ class GetExperimentPostDetailUseCase(
 ) : UseCase<GetExperimentPostDetailUseCase.Input, GetExperimentPostDetailUseCase.Output> {
 
     data class Input(
-        val experimentPostId: Long,
-        val memberId: Long?
+        val experimentPostId: String,
+        val memberId: String?
     )
 
     data class Output(
@@ -32,7 +32,7 @@ class GetExperimentPostDetailUseCase(
     }
 }
 
-fun ExperimentPost.toDetailResponse(memberId: Long?): ExperimentPostDetailResponse {
+fun ExperimentPost.toDetailResponse(memberId: String?): ExperimentPostDetailResponse {
     return ExperimentPostDetailResponse(
         experimentPostId = this.id,
         title = this.title,

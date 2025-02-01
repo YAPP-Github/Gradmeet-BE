@@ -8,9 +8,8 @@ import java.time.LocalDateTime
 @Entity(name = "verification")
 class VerificationEntity (
     @Id
-    @Column(name = "verification_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    @Column(name = "verification_id", columnDefinition = "CHAR(13)")
+    val id: String,
 
     @Column(name = "univ_email", nullable = false, unique = true)
     val univEmail : String,
