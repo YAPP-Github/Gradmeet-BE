@@ -6,14 +6,13 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "researcher")
 class ResearcherEntity (
+    @Id
+    @Column(name= "researcher_id")
+    val id: Long,
+
     @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "researcher_id")
-    val id: Long,
 
     @Column(name = "univ_email", length = 100, nullable = false)
     val univEmail : String,

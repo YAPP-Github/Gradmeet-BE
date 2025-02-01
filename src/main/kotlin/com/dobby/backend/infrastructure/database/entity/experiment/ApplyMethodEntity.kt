@@ -6,7 +6,6 @@ import jakarta.persistence.*
 @Entity(name = "apply_method")
 class ApplyMethodEntity (
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_method_id")
     val id: Long,
 

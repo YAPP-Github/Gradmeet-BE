@@ -12,7 +12,6 @@ import java.time.LocalDateTime
 @Table(name = "member")
 class MemberEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     val id: Long = 0L,
 

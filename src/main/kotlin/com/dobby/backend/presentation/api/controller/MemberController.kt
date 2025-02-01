@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v1/members")
 class MemberController(
     private val memberService: MemberService,
-    private val paginationService: PaginationService
 ) {
     @PostMapping("/signup/participant")
     @Operation(

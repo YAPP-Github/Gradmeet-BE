@@ -6,7 +6,6 @@ import jakarta.persistence.*
 @Entity(name = "experiment_image")
 class ExperimentImageEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "experiment_image_id")
     val id: Long,
 

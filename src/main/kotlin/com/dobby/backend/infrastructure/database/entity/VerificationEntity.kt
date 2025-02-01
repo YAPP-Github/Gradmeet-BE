@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 class VerificationEntity (
     @Id
     @Column(name = "verification_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
     @Column(name = "univ_email", nullable = false, unique = true)

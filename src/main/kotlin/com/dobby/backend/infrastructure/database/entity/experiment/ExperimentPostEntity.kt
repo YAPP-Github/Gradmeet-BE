@@ -13,7 +13,6 @@ import java.time.LocalDateTime
 @Entity(name = "experiment_post")
 class ExperimentPostEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "experiment_post_id")
     val id: Long,
 
