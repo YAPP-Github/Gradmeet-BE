@@ -51,6 +51,9 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+  jackson:
+    generator:
+      write-numbers-as-strings: true
 
 app:
   token:
