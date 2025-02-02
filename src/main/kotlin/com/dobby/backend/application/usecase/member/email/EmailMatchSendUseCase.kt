@@ -2,6 +2,7 @@ package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
+import com.dobby.backend.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.util.EmailUtils
@@ -11,6 +12,7 @@ import java.time.format.DateTimeFormatter
 
 class EmailMatchSendUseCase(
     private val emailGateway: EmailGateway,
+    private val urlGeneratorGateway: UrlGeneratorGateway
 ): UseCase<EmailMatchSendUseCase.Input, EmailMatchSendUseCase.Output>{
 
     data class Input(
@@ -44,9 +46,9 @@ class EmailMatchSendUseCase(
     private fun getFormattedEmail(name: String, jobList: List<ExperimentPost>): Pair<String, String> {
         val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val emailTitle = "[그라밋🔬] $todayDate 오늘의 추천 실험 공고를 확인해보세요!"
-
+        val baseUrl = urlGeneratorGateway.getUrl()
         val jobListFormatted = jobList.joinToString("\n\n") { post ->
-            val postUrl = "https://dev-gradmeet.co.kr/post/${post.id}"
+            val postUrl = baseUrl+"/post/${post.id}"
             """
         🔹 **${post.title}**
         - 📅 기간: ${post.startDate} ~ ${post.endDate}
@@ -63,7 +65,7 @@ class EmailMatchSendUseCase(
         🔹 **추천 공고 목록** 🔹
         $jobListFormatted
 
-        더 많은 공고를 보려면 [그라밋 웹사이트](https://dev-gradmeet.co.kr/)를 방문해 주세요!
+        더 많은 공고를 보려면 [그라밋 웹사이트]($baseUrl)를 방문해 주세요!
     """.trimIndent()
 
         return Pair(emailTitle, content)

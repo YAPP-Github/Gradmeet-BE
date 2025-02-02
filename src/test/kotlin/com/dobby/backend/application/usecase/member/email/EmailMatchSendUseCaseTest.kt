@@ -8,11 +8,13 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
+import com.dobby.backend.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
+import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -21,12 +23,13 @@ import java.time.LocalDateTime
 
 class EmailMatchSendUseCaseTest : BehaviorSpec({
 
-    val emailGateway = mockk<EmailGateway>()
-    val emailMatchSendUseCase = EmailMatchSendUseCase(emailGateway)
+    val emailGateway = mockk<EmailGateway>(relaxed = true)
+    val urlGeneratorGateway = mockk<UrlGeneratorGateway>(relaxed = true)
+    val emailMatchSendUseCase = EmailMatchSendUseCase(emailGateway, urlGeneratorGateway)
 
     given("이메일 매칭 발송을 실행할 때") {
 
-        `when`("유효한 이메일 주소와 야뿌 실험 공고 리스트가 주어지면") {
+        `when`("유효한 이메일 주소와 실험 공고 리스트가 주어지면") {
             val contactEmail = "user@example.com"
             val validMember = Member(
                 id = "1",
@@ -36,8 +39,8 @@ class EmailMatchSendUseCaseTest : BehaviorSpec({
                 name = "신수정",
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                createdAt = LocalDateTime.now().minusDays(2),
+                updatedAt = LocalDateTime.now().minusDays(2)
             )
 
             val experimentPosts = listOf(
@@ -100,8 +103,8 @@ class EmailMatchSendUseCaseTest : BehaviorSpec({
                 name = "신수정",
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                createdAt = LocalDateTime.now().minusDays(2),
+                updatedAt = LocalDateTime.now().minusDays(2)
             )
 
             val experimentPosts = listOf(
