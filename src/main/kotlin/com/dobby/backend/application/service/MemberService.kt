@@ -15,7 +15,8 @@ class MemberService(
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
-    private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase
+    private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase,
+    private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -44,5 +45,10 @@ class MemberService(
     @Transactional
     fun updateResearcherInfo(input: UpdateResearcherInfoUseCase.Input): UpdateResearcherInfoUseCase.Output {
         return updateResearcherInfoUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateParticipantInfo(input: UpdateParticipantInfoUseCase.Input): UpdateParticipantInfoUseCase.Output {
+        return updateParticipantInfoUseCase.execute(input)
     }
 }

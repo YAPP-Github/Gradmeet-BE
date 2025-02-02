@@ -3,6 +3,7 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
 import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
@@ -84,6 +85,20 @@ class MemberController(
     fun getParticipantInfo(): ParticipantInfoResponse {
         val input = MemberMapper.toGetParticipantInfoUseCaseInput()
         val output = memberService.getParticipantInfo(input)
+        return MemberMapper.toParticipantInfoResponse(output)
+    }
+
+    @PreAuthorize("hasRole('PARTICIPANT')")
+    @PutMapping("/participants/me")
+    @Operation(
+        summary = "참여자 회원 정보 수정",
+        description = "참여자의 회원 정보를 수정합니다."
+    )
+    fun updateParticipantInfo(
+        @RequestBody @Valid request: UpdateParticipantInfoRequest
+    ): ParticipantInfoResponse {
+        val input = MemberMapper.toUpdateParticipantInfoUseCaseInput(request)
+        val output = memberService.updateParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
     }
 }

@@ -1,10 +1,12 @@
 package com.dobby.backend.presentation.api.mapper
 
 import com.dobby.backend.application.usecase.member.*
+import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
 import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -134,6 +136,34 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
+        )
+    }
+
+    fun toUpdateParticipantInfoUseCaseInput(request: UpdateParticipantInfoRequest): UpdateParticipantInfoUseCase.Input {
+        return UpdateParticipantInfoUseCase.Input(
+            memberId = getCurrentMemberId(),
+            contactEmail = request.contactEmail,
+            name = request.name,
+            basicAddressInfo = Participant.AddressInfo(
+                region = request.basicAddressInfo.region,
+                area = request.basicAddressInfo.area
+            ),
+            additionalAddressInfo = Participant.AddressInfo(
+                region = request.additionalAddressInfo?.region ?: Region.NONE,
+                area = request.additionalAddressInfo?.area ?: Area.NONE
+            ),
+            matchType = request.matchType
+        )
+    }
+
+    fun toParticipantInfoResponse(output: UpdateParticipantInfoUseCase.Output): ParticipantInfoResponse {
+        return ParticipantInfoResponse(
+            memberInfo = MemberResponse.fromDomain(output.member),
+            gender = output.gender,
+            birthDate = output.birthDate,
+            basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
+            additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
+            matchType = output.matchType
         )
     }
 }
