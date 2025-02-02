@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Comp
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.*
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.member.QMemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.QParticipantEntity
 import com.querydsl.core.types.OrderSpecifier
@@ -216,6 +217,7 @@ class ExperimentPostCustomRepositoryImpl (
         val experimentPost = QExperimentPostEntity.experimentPostEntity
         val targetGroup = QTargetGroupEntity.targetGroupEntity
         val participant = QParticipantEntity.participantEntity
+        val member = QMemberEntity.memberEntity
 
         val currentTime = LocalDateTime.now()
 
@@ -227,27 +229,36 @@ class ExperimentPostCustomRepositoryImpl (
             )
             .fetch()
 
-        return jpaQueryFactory.selectFrom(participant)
+        return jpaQueryFactory
+            .select(participant, member.contactEmail)
+            .from(participant)
+            .join(participant.member, member)
             .fetch()
-            .associate { participant ->
-                val birthDate = LocalDate.parse(participant.birthDate.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                val currentYear = LocalDate.now().year
-                val participantAge = currentYear - birthDate.year + 1
+            .mapNotNull { tuple -> // Null 제거
+                val participantEntity: ParticipantEntity = tuple.get(participant)!!
+                val contactEmail: String? = tuple.get(member.contactEmail)
 
-                participant.id to todayPosts.filter { post ->
-                    listOf(
-                        customGenderEq(post.targetGroup.genderType, participant.gender),
-                        customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
-                        customAddressInfoEq(
-                            post.region, post.area,
-                            participant.basicAddressInfo.region, participant.basicAddressInfo.area,
-                            participant.additionalAddressInfo.region, participant.additionalAddressInfo.area
-                        ),
-                        customMatchTypeEq(post.matchType, participant.matchType)
-                    ).all { it }
-                }.take(10)
-            }
+                contactEmail?.let {
+                    val birthDate = LocalDate.parse(participantEntity.birthDate.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    val currentYear = LocalDate.now().year
+                    val participantAge = currentYear - birthDate.year + 1
+
+                    Pair(it, todayPosts.filter { post ->
+                        listOf(
+                            customGenderEq(post.targetGroup.genderType, participantEntity.gender),
+                            customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
+                            customAddressInfoEq(
+                                post.region, post.area,
+                                participantEntity.basicAddressInfo.region, participantEntity.basicAddressInfo.area,
+                                participantEntity.additionalAddressInfo.region, participantEntity.additionalAddressInfo.area
+                            ),
+                            customMatchTypeEq(post.matchType, participantEntity.matchType)
+                        ).all { it }
+                    }.take(10))
+                }
+            }.toMap()
     }
+
     private fun customGenderEq(
         postGender: GenderType,
         participantGender: GenderType
