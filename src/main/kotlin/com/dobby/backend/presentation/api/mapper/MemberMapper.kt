@@ -1,13 +1,11 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.member.GetResearcherInfoUseCase
-import com.dobby.backend.application.usecase.member.CreateResearcherUseCase
-import com.dobby.backend.application.usecase.member.CreateParticipantUseCase
-import com.dobby.backend.application.usecase.member.GetParticipantInfoUseCase
+import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
 
@@ -115,6 +113,27 @@ object MemberMapper {
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
             matchType = output.matchType
+        )
+    }
+
+    fun toUpdateResearcherInfoUseCaseInput(request: UpdateResearcherInfoRequest): UpdateResearcherInfoUseCase.Input {
+        return UpdateResearcherInfoUseCase.Input(
+            memberId = getCurrentMemberId(),
+            contactEmail = request.contactEmail,
+            name = request.name,
+            univName = request.univName,
+            major = request.major,
+            labInfo = request.labInfo
+        )
+    }
+
+    fun toResearcherInfoResponse(response: UpdateResearcherInfoUseCase.Output): ResearcherInfoResponse {
+        return ResearcherInfoResponse(
+            memberInfo = MemberResponse.fromDomain(response.member),
+            univEmail = response.univEmail,
+            univName = response.univName,
+            major = response.major,
+            labInfo = response.labInfo,
         )
     }
 }
