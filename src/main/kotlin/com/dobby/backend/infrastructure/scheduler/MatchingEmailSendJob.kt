@@ -22,7 +22,7 @@ class MatchingEmailSendJob(
         logger.info("🔔 BulkMatchingEmailSendJob started at ${LocalDateTime.now()}")
 
         val input = GetMatchingExperimentPostsUseCase.Input(
-            requestTime = LocalDateTime.now().toString()
+            requestTime = LocalDateTime.now()
         )
         val output = emailService.getMatchingInfo(input)
         val matchingExperimentPosts = output.matchingPosts

@@ -23,7 +23,7 @@ class GetMatchingExperimentPostsUseCaseTest : BehaviorSpec({
     given("매칭된 실험 공고를 조회할 때") {
 
         `when`("유효한 실험 공고 목록이 존재하면") {
-            val requestTime = "2025-02-02T08:00:00"
+            val requestTime = LocalDateTime.of(2025, 2, 2, 8, 0, 0)
 
             val validMember = Member(
                 id = "1",
