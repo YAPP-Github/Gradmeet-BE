@@ -29,4 +29,22 @@ data class Researcher(
             labInfo = labInfo
         )
     }
+
+    fun updateInfo(
+        contactEmail: String,
+        name: String,
+        univName: String,
+        major: String,
+        labInfo: String?
+    ): Researcher {
+        return this.copy(
+            member = member.copy(
+                contactEmail = contactEmail,
+                name = name
+            ),
+            univName = univName,
+            major = major,
+            labInfo = labInfo
+        )
+    }
 }
