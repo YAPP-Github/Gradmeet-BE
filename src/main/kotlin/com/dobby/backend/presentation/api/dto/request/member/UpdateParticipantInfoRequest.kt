@@ -18,11 +18,11 @@ data class UpdateParticipantInfoRequest(
 
     @NotBlank(message = "거주 지역은 공백일 수 없습니다.")
     @Schema(description = "기본 주소 정보")
-    var basicAddressInfo: AddressInfoResponse,
+    val basicAddressInfo: AddressInfoResponse,
 
     @Schema(description = "추가 주소 정보")
-    var additionalAddressInfo: AddressInfoResponse?,
+    val additionalAddressInfo: AddressInfoResponse?,
 
     @Schema(description = "선호 실험 진행 방식")
-    var matchType: MatchType?,
+    val matchType: MatchType?,
 )
