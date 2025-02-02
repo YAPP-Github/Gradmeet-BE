@@ -40,5 +40,25 @@ data class Participant(
             matchType = matchType
         )
     }
-}
 
+    fun updateInfo(
+        contactEmail: String,
+        name: String,
+        basicAddressInfo: AddressInfo,
+        additionalAddressInfo: AddressInfo?,
+        matchType: MatchType?
+    ): Participant {
+        return this.copy(
+            member = member.copy(
+                contactEmail = contactEmail,
+                name = name
+            ),
+            basicAddressInfo = basicAddressInfo,
+            additionalAddressInfo = additionalAddressInfo?.copy() ?: AddressInfo(
+                region = Region.NONE,
+                area = Area.NONE
+            ),
+            matchType = matchType
+        )
+    }
+}
