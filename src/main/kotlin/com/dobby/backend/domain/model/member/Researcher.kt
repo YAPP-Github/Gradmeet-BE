@@ -1,5 +1,7 @@
 package com.dobby.backend.domain.model.member
 
+import java.time.LocalDateTime
+
 data class Researcher(
     val id: String,
     var member: Member,
@@ -40,7 +42,8 @@ data class Researcher(
         return this.copy(
             member = member.copy(
                 contactEmail = contactEmail,
-                name = name
+                name = name,
+                updatedAt = LocalDateTime.now()
             ),
             univName = univName,
             major = major,

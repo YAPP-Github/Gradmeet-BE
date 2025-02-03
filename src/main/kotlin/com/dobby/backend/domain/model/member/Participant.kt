@@ -5,6 +5,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class Participant(
     val id: String,
@@ -51,7 +52,8 @@ data class Participant(
         return this.copy(
             member = member.copy(
                 contactEmail = contactEmail,
-                name = name
+                name = name,
+                updatedAt = LocalDateTime.now()
             ),
             basicAddressInfo = basicAddressInfo,
             additionalAddressInfo = additionalAddressInfo?.copy() ?: AddressInfo(
