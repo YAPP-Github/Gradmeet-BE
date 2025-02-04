@@ -43,11 +43,11 @@ class SendMatcingEmailUseCase(
         if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
     }
 
-    private fun getFormattedEmail(name: String, jobList: List<ExperimentPost>): Pair<String, String> {
+    private fun getFormattedEmail(memberName: String, experimentPosts: List<ExperimentPost>): Pair<String, String> {
         val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val emailTitle = "[그라밋🔬] $todayDate 오늘의 추천 실험 공고를 확인해보세요!"
         val baseUrl = urlGeneratorGateway.getUrl()
-        val jobListFormatted = jobList.joinToString("\n\n") { post ->
+        val jobListFormatted = experimentPosts.joinToString("\n\n") { post ->
             val postUrl = baseUrl+"/post/${post.id}/details"
             """
         🔹 **${post.title}**
@@ -59,7 +59,7 @@ class SendMatcingEmailUseCase(
         }
 
         val content = """
-        ${name}님과 꼭 맞는 실험 공고를 찾아왔어요 🧚
+        ${memberName}님과 꼭 맞는 실험 공고를 찾아왔어요 🧚
         * 자세한 실험 내용이나 모집 대상은 공고 내용을 확인해 주세요.
 
         🔹 **추천 공고 목록** 🔹

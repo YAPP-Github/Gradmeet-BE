@@ -36,8 +36,8 @@ class SchedulerConfig {
     }
 
     @Bean
-    fun matchingEmailSendJobDetail(): JobDetail {
-        logger.info("Registering MatchingEmailSendJob...")
+    fun sendEmailMatchingJobDetail(): JobDetail {
+        logger.info("Registering SendEmailMatchingJobDetail...")
         return JobBuilder.newJob(SendMatchingEmailJob::class.java)
             .withIdentity("matching_email_send_job", "DEFAULT")
             .storeDurably()
@@ -45,12 +45,12 @@ class SchedulerConfig {
     }
 
     @Bean
-    fun matchingEmailSendTrigger() : Trigger {
-        logger.info("Registering MatchingEmailSendTrigger...")
+    fun sendEmailMatchingPostTrigger() : Trigger {
+        logger.info("Registering SendEmailMatchingPostTrigger...")
         return TriggerBuilder.newTrigger()
-            .forJob(matchingEmailSendJobDetail())
-            .withIdentity("matching_email_send_trigger", "DEFAULT")
-            .startNow() // instantly execution for test
+            .forJob(sendEmailMatchingJobDetail())
+            .withIdentity("send_matching_email_trigger", "DEFAULT")
+            //.startNow() // instantly execution for test api
             .withSchedule(
                 CronScheduleBuilder.dailyAtHourAndMinute(8,0)
                     .inTimeZone(TimeZone.getTimeZone("Asia/Seoul"))

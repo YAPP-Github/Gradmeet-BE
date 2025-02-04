@@ -237,9 +237,9 @@ class ExperimentPostCustomRepositoryImpl (
             .mapNotNull { tuple ->
                 val participantEntity: ParticipantEntity = tuple.get(participant)!!
                 val contactEmail: String? = tuple.get(member.contactEmail)
+                val birthDate = participantEntity.birthDate
 
                 contactEmail?.let {
-                    val birthDate = LocalDate.parse(participantEntity.birthDate.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                     val currentYear = LocalDate.now().year
                     val participantAge = currentYear - birthDate.year + 1
 

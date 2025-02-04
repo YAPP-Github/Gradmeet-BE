@@ -19,7 +19,7 @@ class SendMatchingEmailJob(
     }
 
     override fun execute(context: JobExecutionContext) {
-        logger.info("🔔 BulkMatchingEmailSendJob started at ${LocalDateTime.now()}")
+        logger.info("BulkSendMatchingEmailJob started at ${LocalDateTime.now()}")
 
         val input = GetMatchingExperimentPostsUseCase.Input(
             requestTime = LocalDateTime.now()
@@ -41,16 +41,16 @@ class SendMatchingEmailJob(
                 val emailOutput = emailService.sendMatchingEmail(emailInput)
                 if (emailOutput.isSuccess) {
                     successCount++
-                    logger.info("✅ Email sent successfully to $contactEmail")
+                    logger.info("Email sent successfully to $contactEmail")
                 } else {
                     failureCount++
-                    logger.error("❌ Failed to send email to $contactEmail: ${emailOutput.message}")
+                    logger.error("Failed to send email to $contactEmail: ${emailOutput.message}")
                 }
             } catch (e: Exception) {
                 failureCount++
-                logger.error("❌ Exception occurred while sending email to $contactEmail", e)
+                logger.error("Exception occurred while sending email to $contactEmail", e)
             }
         }
-        logger.info("🎯 MatchingEmailSendJob completed. Success: $successCount, Failures: $failureCount")
+        logger.info("SendMatchingEmailJob completed. Success: $successCount, Failures: $failureCount")
     }
 }
