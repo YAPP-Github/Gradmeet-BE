@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.scheduler
 
 import com.dobby.backend.application.service.EmailService
-import com.dobby.backend.application.usecase.member.email.EmailMatchSendUseCase
+import com.dobby.backend.application.usecase.member.email.SendMatcingEmailUseCase
 import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
 import org.quartz.Job
 import org.quartz.JobExecutionContext
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class MatchingEmailSendJob(
+class SendMatchingEmailJob(
     private val emailService: EmailService
 ): Job {
     companion object {
-        private val logger : Logger = LoggerFactory.getLogger(MatchingEmailSendJob::class.java)
+        private val logger : Logger = LoggerFactory.getLogger(SendMatchingEmailJob::class.java)
     }
 
     override fun execute(context: JobExecutionContext) {
@@ -32,7 +32,7 @@ class MatchingEmailSendJob(
 
         for((contactEmail, jobList) in matchingExperimentPosts) {
             if(jobList.isNullOrEmpty()) continue
-            val emailInput = EmailMatchSendUseCase.Input (
+            val emailInput = SendMatcingEmailUseCase.Input (
                 contactEmail = contactEmail,
                 experimentPosts = jobList,
                 currentDateTime = LocalDateTime.now()

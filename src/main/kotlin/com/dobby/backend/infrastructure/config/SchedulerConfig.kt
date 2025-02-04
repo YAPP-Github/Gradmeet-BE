@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.config
 
 import com.dobby.backend.infrastructure.scheduler.ExpiredExperimentPostJob
-import com.dobby.backend.infrastructure.scheduler.MatchingEmailSendJob
+import com.dobby.backend.infrastructure.scheduler.SendMatchingEmailJob
 import org.quartz.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -38,7 +38,7 @@ class SchedulerConfig {
     @Bean
     fun matchingEmailSendJobDetail(): JobDetail {
         logger.info("👩‍📩 Registering MatchingEmailSendJob...")
-        return JobBuilder.newJob(MatchingEmailSendJob::class.java)
+        return JobBuilder.newJob(SendMatchingEmailJob::class.java)
             .withIdentity("matching_email_send_job", "DEFAULT")
             .storeDurably()
             .build()

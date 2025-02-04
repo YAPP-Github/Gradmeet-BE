@@ -6,9 +6,9 @@ import com.dobby.backend.domain.exception.CodeNotCorrectException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 
-class EmailVerificationUseCase(
+class VerifyEmailUseCase(
     private val verificationGateway: VerificationGateway
-) : UseCase<EmailVerificationUseCase.Input, EmailVerificationUseCase.Output> {
+) : UseCase<VerifyEmailUseCase.Input, VerifyEmailUseCase.Output> {
 
     data class Input (
         val univEmail : String,
