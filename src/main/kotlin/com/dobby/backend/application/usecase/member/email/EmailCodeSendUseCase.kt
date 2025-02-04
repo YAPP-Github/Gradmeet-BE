@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.*
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
@@ -12,7 +12,7 @@ import com.dobby.backend.util.EmailUtils
 class EmailCodeSendUseCase(
     private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway,
-    private val idGeneratorGateway: IdGeneratorGateway
+    private val idGenerator: IdGenerator
 ) : UseCase<EmailCodeSendUseCase.Input, EmailCodeSendUseCase.Output> {
 
     data class Input(
@@ -52,7 +52,7 @@ class EmailCodeSendUseCase(
         }
         else {
             val newVerification = Verification.newVerification(
-                id = idGeneratorGateway.generateId(),
+                id = idGenerator.generateId(),
                 univEmail = input.univEmail,
                 verificationCode = code
             )

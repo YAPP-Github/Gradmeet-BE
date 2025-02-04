@@ -3,7 +3,7 @@ package com.dobby.backend.application.usecase.member.email
 import com.dobby.backend.domain.exception.EmailAlreadyVerifiedException
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.exception.EmailNotUnivException
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
@@ -18,9 +18,9 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
 
     val verificationGateway: VerificationGateway = mockk()
     val emailGateway: EmailGateway = mockk()
-    val idGeneratorGateway: IdGeneratorGateway = mockk()
+    val idGenerator: IdGenerator = mockk()
 
-    val emailCodeSendUseCase = EmailCodeSendUseCase(verificationGateway, emailGateway, idGeneratorGateway)
+    val emailCodeSendUseCase = EmailCodeSendUseCase(verificationGateway, emailGateway, idGenerator)
 
     beforeSpec {
         mockkObject(EmailUtils)
@@ -34,7 +34,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             every { EmailUtils.isUnivMail(univEmail) } returns true
             every { EmailUtils.generateCode() } returns verificationCode
             every { verificationGateway.findByUnivEmail(univEmail) } returns null
-            every { idGeneratorGateway.generateId() } returns "1"
+            every { idGenerator.generateId() } returns "1"
             every { verificationGateway.save(any()) } returns mockk<Verification>()
             every { emailGateway.sendEmail(any(), any(), any()) } just Runs
 
