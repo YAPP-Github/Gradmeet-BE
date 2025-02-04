@@ -1,21 +1,30 @@
 package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.domain.model.experiment.*
+import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
+import com.dobby.backend.infrastructure.database.entity.enums.MatchType.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.*
+import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.member.QMemberEntity
+import com.dobby.backend.infrastructure.database.entity.member.QParticipantEntity
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
+import com.querydsl.core.types.dsl.EnumPath
+import com.querydsl.core.types.dsl.Expressions
+import com.querydsl.core.types.dsl.NumberPath
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Repository
 class ExperimentPostCustomRepositoryImpl (
@@ -89,7 +98,7 @@ class ExperimentPostCustomRepositoryImpl (
 
     private fun matchTypeEq(post: QExperimentPostEntity, matchType: MatchType?): BooleanExpression? {
         return matchType?.let {
-            if(it == MatchType.ALL) null else post.matchType.eq(it)
+            if(it == ALL) null else post.matchType.eq(it)
         }
     }
 
@@ -200,4 +209,94 @@ class ExperimentPostCustomRepositoryImpl (
         }
         entityManager.merge(experimentPost)
     }
+
+    private var lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
+
+    @Override
+    override fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>> {
+        val experimentPost = QExperimentPostEntity.experimentPostEntity
+        val targetGroup = QTargetGroupEntity.targetGroupEntity
+        val participant = QParticipantEntity.participantEntity
+        val member = QMemberEntity.memberEntity
+
+        val currentTime = LocalDateTime.now()
+
+        val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
+            .join(experimentPost.targetGroup, targetGroup).fetchJoin()
+            .where(
+                experimentPost.createdAt.between(lastProcessedTime, currentTime),
+                experimentPost.alarmAgree.isTrue
+            )
+            .fetch()
+
+        return jpaQueryFactory
+            .select(participant, member.contactEmail)
+            .from(participant)
+            .join(participant.member, member)
+            .fetch()
+            .mapNotNull { tuple ->
+                val participantEntity: ParticipantEntity = tuple.get(participant)!!
+                val contactEmail: String? = tuple.get(member.contactEmail)
+                val birthDate = participantEntity.birthDate
+
+                contactEmail?.let {
+                    val currentYear = LocalDate.now().year
+                    val participantAge = currentYear - birthDate.year + 1
+
+                    Pair(it, todayPosts.filter { post ->
+                        listOf(
+                            customGenderEq(post.targetGroup.genderType, participantEntity.gender),
+                            customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
+                            customAddressInfoEq(
+                                post.region, post.area,
+                                participantEntity.basicAddressInfo.region, participantEntity.basicAddressInfo.area,
+                                participantEntity.additionalAddressInfo.region, participantEntity.additionalAddressInfo.area
+                            ),
+                            customMatchTypeEq(post.matchType, participantEntity.matchType)
+                        ).all { it }
+                    }.take(10))
+                }
+            }.toMap()
+    }
+
+    private fun customGenderEq(
+        postGender: GenderType,
+        participantGender: GenderType
+    ): Boolean {
+        return participantGender == GenderType.ALL || postGender == participantGender || postGender == GenderType.ALL
+    }
+
+    private fun customAgeBetween(
+        startAge: Int?,
+        endAge: Int?,
+        participantAge: Int
+    ): Boolean {
+        if(startAge == null || endAge == null) return true
+        return (startAge <= participantAge) && (participantAge <= endAge)
+    }
+
+    private fun customAddressInfoEq(
+        region: Region?,
+        area: Area?,
+        basicRegion: Region, basicArea: Area,
+        additionalRegion: Region?, additionalArea: Area?
+    ): Boolean {
+        if(region == null && area == null) return true
+        val isBasicMatch = (region == basicRegion) && (area == basicArea)
+        val isAdditionalMatch = (additionalRegion != null) && (additionalArea != null)
+                && (region == additionalRegion && area == additionalArea)
+        return isBasicMatch || isAdditionalMatch
+    }
+
+    private fun customMatchTypeEq(
+        postMatchType: MatchType?,
+        participantMatchType: MatchType?
+    ): Boolean {
+        if (participantMatchType == ALL || participantMatchType == null)
+            return true
+        if (postMatchType == null)
+            return true
+        return postMatchType == participantMatchType
+    }
+
 }
