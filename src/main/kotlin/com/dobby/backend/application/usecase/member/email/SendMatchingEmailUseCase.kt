@@ -10,10 +10,10 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class SendMatcingEmailUseCase(
+class SendMatchingEmailUseCase(
     private val emailGateway: EmailGateway,
     private val urlGeneratorGateway: UrlGeneratorGateway
-): UseCase<SendMatcingEmailUseCase.Input, SendMatcingEmailUseCase.Output>{
+): UseCase<SendMatchingEmailUseCase.Input, SendMatchingEmailUseCase.Output>{
 
     data class Input(
         val contactEmail: String,

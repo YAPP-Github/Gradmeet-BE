@@ -1,7 +1,7 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.member.email.SendEmailCodeUseCase
-import com.dobby.backend.application.usecase.member.email.SendMatcingEmailUseCase
+import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
 import com.dobby.backend.application.usecase.member.email.VerifyEmailUseCase
 import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
 import jakarta.transaction.Transactional
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 class EmailService(
     private val sendEmailCodeUseCase: SendEmailCodeUseCase,
     private val verifyEmailUseCase: VerifyEmailUseCase,
-    private val sendMatcingEmailUseCase: SendMatcingEmailUseCase,
+    private val sendMatchingEmailUseCase: SendMatchingEmailUseCase,
     private val getMatchingExperimentPostsUseCase: GetMatchingExperimentPostsUseCase
 ) {
     @Transactional
@@ -25,8 +25,8 @@ class EmailService(
     }
 
     @Transactional
-    fun sendMatchingEmail(req: SendMatcingEmailUseCase.Input): SendMatcingEmailUseCase.Output{
-        return sendMatcingEmailUseCase.execute(req)
+    fun sendMatchingEmail(req: SendMatchingEmailUseCase.Input): SendMatchingEmailUseCase.Output{
+        return sendMatchingEmailUseCase.execute(req)
     }
 
     @Transactional

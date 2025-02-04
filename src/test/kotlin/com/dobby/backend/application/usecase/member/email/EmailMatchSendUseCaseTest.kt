@@ -24,7 +24,7 @@ class EmailMatchSendUseCaseTest : BehaviorSpec({
 
     val emailGateway = mockk<EmailGateway>(relaxed = true)
     val urlGeneratorGateway = mockk<UrlGeneratorGateway>(relaxed = true)
-    val sendMatcingEmailUseCase = SendMatcingEmailUseCase(emailGateway, urlGeneratorGateway)
+    val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway)
 
     given("이메일 매칭 발송을 실행할 때") {
 
@@ -80,12 +80,12 @@ class EmailMatchSendUseCaseTest : BehaviorSpec({
                     recruitStatus = true
                 )
             )
-            val input = SendMatcingEmailUseCase.Input(contactEmail, experimentPosts, LocalDateTime.now())
+            val input = SendMatchingEmailUseCase.Input(contactEmail, experimentPosts, LocalDateTime.now())
 
             every { emailGateway.sendEmail(any(), any(), any()) } returns Unit
 
             then("이메일 전송이 성공해야 한다") {
-                val output = sendMatcingEmailUseCase.execute(input)
+                val output = sendMatchingEmailUseCase.execute(input)
 
                 output.isSuccess shouldBe true
                 verify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any()) }
@@ -144,11 +144,11 @@ class EmailMatchSendUseCaseTest : BehaviorSpec({
                     recruitStatus = true
                 )
             )
-            val input = SendMatcingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
+            val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
 
             then("EmailDomainNotFoundException 예외가 발생해야 한다") {
                 val exception = shouldThrow<EmailDomainNotFoundException> {
-                    sendMatcingEmailUseCase.execute(input)
+                    sendMatchingEmailUseCase.execute(input)
                 }
 
                 exception shouldBe EmailDomainNotFoundException

@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.scheduler
 
 import com.dobby.backend.application.service.EmailService
-import com.dobby.backend.application.usecase.member.email.SendMatcingEmailUseCase
+import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
 import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
 import org.quartz.Job
 import org.quartz.JobExecutionContext
@@ -32,7 +32,7 @@ class SendMatchingEmailJob(
 
         for((contactEmail, jobList) in matchingExperimentPosts) {
             if(jobList.isEmpty()) continue
-            val emailInput = SendMatcingEmailUseCase.Input (
+            val emailInput = SendMatchingEmailUseCase.Input (
                 contactEmail = contactEmail,
                 experimentPosts = jobList,
                 currentDateTime = LocalDateTime.now()
