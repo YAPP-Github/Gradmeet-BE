@@ -13,7 +13,7 @@ import io.mockk.mockk
 
 class EmailVerificationUseCaseTest : BehaviorSpec({
     val verificationGateway: VerificationGateway = mockk()
-    val emailVerificationUseCase = EmailVerificationUseCase(verificationGateway)
+    val verifyEmailUseCase = VerifyEmailUseCase(verificationGateway)
 
     Given("유효한 인증 코드가 주어졌을 때") {
         val validEmail = "christer10@ewhain.net"
@@ -28,7 +28,7 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         every { verificationGateway.save(any()) } returns mockk<Verification>()
 
         When("이메일 인증을 요청하면") {
-            val output = emailVerificationUseCase.execute(EmailVerificationUseCase.Input(validEmail, validCode))
+            val output = verifyEmailUseCase.execute(VerifyEmailUseCase.Input(validEmail, validCode))
 
             Then("이메일 인증이 성공적으로 완료되어야 한다") {
                 output.isSuccess shouldBe true
@@ -44,7 +44,7 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         When("이메일 인증을 요청하면") {
             Then("VerifyInfoNotFoundException이 발생해야 한다") {
                 shouldThrow<VerifyInfoNotFoundException> {
-                    emailVerificationUseCase.execute(EmailVerificationUseCase.Input(invalidEmail, "123456"))
+                    verifyEmailUseCase.execute(VerifyEmailUseCase.Input(invalidEmail, "123456"))
                 }
             }
         }
@@ -61,7 +61,7 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         When("이메일 인증을 요청하면") {
             Then("CodeNotCorrectException이 발생해야 한다") {
                 shouldThrow<CodeNotCorrectException> {
-                    emailVerificationUseCase.execute(EmailVerificationUseCase.Input(email, incorrectCode))
+                    verifyEmailUseCase.execute(VerifyEmailUseCase.Input(email, incorrectCode))
                 }
             }
         }
@@ -79,7 +79,7 @@ class EmailVerificationUseCaseTest : BehaviorSpec({
         When("이메일 인증을 요청하면") {
             Then("CodeExpiredException이 발생해야 한다") {
                 shouldThrow<CodeExpiredException> {
-                    emailVerificationUseCase.execute(EmailVerificationUseCase.Input(email, expiredCode))
+                    verifyEmailUseCase.execute(VerifyEmailUseCase.Input(email, expiredCode))
                 }
             }
         }
