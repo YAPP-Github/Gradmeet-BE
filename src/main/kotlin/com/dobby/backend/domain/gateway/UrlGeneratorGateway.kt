@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.gateway
 
 interface UrlGeneratorGateway {
-    fun getUrl(): String
+    fun getBaseUrl(): String
+    fun getExperimentPostUrl(postId: String): String
 }

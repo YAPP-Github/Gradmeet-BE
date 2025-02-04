@@ -46,9 +46,8 @@ class SendMatchingEmailUseCase(
     private fun getFormattedEmail(memberName: String, experimentPosts: List<ExperimentPost>): Pair<String, String> {
         val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val emailTitle = "[그라밋🔬] $todayDate 오늘의 추천 실험 공고를 확인해보세요!"
-        val baseUrl = urlGeneratorGateway.getUrl()
         val jobListFormatted = experimentPosts.joinToString("\n\n") { post ->
-            val postUrl = baseUrl+"/post/${post.id}/details"
+            val postUrl = urlGeneratorGateway.getExperimentPostUrl(postId = post.id)
             """
         🔹 **${post.title}**
         - 📅 기간: ${post.startDate} ~ ${post.endDate}
@@ -65,7 +64,7 @@ class SendMatchingEmailUseCase(
         🔹 **추천 공고 목록** 🔹
         $jobListFormatted
 
-        더 많은 공고를 보려면 [그라밋 웹사이트]($baseUrl)를 방문해 주세요!
+        더 많은 공고를 보려면 [그라밋 웹사이트](${urlGeneratorGateway.getBaseUrl()})를 방문해 주세요!
     """.trimIndent()
 
         return Pair(emailTitle, content)

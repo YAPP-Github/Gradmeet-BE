@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component
 class UrlGeneratorGatewayImpl(
     private val urlProperties: UrlProperties
 ) : UrlGeneratorGateway{
-    override fun getUrl(): String {
+    override fun getBaseUrl(): String {
         return urlProperties.serverUrl
+    }
+
+    override fun getExperimentPostUrl(postId: String): String {
+        return urlProperties.serverUrl+"/v1/experiment-posts/"+postId+"/details"
     }
 }
