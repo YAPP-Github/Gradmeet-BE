@@ -50,7 +50,6 @@ class SchedulerConfig {
         return TriggerBuilder.newTrigger()
             .forJob(sendEmailMatchingJobDetail())
             .withIdentity("send_matching_email_trigger", "DEFAULT")
-            //.startNow() // instantly execution for test api
             .withSchedule(
                 CronScheduleBuilder.dailyAtHourAndMinute(8,0)
                     .inTimeZone(TimeZone.getTimeZone("Asia/Seoul"))
