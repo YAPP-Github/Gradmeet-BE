@@ -1,8 +1,10 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.mapper.ExperimentMapper
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.backend.domain.model.experiment.CustomFilter
+import com.dobby.backend.domain.model.experiment.LocationTarget
+import com.dobby.backend.domain.model.experiment.StudyTarget
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 
@@ -19,7 +21,12 @@ class GetExperimentPostTotalCountByCustomFilterUseCase(
 
     override fun execute(input: Input): Int {
         return experimentPostGateway.countExperimentPostsByCustomFilter(
-            ExperimentMapper.toDomainFilter(input)
+            CustomFilter.newCustomFilter(
+                input.matchType,
+                studyTarget = input.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                locationTarget = input.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                input.recruitStatus
+            )
         )
     }
 }
