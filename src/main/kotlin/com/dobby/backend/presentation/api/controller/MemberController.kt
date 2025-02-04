@@ -3,6 +3,8 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
@@ -51,8 +53,8 @@ class MemberController(
     @PreAuthorize("hasRole('RESEARCHER')")
     @GetMapping("/researchers/me")
     @Operation(
-        summary = "연구자 기본 정보 렌더링",
-        description = "연구자의 기본 정보 [학교 + 전공 + 랩실 정보 + 이름]를 반환합니다."
+        summary = "연구자 회원 정보 렌더링",
+        description = "연구자의 회원 정보를 반환합니다."
     )
     fun getResearcherInfo(): ResearcherInfoResponse {
         val input = MemberMapper.toGetResearcherInfoUseCaseInput()
@@ -60,15 +62,43 @@ class MemberController(
         return MemberMapper.toResearcherInfoResponse(output)
     }
 
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PutMapping("/researchers/me")
+    @Operation(
+        summary = "연구자 회원 정보 수정",
+        description = "연구자의 회원 정보를 수정합니다."
+    )
+    fun updateResearcherInfo(
+        @RequestBody @Valid request: UpdateResearcherInfoRequest
+    ): ResearcherInfoResponse {
+        val input = MemberMapper.toUpdateResearcherInfoUseCaseInput(request)
+        val output = memberService.updateResearcherInfo(input)
+        return MemberMapper.toResearcherInfoResponse(output)
+    }
+
     @PreAuthorize("hasRole('PARTICIPANT')")
     @GetMapping("/participants/me")
     @Operation(
-        summary = "참여자 회원 기본 정보 렌더링",
-        description = "참여자의 기본 정보를 반환합니다."
+        summary = "참여자 회원 정보 렌더링",
+        description = "참여자의 회원 정보를 반환합니다."
     )
     fun getParticipantInfo(): ParticipantInfoResponse {
         val input = MemberMapper.toGetParticipantInfoUseCaseInput()
         val output = memberService.getParticipantInfo(input)
+        return MemberMapper.toParticipantInfoResponse(output)
+    }
+
+    @PreAuthorize("hasRole('PARTICIPANT')")
+    @PutMapping("/participants/me")
+    @Operation(
+        summary = "참여자 회원 정보 수정",
+        description = "참여자의 회원 정보를 수정합니다."
+    )
+    fun updateParticipantInfo(
+        @RequestBody @Valid request: UpdateParticipantInfoRequest
+    ): ParticipantInfoResponse {
+        val input = MemberMapper.toUpdateParticipantInfoUseCaseInput(request)
+        val output = memberService.updateParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
     }
 }

@@ -35,8 +35,8 @@ class ParticipantEntity (
 
     @Embedded
     @AttributeOverrides(
-        AttributeOverride(name = "region", column = Column(name = "optional_region", nullable = false)),
-        AttributeOverride(name = "area", column = Column(name = "optional_area", nullable = false))
+        AttributeOverride(name = "region", column = Column(name = "additional_region", nullable = false)),
+        AttributeOverride(name = "area", column = Column(name = "additional_area", nullable = false))
     )
     val additionalAddressInfo: AddressInfo,
 
