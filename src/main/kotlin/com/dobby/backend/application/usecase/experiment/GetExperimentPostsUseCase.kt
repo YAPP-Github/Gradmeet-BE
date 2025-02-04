@@ -68,10 +68,7 @@ class GetExperimentPostsUseCase (
             locationTarget = input.customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
             input.customFilter.recruitStatus
         )
-        val pagination = Pagination.newPagination(
-            input.pagination.page,
-            input.pagination.count
-        )
+        val pagination = input.pagination.let { (page, count) -> Pagination.newPagination(page, count) }
         val posts = experimentPostGateway.findExperimentPostsByCustomFilter(
             domainFilter,
             pagination

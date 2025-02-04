@@ -32,7 +32,7 @@ class GetMyExperimentPostsUseCase(
     override fun execute(input: Input): List<Output> {
         val posts = experimentPostGateway.findExperimentPostsByMemberIdWithPagination(
             memberId = input.memberId,
-            pagination = Pagination.newPagination(input.pagination.page, input.pagination.count),
+            pagination = input.pagination.let { (page, count) -> Pagination.newPagination(page, count) },
             order = input.pagination.order
         )
 
