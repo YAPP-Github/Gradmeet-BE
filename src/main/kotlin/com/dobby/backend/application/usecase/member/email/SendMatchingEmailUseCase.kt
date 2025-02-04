@@ -33,9 +33,9 @@ class SendMatchingEmailUseCase(
 
         return try {
             emailGateway.sendEmail(input.contactEmail, title, content)
-            Output(isSuccess = true, message = " ✅ Email successfully sent to ${input.contactEmail}")
+            Output(isSuccess = true, message = " Email successfully sent to ${input.contactEmail}")
         } catch (ex: Exception) {
-            Output(isSuccess = false, message = "😭 Failed to send to email to ${input.contactEmail}: ${ex.message}")
+            Output(isSuccess = false, message = "Failed to send to email to ${input.contactEmail}: ${ex.message}")
         }
     }
 
@@ -50,10 +50,10 @@ class SendMatchingEmailUseCase(
             val postUrl = urlGeneratorGateway.getExperimentPostUrl(postId = post.id)
             """
         🔹 **${post.title}**
-        - 📅 기간: ${post.startDate} ~ ${post.endDate}
-        - 📍 위치: ${post.univName ?: "공고참고"} 
-        - 💰 보상: ${post.reward}
-        - 🔗 [공고 확인하기]($postUrl)
+        -  기간: ${post.startDate} ~ ${post.endDate}
+        -  위치: ${post.univName ?: "공고참고"} 
+        -  보상: ${post.reward}
+        -  [공고 확인하기]($postUrl)
         """.trimIndent()
         }
 
