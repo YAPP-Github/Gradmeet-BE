@@ -111,10 +111,10 @@ class ExperimentPostGatewayImpl(
         experimentPostRepository.delete(ExperimentPostEntity.fromDomain(post))
     }
 
-    override fun findMatchingExperimentPosts(): Map<String, List<ExperimentPost>?> {
+    override fun findMatchingExperimentPosts(): Map<String, List<ExperimentPost>> {
         val matchingPosts = experimentPostCustomRepository.findMatchingExperimentPostsForAllParticipants()
         return matchingPosts.mapValues { (_, postEntities) ->
-            postEntities?.map { it.toDomain() }
+            postEntities.map { it.toDomain() }
         }
     }
 }

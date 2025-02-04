@@ -15,7 +15,7 @@ class SchedulerConfig {
 
     @Bean
     fun expiredExperimentPostJobDetail(): JobDetail {
-        logger.info("👩‍💻 Registering ExpiredExperimentPostJob...")
+        logger.info("Registering ExpiredExperimentPostJob...")
         return JobBuilder.newJob(ExpiredExperimentPostJob::class.java)
             .withIdentity("expired_experiment_post_job", "DEFAULT")
             .storeDurably()
@@ -24,7 +24,7 @@ class SchedulerConfig {
 
     @Bean
     fun expiredExperimentPostTrigger(): Trigger {
-        logger.info("👩‍💻 Registering ExpiredExperimentPostTrigger...")
+        logger.info("Registering ExpiredExperimentPostTrigger...")
         return TriggerBuilder.newTrigger()
             .forJob(expiredExperimentPostJobDetail())
             .withIdentity("expired_experiment_post_trigger", "DEFAULT")
@@ -37,7 +37,7 @@ class SchedulerConfig {
 
     @Bean
     fun matchingEmailSendJobDetail(): JobDetail {
-        logger.info("👩‍📩 Registering MatchingEmailSendJob...")
+        logger.info("Registering MatchingEmailSendJob...")
         return JobBuilder.newJob(SendMatchingEmailJob::class.java)
             .withIdentity("matching_email_send_job", "DEFAULT")
             .storeDurably()
@@ -46,10 +46,11 @@ class SchedulerConfig {
 
     @Bean
     fun matchingEmailSendTrigger() : Trigger {
-        logger.info("👩‍📩 Registering MatchingEmailSendTrigger...")
+        logger.info("Registering MatchingEmailSendTrigger...")
         return TriggerBuilder.newTrigger()
             .forJob(matchingEmailSendJobDetail())
             .withIdentity("matching_email_send_trigger", "DEFAULT")
+            .startNow() // instantly execution for test
             .withSchedule(
                 CronScheduleBuilder.dailyAtHourAndMinute(8,0)
                     .inTimeZone(TimeZone.getTimeZone("Asia/Seoul"))

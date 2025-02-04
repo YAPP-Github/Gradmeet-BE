@@ -48,7 +48,7 @@ class SendMatcingEmailUseCase(
         val emailTitle = "[그라밋🔬] $todayDate 오늘의 추천 실험 공고를 확인해보세요!"
         val baseUrl = urlGeneratorGateway.getUrl()
         val jobListFormatted = jobList.joinToString("\n\n") { post ->
-            val postUrl = baseUrl+"/post/${post.id}"
+            val postUrl = baseUrl+"/post/${post.id}/details"
             """
         🔹 **${post.title}**
         - 📅 기간: ${post.startDate} ~ ${post.endDate}

@@ -31,7 +31,7 @@ class SendMatchingEmailJob(
         var failureCount = 0
 
         for((contactEmail, jobList) in matchingExperimentPosts) {
-            if(jobList.isNullOrEmpty()) continue
+            if(jobList.isEmpty()) continue
             val emailInput = SendMatcingEmailUseCase.Input (
                 contactEmail = contactEmail,
                 experimentPosts = jobList,

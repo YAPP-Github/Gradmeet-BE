@@ -27,5 +27,5 @@ interface ExperimentPostGateway {
     fun findExperimentPostByMemberIdAndPostId(memberId: String, postId: String): ExperimentPost?
     fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
     fun delete(post: ExperimentPost)
-    fun findMatchingExperimentPosts(): Map<String, List<ExperimentPost>?>
+    fun findMatchingExperimentPosts(): Map<String, List<ExperimentPost>>
 }

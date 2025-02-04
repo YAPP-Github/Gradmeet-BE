@@ -234,7 +234,7 @@ class ExperimentPostCustomRepositoryImpl (
             .from(participant)
             .join(participant.member, member)
             .fetch()
-            .mapNotNull { tuple -> // Null 제거
+            .mapNotNull { tuple ->
                 val participantEntity: ParticipantEntity = tuple.get(participant)!!
                 val contactEmail: String? = tuple.get(member.contactEmail)
 
@@ -263,7 +263,7 @@ class ExperimentPostCustomRepositoryImpl (
         postGender: GenderType,
         participantGender: GenderType
     ): Boolean {
-        return participantGender == GenderType.ALL || postGender == participantGender
+        return participantGender == GenderType.ALL || postGender == participantGender || postGender == GenderType.ALL
     }
 
     private fun customAgeBetween(

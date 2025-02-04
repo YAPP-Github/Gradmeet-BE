@@ -14,7 +14,7 @@ class GetMatchingExperimentPostsUseCase(
     )
 
     data class Output(
-        val matchingPosts: Map<String, List<ExperimentPost>?>
+        val matchingPosts: Map<String, List<ExperimentPost>>
     )
 
     override fun execute(input : Input): Output {

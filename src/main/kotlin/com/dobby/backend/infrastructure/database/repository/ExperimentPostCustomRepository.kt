@@ -26,5 +26,5 @@ interface ExperimentPostCustomRepository {
 
     fun countExperimentPostsByCustomFilter(customFilter: CustomFilter): Int
 
-    fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>?>
+    fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>>
 }
