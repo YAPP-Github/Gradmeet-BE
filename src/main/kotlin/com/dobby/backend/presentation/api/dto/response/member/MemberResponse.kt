@@ -19,6 +19,9 @@ data class MemberResponse(
     @Schema(description = "OAuth 제공자", example = "GOOGLE")
     val provider: ProviderType?,
 
+    @Schema(description = "연락받을 이메일", example = "dlawotn3@naver.com")
+    val contactEmail: String?,
+
     @Schema(description = "역할", example = "RESEARCHER")
     val role: RoleType?,
 ) {
@@ -29,6 +32,7 @@ data class MemberResponse(
                 memberId = id,
                 oauthEmail = oauthEmail,
                 provider = provider,
+                contactEmail = contactEmail,
                 role = role,
                 name = name
             )
