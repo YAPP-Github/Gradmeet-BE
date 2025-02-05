@@ -52,7 +52,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers/me")
+    @GetMapping("/me/researchers")
     @Operation(
         summary = "연구자 회원 정보 렌더링",
         description = "연구자의 회원 정보를 반환합니다."
@@ -64,7 +64,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @PutMapping("/researchers/me")
+    @PutMapping("/me/researchers")
     @Operation(
         summary = "연구자 회원 정보 수정",
         description = "연구자의 회원 정보를 수정합니다."
@@ -78,7 +78,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @GetMapping("/participants/me")
+    @GetMapping("/me/participants")
     @Operation(
         summary = "참여자 회원 정보 렌더링",
         description = "참여자의 회원 정보를 반환합니다."
@@ -90,7 +90,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @PutMapping("/participants/me")
+    @PutMapping("/me/participants")
     @Operation(
         summary = "참여자 회원 정보 수정",
         description = "참여자의 회원 정보를 수정합니다."
