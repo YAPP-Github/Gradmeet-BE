@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.experiment
 
+import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.Input
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.CustomFilterInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
@@ -88,7 +89,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination.newPagination(pagination.page, pagination.count)
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -170,7 +171,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination.newPagination(pagination.page, pagination.count)
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -249,7 +250,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination.newPagination(pagination.page, pagination.count)
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -327,7 +328,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination.newPagination(pagination.page, pagination.count)
+                Pagination(pagination.page, pagination.count)
             )
         } returns mutableListOf()
 
@@ -405,7 +406,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination.newPagination(pagination.page, pagination.count)
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 

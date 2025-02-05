@@ -1,10 +1,10 @@
 package com.dobby.backend.application.usecase.experiment
 
+import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.LocationTarget
-import com.dobby.backend.domain.model.experiment.Pagination
 import com.dobby.backend.domain.model.experiment.StudyTarget
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
@@ -20,6 +20,7 @@ class GetExperimentPostsUseCase (
         val customFilter: CustomFilterInput,
         val pagination: PaginationInput
     )
+
     data class CustomFilterInput(
         val matchType : MatchType?,
         val studyTarget: StudyTargetInput?,
@@ -68,7 +69,7 @@ class GetExperimentPostsUseCase (
             locationTarget = input.customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
             input.customFilter.recruitStatus
         )
-        val pagination = input.pagination.let { (page, count) -> Pagination.newPagination(page, count) }
+        val pagination = Pagination(input.pagination.page, input.pagination.count)
         val posts = experimentPostGateway.findExperimentPostsByCustomFilter(
             domainFilter,
             pagination
