@@ -34,7 +34,7 @@ spring:
             enable: true
   data:
     redis:
-      host: test
+      host: localhost
       port: 6379
 
 app:
