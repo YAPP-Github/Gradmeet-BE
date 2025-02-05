@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.SignupContactEmailDuplicateException
+import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 
 class VerifyContactEmailUseCase(
@@ -16,7 +16,9 @@ class VerifyContactEmailUseCase(
     )
 
     override fun execute(input: Input): Output {
-        if(memberGateway.findByContactEmail(input.contactEmail) == null) return Output(success = true)
-        else throw SignupContactEmailDuplicateException
+        if(!memberGateway.existsByContactEmail(input.contactEmail))
+            return Output(success = true)
+        else
+            throw ContactEmailDuplicateException
     }
 }

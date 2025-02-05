@@ -24,10 +24,8 @@ class MemberGatewayImpl(
             .orElse(null)
     }
 
-    override fun findByContactEmail(contactEmail: String): Member? {
-        return memberRepository
-            .findByContactEmail(contactEmail)
-            ?.let(MemberEntity::toDomain)
+    override fun existsByContactEmail(contactEmail: String): Boolean {
+        return memberRepository.existsByContactEmail(contactEmail)
     }
 
     override fun findByOauthEmailAndStatus(email: String, status: MemberStatus): Member? {

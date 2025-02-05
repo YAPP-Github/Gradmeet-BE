@@ -51,7 +51,7 @@ data object ResearcherNotFoundException : ClientException("ME0003", "Researcher 
 data object ParticipantNotFoundException : ClientException("ME0004", "Participant Not Found.", HttpStatus.NOT_FOUND)
 data object EmailNotValidateException : ClientException("ME0005", "You should validate your school email first", HttpStatus.BAD_REQUEST)
 data object SignupOauthEmailDuplicateException : ClientException("ME0006", "You've already joined with requested oauth email", HttpStatus.CONFLICT)
-data object SignupContactEmailDuplicateException: ClientException("ME0007", "You've already joined with requested contact email", HttpStatus.CONFLICT)
+data object ContactEmailDuplicateException: ClientException("ME0007", "This contact email is already in use", HttpStatus.CONFLICT)
 /**
  * Experiment error codes
  */
