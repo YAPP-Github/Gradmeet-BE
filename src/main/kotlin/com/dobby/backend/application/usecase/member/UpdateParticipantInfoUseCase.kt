@@ -37,7 +37,7 @@ class UpdateParticipantInfoUseCase(
     override fun execute(input: Input): Output {
         val participant = participantGateway.findByMemberId(input.memberId)
             ?: throw ParticipantNotFoundException
-        if (memberGateway.existsByContactEmail(input.contactEmail)) {
+        if (memberGateway.existsByContactEmail(input.contactEmail) && participant.member.contactEmail != input.contactEmail) {
             throw ContactEmailDuplicateException
         }
 

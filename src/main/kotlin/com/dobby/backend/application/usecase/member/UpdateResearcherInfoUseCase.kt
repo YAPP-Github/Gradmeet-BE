@@ -31,7 +31,7 @@ class UpdateResearcherInfoUseCase(
     override fun execute(input: Input): Output {
         val researcher = researcherGateway.findByMemberId(input.memberId)
             ?: throw ResearcherNotFoundException
-        if (memberGateway.existsByContactEmail(input.contactEmail)) {
+        if (memberGateway.existsByContactEmail(input.contactEmail)&& researcher.member.contactEmail != input.contactEmail) {
             throw ContactEmailDuplicateException
         }
 

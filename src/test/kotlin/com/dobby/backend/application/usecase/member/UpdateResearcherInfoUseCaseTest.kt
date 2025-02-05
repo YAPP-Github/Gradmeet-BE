@@ -130,4 +130,54 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
             }
         }
     }
+
+    given("사용자가 자신의 기존 contactEmail을 사용할 때") {
+        val memberId = "1"
+        val existingEmail = "existing@example.com"
+
+        val researcher = Researcher(
+            id = memberId,
+            member = Member(
+                id = memberId,
+                name = "기존 연구자",
+                contactEmail = existingEmail,
+                oauthEmail = "oauth@example.com",
+                provider = ProviderType.NAVER,
+                role = RoleType.RESEARCHER,
+                status = MemberStatus.ACTIVE,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            ),
+            univEmail = "old@university.com",
+            univName = "Old University",
+            major = "Old Major",
+            labInfo = "Old Lab",
+            emailVerified = true
+        )
+
+        val input = UpdateResearcherInfoUseCase.Input(
+            memberId = memberId,
+            contactEmail = existingEmail,
+            name = "새 연구자",
+            univName = "New University",
+            major = "New Major",
+            labInfo = "New Lab"
+        )
+
+        every { researcherGateway.findByMemberId(memberId) } returns researcher
+        every { memberGateway.existsByContactEmail(input.contactEmail) } returns true
+        every { researcherGateway.save(any()) } answers { firstArg() }
+
+        `when`("useCase의 execute가 호출되면") {
+            val result = useCase.execute(input)
+
+            then("정상적으로 researcher 정보가 업데이트된다") {
+                result.member.contactEmail shouldBe existingEmail
+                result.member.name shouldBe input.name
+                result.univName shouldBe input.univName
+                result.major shouldBe input.major
+                result.labInfo shouldBe input.labInfo
+            }
+        }
+    }
 })

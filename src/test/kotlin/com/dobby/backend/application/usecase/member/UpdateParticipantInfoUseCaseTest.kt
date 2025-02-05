@@ -129,4 +129,50 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             }
         }
     }
+
+    given("사용자가 자신의 기존 contactEmail을 사용할 때") {
+        val memberId = "1"
+        val existingEmail = "existing@example.com"
+
+        val participant = Participant(
+            id = memberId,
+            member = Member(
+                id = memberId,
+                name = "기존 이름",
+                contactEmail = existingEmail,
+                oauthEmail = "oauth@example.com",
+                provider = ProviderType.NAVER,
+                role = RoleType.PARTICIPANT,
+                status = MemberStatus.ACTIVE,
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            ),
+            gender = GenderType.MALE,
+            birthDate = LocalDate.of(1998, 5, 10),
+            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
+            additionalAddressInfo = Participant.AddressInfo(Region.INCHEON, Area.SEOGU),
+            matchType = MatchType.OFFLINE
+        )
+
+        val input = UpdateParticipantInfoUseCase.Input(
+            memberId = memberId,
+            contactEmail = existingEmail,
+            name = "새로운 이름",
+            basicAddressInfo = Participant.AddressInfo(Region.BUSAN, Area.BUSAN_ALL),
+            additionalAddressInfo = Participant.AddressInfo(Region.DAEGU, Area.DAEGU_ALL),
+            matchType = MatchType.ONLINE
+        )
+
+        every { participantGateway.findByMemberId(memberId) } returns participant
+        every { memberGateway.existsByContactEmail(input.contactEmail) } returns true
+        every { participantGateway.save(any()) } answers { firstArg() }
+
+        `when`("useCase의 execute가 호출되면") {
+            val result = useCase.execute(input)
+
+            then("정상적으로 participant 정보가 업데이트된다") {
+                result.member.contactEmail shouldBe existingEmail
+            }
+        }
+    }
 })
