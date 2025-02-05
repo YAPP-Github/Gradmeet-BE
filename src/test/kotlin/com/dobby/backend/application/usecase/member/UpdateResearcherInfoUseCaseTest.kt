@@ -1,6 +1,8 @@
 package com.dobby.backend.application.usecase.member
 
+import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.exception.ResearcherNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
@@ -17,7 +19,8 @@ import java.time.LocalDateTime
 
 class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
     val researcherGateway = mockk<ResearcherGateway>()
-    val useCase = UpdateResearcherInfoUseCase(researcherGateway)
+    val memberGateway = mockk<MemberGateway>()
+    val useCase = UpdateResearcherInfoUseCase(researcherGateway, memberGateway)
 
     given("유효한 memberId가 주어졌을 때") {
         val memberId = "1"
@@ -46,6 +49,7 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
         )
 
         every { researcherGateway.findByMemberId(memberId) } returns researcher
+        every { memberGateway.existsByContactEmail(input.contactEmail) } returns false
         every { researcherGateway.save(any()) } answers { firstArg() }
 
         `when`("useCase의 execute가 호출되면") {
@@ -83,6 +87,44 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
 
             then("ResearcherNotFoundException이 발생한다") {
                 shouldThrow<ResearcherNotFoundException> {
+                    useCase.execute(input)
+                }
+            }
+        }
+    }
+
+    given("중복된 contactEmail이 주어졌을 때") {
+        val memberId = "1"
+
+        val researcher = Researcher(
+            id = memberId,
+            member = Member(
+                id = memberId, name = "기존 연구자", contactEmail = "old@example.com",
+                oauthEmail = "oauth@example.com", provider = ProviderType.NAVER, role = RoleType.RESEARCHER,
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()
+            ),
+            univEmail = "old@university.com",
+            univName = "Old University",
+            major = "Old Major",
+            labInfo = "Old Lab",
+            emailVerified = true
+        )
+
+        val input = UpdateResearcherInfoUseCase.Input(
+            memberId = memberId,
+            contactEmail = "duplicate@example.com",
+            name = "새 연구자",
+            univName = "New University",
+            major = "New Major",
+            labInfo = "New Lab"
+        )
+
+        every { researcherGateway.findByMemberId(memberId) } returns researcher
+        every { memberGateway.existsByContactEmail(input.contactEmail) } returns true
+
+        `when`("useCase의 execute가 호출되면") {
+            then("ContactEmailDuplicateException이 발생한다") {
+                shouldThrow<ContactEmailDuplicateException> {
                     useCase.execute(input)
                 }
             }

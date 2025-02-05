@@ -69,7 +69,8 @@ object MemberMapper {
                     name = input.name,
                     provider = input.provider,
                     role = input.role,
-                    oauthEmail = input.oauthEmail
+                    oauthEmail = input.oauthEmail,
+                    contactEmail = input.contactEmail
                 )
             }
             is CreateParticipantUseCase.MemberResponse -> {
@@ -78,7 +79,8 @@ object MemberMapper {
                     name = input.name,
                     provider = input.provider,
                     role = input.role,
-                    oauthEmail = input.oauthEmail
+                    oauthEmail = input.oauthEmail,
+                    contactEmail = input.contactEmail
                 )
             }
             else -> throw IllegalArgumentException("Unsupported MemberResponse type")

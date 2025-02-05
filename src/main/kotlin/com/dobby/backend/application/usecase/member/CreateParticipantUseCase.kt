@@ -43,6 +43,7 @@ class CreateParticipantUseCase (
         val name: String?,
         val oauthEmail: String?,
         val provider: ProviderType?,
+        val contactEmail: String?,
         val role: RoleType?,
     )
 
@@ -65,6 +66,7 @@ class CreateParticipantUseCase (
                 name = newMember.name,
                 oauthEmail = newMember.oauthEmail,
                 provider = newMember.provider,
+                contactEmail = newMember.contactEmail,
                 role = newMember.role
             )
         )
