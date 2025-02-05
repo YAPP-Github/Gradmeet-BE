@@ -168,4 +168,11 @@ object MemberMapper {
             matchType = output.matchType
         )
     }
+
+    fun toValidateContactEmailForUpdateUseCaseInput(email: String): ValidateContactEmailForUpdateUseCase.Input {
+        return ValidateContactEmailForUpdateUseCase.Input(
+            memberId = getCurrentMemberId(),
+            contactEmail = email
+        )
+    }
 }

@@ -45,4 +45,8 @@ class MemberGatewayImpl(
     override fun existsByContactEmail(contactEmail: String): Boolean {
         return memberRepository.existsByContactEmail(contactEmail)
     }
+
+    override fun findContactEmailByMemberId(memberId: String): String {
+        return memberRepository.findContactEmailById(memberId)
+    }
 }

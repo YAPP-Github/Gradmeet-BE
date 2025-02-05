@@ -8,4 +8,5 @@ interface MemberRepository : JpaRepository<MemberEntity, String> {
     fun findByOauthEmail(oauthEmail: String): MemberEntity?
     fun findByOauthEmailAndStatus(oauthEmail: String, status: MemberStatus): MemberEntity?
     fun existsByContactEmail(contactEmail: String): Boolean
+    fun findContactEmailById(memberId: String): String
 }
