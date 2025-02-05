@@ -1,7 +1,9 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Participant
@@ -10,7 +12,8 @@ import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import java.time.LocalDate
 
 class UpdateParticipantInfoUseCase(
-    private val participantGateway: ParticipantGateway
+    private val participantGateway: ParticipantGateway,
+    private val memberGateway: MemberGateway
 ) : UseCase<UpdateParticipantInfoUseCase.Input, UpdateParticipantInfoUseCase.Output> {
 
     data class Input(
@@ -34,6 +37,9 @@ class UpdateParticipantInfoUseCase(
     override fun execute(input: Input): Output {
         val participant = participantGateway.findByMemberId(input.memberId)
             ?: throw ParticipantNotFoundException
+        if (memberGateway.existsByContactEmail(input.contactEmail)) {
+            throw ContactEmailDuplicateException
+        }
 
         val updatedParticipant = participantGateway.save(
             participant.updateInfo(

@@ -9,4 +9,5 @@ interface MemberGateway {
     fun findByOauthEmailAndStatus(email: String, status: MemberStatus): Member?
     fun findByOauthEmail(email: String): Member?
     fun save(savedMember: Member) : Member
+    fun existsByContactEmail(contactEmail: String) : Boolean
 }

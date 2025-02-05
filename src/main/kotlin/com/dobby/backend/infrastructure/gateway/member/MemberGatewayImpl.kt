@@ -41,4 +41,8 @@ class MemberGatewayImpl(
             .save(MemberEntity.fromDomain(savedMember))
         return savedEntity.toDomain()
     }
+
+    override fun existsByContactEmail(contactEmail: String): Boolean {
+        return memberRepository.existsByContactEmail(contactEmail)
+    }
 }
