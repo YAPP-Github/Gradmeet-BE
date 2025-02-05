@@ -58,9 +58,9 @@ object MemberMapper {
         )
     }
 
-    fun toContactEmailVerificationInput(req: ContactEmailVerificationRequest): VerifyContactEmailUseCase.Input{
+    fun toContactEmailVerificationInput(contactEmail: String): VerifyContactEmailUseCase.Input{
         return VerifyContactEmailUseCase.Input(
-            contactEmail = req.contactEmail
+            contactEmail = contactEmail
         )
     }
 
