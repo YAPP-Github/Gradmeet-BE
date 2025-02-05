@@ -9,11 +9,11 @@ import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import com.dobby.backend.util.EmailUtils
 
-class EmailCodeSendUseCase(
+class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway,
     private val idGenerator: IdGenerator
-) : UseCase<EmailCodeSendUseCase.Input, EmailCodeSendUseCase.Output> {
+) : UseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
 
     data class Input(
         val univEmail: String

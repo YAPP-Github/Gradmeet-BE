@@ -20,7 +20,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
     val emailGateway: EmailGateway = mockk()
     val idGenerator: IdGenerator = mockk()
 
-    val emailCodeSendUseCase = EmailCodeSendUseCase(verificationGateway, emailGateway, idGenerator)
+    val sendEmailCodeUseCase = SendEmailCodeUseCase(verificationGateway, emailGateway, idGenerator)
 
     beforeSpec {
         mockkObject(EmailUtils)
@@ -39,7 +39,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             every { emailGateway.sendEmail(any(), any(), any()) } just Runs
 
             `when`("이메일 인증 코드 전송을 실행하면") {
-                val output = emailCodeSendUseCase.execute(EmailCodeSendUseCase.Input(univEmail))
+                val output = sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(univEmail))
 
                 then("성공적으로 이메일이 전송되었음을 반환해야 한다") {
                     output.isSuccess shouldBe true
@@ -55,7 +55,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             `when`("이메일 인증 코드 전송을 실행하면") {
                 then("EmailDomainNotFoundException 예외가 발생해야 한다") {
                     shouldThrow<EmailDomainNotFoundException> {
-                        emailCodeSendUseCase.execute(EmailCodeSendUseCase.Input(invalidEmail))
+                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(invalidEmail))
                     }
                 }
             }
@@ -69,7 +69,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             `when`("이메일 인증 코드 전송을 실행하면") {
                 then("EmailNotUnivException 예외가 발생해야 한다") {
                     shouldThrow<EmailNotUnivException> {
-                        emailCodeSendUseCase.execute(EmailCodeSendUseCase.Input(personalEmail))
+                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(personalEmail))
                     }
                 }
             }
@@ -88,7 +88,7 @@ class EmailCodeSendUseCaseTest : BehaviorSpec({
             `when`("이메일 인증 코드 전송을 실행하면") {
                 then("EmailAlreadyVerifiedException 예외가 발생해야 한다") {
                     shouldThrow<EmailAlreadyVerifiedException> {
-                        emailCodeSendUseCase.execute(EmailCodeSendUseCase.Input(verifiedEmail))
+                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(verifiedEmail))
                     }
                 }
             }

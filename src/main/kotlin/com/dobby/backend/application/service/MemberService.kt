@@ -15,6 +15,8 @@ class MemberService(
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
+    private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase,
+    private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -24,7 +26,7 @@ class MemberService(
     @Transactional
     fun researcherSignup(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
-        if(existingMember!= null) throw SignupOauthEmailDuplicateException
+        if (existingMember!= null) throw SignupOauthEmailDuplicateException
 
         verifyResearcherEmailUseCase.execute(input.univEmail)
         return createResearcherUseCase.execute(input)
@@ -38,5 +40,15 @@ class MemberService(
     @Transactional
     fun getParticipantInfo(input: GetParticipantInfoUseCase.Input): GetParticipantInfoUseCase.Output {
         return getParticipantInfoUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateResearcherInfo(input: UpdateResearcherInfoUseCase.Input): UpdateResearcherInfoUseCase.Output {
+        return updateResearcherInfoUseCase.execute(input)
+    }
+
+    @Transactional
+    fun updateParticipantInfo(input: UpdateParticipantInfoUseCase.Input): UpdateParticipantInfoUseCase.Output {
+        return updateParticipantInfoUseCase.execute(input)
     }
 }

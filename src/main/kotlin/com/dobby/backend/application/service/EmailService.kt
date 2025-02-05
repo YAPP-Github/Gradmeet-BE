@@ -1,22 +1,36 @@
 package com.dobby.backend.application.service
 
-import com.dobby.backend.application.usecase.member.email.EmailCodeSendUseCase
-import com.dobby.backend.application.usecase.member.email.EmailVerificationUseCase
+import com.dobby.backend.application.usecase.member.email.SendEmailCodeUseCase
+import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
+import com.dobby.backend.application.usecase.member.email.VerifyEmailUseCase
+import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
 class EmailService(
-    private val emailCodeSendUseCase: EmailCodeSendUseCase,
-    private val emailVerificationUseCase: EmailVerificationUseCase
+    private val sendEmailCodeUseCase: SendEmailCodeUseCase,
+    private val verifyEmailUseCase: VerifyEmailUseCase,
+    private val sendMatchingEmailUseCase: SendMatchingEmailUseCase,
+    private val getMatchingExperimentPostsUseCase: GetMatchingExperimentPostsUseCase
 ) {
     @Transactional
-    fun sendEmail(req: EmailCodeSendUseCase.Input) : EmailCodeSendUseCase.Output{
-        return emailCodeSendUseCase.execute(req)
+    fun sendEmail(req: SendEmailCodeUseCase.Input) : SendEmailCodeUseCase.Output{
+        return sendEmailCodeUseCase.execute(req)
     }
 
     @Transactional
-    fun verifyCode(req: EmailVerificationUseCase.Input) : EmailVerificationUseCase.Output {
-        return emailVerificationUseCase.execute(req)
+    fun verifyCode(req: VerifyEmailUseCase.Input) : VerifyEmailUseCase.Output {
+        return verifyEmailUseCase.execute(req)
+    }
+
+    @Transactional
+    fun sendMatchingEmail(req: SendMatchingEmailUseCase.Input): SendMatchingEmailUseCase.Output{
+        return sendMatchingEmailUseCase.execute(req)
+    }
+
+    @Transactional
+    fun getMatchingInfo(req: GetMatchingExperimentPostsUseCase.Input): GetMatchingExperimentPostsUseCase.Output{
+        return getMatchingExperimentPostsUseCase.execute(req)
     }
 }

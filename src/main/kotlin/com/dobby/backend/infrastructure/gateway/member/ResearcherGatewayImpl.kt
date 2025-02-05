@@ -22,5 +22,4 @@ class ResearcherGatewayImpl(
             .save(ResearcherEntity.fromDomain(researcher))
         return savedEntity.toDomain()
     }
-
 }
