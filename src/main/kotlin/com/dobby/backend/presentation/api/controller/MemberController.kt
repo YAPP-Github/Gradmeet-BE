@@ -52,7 +52,7 @@ class MemberController(
         return MemberMapper.toResearcherSignupResponse(output)
     }
 
-    @GetMapping("/signup/validate/contact-email")
+    @GetMapping("/signup/validation/contact-email")
     @Operation(
         summary = "연락 받을 이메일 주소 검증 API - 회원가입 시 필수 API",
         description = "연락 받을 이메일이 사용 가능한지 검증해주는 API입니다. 사용가능하면 true, 아니면 예외를 던집니다."
@@ -117,7 +117,7 @@ class MemberController(
         return MemberMapper.toParticipantInfoResponse(output)
     }
 
-    @GetMapping("/me/validate/contact-email")
+    @GetMapping("/me/validation/contact-email")
     @Operation(
         summary = "연락 받을 이메일 주소 검증 API",
         description = "회원 정보 수정 시, 이메일 중복 확인을 위한 API입니다."
