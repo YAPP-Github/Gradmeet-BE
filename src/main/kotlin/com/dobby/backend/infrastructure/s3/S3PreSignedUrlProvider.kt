@@ -7,7 +7,7 @@ import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidRequestValueException
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.infrastructure.config.properties.S3Properties
 import org.springframework.stereotype.Component
 import java.util.*
@@ -15,7 +15,7 @@ import java.util.*
 @Component
 class S3PreSignedUrlProvider(
     private val amazonS3Client: AmazonS3,
-    private val idGeneratorGateway: IdGeneratorGateway,
+    private val idGenerator: IdGenerator,
     properties: S3Properties
 ) {
     private val bucket: String = properties.s3.bucket
@@ -54,6 +54,6 @@ class S3PreSignedUrlProvider(
             throw InvalidRequestValueException
         }
         val ext = fileName.substring(lastDotIndex)
-        return "${idGeneratorGateway.generateId()}$ext"
+        return "${idGenerator.generateId()}$ext"
     }
 }
