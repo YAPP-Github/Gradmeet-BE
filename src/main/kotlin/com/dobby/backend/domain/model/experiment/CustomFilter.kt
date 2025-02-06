@@ -11,7 +11,17 @@ data class CustomFilter(
     val studyTarget: StudyTarget?,
     val locationTarget: LocationTarget?,
     val recruitStatus: RecruitStatus
-)
+) {
+    companion object {
+        fun newCustomFilter(
+            matchType: MatchType?,
+            studyTarget: StudyTarget?,
+            locationTarget: LocationTarget?,
+            recruitStatus: RecruitStatus
+        ): CustomFilter = CustomFilter(matchType, studyTarget, locationTarget, recruitStatus)
+    }
+}
+
 data class StudyTarget(
     val gender: GenderType?,
     val age: Int?

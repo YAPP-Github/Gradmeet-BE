@@ -1,7 +1,6 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.ExperimentPostService
-import com.dobby.backend.application.service.PaginationService
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
@@ -30,8 +29,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/experiment-posts")
 class ExperimentPostController (
-    private val experimentPostService: ExperimentPostService,
-    private val paginationService: PaginationService
+    private val experimentPostService: ExperimentPostService
 ){
     @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping
@@ -166,7 +164,7 @@ class ExperimentPostController (
 
         val totalCountInput = ExperimentPostMapper.toGetExperimentPostTotalCountUseCaseInput(customFilter)
         val totalCount = experimentPostService.getExperimentPostTotalCount(totalCountInput)
-        val isLast = paginationService.isLastPage(totalCount, page, count)
+        val isLast = totalCount <= count * page
         return ExperimentPostMapper.toGetExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 
@@ -187,7 +185,7 @@ class ExperimentPostController (
 
         val totalCountInput = ExperimentPostMapper.toGetTotalMyExperimentPostCountUseCaseInput()
         val totalCount = experimentPostService.getMyExperimentPostsCount(totalCountInput).totalPostCount
-        val isLast = paginationService.isLastPage(totalCount, count, page)
+        val isLast = totalCount <= count * page
         return ExperimentPostMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
     }
 }
