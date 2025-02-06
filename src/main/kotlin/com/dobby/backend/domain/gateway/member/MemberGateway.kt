@@ -11,4 +11,5 @@ interface MemberGateway {
     fun save(savedMember: Member) : Member
     fun existsByContactEmail(contactEmail: String) : Boolean
     fun findContactEmailByMemberId(memberId: String): String
+    fun findByContactEmail(contactEmail: String): Member?
 }
