@@ -6,7 +6,7 @@ import org.quartz.JobKey
 import org.springframework.stereotype.Component
 
 @Component
-class QuartzTriggerGatewayImpl(
+class SchedulerTriggerGatewayImpl(
     private val scheduler: Scheduler
 ) : SchedulerTriggerGateway {
     override fun triggerJob(jobName: String, jobGroup: String) {
