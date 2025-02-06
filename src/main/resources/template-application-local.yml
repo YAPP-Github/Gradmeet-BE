@@ -52,6 +52,11 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
 
+  data:
+    redis:
+      host: ${REDIS_ENDPOINT}
+      port: ${REDIS_PORT}
+
 app:
   token:
     secretKey: ${JWT_SECRET_KEY}
