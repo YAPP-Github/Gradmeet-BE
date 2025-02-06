@@ -1,5 +1,6 @@
 package com.dobby.backend.infrastructure.database.repository
 
+import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.domain.model.experiment.*
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
