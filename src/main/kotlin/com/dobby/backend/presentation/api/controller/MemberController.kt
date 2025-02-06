@@ -109,9 +109,9 @@ class MemberController(
         description = "회원 정보 수정 시, 이메일 중복 확인을 위한 API입니다."
     )
     fun validateContactEmailForUpdate(
-        @RequestParam email: String
+        @RequestParam contactEmail: String
     ): DefaultResponse {
-        val input = MemberMapper.toValidateContactEmailForUpdateUseCaseInput(email)
+        val input = MemberMapper.toValidateContactEmailForUpdateUseCaseInput(contactEmail)
         val output = memberService.validateContactEmailForUpdate(input)
         return DefaultResponse(output.isDuplicate)
     }
