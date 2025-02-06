@@ -10,6 +10,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
+import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -20,11 +21,12 @@ import io.mockk.verify
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class EmailMatchSendUseCaseTest : BehaviorSpec({
+class SendMatchingEmailUseCaseTest : BehaviorSpec({
 
     val emailGateway = mockk<EmailGateway>(relaxed = true)
+    val memberGateway = mockk<MemberGateway>(relaxed = true)
     val urlGeneratorGateway = mockk<UrlGeneratorGateway>(relaxed = true)
-    val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway)
+    val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway, memberGateway)
 
     given("이메일 매칭 발송을 실행할 때") {
 
