@@ -3,7 +3,7 @@ package com.dobby.backend.application.usecase.experiment
 import com.dobby.backend.domain.exception.ExperimentPostImageSizeException
 import com.dobby.backend.domain.exception.ExperimentPostInvalidOnlineRequestException
 import com.dobby.backend.domain.exception.PermissionDeniedException
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
@@ -22,9 +22,9 @@ import java.time.LocalDateTime
 class CreateExperimentPostUseCaseTest: BehaviorSpec ({
     val experimentPostGateway: ExperimentPostGateway = mockk(relaxed = true)
     val memberGateway: MemberGateway = mockk()
-    val idGeneratorGateway: IdGeneratorGateway = mockk()
+    val idGenerator: IdGenerator = mockk()
 
-    val createExperimentPostUseCase = CreateExperimentPostUseCase(experimentPostGateway, memberGateway, idGeneratorGateway)
+    val createExperimentPostUseCase = CreateExperimentPostUseCase(experimentPostGateway, memberGateway, idGenerator)
 
     given("유효한 입력값이 주어졌을 때") {
         val validMember = Member(
@@ -69,7 +69,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         every { memberGateway.getById(validInput.memberId) } returns validMember
-        every { idGeneratorGateway.generateId() } returns "1"
+        every { idGenerator.generateId() } returns "1"
         every { experimentPostGateway.save(any()) } answers {
             val capturedExperimentPost = firstArg<ExperimentPost>()
             capturedExperimentPost.copy(id = "0") // DB에 저장된 ID 시뮬레이션
@@ -184,7 +184,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
 
 
         every { memberGateway.getById(invalidInput.memberId) } returns validMember
-        every { idGeneratorGateway.generateId() } returns "1"
+        every { idGenerator.generateId() } returns "1"
 
         `when`("유즈케이스를 실행하면") {
             then("ExperimentPostImageSizeException 예외가 발생해야 한다") {
@@ -238,7 +238,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         )
 
         every { memberGateway.getById(invalidInput.memberId) } returns validMember
-        every { idGeneratorGateway.generateId() } returns "1"
+        every { idGenerator.generateId() } returns "1"
 
         `when`("유즈케이스를 실행하면") {
             then("ExperimentPostInvalidOnlineRequestException 예외가 발생해야 한다") {

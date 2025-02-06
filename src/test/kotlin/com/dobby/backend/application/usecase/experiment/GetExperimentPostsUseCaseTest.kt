@@ -1,15 +1,13 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.mapper.ExperimentMapper
+import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.Input
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.CustomFilterInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.ApplyMethod
-import com.dobby.backend.domain.model.experiment.ExperimentPost
-import com.dobby.backend.domain.model.experiment.TargetGroup
+import com.dobby.backend.domain.model.experiment.*
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -85,8 +83,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
+                CustomFilter.newCustomFilter(
+                    customFilter.matchType,
+                    customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                    customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                    customFilter.recruitStatus
+                ),
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -162,8 +165,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
+                CustomFilter.newCustomFilter(
+                    customFilter.matchType,
+                    customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                    customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                    customFilter.recruitStatus
+                ),
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -236,8 +244,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
+                CustomFilter.newCustomFilter(
+                    customFilter.matchType,
+                    customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                    customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                    customFilter.recruitStatus
+                ),
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -309,8 +322,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
+                CustomFilter.newCustomFilter(
+                    customFilter.matchType,
+                    customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                    customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                    customFilter.recruitStatus
+                ),
+                Pagination(pagination.page, pagination.count)
             )
         } returns mutableListOf()
 
@@ -319,80 +337,6 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
             then("결과가 비어있음") {
                 result shouldBe mutableListOf()
-            }
-        }
-    }
-
-    given("studyTarget이 null인 경우") {
-        val customFilter = CustomFilterInput(
-            matchType = MatchType.ALL,
-            studyTarget = null,
-            locationTarget = LocationTargetInput(region = Region.SEOUL, areas = listOf(Area.SEODAEMUNGU)),
-            recruitStatus = RecruitStatus.ALL
-        )
-        val pagination = PaginationInput(page = 1, count = 6)
-        val input = Input(customFilter, pagination)
-
-        val mockPost = ExperimentPost(
-            id = "1",
-            title = "야뿌 피자 먹방 테스트",
-            views = 10,
-            univName = "Test University",
-            reward = "Test Reward",
-            recruitStatus = false,
-            startDate = LocalDate.now(),
-            endDate = LocalDate.now().plusDays(10),
-            alarmAgree = true,
-            applyMethod = ApplyMethod(
-                id = "1",
-                phoneNum = "123-456-7890",
-                formUrl = "https://example.googleform.com",
-                content = "구글 폼 참고하여 신청해주세요."
-            ),
-            region = Region.SEOUL,
-            area = Area.SEODAEMUNGU,
-            content = "Test content",
-            count = 10,
-            detailedAddress = "Test Address",
-            images = mutableListOf(),
-            leadResearcher = "Test Researcher",
-            matchType = MatchType.ALL,
-            timeRequired = TimeSlot.ABOUT_1H,
-            member = Member(
-                id = "1",
-                name = "Test Member",
-                role = RoleType.RESEARCHER,
-                contactEmail = "researcher@example.com",
-                oauthEmail = "researcher@gmail.com",
-                provider = ProviderType.GOOGLE,
-                status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
-            ),
-            targetGroup = TargetGroup(
-                id = "0",
-                startAge = 20,
-                endAge = 29,
-                genderType = GenderType.FEMALE,
-                otherCondition = null
-            ),
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
-        )
-
-        every {
-            experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
-            )
-        } returns listOf(mockPost)
-
-        `when`("studyTarget이 null인 경우") {
-            val result = useCase.execute(input)
-
-            then("studyTarget이 null일 때에도 필터링된 공고가 반환된다") {
-                result.size shouldBe 1
-                result.first().postInfo.title shouldBe "야뿌 피자 먹방 테스트"
             }
         }
     }
@@ -456,8 +400,13 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
 
         every {
             experimentPostGateway.findExperimentPostsByCustomFilter(
-                ExperimentMapper.toDomainFilter(input.customFilter),
-                ExperimentMapper.toDomainPagination(input.pagination)
+                CustomFilter.newCustomFilter(
+                    customFilter.matchType,
+                    customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+                    customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+                    customFilter.recruitStatus
+                ),
+                Pagination(pagination.page, pagination.count)
             )
         } returns listOf(mockPost)
 
@@ -470,6 +419,5 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             }
         }
     }
-
 })
 

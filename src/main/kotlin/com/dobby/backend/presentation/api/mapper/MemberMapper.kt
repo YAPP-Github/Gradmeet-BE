@@ -4,10 +4,7 @@ import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
-import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
+import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
 
@@ -58,6 +55,18 @@ object MemberMapper {
             accessToken = output.accessToken,
             refreshToken = output.refreshToken,
             memberInfo = toMemberResDto(output.memberInfo)
+        )
+    }
+
+    fun toValidateContactEmailForSignUpInput(contactEmail: String): ValidateContactEmailForSignUpUseCase.Input{
+        return ValidateContactEmailForSignUpUseCase.Input(
+            contactEmail = contactEmail
+        )
+    }
+
+    fun toValidateContactEmailForSignUpResponse(output: ValidateContactEmailForSignUpUseCase.Output): DefaultResponse{
+        return DefaultResponse(
+            success = output.success
         )
     }
 
