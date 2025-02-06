@@ -1,8 +1,11 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.mapper.ExperimentMapper
+import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.backend.domain.model.experiment.CustomFilter
+import com.dobby.backend.domain.model.experiment.LocationTarget
+import com.dobby.backend.domain.model.experiment.StudyTarget
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -17,6 +20,7 @@ class GetExperimentPostsUseCase (
         val customFilter: CustomFilterInput,
         val pagination: PaginationInput
     )
+
     data class CustomFilterInput(
         val matchType : MatchType?,
         val studyTarget: StudyTargetInput?,
@@ -59,9 +63,16 @@ class GetExperimentPostsUseCase (
     )
 
     override fun execute(input: Input) : List<Output> {
+        val domainFilter = CustomFilter.newCustomFilter(
+            input.customFilter.matchType,
+            studyTarget = input.customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },
+            locationTarget = input.customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
+            input.customFilter.recruitStatus
+        )
+        val pagination = Pagination(input.pagination.page, input.pagination.count)
         val posts = experimentPostGateway.findExperimentPostsByCustomFilter(
-            ExperimentMapper.toDomainFilter(input.customFilter),
-            ExperimentMapper.toDomainPagination(input.pagination)
+            domainFilter,
+            pagination
         )
 
         return posts?.map { post ->
