@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
@@ -10,12 +10,11 @@ import com.dobby.backend.infrastructure.database.entity.enums.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class CreateParticipantUseCase (
     private val participantGateway: ParticipantGateway,
     private val tokenGateway: TokenGateway,
-    private val idGeneratorGateway: IdGeneratorGateway
+    private val idGenerator: IdGenerator
 ): UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output>
 {
     data class Input (
@@ -72,7 +71,7 @@ class CreateParticipantUseCase (
 
     private fun createParticipant(input: Input): Participant {
         val member = Member.newMember(
-            id = idGeneratorGateway.generateId(),
+            id = idGenerator.generateId(),
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -81,7 +80,7 @@ class CreateParticipantUseCase (
         )
 
         return Participant.newParticipant(
-            id = idGeneratorGateway.generateId(),
+            id = idGenerator.generateId(),
             member = member,
             gender = input.gender,
             birthDate = input.birthDate,
