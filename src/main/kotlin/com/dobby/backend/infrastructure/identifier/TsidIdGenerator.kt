@@ -1,11 +1,11 @@
-package com.dobby.backend.infrastructure.gateway
+package com.dobby.backend.infrastructure.identifier
 
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.github.f4b6a3.tsid.TsidCreator
 import org.springframework.stereotype.Component
 
 @Component
-class IdGeneratorGatewayImpl : IdGeneratorGateway {
+class TsidIdGenerator : IdGenerator {
     override fun generateId(): String {
         return TsidCreator.getTsid().toString()
     }

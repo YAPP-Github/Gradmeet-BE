@@ -1,6 +1,6 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
@@ -20,9 +20,9 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
 
     val participantGateway: ParticipantGateway = mockk()
     val tokenGateway: TokenGateway = mockk()
-    val idGeneratorGateway: IdGeneratorGateway = mockk()
+    val idGenerator: IdGenerator = mockk()
 
-    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, tokenGateway, idGeneratorGateway)
+    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, tokenGateway, idGenerator)
 
     given("유효한 입력을 받았을 때") {
         val input = CreateParticipantUseCase.Input(
@@ -72,7 +72,7 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"
 
-        every { idGeneratorGateway.generateId() } returns "1"
+        every { idGenerator.generateId() } returns "1"
         every { participantGateway.save(any()) } returns savedParticipant
         every { tokenGateway.generateAccessToken(any()) } returns accessToken
         every { tokenGateway.generateRefreshToken(any()) } returns refreshToken
