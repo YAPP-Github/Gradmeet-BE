@@ -28,7 +28,8 @@ class FetchGoogleUserInfoUseCase(
         val name: String?,
         val oauthEmail: String,
         val role: RoleType?,
-        val provider: ProviderType
+        val provider: ProviderType,
+        val contactEmail: String?
     )
 
     override fun execute(input: Input): Output {
@@ -52,7 +53,8 @@ class FetchGoogleUserInfoUseCase(
                 name = member.name,
                 oauthEmail = member.oauthEmail,
                 role = member.role,
-                provider = ProviderType.GOOGLE
+                provider = ProviderType.GOOGLE,
+                contactEmail = member.contactEmail
             )
         } else {
             // 등록된 멤버가 없으면 isRegistered = false, memberId = null
@@ -64,7 +66,8 @@ class FetchGoogleUserInfoUseCase(
                 name = null,
                 oauthEmail = email,
                 role = null,
-                provider = ProviderType.GOOGLE
+                provider = ProviderType.GOOGLE,
+                contactEmail = null
             )
         }
     }

@@ -4,9 +4,9 @@ import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 
-class VerifyContactEmailUseCase(
+class ValidateContactEmailForSignUpUseCase(
     private val memberGateway: MemberGateway
-): UseCase<VerifyContactEmailUseCase.Input, VerifyContactEmailUseCase.Output> {
+): UseCase<ValidateContactEmailForSignUpUseCase.Input, ValidateContactEmailForSignUpUseCase.Output> {
     data class Input(
         val contactEmail: String
     )
