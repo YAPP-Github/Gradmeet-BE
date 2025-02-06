@@ -49,4 +49,10 @@ class MemberGatewayImpl(
     override fun findContactEmailByMemberId(memberId: String): String {
         return memberRepository.findContactEmailById(memberId)
     }
+
+    override fun findByContactEmail(contactEmail: String): Member? {
+        return memberRepository
+            .findByContactEmail(contactEmail)
+            ?.let(MemberEntity::toDomain)
+    }
 }
