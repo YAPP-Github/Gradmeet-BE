@@ -21,9 +21,9 @@ class RedisConfig(
     }
 
     @Bean
-    fun redisTemplate(): RedisTemplate<String, Any> {
+    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
         return RedisTemplate<String, Any>().apply {
-            connectionFactory = redisConnectionFactory()
+            connectionFactory = redisConnectionFactory
             keySerializer = StringRedisSerializer()
             valueSerializer = GenericJackson2JsonRedisSerializer()
         }
