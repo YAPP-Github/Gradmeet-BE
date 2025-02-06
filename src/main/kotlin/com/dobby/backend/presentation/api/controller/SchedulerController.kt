@@ -1,7 +1,6 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.SchedulerService
-import com.dobby.backend.application.usecase.quartz.SchedulerTriggerUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
