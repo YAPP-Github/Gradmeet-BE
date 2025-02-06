@@ -1,20 +1,19 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.IdGeneratorGateway
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enums.*
-import java.time.LocalDateTime
 
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
     private val researcherGateway: ResearcherGateway,
     private val tokenGateway: TokenGateway,
-    private val idGeneratorGateway: IdGeneratorGateway
+    private val idGenerator: IdGenerator
 ) : UseCase<CreateResearcherUseCase.Input, CreateResearcherUseCase.Output> {
     data class Input(
         val oauthEmail: String,
@@ -64,7 +63,7 @@ class CreateResearcherUseCase(
 
     private fun createResearcher(input: Input): Researcher {
         val member = Member.newMember(
-            id = idGeneratorGateway.generateId(),
+            id = idGenerator.generateId(),
             oauthEmail = input.oauthEmail,
             contactEmail = input.contactEmail,
             provider = input.provider,
@@ -73,7 +72,7 @@ class CreateResearcherUseCase(
         )
 
         val researcher = Researcher.newResearcher(
-            id = idGeneratorGateway.generateId(),
+            id = idGenerator.generateId(),
             member = member,
             univEmail = input.univEmail,
             univName = input.univName,
