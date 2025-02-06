@@ -3,6 +3,10 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
+import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
+import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
@@ -48,21 +52,21 @@ class MemberController(
         return MemberMapper.toResearcherSignupResponse(output)
     }
 
-    @GetMapping("/signup/validate/contact-email")
+    @GetMapping("/signup/validation/contact-email")
     @Operation(
         summary = "연락 받을 이메일 주소 검증 API - 회원가입 시 필수 API",
         description = "연락 받을 이메일이 사용 가능한지 검증해주는 API입니다. 사용가능하면 true, 아니면 예외를 던집니다."
     )
-    fun emailAvailableCheck(
+    fun validateContactEmailForSignUp(
         @RequestParam contactEmail: String
     ) : DefaultResponse {
-        val input = MemberMapper.toContactEmailVerificationInput(contactEmail)
-        val output = memberService.validateDuplicatedContactEmail(input)
-        return MemberMapper.toContactEmailVerificationResponse(output)
+        val input = MemberMapper.toValidateContactEmailForSignUpInput(contactEmail)
+        val output = memberService.validateContactEmailForSignUp(input)
+        return MemberMapper.toValidateContactEmailForSignUpResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @GetMapping("/researchers/me")
+    @GetMapping("/me/researchers")
     @Operation(
         summary = "연구자 회원 정보 렌더링",
         description = "연구자의 회원 정보를 반환합니다."
@@ -74,7 +78,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
-    @PutMapping("/researchers/me")
+    @PutMapping("/me/researchers")
     @Operation(
         summary = "연구자 회원 정보 수정",
         description = "연구자의 회원 정보를 수정합니다."
@@ -88,7 +92,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @GetMapping("/participants/me")
+    @GetMapping("/me/participants")
     @Operation(
         summary = "참여자 회원 정보 렌더링",
         description = "참여자의 회원 정보를 반환합니다."
@@ -100,7 +104,7 @@ class MemberController(
     }
 
     @PreAuthorize("hasRole('PARTICIPANT')")
-    @PutMapping("/participants/me")
+    @PutMapping("/me/participants")
     @Operation(
         summary = "참여자 회원 정보 수정",
         description = "참여자의 회원 정보를 수정합니다."
@@ -111,5 +115,18 @@ class MemberController(
         val input = MemberMapper.toUpdateParticipantInfoUseCaseInput(request)
         val output = memberService.updateParticipantInfo(input)
         return MemberMapper.toParticipantInfoResponse(output)
+    }
+
+    @GetMapping("/me/validation/contact-email")
+    @Operation(
+        summary = "연락 받을 이메일 주소 검증 API",
+        description = "회원 정보 수정 시, 이메일 중복 확인을 위한 API입니다."
+    )
+    fun validateContactEmailForUpdate(
+        @RequestParam contactEmail: String
+    ): DefaultResponse {
+        val input = MemberMapper.toValidateContactEmailForUpdateUseCaseInput(contactEmail)
+        val output = memberService.validateContactEmailForUpdate(input)
+        return DefaultResponse(output.isDuplicate)
     }
 }

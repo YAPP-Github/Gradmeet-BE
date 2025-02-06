@@ -12,12 +12,13 @@ class MemberService(
     private val memberGateway: MemberGateway,
     private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,
-    private val verifyContactEmailUseCase: VerifyContactEmailUseCase,
+    private val verifyContactEmailUseCase: ValidateContactEmailForSignUpUseCase,
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase,
-    private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase
+    private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase,
+    private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -34,7 +35,7 @@ class MemberService(
     }
 
     @Transactional
-    fun validateDuplicatedContactEmail(input: VerifyContactEmailUseCase.Input) : VerifyContactEmailUseCase.Output{
+    fun validateContactEmailForSignUp(input: ValidateContactEmailForSignUpUseCase.Input) : ValidateContactEmailForSignUpUseCase.Output{
         return verifyContactEmailUseCase.execute(input)
     }
 
@@ -56,5 +57,9 @@ class MemberService(
     @Transactional
     fun updateParticipantInfo(input: UpdateParticipantInfoUseCase.Input): UpdateParticipantInfoUseCase.Output {
         return updateParticipantInfoUseCase.execute(input)
+    }
+
+    fun validateContactEmailForUpdate(input: ValidateContactEmailForUpdateUseCase.Input): ValidateContactEmailForUpdateUseCase.Output {
+        return validateContactEmailForUpdateUseCase.execute(input)
     }
 }

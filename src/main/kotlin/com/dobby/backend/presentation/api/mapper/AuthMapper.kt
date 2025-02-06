@@ -30,7 +30,8 @@ object AuthMapper {
                 name = output.name,
                 oauthEmail = output.oauthEmail,
                 role = output.role,
-                provider = output.provider
+                provider = output.provider,
+                contactEmail = output.contactEmail
             )
         )
     }
@@ -54,7 +55,8 @@ object AuthMapper {
                 name = output.name,
                 oauthEmail = output.oauthEmail,
                 role = output.role,
-                provider = output.provider
+                provider = output.provider,
+                contactEmail = output.contactEmail
             )
         )
     }
@@ -88,7 +90,8 @@ object AuthMapper {
                 name = output.member.name,
                 oauthEmail = output.member.oauthEmail,
                 role = output.member.role,
-                provider = output.member.provider
+                provider = output.member.provider,
+                contactEmail = output.member.contactEmail
             )
         )
     }
