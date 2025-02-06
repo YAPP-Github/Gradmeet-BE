@@ -36,6 +36,7 @@ class CreateResearcherUseCase(
         val name: String?,
         val oauthEmail: String?,
         val provider: ProviderType?,
+        val contactEmail: String?,
         val role: RoleType?,
     )
 
@@ -56,6 +57,7 @@ class CreateResearcherUseCase(
                 name = savedMember.name,
                 oauthEmail = savedMember.oauthEmail,
                 provider = savedMember.provider,
+                contactEmail = savedMember.contactEmail,
                 role = savedMember.role
             )
         )

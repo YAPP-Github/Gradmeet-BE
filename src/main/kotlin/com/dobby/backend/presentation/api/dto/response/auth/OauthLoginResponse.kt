@@ -18,5 +18,4 @@ data class OauthLoginResponse(
 
     @Schema(description = "사용자 정보")
     val memberInfo: MemberResponse
-) {
-}
+)

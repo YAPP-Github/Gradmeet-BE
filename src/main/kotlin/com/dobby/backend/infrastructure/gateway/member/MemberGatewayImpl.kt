@@ -24,10 +24,6 @@ class MemberGatewayImpl(
             .orElse(null)
     }
 
-    override fun existsByContactEmail(contactEmail: String): Boolean {
-        return memberRepository.existsByContactEmail(contactEmail)
-    }
-
     override fun findByOauthEmailAndStatus(email: String, status: MemberStatus): Member? {
         return memberRepository
             .findByOauthEmailAndStatus(email, status)
@@ -44,5 +40,13 @@ class MemberGatewayImpl(
         val savedEntity= memberRepository
             .save(MemberEntity.fromDomain(savedMember))
         return savedEntity.toDomain()
+    }
+
+    override fun existsByContactEmail(contactEmail: String): Boolean {
+        return memberRepository.existsByContactEmail(contactEmail)
+    }
+
+    override fun findContactEmailByMemberId(memberId: String): String {
+        return memberRepository.findContactEmailById(memberId)
     }
 }
