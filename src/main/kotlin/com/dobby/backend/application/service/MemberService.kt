@@ -12,6 +12,7 @@ class MemberService(
     private val memberGateway: MemberGateway,
     private val createParticipantUseCase: CreateParticipantUseCase,
     private val createResearcherUseCase: CreateResearcherUseCase,
+    private val verifyContactEmailUseCase: VerifyContactEmailUseCase,
     private val verifyResearcherEmailUseCase: VerifyResearcherEmailUseCase,
     private val getResearcherInfoUseCase: GetResearcherInfoUseCase,
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
@@ -30,6 +31,11 @@ class MemberService(
 
         verifyResearcherEmailUseCase.execute(input.univEmail)
         return createResearcherUseCase.execute(input)
+    }
+
+    @Transactional
+    fun validateDuplicatedContactEmail(input: VerifyContactEmailUseCase.Input) : VerifyContactEmailUseCase.Output{
+        return verifyContactEmailUseCase.execute(input)
     }
 
     @Transactional

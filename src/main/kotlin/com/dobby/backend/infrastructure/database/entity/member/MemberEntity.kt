@@ -30,7 +30,7 @@ class MemberEntity(
     @Enumerated(EnumType.STRING)
     val role: RoleType?,
 
-    @Column(name = "contact_email", length = 100, nullable = true)
+    @Column(name = "contact_email", length = 100, nullable = true, unique = true)
     val contactEmail: String?,
 
     @Column(name = "name", length = 10, nullable = true)
