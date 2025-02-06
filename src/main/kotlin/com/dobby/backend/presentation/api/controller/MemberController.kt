@@ -1,10 +1,8 @@
 package com.dobby.backend.presentation.api.controller
 
 import com.dobby.backend.application.service.MemberService
-import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
-import com.dobby.backend.presentation.api.dto.request.member.ResearcherSignupRequest
-import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantInfoRequest
-import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
+import com.dobby.backend.presentation.api.dto.request.member.*
+import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
@@ -48,6 +46,19 @@ class MemberController(
         val input = MemberMapper.toCreateResearcherInput(req)
         val output = memberService.researcherSignup(input)
         return MemberMapper.toResearcherSignupResponse(output)
+    }
+
+    @GetMapping("/signup/validate/contact-email")
+    @Operation(
+        summary = "연락 받을 이메일 주소 검증 API - 회원가입 시 필수 API",
+        description = "연락 받을 이메일이 사용 가능한지 검증해주는 API입니다. 사용가능하면 true, 아니면 예외를 던집니다."
+    )
+    fun emailAvailableCheck(
+        @RequestParam contactEmail: String
+    ) : DefaultResponse {
+        val input = MemberMapper.toContactEmailVerificationInput(contactEmail)
+        val output = memberService.validateDuplicatedContactEmail(input)
+        return MemberMapper.toContactEmailVerificationResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
