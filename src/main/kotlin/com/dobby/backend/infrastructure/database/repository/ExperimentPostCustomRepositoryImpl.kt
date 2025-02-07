@@ -223,8 +223,6 @@ class ExperimentPostCustomRepositoryImpl (
             val currentTime = LocalDateTime.now()
 
             logger.info("🕒 [쿼리 범위] lastProcessedTime: {}, currentTime: {}", lastProcessedTime, currentTime)
-            
-            // 1️⃣ **오늘 생성된 실험 공고 조회**
             val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
                 .join(experimentPost.targetGroup, targetGroup).fetchJoin()
                 .where(
@@ -233,32 +231,26 @@ class ExperimentPostCustomRepositoryImpl (
                 )
                 .fetch()
 
-            // 🚧 **오늘 생성된 실험 공고 수 확인**
             logger.info("🚧 [쿼리 결과] todayPosts count: {}", todayPosts.size)
 
-            // 🔍 **todayPosts의 상세 데이터 확인 (10개까지만)**
             todayPosts.take(10).forEachIndexed { index, post ->
                 logger.debug("📌 [todayPost {}] title: {}, createdAt: {}, alarmAgree: {}", index + 1, post.title, post.createdAt, post.alarmAgree)
             }
 
-            // 2️⃣ **참가자 및 이메일 정보 조회**
             val participants = jpaQueryFactory
                 .select(participant, member.contactEmail)
                 .from(participant)
                 .join(participant.member, member)
                 .fetch()
 
-            // 🚧 **참가자 수 확인**
             logger.info("🚧 [쿼리 결과] participants count: {}", participants.size)
 
-            // 🔍 **참가자 정보 상세 확인 (10명까지만)**
             participants.take(10).forEachIndexed { index, tuple ->
                 val participantEntity = tuple.get(participant)
                 val email = tuple.get(member.contactEmail)
                 logger.debug("📌 [Participant {}] memberId: {}, email: {}", index + 1, participantEntity?.member?.id, email)
             }
 
-            // 3️⃣ **참가자별 실험 공고 매칭 로직**
             val resultMap = participants.mapNotNull { tuple ->
                 val participantEntity: ParticipantEntity = tuple.get(participant)!!
                 val contactEmail: String? = tuple.get(member.contactEmail)
@@ -280,21 +272,18 @@ class ExperimentPostCustomRepositoryImpl (
                             customMatchTypeEq(post.matchType, participantEntity.matchType)
                         )
 
-                        // 🚧 **각 필터의 결과 로그 출력**
                         logger.debug("🔎 [필터 결과] Email: {}, Post: {}", contactEmail, post.title)
                         logger.debug("   📍 Gender Match: {}, Age Match: {}, Address Match: {}, MatchType Match: {}", matchResults[0], matchResults[1], matchResults[2], matchResults[3])
 
                         matchResults.all { it }
                     }.take(10)
 
-                    // 🚧 **이메일을 받을 사람 및 매칭된 공고 개수**
                     logger.info("📌 [매칭 결과] Email: {}, Matched posts: {}", contactEmail, matchedPosts.size)
 
                     if (matchedPosts.isNotEmpty()) Pair(it, matchedPosts) else null
                 }
             }.toMap()
 
-            // 🚧 **최종적으로 이메일을 받을 사람 수**
             logger.info("📧 [최종 결과] 이메일을 받을 대상자 수: {}", resultMap.size)
 
             return resultMap
