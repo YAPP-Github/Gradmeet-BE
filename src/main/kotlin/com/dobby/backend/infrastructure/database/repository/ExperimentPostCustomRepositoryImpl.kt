@@ -222,6 +222,8 @@ class ExperimentPostCustomRepositoryImpl (
 
             val currentTime = LocalDateTime.now()
 
+            logger.info("🕒 [쿼리 범위] lastProcessedTime: {}, currentTime: {}", lastProcessedTime, currentTime)
+            
             // 1️⃣ **오늘 생성된 실험 공고 조회**
             val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
                 .join(experimentPost.targetGroup, targetGroup).fetchJoin()
