@@ -38,11 +38,11 @@ object MemberMapper {
             name = req.name,
             gender = req.gender,
             birthDate = req.birthDate,
-            basicAddressInfo = CreateParticipantUseCase.BasicAddressInfo(
+            basicAddressInfo = CreateParticipantUseCase.AddressInfo(
                 region = req.basicAddressInfo.region,
                 area = req.basicAddressInfo.area
             ),
-            additionalAddressInfo = CreateParticipantUseCase.AdditionalAddressInfo(
+            additionalAddressInfo = CreateParticipantUseCase.AddressInfo(
                 region = req.additionalAddressInfo?.region ?: Region.NONE,
                 area = req.additionalAddressInfo?.area ?: Area.NONE
             ),
