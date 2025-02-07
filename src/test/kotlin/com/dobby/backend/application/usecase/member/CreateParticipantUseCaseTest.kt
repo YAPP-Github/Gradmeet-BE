@@ -32,11 +32,11 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             name = "신수정 실험자",
             gender = GenderType.FEMALE,
             birthDate = LocalDate.of(2002, 11, 21),
-            basicAddressInfo = CreateParticipantUseCase.BasicAddressInfo(
+            basicAddressInfo = CreateParticipantUseCase.AddressInfo(
                 region = Region.GYEONGGI,
                 area = Area.GWANGMYEONGSI
             ),
-            additionalAddressInfo = CreateParticipantUseCase.AdditionalAddressInfo(
+            additionalAddressInfo = CreateParticipantUseCase.AddressInfo(
                 region = Region.SEOUL,
                 area = Area.SEODAEMUNGU
             ),
@@ -62,8 +62,8 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
                 area = input.basicAddressInfo.area
             ),
             additionalAddressInfo = Participant.AddressInfo(
-                region = input.additionalAddressInfo.region ?: Region.NONE,
-                area = input.additionalAddressInfo.area ?: Area.NONE
+                region = input.additionalAddressInfo.region,
+                area = input.additionalAddressInfo.area
             ),
             matchType = input.matchType
         )
