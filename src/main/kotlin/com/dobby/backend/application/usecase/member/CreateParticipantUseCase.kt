@@ -24,19 +24,14 @@ class CreateParticipantUseCase (
         val name : String,
         val gender: GenderType,
         val birthDate: LocalDate,
-        var basicAddressInfo: BasicAddressInfo,
-        var additionalAddressInfo: AdditionalAddressInfo,
+        var basicAddressInfo: AddressInfo,
+        var additionalAddressInfo: AddressInfo,
         var matchType: MatchType?,
     )
 
-    data class BasicAddressInfo(
+    data class AddressInfo(
         val region: Region,
         val area: Area
-    )
-
-    data class AdditionalAddressInfo(
-        val region: Region?,
-        val area: Area?
     )
 
     data class Output(
@@ -98,8 +93,8 @@ class CreateParticipantUseCase (
                 area = input.basicAddressInfo.area
             ),
             additionalAddressInfo = Participant.AddressInfo(
-                region = input.additionalAddressInfo.region ?: Region.NONE,
-                area = input.additionalAddressInfo.area ?: Area.NONE,
+                region = input.additionalAddressInfo.region,
+                area = input.additionalAddressInfo.area,
             ),
             matchType = input.matchType
         )
