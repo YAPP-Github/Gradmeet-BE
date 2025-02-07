@@ -2,7 +2,6 @@ package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.domain.model.experiment.*
-import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType.*
@@ -16,16 +15,14 @@ import com.dobby.backend.infrastructure.database.entity.member.QMemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.QParticipantEntity
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
-import com.querydsl.core.types.dsl.EnumPath
-import com.querydsl.core.types.dsl.Expressions
-import com.querydsl.core.types.dsl.NumberPath
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 @Repository
 class ExperimentPostCustomRepositoryImpl (
@@ -33,6 +30,8 @@ class ExperimentPostCustomRepositoryImpl (
 ) : ExperimentPostCustomRepository {
     @PersistenceContext
     private lateinit var entityManager: EntityManager
+
+    private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
     override fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
@@ -213,29 +212,52 @@ class ExperimentPostCustomRepositoryImpl (
 
     private var lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
 
-    @Override
-    override fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>> {
-        val experimentPost = QExperimentPostEntity.experimentPostEntity
-        val targetGroup = QTargetGroupEntity.targetGroupEntity
-        val participant = QParticipantEntity.participantEntity
-        val member = QMemberEntity.memberEntity
+        override fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>> {
+            val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-        val currentTime = LocalDateTime.now()
+            val experimentPost = QExperimentPostEntity.experimentPostEntity
+            val targetGroup = QTargetGroupEntity.targetGroupEntity
+            val participant = QParticipantEntity.participantEntity
+            val member = QMemberEntity.memberEntity
 
-        val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
-            .join(experimentPost.targetGroup, targetGroup).fetchJoin()
-            .where(
-                experimentPost.createdAt.between(lastProcessedTime, currentTime),
-                experimentPost.alarmAgree.isTrue
-            )
-            .fetch()
+            val currentTime = LocalDateTime.now()
 
-        return jpaQueryFactory
-            .select(participant, member.contactEmail)
-            .from(participant)
-            .join(participant.member, member)
-            .fetch()
-            .mapNotNull { tuple ->
+            // 1️⃣ **오늘 생성된 실험 공고 조회**
+            val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
+                .join(experimentPost.targetGroup, targetGroup).fetchJoin()
+                .where(
+                    experimentPost.createdAt.between(lastProcessedTime, currentTime),
+                    experimentPost.alarmAgree.isTrue
+                )
+                .fetch()
+
+            // 🚧 **오늘 생성된 실험 공고 수 확인**
+            logger.info("🚧 [쿼리 결과] todayPosts count: {}", todayPosts.size)
+
+            // 🔍 **todayPosts의 상세 데이터 확인 (10개까지만)**
+            todayPosts.take(10).forEachIndexed { index, post ->
+                logger.debug("📌 [todayPost {}] title: {}, createdAt: {}, alarmAgree: {}", index + 1, post.title, post.createdAt, post.alarmAgree)
+            }
+
+            // 2️⃣ **참가자 및 이메일 정보 조회**
+            val participants = jpaQueryFactory
+                .select(participant, member.contactEmail)
+                .from(participant)
+                .join(participant.member, member)
+                .fetch()
+
+            // 🚧 **참가자 수 확인**
+            logger.info("🚧 [쿼리 결과] participants count: {}", participants.size)
+
+            // 🔍 **참가자 정보 상세 확인 (10명까지만)**
+            participants.take(10).forEachIndexed { index, tuple ->
+                val participantEntity = tuple.get(participant)
+                val email = tuple.get(member.contactEmail)
+                logger.debug("📌 [Participant {}] memberId: {}, email: {}", index + 1, participantEntity?.member?.id, email)
+            }
+
+            // 3️⃣ **참가자별 실험 공고 매칭 로직**
+            val resultMap = participants.mapNotNull { tuple ->
                 val participantEntity: ParticipantEntity = tuple.get(participant)!!
                 val contactEmail: String? = tuple.get(member.contactEmail)
                 val birthDate = participantEntity.birthDate
@@ -244,8 +266,8 @@ class ExperimentPostCustomRepositoryImpl (
                     val currentYear = LocalDate.now().year
                     val participantAge = currentYear - birthDate.year + 1
 
-                    Pair(it, todayPosts.filter { post ->
-                        listOf(
+                    val matchedPosts = todayPosts.filter { post ->
+                        val matchResults = listOf(
                             customGenderEq(post.targetGroup.genderType, participantEntity.gender),
                             customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
                             customAddressInfoEq(
@@ -254,11 +276,27 @@ class ExperimentPostCustomRepositoryImpl (
                                 participantEntity.additionalAddressInfo.region, participantEntity.additionalAddressInfo.area
                             ),
                             customMatchTypeEq(post.matchType, participantEntity.matchType)
-                        ).all { it }
-                    }.take(10))
+                        )
+
+                        // 🚧 **각 필터의 결과 로그 출력**
+                        logger.debug("🔎 [필터 결과] Email: {}, Post: {}", contactEmail, post.title)
+                        logger.debug("   📍 Gender Match: {}, Age Match: {}, Address Match: {}, MatchType Match: {}", matchResults[0], matchResults[1], matchResults[2], matchResults[3])
+
+                        matchResults.all { it }
+                    }.take(10)
+
+                    // 🚧 **이메일을 받을 사람 및 매칭된 공고 개수**
+                    logger.info("📌 [매칭 결과] Email: {}, Matched posts: {}", contactEmail, matchedPosts.size)
+
+                    if (matchedPosts.isNotEmpty()) Pair(it, matchedPosts) else null
                 }
             }.toMap()
-    }
+
+            // 🚧 **최종적으로 이메일을 받을 사람 수**
+            logger.info("📧 [최종 결과] 이메일을 받을 대상자 수: {}", resultMap.size)
+
+            return resultMap
+        }
 
     private fun customGenderEq(
         postGender: GenderType,
