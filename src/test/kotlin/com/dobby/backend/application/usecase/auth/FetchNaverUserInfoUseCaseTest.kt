@@ -39,7 +39,8 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
             contactEmail = "contact@example.com",
             provider = ProviderType.NAVER,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val mockEmptyMember = null

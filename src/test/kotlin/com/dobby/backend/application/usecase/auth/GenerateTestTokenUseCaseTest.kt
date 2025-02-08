@@ -22,7 +22,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
     given("memberId가 주어졌을 때") {
         val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
         val accessToken = "testAccessToken"
         val refreshToken = "testRefreshToken"
 

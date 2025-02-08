@@ -27,7 +27,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
         given("회원 정보가 주어지고") {
             val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
             val authentication = UsernamePasswordAuthenticationToken(member.id, null, authorities)
 
@@ -43,7 +43,7 @@ class JwtTokenProviderTest : BehaviorSpec() {
         given("유효한 JWT 토큰이 주어지고") {
             val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
             val authorities = listOf(SimpleGrantedAuthority(member.role?.name ?: "PARTICIPANT"))
             val authentication = UsernamePasswordAuthenticationToken(member.id, null, authorities)
             val validToken = jwtTokenProvider.generateAccessToken(authentication)

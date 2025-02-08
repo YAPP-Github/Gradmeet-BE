@@ -38,7 +38,8 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
             contactEmail = "contact@example.com",
             provider = ProviderType.GOOGLE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val mockEmptyMember = null

@@ -39,7 +39,8 @@ class GetMatchingExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(fixedClock),
-                updatedAt = LocalDateTime.now(fixedClock)
+                updatedAt = LocalDateTime.now(fixedClock),
+                deletedAt = null
             )
 
             val experimentPosts = listOf(

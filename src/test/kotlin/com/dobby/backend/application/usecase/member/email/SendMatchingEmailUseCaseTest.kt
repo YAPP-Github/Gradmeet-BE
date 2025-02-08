@@ -46,7 +46,8 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now().minusDays(2),
-                updatedAt = LocalDateTime.now().minusDays(2)
+                updatedAt = LocalDateTime.now().minusDays(2),
+                deletedAt = null
             )
 
             val experimentPosts = listOf(
@@ -110,7 +111,8 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now().minusDays(2),
-                updatedAt = LocalDateTime.now().minusDays(2)
+                updatedAt = LocalDateTime.now().minusDays(2),
+                deletedAt = null
             )
 
             val experimentPosts = listOf(

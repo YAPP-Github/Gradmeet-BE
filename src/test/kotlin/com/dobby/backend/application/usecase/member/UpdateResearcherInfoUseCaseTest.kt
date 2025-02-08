@@ -30,7 +30,7 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
             member = Member(
                 id = memberId, name = "기존 연구자", contactEmail = "old@example.com",
                 oauthEmail = "oauth@example.com", provider = ProviderType.NAVER, role = RoleType.RESEARCHER,
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",
@@ -101,7 +101,7 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
             member = Member(
                 id = memberId, name = "기존 연구자", contactEmail = "old@example.com",
                 oauthEmail = "oauth@example.com", provider = ProviderType.NAVER, role = RoleType.RESEARCHER,
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",
@@ -146,7 +146,8 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
                 role = RoleType.RESEARCHER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",

@@ -41,7 +41,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val validInput = CreateExperimentPostUseCase.Input(
@@ -102,7 +103,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
@@ -155,7 +157,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
@@ -210,7 +213,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(

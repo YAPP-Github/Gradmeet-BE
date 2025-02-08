@@ -34,7 +34,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             id = memberId,
             member = Member(id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()),
+                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
             basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
@@ -105,7 +105,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             id = memberId,
             member = Member(id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()),
+                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
             basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
@@ -149,7 +149,8 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
                 role = RoleType.PARTICIPANT,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),

@@ -29,7 +29,8 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
             role = RoleType.RESEARCHER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
         val mockResearcher = Researcher(
             member = mockMember,

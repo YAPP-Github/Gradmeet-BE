@@ -73,7 +73,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.GOOGLE,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             targetGroup = TargetGroup(
                 id = "0",
@@ -155,7 +156,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.GOOGLE,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             targetGroup = TargetGroup(
                 id = "0",
@@ -234,7 +236,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.GOOGLE,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             targetGroup = TargetGroup(
                 id = "0",
@@ -312,7 +315,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.GOOGLE,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             targetGroup = TargetGroup(
                 id = "0",
@@ -390,7 +394,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 provider = ProviderType.GOOGLE,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             targetGroup = TargetGroup(
                 id = "0",
