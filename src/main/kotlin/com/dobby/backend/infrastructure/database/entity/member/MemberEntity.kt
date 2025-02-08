@@ -58,7 +58,8 @@ class MemberEntity(
         status = status,
         role = role,
         createdAt = createdAt,
-        updatedAt = updatedAt
+        updatedAt = updatedAt,
+        deletedAt = deletedAt
     )
 
     companion object {
@@ -73,7 +74,7 @@ class MemberEntity(
                 name = name,
                 createdAt = createdAt,
                 updatedAt = updatedAt,
-                deletedAt = null
+                deletedAt = deletedAt
             )
         }
     }

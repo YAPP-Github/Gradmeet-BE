@@ -50,4 +50,12 @@ data class Researcher(
             labInfo = labInfo
         )
     }
+
+    fun withdraw(): Researcher = this.copy(
+        member = member.withdraw(),
+        univEmail = "",
+        univName = "",
+        major = "",
+        labInfo = null
+    )
 }
