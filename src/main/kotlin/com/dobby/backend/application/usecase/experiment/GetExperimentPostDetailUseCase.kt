@@ -45,7 +45,8 @@ fun ExperimentPost.toDetailResponse(memberId: String?): ExperimentPostDetailResp
         address = this.toAddressResponse(),
         content = this.content,
         imageList = this.images.map { it.imageUrl },
-        isAuthor = this.member.id == memberId
+        isAuthor = this.member.id == memberId,
+        isUploaderActive = this.member.deletedAt == null
     )
 }
 

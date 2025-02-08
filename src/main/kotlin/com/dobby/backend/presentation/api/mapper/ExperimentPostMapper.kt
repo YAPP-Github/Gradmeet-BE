@@ -176,7 +176,8 @@ object ExperimentPostMapper {
             address = response.experimentPostDetailResponse.address,
             content = response.experimentPostDetailResponse.content,
             imageList = response.experimentPostDetailResponse.imageList,
-            isAuthor = response.experimentPostDetailResponse.isAuthor
+            isAuthor = response.experimentPostDetailResponse.isAuthor,
+            isUploaderActive = response.experimentPostDetailResponse.isUploaderActive
         )
     }
 
