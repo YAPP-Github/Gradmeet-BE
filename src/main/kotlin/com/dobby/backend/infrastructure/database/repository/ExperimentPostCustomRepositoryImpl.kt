@@ -2,7 +2,7 @@ package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.domain.model.experiment.*
-import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
