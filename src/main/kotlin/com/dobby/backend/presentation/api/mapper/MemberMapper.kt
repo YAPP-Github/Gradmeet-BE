@@ -184,4 +184,12 @@ object MemberMapper {
             contactEmail = email
         )
     }
+
+    fun toDeleteMemberUseCaseInput(request: DeleteMemberRequest): DeleteMemberUseCase.Input {
+        return DeleteMemberUseCase.Input(
+            memberId = getCurrentMemberId(),
+            reasonType = request.reasonType,
+            reason = request.reason
+        )
+    }
 }

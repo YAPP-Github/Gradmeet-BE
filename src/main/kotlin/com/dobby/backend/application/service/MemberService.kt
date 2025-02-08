@@ -18,7 +18,8 @@ class MemberService(
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase,
     private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase,
-    private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase
+    private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase,
+    private val deleteMemberUseCase: DeleteMemberUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -61,5 +62,10 @@ class MemberService(
 
     fun validateContactEmailForUpdate(input: ValidateContactEmailForUpdateUseCase.Input): ValidateContactEmailForUpdateUseCase.Output {
         return validateContactEmailForUpdateUseCase.execute(input)
+    }
+
+    @Transactional
+    fun deleteMember(input: DeleteMemberUseCase.Input): DeleteMemberUseCase.Output {
+        return deleteMemberUseCase.execute(input)
     }
 }

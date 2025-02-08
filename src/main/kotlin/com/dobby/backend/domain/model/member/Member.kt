@@ -14,7 +14,8 @@ data class Member(
     var status: MemberStatus,
     val role: RoleType?,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+    val deletedAt: LocalDateTime? = null
 ) {
 
     companion object {
@@ -37,4 +38,10 @@ data class Member(
             updatedAt = LocalDateTime.now()
         )
     }
+
+    fun withdraw(): Member = copy(
+        status = MemberStatus.HOLD,
+        deletedAt = LocalDateTime.now(),
+        updatedAt = LocalDateTime.now()
+    )
 }

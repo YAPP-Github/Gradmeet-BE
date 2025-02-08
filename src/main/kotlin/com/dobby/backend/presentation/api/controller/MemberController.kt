@@ -129,4 +129,17 @@ class MemberController(
         val output = memberService.validateContactEmailForUpdate(input)
         return DefaultResponse(output.isDuplicate)
     }
+
+    @DeleteMapping
+    @Operation(
+        summary = "회원 탈퇴 API",
+        description = "회원 탈퇴 API입니다."
+    )
+    fun deleteMember(
+        @RequestBody @Valid request: DeleteMemberRequest
+    ): DefaultResponse {
+        val input = MemberMapper.toDeleteMemberUseCaseInput(request)
+        val output = memberService.deleteMember(input)
+        return DefaultResponse(output.isSuccess)
+    }
 }
