@@ -7,10 +7,10 @@ import com.dobby.backend.domain.gateway.member.MemberWithdrawalGateway
 import com.dobby.backend.domain.model.member.MemberWithdrawal
 import com.dobby.backend.infrastructure.database.entity.enums.member.WithdrawalReasonType
 
-class DeleteMemberUseCase(
+class DeleteParticipantUseCase(
     private val memberGateway: MemberGateway,
     private val memberWithdrawalGateway: MemberWithdrawalGateway
-) : UseCase<DeleteMemberUseCase.Input, DeleteMemberUseCase.Output> {
+) : UseCase<DeleteParticipantUseCase.Input, DeleteParticipantUseCase.Output> {
     data class Input(
         val memberId: String,
         val reasonType: WithdrawalReasonType,
@@ -26,6 +26,7 @@ class DeleteMemberUseCase(
             ?: throw MemberNotFoundException
 
         memberGateway.save(member.withdraw())
+
         memberWithdrawalGateway.save(
             MemberWithdrawal.newWithdrawal(
                 memberId = input.memberId,

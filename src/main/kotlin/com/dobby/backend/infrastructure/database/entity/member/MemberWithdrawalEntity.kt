@@ -19,7 +19,7 @@ class MemberWithdrawalEntity(
     @Column(name = "other_reason", nullable = true)
     val otherReason: String? = null,
 
-    @Column(name = "withdrawn_at", nullable = false)
+    @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime
 ) {
     fun toDomain() = MemberWithdrawal(

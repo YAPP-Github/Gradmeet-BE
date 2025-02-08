@@ -17,6 +17,12 @@ class ResearcherGatewayImpl(
             ?.let(ResearcherEntity::toDomain)
     }
 
+    override fun findByMemberIdAndMemberDeletedAtIsNull(memberId: String): Researcher? {
+        return researcherRepository
+            .findByMemberIdAndMemberDeletedAtIsNull(memberId)
+            ?.let(ResearcherEntity::toDomain)
+    }
+
     override fun save(researcher: Researcher): Researcher {
         val savedEntity = researcherRepository
             .save(ResearcherEntity.fromDomain(researcher))

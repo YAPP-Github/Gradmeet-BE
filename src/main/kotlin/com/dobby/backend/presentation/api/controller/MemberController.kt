@@ -11,6 +11,7 @@ import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoRes
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
+import com.dobby.backend.util.getCurrentMemberId
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -138,8 +139,11 @@ class MemberController(
     fun deleteMember(
         @RequestBody @Valid request: DeleteMemberRequest
     ): DefaultResponse {
-        val input = MemberMapper.toDeleteMemberUseCaseInput(request)
-        val output = memberService.deleteMember(input)
-        return DefaultResponse(output.isSuccess)
+        val memberId = getCurrentMemberId()
+        val roleType = memberService.getMemberRole(memberId)
+
+        val input = MemberMapper.toDeleteMemberUseCaseInput(request, roleType)
+        memberService.deleteMember(input)
+        return DefaultResponse(true)
     }
 }
