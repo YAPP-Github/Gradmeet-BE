@@ -9,10 +9,10 @@ class UrlGeneratorGatewayImpl(
     private val urlProperties: UrlProperties
 ) : UrlGeneratorGateway{
     override fun getBaseUrl(): String {
-        return urlProperties.serverUrl
+        return urlProperties.baseUrl
     }
 
     override fun getExperimentPostUrl(postId: String): String {
-        return urlProperties.serverUrl+"/v1/experiment-posts/"+postId+"/details"
+        return urlProperties.baseUrl+"/post/"+postId
     }
 }

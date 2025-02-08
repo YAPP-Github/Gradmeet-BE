@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 
 @Component
-@ConfigurationProperties(prefix = "swagger")
+@ConfigurationProperties(prefix = "app")
 class UrlProperties (
-    var serverUrl : String = ""
+    var baseUrl : String = ""
 )
 
