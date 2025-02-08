@@ -17,7 +17,7 @@ class MemberGatewayImpl(
             .let(MemberEntity::toDomain)
     }
 
-    override fun findById(memberId: String): Member? {
+    override fun findByIdAndDeletedAtIsNull(memberId: String): Member? {
         return memberRepository
             .findById(memberId)
             .map(MemberEntity::toDomain)

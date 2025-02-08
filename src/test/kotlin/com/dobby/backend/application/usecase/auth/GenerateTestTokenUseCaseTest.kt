@@ -28,7 +28,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
 
         every { tokenGateway.generateAccessToken(member) } returns accessToken
         every { tokenGateway.generateRefreshToken(member) } returns refreshToken
-        every { memberGateway.findById("1") } returns member
+        every { memberGateway.findByIdAndDeletedAtIsNull("1") } returns member
 
         `when`("execute가 호출되면") {
             val input = GenerateTestTokenUseCase.Input(member.id)
@@ -40,7 +40,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
             }
         }
 
-        every { memberGateway.findById("2") } returns null
+        every { memberGateway.findByIdAndDeletedAtIsNull("2") } returns null
 
         `when`("존재하지 않는 회원 ID가 주어졌을 때") {
             val input = GenerateTestTokenUseCase.Input("2")
