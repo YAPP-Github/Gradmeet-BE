@@ -76,9 +76,9 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             val initialViews = experimentPost.views
             val result = getExperimentPostDetailUseCase.execute(input)
 
-            then("isAuthor가 true인 experimentPostDetailResponse가 반환된다") {
-                result.experimentPostDetailResponse.title shouldBe experimentPost.title
-                result.experimentPostDetailResponse.isAuthor shouldBe true
+            then("isAuthor가 true인 experimentPostDetail이 반환된다") {
+                result.experimentPostDetail.title shouldBe experimentPost.title
+                result.experimentPostDetail.isAuthor shouldBe true
             }
 
             then("views가 증가했는지 확인한다") {
@@ -90,9 +90,9 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = "2")
             val result = getExperimentPostDetailUseCase.execute(input)
 
-            then("isAuthor가 false인 experimentPostDetailResponse가 반환된다") {
-                result.experimentPostDetailResponse.title shouldBe experimentPost.title
-                result.experimentPostDetailResponse.isAuthor shouldBe false
+            then("isAuthor가 false인 experimentPostDetail이 반환된다") {
+                result.experimentPostDetail.title shouldBe experimentPost.title
+                result.experimentPostDetail.isAuthor shouldBe false
             }
         }
 
@@ -100,9 +100,9 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
             val result = getExperimentPostDetailUseCase.execute(input)
 
-            then("isAuthor가 false인 experimentPostDetailResponse가 반환된다") {
-                result.experimentPostDetailResponse.title shouldBe experimentPost.title
-                result.experimentPostDetailResponse.isAuthor shouldBe false
+            then("isAuthor가 false인 experimentPostDetail이 반환된다") {
+                result.experimentPostDetail.title shouldBe experimentPost.title
+                result.experimentPostDetail.isAuthor shouldBe false
             }
         }
     }
@@ -122,3 +122,4 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
         }
     }
 })
+
