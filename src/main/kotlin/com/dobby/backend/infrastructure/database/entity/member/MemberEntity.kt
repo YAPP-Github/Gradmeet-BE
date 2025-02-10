@@ -1,9 +1,9 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -43,7 +43,10 @@ class MemberEntity(
     val createdAt: LocalDateTime,
 
     @Column(name = "updated_at", nullable = false)
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+
+    @Column(name = "deleted_at")
+    val deletedAt: LocalDateTime?
 ) {
 
     fun toDomain() = Member(
@@ -55,7 +58,8 @@ class MemberEntity(
         status = status,
         role = role,
         createdAt = createdAt,
-        updatedAt = updatedAt
+        updatedAt = updatedAt,
+        deletedAt = deletedAt
     )
 
     companion object {
@@ -69,7 +73,8 @@ class MemberEntity(
                 contactEmail = contactEmail,
                 name = name,
                 createdAt = createdAt,
-                updatedAt = updatedAt
+                updatedAt = updatedAt,
+                deletedAt = deletedAt
             )
         }
     }

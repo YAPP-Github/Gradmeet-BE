@@ -4,6 +4,7 @@ import com.dobby.backend.application.usecase.member.*
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
@@ -183,5 +184,20 @@ object MemberMapper {
             memberId = getCurrentMemberId(),
             contactEmail = email
         )
+    }
+
+    fun toDeleteMemberUseCaseInput(request: DeleteMemberRequest, roleType: RoleType): Any {
+        return when (roleType) {
+            RoleType.RESEARCHER -> DeleteResearcherUseCase.Input(
+                memberId = getCurrentMemberId(),
+                reasonType = request.reasonType,
+                reason = request.reason
+            )
+            RoleType.PARTICIPANT -> DeleteParticipantUseCase.Input(
+                memberId = getCurrentMemberId(),
+                reasonType = request.reasonType,
+                reason = request.reason
+            )
+        }
     }
 }

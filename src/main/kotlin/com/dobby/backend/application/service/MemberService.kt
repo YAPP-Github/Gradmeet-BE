@@ -1,9 +1,11 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.member.*
+import com.dobby.backend.domain.exception.MemberNotFoundException
 import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -18,7 +20,9 @@ class MemberService(
     private val getParticipantInfoUseCase: GetParticipantInfoUseCase,
     private val updateResearcherInfoUseCase: UpdateResearcherInfoUseCase,
     private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase,
-    private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase
+    private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase,
+    private val deleteParticipantUseCase: DeleteParticipantUseCase,
+    private val deleteResearcherUseCase: DeleteResearcherUseCase
 ) {
     @Transactional
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -61,5 +65,19 @@ class MemberService(
 
     fun validateContactEmailForUpdate(input: ValidateContactEmailForUpdateUseCase.Input): ValidateContactEmailForUpdateUseCase.Output {
         return validateContactEmailForUpdateUseCase.execute(input)
+    }
+
+    @Transactional
+    fun deleteMember(input: Any): Any {
+        return when (input) {
+            is DeleteParticipantUseCase.Input -> deleteParticipantUseCase.execute(input)
+            is DeleteResearcherUseCase.Input -> deleteResearcherUseCase.execute(input)
+            else -> throw IllegalArgumentException("Unsupported DeleteMember input type")
+        }
+    }
+
+    fun getMemberRole(memberId: String): RoleType {
+        return memberGateway.findRoleByIdAndDeletedAtIsNull(memberId)
+            ?: throw MemberNotFoundException
     }
 }

@@ -43,5 +43,4 @@ class EmailController(
         val output = emailService.verifyCode(input)
         return EmailMapper.toEmailVerificationResponse(output)
     }
-
 }

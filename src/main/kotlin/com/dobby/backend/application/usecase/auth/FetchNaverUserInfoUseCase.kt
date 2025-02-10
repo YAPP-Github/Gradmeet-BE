@@ -5,9 +5,9 @@ import com.dobby.backend.domain.exception.MemberRoleMismatchException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 
 class FetchNaverUserInfoUseCase(
     private val naverAuthGateway: NaverAuthGateway,

@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums
+package com.dobby.backend.infrastructure.database.entity.enums.member
 
 enum class RoleType(
     val roleName: String

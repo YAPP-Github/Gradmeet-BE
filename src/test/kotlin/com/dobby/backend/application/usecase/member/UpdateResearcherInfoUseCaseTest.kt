@@ -6,9 +6,9 @@ import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -30,7 +30,7 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
             member = Member(
                 id = memberId, name = "기존 연구자", contactEmail = "old@example.com",
                 oauthEmail = "oauth@example.com", provider = ProviderType.NAVER, role = RoleType.RESEARCHER,
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",
@@ -101,7 +101,7 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
             member = Member(
                 id = memberId, name = "기존 연구자", contactEmail = "old@example.com",
                 oauthEmail = "oauth@example.com", provider = ProviderType.NAVER, role = RoleType.RESEARCHER,
-                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now()
+                status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",
@@ -146,7 +146,8 @@ class UpdateResearcherInfoUseCaseTest : BehaviorSpec({
                 role = RoleType.RESEARCHER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                updatedAt = LocalDateTime.now(),
+                deletedAt = null
             ),
             univEmail = "old@university.com",
             univName = "Old University",
