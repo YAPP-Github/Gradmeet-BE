@@ -3,9 +3,9 @@ package com.dobby.backend.application.usecase.auth
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -21,7 +21,7 @@ class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
         val validRefreshToken = "validRefreshToken"
         val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
         val accessToken = "newAccessToken"
         val newRefreshToken = "newRefreshToken"
 

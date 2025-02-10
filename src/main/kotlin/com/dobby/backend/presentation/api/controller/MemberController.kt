@@ -11,6 +11,7 @@ import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoRes
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
+import com.dobby.backend.util.getCurrentMemberId
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -128,5 +129,21 @@ class MemberController(
         val input = MemberMapper.toValidateContactEmailForUpdateUseCaseInput(contactEmail)
         val output = memberService.validateContactEmailForUpdate(input)
         return DefaultResponse(output.isDuplicate)
+    }
+
+    @DeleteMapping
+    @Operation(
+        summary = "회원 탈퇴 API",
+        description = "회원 탈퇴 API입니다."
+    )
+    fun deleteMember(
+        @RequestBody @Valid request: DeleteMemberRequest
+    ): DefaultResponse {
+        val memberId = getCurrentMemberId()
+        val roleType = memberService.getMemberRole(memberId)
+
+        val input = MemberMapper.toDeleteMemberUseCaseInput(request, roleType)
+        memberService.deleteMember(input)
+        return DefaultResponse(true)
     }
 }

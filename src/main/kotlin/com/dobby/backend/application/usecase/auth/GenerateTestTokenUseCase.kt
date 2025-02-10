@@ -22,7 +22,7 @@ class GenerateTestTokenUseCase(
 
     override fun execute(input: Input): Output {
         val memberId = input.memberId
-        val member = memberGateway.findById(memberId)
+        val member = memberGateway.findByIdAndDeletedAtIsNull(memberId)
             ?: throw MemberNotFoundException
 
         return Output(

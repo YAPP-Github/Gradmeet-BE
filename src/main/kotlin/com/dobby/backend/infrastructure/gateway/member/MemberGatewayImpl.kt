@@ -1,8 +1,9 @@
 package com.dobby.backend.infrastructure.gateway.member
 
 import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import org.springframework.stereotype.Component
@@ -17,11 +18,10 @@ class MemberGatewayImpl(
             .let(MemberEntity::toDomain)
     }
 
-    override fun findById(memberId: String): Member? {
+    override fun findByIdAndDeletedAtIsNull(memberId: String): Member? {
         return memberRepository
-            .findById(memberId)
-            .map(MemberEntity::toDomain)
-            .orElse(null)
+            .findByIdAndDeletedAtIsNull(memberId)
+            ?.let(MemberEntity::toDomain)
     }
 
     override fun findByOauthEmailAndStatus(email: String, status: MemberStatus): Member? {
@@ -54,5 +54,9 @@ class MemberGatewayImpl(
         return memberRepository
             .findByContactEmail(contactEmail)
             ?.let(MemberEntity::toDomain)
+    }
+
+    override fun findRoleByIdAndDeletedAtIsNull(memberId: String): RoleType? {
+        return memberRepository.findRoleByIdAndDeletedAtIsNull(memberId)
     }
 }

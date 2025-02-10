@@ -5,9 +5,9 @@ import com.dobby.backend.domain.gateway.member.MemberGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -22,13 +22,13 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
     given("memberId가 주어졌을 때") {
         val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now())
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
         val accessToken = "testAccessToken"
         val refreshToken = "testRefreshToken"
 
         every { tokenGateway.generateAccessToken(member) } returns accessToken
         every { tokenGateway.generateRefreshToken(member) } returns refreshToken
-        every { memberGateway.findById("1") } returns member
+        every { memberGateway.findByIdAndDeletedAtIsNull("1") } returns member
 
         `when`("execute가 호출되면") {
             val input = GenerateTestTokenUseCase.Input(member.id)
@@ -40,7 +40,7 @@ class GenerateTestTokenUseCaseTest: BehaviorSpec({
             }
         }
 
-        every { memberGateway.findById("2") } returns null
+        every { memberGateway.findByIdAndDeletedAtIsNull("2") } returns null
 
         `when`("존재하지 않는 회원 ID가 주어졌을 때") {
             val input = GenerateTestTokenUseCase.Input("2")
