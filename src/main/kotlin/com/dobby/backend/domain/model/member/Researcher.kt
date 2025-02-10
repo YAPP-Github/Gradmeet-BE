@@ -55,6 +55,7 @@ data class Researcher(
     fun withdraw(): Researcher = this.copy(
         member = member.withdraw(),
         univEmail = ResearcherMaskingPolicy.maskSensitiveData(this.id),
+        emailVerified = false,
         univName = ResearcherMaskingPolicy.maskSensitiveData(this.id),
         major = ResearcherMaskingPolicy.maskMajor(),
         labInfo = null
