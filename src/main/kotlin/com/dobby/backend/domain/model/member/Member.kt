@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.model.member
 
+import com.dobby.backend.domain.policy.MemberMaskingPolicy
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
@@ -41,9 +42,9 @@ data class Member(
     }
 
     fun withdraw(): Member = copy(
-        name = "ExMember",
-        oauthEmail = "Deleted_${id}",
-        contactEmail = "Deleted_${id}",
+        name = MemberMaskingPolicy.maskName(),
+        oauthEmail = MemberMaskingPolicy.maskSensitiveData(this.id),
+        contactEmail = MemberMaskingPolicy.maskSensitiveData(this.id),
         status = MemberStatus.HOLD,
         updatedAt = LocalDateTime.now(),
         deletedAt = LocalDateTime.now(),
