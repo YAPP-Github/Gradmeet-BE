@@ -26,11 +26,13 @@ class ExperimentPostGatewayImpl(
 
     override fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
-        pagination: Pagination
+        pagination: Pagination,
+        order: String
     ): List<ExperimentPost>? {
         return experimentPostCustomRepository.findExperimentPostsByCustomFilter(
             customFilter,
-            pagination
+            pagination,
+            order
         )?.map{ it.toDomain()}
     }
 

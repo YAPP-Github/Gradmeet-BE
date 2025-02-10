@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 interface ExperimentPostGateway {
     fun save(experimentPost: ExperimentPost): ExperimentPost
     fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
-    fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination): List<ExperimentPost>?
+    fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, pagination: Pagination, order: String): List<ExperimentPost>?
     fun findById(experimentPostId: String): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
     fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
