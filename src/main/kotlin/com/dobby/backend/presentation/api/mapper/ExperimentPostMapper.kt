@@ -68,7 +68,7 @@ object ExperimentPostMapper {
 
     fun toCreateExperimentPostResponse(response: CreateExperimentPostUseCase.Output): CreateExperimentPostResponse{
         return CreateExperimentPostResponse(
-             postInfo = toCreatePostInfo(response.postInfo)
+            postInfo = toCreatePostInfo(response.postInfo)
         )
     }
 
@@ -129,30 +129,29 @@ object ExperimentPostMapper {
         return UpdateExperimentPostUseCase.Input(
             experimentPostId = postId,
             memberId = getCurrentMemberId(),
-                applyMethodInfo = toUpdateApplyMethodInfo(request.applyMethodInfo),
-                targetGroupInfo = toUpdateTargetGroupInfo(request.targetGroupInfo),
-                imageListInfo = toUpdateImageListInfo(request.imageListInfo),
-                title = request.title,
-                content = request.content,
-                univName = request.univName,
-                count = request.count,
-                region = request.region,
-                area = request.area,
-                timeRequired = request.timeRequired,
-                reward = request.reward,
-                startDate = request.startDate,
-                endDate = request.endDate,
-                matchType = request.matchType,
-                detailedAddress = request.detailedAddress,
-                leadResearcher = request.leadResearcher,
-            )
+            applyMethodInfo = toUpdateApplyMethodInfo(request.applyMethodInfo),
+            targetGroupInfo = toUpdateTargetGroupInfo(request.targetGroupInfo),
+            imageListInfo = toUpdateImageListInfo(request.imageListInfo),
+            title = request.title,
+            content = request.content,
+            univName = request.univName,
+            count = request.count,
+            region = request.region,
+            area = request.area,
+            timeRequired = request.timeRequired,
+            reward = request.reward,
+            startDate = request.startDate,
+            endDate = request.endDate,
+            matchType = request.matchType,
+            detailedAddress = request.detailedAddress,
+            leadResearcher = request.leadResearcher,
+        )
     }
 
-    fun toUpdateExperimentPostResponse(response: UpdateExperimentPostUseCase.Output): UpdateExperimentPostResponse{
-        val responseDto= UpdateExperimentPostResponse(
+    fun toUpdateExperimentPostResponse(response: UpdateExperimentPostUseCase.Output): UpdateExperimentPostResponse {
+        return UpdateExperimentPostResponse(
             postInfo = toUpdatePostInfo(response.postInfo)
         )
-        return responseDto
     }
 
 
@@ -165,19 +164,49 @@ object ExperimentPostMapper {
 
     fun toGetExperimentPostDetailResponse(response: GetExperimentPostDetailUseCase.Output): ExperimentPostDetailResponse {
         return ExperimentPostDetailResponse(
-            experimentPostId = response.experimentPostDetailResponse.experimentPostId,
-            title = response.experimentPostDetailResponse.title,
-            uploadDate = response.experimentPostDetailResponse.uploadDate,
-            uploaderName = response.experimentPostDetailResponse.uploaderName,
-            views = response.experimentPostDetailResponse.views,
-            recruitStatus = response.experimentPostDetailResponse.recruitStatus,
-            summary = response.experimentPostDetailResponse.summary,
-            targetGroup = response.experimentPostDetailResponse.targetGroup,
-            address = response.experimentPostDetailResponse.address,
-            content = response.experimentPostDetailResponse.content,
-            imageList = response.experimentPostDetailResponse.imageList,
-            isAuthor = response.experimentPostDetailResponse.isAuthor,
-            isUploaderActive = response.experimentPostDetailResponse.isUploaderActive
+            experimentPostId = response.experimentPostDetail.experimentPostId,
+            title = response.experimentPostDetail.title,
+            uploadDate = response.experimentPostDetail.uploadDate,
+            uploaderName = response.experimentPostDetail.uploaderName,
+            views = response.experimentPostDetail.views,
+            recruitStatus = response.experimentPostDetail.recruitStatus,
+            summary = response.experimentPostDetail.summary.toResponse(),
+            targetGroup = response.experimentPostDetail.targetGroup.toResponse(),
+            address = response.experimentPostDetail.address.toResponse(),
+            content = response.experimentPostDetail.content,
+            imageList = response.experimentPostDetail.imageList,
+            isAuthor = response.experimentPostDetail.isAuthor,
+            isUploaderActive = response.experimentPostDetail.isUploaderActive
+        )
+    }
+
+    private fun GetExperimentPostDetailUseCase.ExperimentPostDetail.Summary.toResponse(): ExperimentPostDetailResponse.SummaryResponse {
+        return ExperimentPostDetailResponse.SummaryResponse(
+            startDate = this.startDate,
+            endDate = this.endDate,
+            leadResearcher = this.leadResearcher,
+            matchType = this.matchType,
+            reward = this.reward,
+            count = this.count,
+            timeRequired = this.timeRequired
+        )
+    }
+
+    private fun GetExperimentPostDetailUseCase.ExperimentPostDetail.TargetGroup.toResponse(): ExperimentPostDetailResponse.TargetGroupResponse {
+        return ExperimentPostDetailResponse.TargetGroupResponse(
+            startAge = this.startAge,
+            endAge = this.endAge,
+            genderType = this.genderType,
+            otherCondition = this.otherCondition
+        )
+    }
+
+    private fun GetExperimentPostDetailUseCase.ExperimentPostDetail.Address.toResponse(): ExperimentPostDetailResponse.AddressResponse {
+        return ExperimentPostDetailResponse.AddressResponse(
+            univName = this.univName,
+            region = this.region,
+            area = this.area,
+            detailedAddress = this.detailedAddress
         )
     }
 
@@ -296,7 +325,7 @@ object ExperimentPostMapper {
                     ),
                     recruitStatus = post.postInfo.recruitStatus
                 )
-                                 },
+            },
             page = page,
             size = output.size,
             totalCount = totalCount,
