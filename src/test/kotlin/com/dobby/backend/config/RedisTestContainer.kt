@@ -17,14 +17,16 @@ object RedisTestContainer : TestListener {
     override suspend fun beforeSpec(spec: Spec) {
         redis.start()
 
-        val redisHost = "127.0.0.1"
-        val redisPort = "6379"
+        val redisHost = redis.host
+        val redisPort = redis.firstMappedPort.toString()
 
         System.setProperty("spring.data.redis.host", redisHost)
         System.setProperty("spring.data.redis.port", redisPort)
     }
 
     override suspend fun afterSpec(spec: Spec) {
+        System.clearProperty("spring.data.redis.host")
+        System.clearProperty("spring.data.redis.port")
         redis.stop()
     }
 }
