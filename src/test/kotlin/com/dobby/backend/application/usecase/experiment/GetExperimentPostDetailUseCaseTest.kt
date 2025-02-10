@@ -106,6 +106,17 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
                 result.experimentPostDetail.isAuthor shouldBe false
             }
         }
+
+        `when`("탈퇴한 회원이 작성한 게시글인 경우") {
+            every { member.deletedAt } returns LocalDateTime.now()
+            val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
+            val result = getExperimentPostDetailUseCase.execute(input)
+
+            then("isAuthor가 false인 experimentPostDetail이 반환된다") {
+                result.experimentPostDetail.title shouldBe experimentPost.title
+                result.experimentPostDetail.isAuthor shouldBe false
+            }
+        }
     }
 
     given("유효하지 않은 experimentPostId가 주어졌을 때") {
