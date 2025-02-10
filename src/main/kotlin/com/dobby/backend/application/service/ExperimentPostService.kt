@@ -44,6 +44,7 @@ class ExperimentPostService(
     @Transactional
     fun getExperimentPosts(input: GetExperimentPostsUseCase.Input): List<GetExperimentPostsUseCase.Output> {
         validateFilter(input)
+        validateSortOrder(input.pagination.order)
         return getExperimentPostsUseCase.execute(input)
     }
 
