@@ -13,7 +13,8 @@ object RedisTestContainerConfig : BeforeAllCallback {
     private val redisContainer: GenericContainer<out GenericContainer<*>> = GenericContainer(DockerImageName.parse(REDIS_IMAGE))
         .apply {
             withExposedPorts(REDIS_PORT)
-            start()
+            withReuse(true) // 컨테이너 재사용 설정
+            if (!isRunning) start()
         }
 
     override fun beforeAll(context: ExtensionContext?) {
