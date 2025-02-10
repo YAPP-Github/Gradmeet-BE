@@ -11,7 +11,8 @@ import java.time.LocalDate
 interface ExperimentPostCustomRepository {
     fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
-        pagination: Pagination
+        pagination: Pagination,
+        order: String
     ): List<ExperimentPostEntity>?
 
     fun updateExperimentPostStatus(currentDate : LocalDate): Long
