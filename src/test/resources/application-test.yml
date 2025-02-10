@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:h2:~/dobby;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+    url: jdbc:h2:mem:dobby;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
     username: sa
     password: ''
   jpa:
@@ -12,8 +13,7 @@ spring:
           enabled: true
         show_sql: false
         format_sql: false
-        dialect: org.hibernate.dialect.MySQL8Dialect
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.H2Dialect
   security:
     oauth2:
       client:
@@ -34,7 +34,7 @@ spring:
             enable: true
   data:
     redis:
-      host: localhost
+      host: 127.0.0.1
       port: 6379
 
 app:

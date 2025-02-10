@@ -2,6 +2,7 @@ package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByRegionUseCase
+import com.dobby.backend.config.RedisTestContainer
 import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -38,6 +39,8 @@ class ExperimentPostServiceTest @Autowired constructor(
     val createExperimentPostUseCase = mockk<CreateExperimentPostUseCase>()
 
     lateinit var memberId: String
+
+    listeners(RedisTestContainer)
 
     beforeSpec {
         clearAllMocks()
@@ -114,7 +117,6 @@ class ExperimentPostServiceTest @Autowired constructor(
 
         val mockImageListInfo = mockk<CreateExperimentPostUseCase.ImageListInfo>(relaxed = true)
         every { mockImageListInfo.images } returns listOf("https://test.com/image1.jpg", "https://test.com/image2.jpg")
-
         every { mockInput.imageListInfo } returns mockImageListInfo
 
         every { createExperimentPostUseCase.execute(any()) } returns mockk()
