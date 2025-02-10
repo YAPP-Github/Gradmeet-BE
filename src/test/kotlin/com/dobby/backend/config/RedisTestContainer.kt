@@ -10,7 +10,6 @@ object RedisTestContainer : TestListener {
     private val redis: GenericContainer<*> = GenericContainer(DockerImageName.parse("redis:7.0.8-alpine"))
         .apply {
             withExposedPorts(6379)
-            portBindings = listOf("6379:6379")
             withReuse(true)
         }
 
