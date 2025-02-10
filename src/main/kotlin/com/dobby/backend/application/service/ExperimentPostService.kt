@@ -38,8 +38,7 @@ class ExperimentPostService(
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
-        cacheGateway.evict("experimentPostCounts:ALL")
-        cacheGateway.evict("experimentPostCounts:OPEN")
+        evictExperimentPostCountsCaches()
         return createExperimentPostUseCase.execute(input)
     }
 
@@ -151,8 +150,12 @@ class ExperimentPostService(
 
     @Transactional
     fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
+        evictExperimentPostCountsCaches()
+        deleteExperimentPostUseCase.execute(input)
+    }
+
+    private fun evictExperimentPostCountsCaches() {
         cacheGateway.evict("experimentPostCounts:ALL")
         cacheGateway.evict("experimentPostCounts:OPEN")
-        deleteExperimentPostUseCase.execute(input)
     }
 }
