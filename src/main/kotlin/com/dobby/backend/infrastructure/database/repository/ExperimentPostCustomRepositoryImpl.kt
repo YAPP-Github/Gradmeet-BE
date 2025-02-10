@@ -35,7 +35,8 @@ class ExperimentPostCustomRepositoryImpl (
 
     override fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
-        pagination: Pagination
+        pagination: Pagination,
+        order: String
     ): List<ExperimentPostEntity>? {
         val post = QExperimentPostEntity.experimentPostEntity
         val recruitStatusCondition = when (customFilter.recruitStatus) {
@@ -56,7 +57,7 @@ class ExperimentPostCustomRepositoryImpl (
             )
             .offset((pagination.page - 1L) * pagination.count)
             .limit(pagination.count.toLong())
-            .orderBy(post.createdAt.desc())
+            .orderBy(getOrderClause(order))
             .fetch()
     }
 

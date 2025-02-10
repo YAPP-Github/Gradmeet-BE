@@ -41,6 +41,7 @@ class GetExperimentPostsUseCase (
     data class PaginationInput(
         val page: Int = 1,
         val count: Int = 6,
+        val order : String = "DESC"
     )
 
     data class Output(
@@ -72,7 +73,8 @@ class GetExperimentPostsUseCase (
         val pagination = Pagination(input.pagination.page, input.pagination.count)
         val posts = experimentPostGateway.findExperimentPostsByCustomFilter(
             domainFilter,
-            pagination
+            pagination,
+            input.pagination.order
         )
 
         return posts?.map { post ->

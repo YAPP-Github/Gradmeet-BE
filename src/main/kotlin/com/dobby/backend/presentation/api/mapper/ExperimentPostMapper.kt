@@ -284,11 +284,14 @@ object ExperimentPostMapper {
     }
 
     fun toGetExperimentPostsUseCasePagination(
-        page: Int, count: Int
+        page: Int,
+        count: Int,
+        order: String
     ) : GetExperimentPostsUseCase.PaginationInput {
         return GetExperimentPostsUseCase.PaginationInput(
             page = page,
             count = count,
+            order = order
         )
     }
 
