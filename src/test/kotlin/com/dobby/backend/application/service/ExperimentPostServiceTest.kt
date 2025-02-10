@@ -35,9 +35,7 @@ class ExperimentPostServiceTest @Autowired constructor(
     private val objectMapper: ObjectMapper
 ) : BehaviorSpec({
 
-    val getExperimentPostCountsByRegionUseCase = mockk<GetExperimentPostCountsByRegionUseCase>()
     val createExperimentPostUseCase = mockk<CreateExperimentPostUseCase>()
-
     lateinit var memberId: String
 
     listeners(RedisTestContainer)
@@ -62,7 +60,7 @@ class ExperimentPostServiceTest @Autowired constructor(
         memberId = savedMember.id
     }
 
-    given("Redis 캐시에 게시글 개수를 저장할 때") {
+    given("Redis 캐시에 지역별 실험 공고 개수를 저장할 때") {
         val input = GetExperimentPostCountsByRegionUseCase.Input(region = null, recruitStatus = RecruitStatus.ALL)
         val output = GetExperimentPostCountsByRegionUseCase.Output(total = 100, area = emptyList())
 
@@ -78,7 +76,7 @@ class ExperimentPostServiceTest @Autowired constructor(
         }
     }
 
-    given("새로운 게시글을 생성할 때") {
+    given("새로운 실험 공고를 생성할 때") {
         val cacheKey = "experimentPostCounts:ALL"
         cacheGateway.set(cacheKey, objectMapper.writeValueAsString(GetExperimentPostCountsByRegionUseCase.Output(100, emptyList())))
 

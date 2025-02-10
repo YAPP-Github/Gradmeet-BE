@@ -12,7 +12,7 @@ class RedisCacheGatewayImpl(
     private val environment: Environment
 ) : CacheGateway {
 
-    private val cacheTimeout = 300L
+    private val cacheTimeout = 240L
 
     override fun get(key: String): String? {
         return redisTemplate.opsForValue().get(getCacheKey(key))

@@ -151,6 +151,8 @@ class ExperimentPostService(
 
     @Transactional
     fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
+        cacheGateway.evict("experimentPostCounts:ALL")
+        cacheGateway.evict("experimentPostCounts:OPEN")
         deleteExperimentPostUseCase.execute(input)
     }
 }

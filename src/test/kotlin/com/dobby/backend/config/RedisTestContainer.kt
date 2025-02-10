@@ -12,7 +12,7 @@ object RedisTestContainer : TestListener {
         withExposedPorts(6379)
 
         if (!isCI) {
-            setPortBindings(listOf("6379:6379"))
+            portBindings = listOf("6379:6379")
         }
     }
 
