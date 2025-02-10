@@ -155,10 +155,11 @@ class ExperimentPostController (
         @RequestParam(required = false) areas: List<Area>?,
         @RequestParam(required = false, defaultValue = "ALL") recruitStatus: RecruitStatus,
         @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "6") count: Int
+        @RequestParam(defaultValue = "6") count: Int,
+        @RequestParam(defaultValue = "DESC") order: String
     ): PaginatedResponse<ExperimentPostResponse> {
         val customFilter = ExperimentPostMapper.toUseCaseCustomFilter(matchType, gender, age, region, areas, recruitStatus)
-        val pagination = ExperimentPostMapper.toGetExperimentPostsUseCasePagination(page, count)
+        val pagination = ExperimentPostMapper.toGetExperimentPostsUseCasePagination(page, count, order)
         val input = ExperimentPostMapper.toGetExperimentPostsUseCaseInput(customFilter, pagination)
         val posts = experimentPostService.getExperimentPosts(input)
 
