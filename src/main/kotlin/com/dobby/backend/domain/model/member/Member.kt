@@ -1,8 +1,9 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.infrastructure.database.entity.enums.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.RoleType
+import com.dobby.backend.domain.policy.MemberMaskingPolicy
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import java.time.LocalDateTime
 
 data class Member(
@@ -14,7 +15,8 @@ data class Member(
     var status: MemberStatus,
     val role: RoleType?,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+    val deletedAt: LocalDateTime?
 ) {
 
     companion object {
@@ -34,7 +36,17 @@ data class Member(
             status = MemberStatus.ACTIVE,
             role = role,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
     }
+
+    fun withdraw(): Member = copy(
+        name = MemberMaskingPolicy.maskName(),
+        oauthEmail = MemberMaskingPolicy.maskSensitiveData(this.id),
+        contactEmail = MemberMaskingPolicy.maskSensitiveData(this.id),
+        status = MemberStatus.HOLD,
+        updatedAt = LocalDateTime.now(),
+        deletedAt = LocalDateTime.now(),
+    )
 }

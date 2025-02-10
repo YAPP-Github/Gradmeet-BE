@@ -11,6 +11,11 @@ import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -36,7 +41,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val validInput = CreateExperimentPostUseCase.Input(
@@ -97,7 +103,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
@@ -150,7 +157,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(
@@ -205,7 +213,8 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             provider = ProviderType.NAVER,
             status = MemberStatus.ACTIVE,
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
         )
 
         val invalidInput = CreateExperimentPostUseCase.Input(

@@ -1,10 +1,11 @@
 package com.dobby.backend.presentation.api.dto.response.experiment
 
-import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 
@@ -21,6 +22,9 @@ data class ExperimentPostDetailResponse(
 
     @Schema(description = "업로더 이름", example = "야뿌")
     val uploaderName: String,
+
+    @Schema(description = "업로더 활성 상태", example = true.toString())
+    val isUploaderActive: Boolean,
 
     @Schema(description = "조회수", example = "123")
     val views: Int,

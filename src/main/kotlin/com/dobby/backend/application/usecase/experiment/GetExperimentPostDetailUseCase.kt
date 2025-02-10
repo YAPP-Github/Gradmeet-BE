@@ -5,11 +5,11 @@ import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
-import com.dobby.backend.infrastructure.database.entity.enums.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import java.time.LocalDate
 
 class GetExperimentPostDetailUseCase(
@@ -37,7 +37,8 @@ class GetExperimentPostDetailUseCase(
         val address: Address,
         val content: String,
         val imageList: List<String>,
-        val isAuthor: Boolean
+        val isAuthor: Boolean,
+        val isUploaderActive: Boolean
     ) {
         data class Summary(
             val startDate: LocalDate?,
@@ -89,7 +90,8 @@ fun ExperimentPost.toExperimentPostDetail(memberId: String?): GetExperimentPostD
         address = this.toAddress(),
         content = this.content,
         imageList = this.images.map { it.imageUrl },
-        isAuthor = this.member.id == memberId
+        isAuthor = this.member.id == memberId,
+        isUploaderActive = this.member.deletedAt == null
     )
 }
 

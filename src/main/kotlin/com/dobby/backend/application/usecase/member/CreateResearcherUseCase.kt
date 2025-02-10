@@ -7,7 +7,9 @@ import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.infrastructure.database.entity.enums.*
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,

@@ -26,4 +26,5 @@ interface VerificationRepository : JpaRepository<VerificationEntity, String> {
         nativeQuery = true
     )
     fun updateCode(univEmail: String, code: String)
+    fun deleteByUnivEmail(univEmail: String)
 }

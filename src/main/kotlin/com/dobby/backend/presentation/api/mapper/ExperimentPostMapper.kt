@@ -6,7 +6,7 @@ import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMe
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
-import com.dobby.backend.infrastructure.database.entity.enums.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
@@ -68,7 +68,7 @@ object ExperimentPostMapper {
 
     fun toCreateExperimentPostResponse(response: CreateExperimentPostUseCase.Output): CreateExperimentPostResponse{
         return CreateExperimentPostResponse(
-             postInfo = toCreatePostInfo(response.postInfo)
+            postInfo = toCreatePostInfo(response.postInfo)
         )
     }
 
@@ -129,23 +129,23 @@ object ExperimentPostMapper {
         return UpdateExperimentPostUseCase.Input(
             experimentPostId = postId,
             memberId = getCurrentMemberId(),
-                applyMethodInfo = toUpdateApplyMethodInfo(request.applyMethodInfo),
-                targetGroupInfo = toUpdateTargetGroupInfo(request.targetGroupInfo),
-                imageListInfo = toUpdateImageListInfo(request.imageListInfo),
-                title = request.title,
-                content = request.content,
-                univName = request.univName,
-                count = request.count,
-                region = request.region,
-                area = request.area,
-                timeRequired = request.timeRequired,
-                reward = request.reward,
-                startDate = request.startDate,
-                endDate = request.endDate,
-                matchType = request.matchType,
-                detailedAddress = request.detailedAddress,
-                leadResearcher = request.leadResearcher,
-            )
+            applyMethodInfo = toUpdateApplyMethodInfo(request.applyMethodInfo),
+            targetGroupInfo = toUpdateTargetGroupInfo(request.targetGroupInfo),
+            imageListInfo = toUpdateImageListInfo(request.imageListInfo),
+            title = request.title,
+            content = request.content,
+            univName = request.univName,
+            count = request.count,
+            region = request.region,
+            area = request.area,
+            timeRequired = request.timeRequired,
+            reward = request.reward,
+            startDate = request.startDate,
+            endDate = request.endDate,
+            matchType = request.matchType,
+            detailedAddress = request.detailedAddress,
+            leadResearcher = request.leadResearcher,
+        )
     }
 
     fun toUpdateExperimentPostResponse(response: UpdateExperimentPostUseCase.Output): UpdateExperimentPostResponse {
@@ -175,7 +175,8 @@ object ExperimentPostMapper {
             address = response.experimentPostDetail.address.toResponse(),
             content = response.experimentPostDetail.content,
             imageList = response.experimentPostDetail.imageList,
-            isAuthor = response.experimentPostDetail.isAuthor
+            isAuthor = response.experimentPostDetail.isAuthor,
+            isUploaderActive = response.experimentPostDetail.isUploaderActive
         )
     }
 
@@ -324,7 +325,7 @@ object ExperimentPostMapper {
                     ),
                     recruitStatus = post.postInfo.recruitStatus
                 )
-                                 },
+            },
             page = page,
             size = output.size,
             totalCount = totalCount,

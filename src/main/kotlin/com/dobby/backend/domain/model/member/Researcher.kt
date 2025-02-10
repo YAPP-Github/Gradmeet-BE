@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.model.member
 
+import com.dobby.backend.domain.policy.ResearcherMaskingPolicy
 import java.time.LocalDateTime
 
 data class Researcher(
@@ -50,4 +51,13 @@ data class Researcher(
             labInfo = labInfo
         )
     }
+
+    fun withdraw(): Researcher = this.copy(
+        member = member.withdraw(),
+        univEmail = ResearcherMaskingPolicy.maskSensitiveData(this.id),
+        emailVerified = false,
+        univName = ResearcherMaskingPolicy.maskSensitiveData(this.id),
+        major = ResearcherMaskingPolicy.maskMajor(),
+        labInfo = null
+    )
 }

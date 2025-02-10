@@ -12,6 +12,11 @@ import com.dobby.backend.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
+import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
+import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -41,7 +46,8 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now().minusDays(2),
-                updatedAt = LocalDateTime.now().minusDays(2)
+                updatedAt = LocalDateTime.now().minusDays(2),
+                deletedAt = null
             )
 
             val experimentPosts = listOf(
@@ -105,7 +111,8 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 provider = ProviderType.NAVER,
                 status = MemberStatus.ACTIVE,
                 createdAt = LocalDateTime.now().minusDays(2),
-                updatedAt = LocalDateTime.now().minusDays(2)
+                updatedAt = LocalDateTime.now().minusDays(2),
+                deletedAt = null
             )
 
             val experimentPosts = listOf(
