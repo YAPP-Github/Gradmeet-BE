@@ -10,7 +10,10 @@ import com.dobby.backend.application.usecase.experiment.GetMyExperimentPostsUseC
 import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
 import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.domain.exception.InvalidRequestValueException
+import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
+import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
+import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -30,9 +33,12 @@ class ExperimentPostService(
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
+    private val cacheGateway: CacheGateway,
+    private val objectMapper: ObjectMapper,
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
+        evictExperimentPostCountsCaches()
         return createExperimentPostUseCase.execute(input)
     }
 
@@ -69,14 +75,36 @@ class ExperimentPostService(
     }
 
     fun getExperimentPostCounts(input: Any): Any {
-        return when (input) {
+        if (input is GetExperimentPostCountsByRegionUseCase.Input && input.region == null) {
+            getCachedExperimentPostCounts(input.recruitStatus)?.let { return it }
+        }
+
+        val output = when (input) {
             is GetExperimentPostCountsByRegionUseCase.Input -> getExperimentPostCountsByRegionUseCase.execute(input)
             is GetExperimentPostCountsByAreaUseCase.Input -> getExperimentPostCountsByAreaUseCase.execute(input)
             else -> throw IllegalArgumentException("Invalid input type: ${input::class.java.simpleName}")
         }
+
+        if (input is GetExperimentPostCountsByRegionUseCase.Input && input.region == null) {
+            cacheExperimentPostCounts(input.recruitStatus, output)
+        }
+
+        return output
     }
 
-    fun validateFilter(input: GetExperimentPostsUseCase.Input) {
+    private fun getCachedExperimentPostCounts(recruitStatus: RecruitStatus): GetExperimentPostCountsByRegionUseCase.Output? {
+        val cacheKey = "experimentPostCounts:$recruitStatus"
+        return cacheGateway.get(cacheKey)?.let {
+            objectMapper.readValue(it, GetExperimentPostCountsByRegionUseCase.Output::class.java)
+        }
+    }
+
+    private fun cacheExperimentPostCounts(recruitStatus: RecruitStatus, output: Any) {
+        val cacheKey = "experimentPostCounts:$recruitStatus"
+        cacheGateway.set(cacheKey, objectMapper.writeValueAsString(output))
+    }
+
+    private fun validateFilter(input: GetExperimentPostsUseCase.Input) {
         val locationInfo = input.customFilter.locationTarget ?: return
 
         locationInfo.areas?.let { validateLocationAreaCount(it) }
@@ -123,5 +151,10 @@ class ExperimentPostService(
     @Transactional
     fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
         deleteExperimentPostUseCase.execute(input)
+        evictExperimentPostCountsCaches()
+    }
+
+    private fun evictExperimentPostCountsCaches() {
+        listOf("ALL", "OPEN").forEach { cacheGateway.evict("experimentPostCounts:$it") }
     }
 }
