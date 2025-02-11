@@ -79,6 +79,9 @@ dependencies {
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
 
 	testImplementation("io.mockk:mockk:1.13.10")
+
+	testImplementation("org.testcontainers:testcontainers:1.19.3")
+	testImplementation("org.testcontainers:junit-jupiter:1.19.3")
 }
 
 dependencyManagement {
