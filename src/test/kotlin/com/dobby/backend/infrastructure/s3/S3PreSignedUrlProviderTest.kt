@@ -8,12 +8,14 @@ import com.dobby.backend.infrastructure.config.properties.S3Properties
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import java.net.URL
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 @SpringBootTest
+@ActiveProfiles("test")
 class S3PreSignedUrlProviderTest : BehaviorSpec({
 
     val amazonS3Client = mockk<AmazonS3>()
