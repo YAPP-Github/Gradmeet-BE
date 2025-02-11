@@ -10,6 +10,7 @@ object RedisTestContainer : TestListener {
 
     private val redis: GenericContainer<*> = GenericContainer(DockerImageName.parse("redis:7.0.8-alpine")).apply {
         withExposedPorts(6379)
+        withReuse(true)
 
         if (!isCI) {
             portBindings = listOf("6379:6379")
@@ -17,7 +18,7 @@ object RedisTestContainer : TestListener {
     }
 
     override suspend fun beforeSpec(spec: Spec) {
-        redis.start()
+        if (!redis.isRunning) redis.start()
 
         val redisHost = "127.0.0.1"
         val redisPort = redis.getMappedPort(6379).toString()
@@ -27,6 +28,8 @@ object RedisTestContainer : TestListener {
     }
 
     override suspend fun afterSpec(spec: Spec) {
-        redis.stop()
+        if (!isCI) {
+            redis.stop()
+        }
     }
 }
