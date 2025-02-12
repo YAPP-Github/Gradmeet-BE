@@ -25,7 +25,7 @@ class EmailController(
         summary = "학교 메일 코드 전송 API- 연구자 회원가입 과정",
         description = "연구자 회원가입 시, 학교 메일 인증 코드를 전송하는 API입니다."
     )
-    fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
+    suspend fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
             : EmailSendResponse {
         val input = EmailMapper.toEmailCodeSendUseCaseInput(emailSendRequest)
         val output = emailService.sendEmail(input)
