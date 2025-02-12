@@ -1,5 +1,6 @@
 package com.dobby.backend.domain.model.experiment
 
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.exception.ExperimentPostImageSizeException
 import com.dobby.backend.domain.exception.ExperimentPostInvalidOnlineRequestException
 import com.dobby.backend.domain.model.member.Member
@@ -69,12 +70,18 @@ data class ExperimentPost(
         univName: String?,
         region: Region?,
         area: Area?,
-        imageListInfo: List<String>?
+        imageListInfo: List<String>?,
+        idGenerator: IdGenerator
     ): ExperimentPost {
-        val updatedImages = imageListInfo?.map { imageUrl ->
-            val existingImage = this.images.find { it.imageUrl == imageUrl }
-            existingImage ?: ExperimentImage(id = "0", experimentPost = this, imageUrl = imageUrl)
-        } ?: this.images
+        val existingImageUrls = this.images.map { it.imageUrl }.toSet()
+        val newImages = imageListInfo?.filter { it !in existingImageUrls }?.map { imageUrl ->
+            ExperimentImage(
+                id = idGenerator.generateId(),
+                experimentPost = this,
+                imageUrl = imageUrl
+            )
+        } ?: emptyList()
+        val updatedImages = this.images.toMutableList().apply { addAll(newImages) }
 
         return this.copy(
             targetGroup = targetGroup ?: this.targetGroup,
@@ -88,9 +95,9 @@ data class ExperimentPost(
             leadResearcher = leadResearcher ?: this.leadResearcher,
             detailedAddress = detailedAddress ?: this.detailedAddress,
             matchType = matchType ?: this.matchType,
-            univName = univName ?: this.univName,
-            region = region ?: this.region,
-            area = area ?: this.area,
+            univName = univName,
+            region = region,
+            area = area,
             images = updatedImages.toMutableList(),
             updatedAt = LocalDateTime.now()
         ).apply { validate() }
