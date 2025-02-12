@@ -24,7 +24,7 @@ data class UpdateExperimentPostRequest (
     val area: Area?,
     val detailedAddress: String?,
 
-    val reward: String?,
-    val title: String?,
-    val content: String?,
+    val reward: String,
+    val title: String,
+    val content: String,
 )
