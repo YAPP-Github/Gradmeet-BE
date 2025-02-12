@@ -48,7 +48,10 @@ data class ExperimentPostDetailResponse(
     val imageList: List<String>,
 
     @Schema(description = "글쓴이 여부", example = "true")
-    val isAuthor: Boolean
+    val isAuthor: Boolean,
+
+    @Schema(description = "알림 동의 여부", example = "true")
+    val alarmAgree: Boolean
 ) {
     @Schema(description = "실험 공고 요약 정보")
     data class SummaryResponse(
