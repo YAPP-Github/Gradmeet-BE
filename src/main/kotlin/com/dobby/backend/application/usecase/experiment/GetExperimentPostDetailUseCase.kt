@@ -38,7 +38,8 @@ class GetExperimentPostDetailUseCase(
         val content: String,
         val imageList: List<String>,
         val isAuthor: Boolean,
-        val isUploaderActive: Boolean
+        val isUploaderActive: Boolean,
+        val alarmAgree: Boolean
     ) {
         data class Summary(
             val startDate: LocalDate?,
@@ -91,7 +92,8 @@ fun ExperimentPost.toExperimentPostDetail(memberId: String?): GetExperimentPostD
         content = this.content,
         imageList = this.images.map { it.imageUrl },
         isAuthor = this.member.id == memberId,
-        isUploaderActive = this.member.deletedAt == null
+        isUploaderActive = this.member.deletedAt == null,
+        alarmAgree = this.alarmAgree
     )
 }
 
