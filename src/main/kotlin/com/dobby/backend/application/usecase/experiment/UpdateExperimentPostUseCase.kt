@@ -1,6 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
@@ -12,7 +13,8 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import java.time.LocalDate
 
 class UpdateExperimentPostUseCase (
-    private val experimentPostGateway: ExperimentPostGateway
+    private val experimentPostGateway: ExperimentPostGateway,
+    private val idGenerator: IdGenerator
 ) : UseCase<UpdateExperimentPostUseCase.Input, UpdateExperimentPostUseCase.Output> {
     data class Input(
         val experimentPostId: String,
@@ -104,7 +106,8 @@ class UpdateExperimentPostUseCase (
             univName = input.univName,
             region = input.region,
             area = input.area,
-            imageListInfo = input.imageListInfo?.images
+            imageListInfo = input.imageListInfo?.images,
+            idGenerator = idGenerator
         )
         val updatedPost = experimentPostGateway.save(experimentPost)
 
