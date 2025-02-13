@@ -89,6 +89,20 @@ class ExperimentPostController (
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")
+    @GetMapping("/{postId}/edit")
+    @Operation(
+        summary = "공고 수정 시 기존 내용 조회 API",
+        description = "연구자가 공고를 수정할 때 기존 공고 내용을 불러옵니다."
+    )
+    fun getExperimentPostDetailForUpdate(
+        @PathVariable postId: String
+    ): ExperimentPostDetailResponse {
+        val input = ExperimentPostMapper.toGetExperimentPostDetailForUpdateUseCaseInput(postId)
+        val output = experimentPostService.getExperimentPostDetailForUpdate(input)
+        return ExperimentPostMapper.toGetExperimentPostDetailForUpdateResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping("/image-upload-request")
     @Operation(
         summary = "공고 사진 S3 Presigned Url 요청",
