@@ -99,7 +99,7 @@ class ExperimentPostController (
     ): ExperimentPostDetailResponse {
         val input = ExperimentPostMapper.toGetExperimentPostDetailForUpdateUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostDetailForUpdate(input)
-        return ExperimentPostMapper.toGetExperimentPostDetailForUpdateUseCase(output)
+        return ExperimentPostMapper.toGetExperimentPostDetailForUpdateResponse(output)
     }
 
     @PreAuthorize("hasRole('RESEARCHER')")

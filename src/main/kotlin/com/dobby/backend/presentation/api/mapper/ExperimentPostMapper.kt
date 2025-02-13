@@ -161,7 +161,7 @@ object ExperimentPostMapper {
         )
     }
 
-    fun toGetExperimentPostDetailForUpdateUseCase(response: GetExperimentPostDetailForUpdateUseCase.Output): ExperimentPostDetailResponse {
+    fun toGetExperimentPostDetailForUpdateResponse(response: GetExperimentPostDetailForUpdateUseCase.Output): ExperimentPostDetailResponse {
         return ExperimentPostDetailResponse(
             experimentPostId = response.experimentPostDetail.experimentPostId,
             title = response.experimentPostDetail.title,
