@@ -11,9 +11,11 @@ import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import com.dobby.backend.util.EmailUtils
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.springframework.stereotype.Component
+import org.slf4j.LoggerFactory
+import kotlin.math.pow
+import kotlin.random.Random
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
@@ -75,9 +77,34 @@ class SendEmailCodeUseCase(
         }
     }
 
+    private val logger = LoggerFactory.getLogger(SendEmailCodeUseCase::class.java)
+
     private suspend fun sendVerificationEmail(univEmail: String, code: String) {
         val content = EMAIL_CONTENT_TEMPLATE.format(code)
-        emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
+        val maxRetries = 3
+
+        var attempt = 1
+        while(attempt <= maxRetries) {
+            try {
+                emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
+                return
+            } catch (ex: Exception) {
+                attempt += 1
+                if(attempt >= maxRetries) {
+                    logger.error("Failed to send email verification to $univEmail after $maxRetries attempts.", ex)
+                    throw ex
+                }
+                val backOffTime = calculateBackOff(attempt)
+                logger.warn("Retrying to sending email... Attempt: $attempt, Waiting: ${backOffTime}ms")
+                delay(backOffTime)
+            }
+        }
+    }
+
+    private fun calculateBackOff(attempt: Int): Long {
+        val defaultDelay = 1000L
+        val maxJitter = 500L
+        return defaultDelay * (2.0.pow(attempt)).toLong() + Random.nextLong(0, maxJitter)
     }
 
     companion object {
