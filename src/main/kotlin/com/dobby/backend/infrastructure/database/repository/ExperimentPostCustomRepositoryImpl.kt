@@ -104,7 +104,8 @@ class ExperimentPostCustomRepositoryImpl (
     }
 
     private fun genderEq(post: QExperimentPostEntity, gender: GenderType?): BooleanExpression? {
-        return gender?.let { post.targetGroup.genderType.eq(it) }
+        return gender?.let {
+            post.targetGroup.genderType.eq(it).or(post.targetGroup.genderType.eq(GenderType.ALL)) }
     }
 
     private fun ageBetween(post: QExperimentPostEntity, age: Int?): BooleanExpression? {
