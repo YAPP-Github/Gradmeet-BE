@@ -8,6 +8,7 @@ import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.util.EmailUtils
+import com.dobby.backend.util.RetryUtils
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +37,9 @@ class SendMatchingEmailUseCase(
         val (title, content) = getFormattedEmail(member.name, input.experimentPosts)
 
         return try {
-            emailGateway.sendEmail(input.contactEmail, title, content)
+            RetryUtils.retryWithBackOff {
+                emailGateway.sendEmail(input.contactEmail, title, content)
+            }
             Output(isSuccess = true, message = " Email successfully sent to ${input.contactEmail}")
         } catch (ex: Exception) {
             Output(isSuccess = false, message = "Failed to send to email to ${input.contactEmail}: ${ex.message}")
