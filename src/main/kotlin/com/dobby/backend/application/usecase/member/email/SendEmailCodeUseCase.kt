@@ -1,6 +1,8 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.application.service.CoroutineDispatcherProvider
+import com.dobby.backend.application.service.TransactionExecutor
+import com.dobby.backend.application.usecase.AsyncUseCase
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.email.EmailGateway
@@ -8,12 +10,17 @@ import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
 import com.dobby.backend.util.EmailUtils
+import com.dobby.backend.util.RetryUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway,
-    private val idGenerator: IdGenerator
-) : UseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
+    private val idGenerator: IdGenerator,
+    private val dispatcherProvider: CoroutineDispatcherProvider,
+    private val transactionExecutor: TransactionExecutor
+) : AsyncUseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
 
     data class Input(
         val univEmail: String
@@ -22,13 +29,23 @@ class SendEmailCodeUseCase(
         val isSuccess: Boolean,
         val message: String
     )
-    override fun execute(input: Input): Output {
+    override suspend fun execute(input: Input): Output {
         validateEmail(input.univEmail)
 
         val code = EmailUtils.generateCode()
-        reflectVerification(input, code)
 
-        sendVerificationEmail(input.univEmail, code)
+        CoroutineScope(dispatcherProvider.io).launch {
+            RetryUtils.retryWithBackOff {
+                transactionExecutor.execute {
+                    reflectVerification(input, code)
+                }
+            }
+        }
+
+        CoroutineScope(dispatcherProvider.io).launch {
+            sendVerificationEmail(input.univEmail, code)
+        }
+
         return Output(
             isSuccess = true,
             message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요."
@@ -60,9 +77,12 @@ class SendEmailCodeUseCase(
         }
     }
 
-    private fun sendVerificationEmail(univEmail: String, code: String) {
+    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
         val content = EMAIL_CONTENT_TEMPLATE.format(code)
-        emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
+
+        RetryUtils.retryWithBackOff {
+            emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
+        }
     }
 
     companion object {

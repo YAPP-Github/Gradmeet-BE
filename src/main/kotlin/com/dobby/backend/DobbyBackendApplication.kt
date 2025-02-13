@@ -1,5 +1,6 @@
 package com.dobby.backend
 
+import com.dobby.backend.application.usecase.AsyncUseCase
 import com.dobby.backend.application.usecase.UseCase
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.FilterType
 @ComponentScan(
 	includeFilters = [ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE,
-		classes = [UseCase::class]
+		classes = [UseCase::class, AsyncUseCase::class]
 	)]
 )
 @SpringBootApplication
