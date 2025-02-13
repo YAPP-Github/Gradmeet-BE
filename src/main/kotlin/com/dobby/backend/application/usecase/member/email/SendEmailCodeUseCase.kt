@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Component
 
-@Component
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway,

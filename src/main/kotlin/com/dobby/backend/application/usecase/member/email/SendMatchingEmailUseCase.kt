@@ -14,7 +14,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Component
 class SendMatchingEmailUseCase(
     private val emailGateway: EmailGateway,
     private val urlGeneratorGateway: UrlGeneratorGateway,
