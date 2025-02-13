@@ -22,6 +22,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -91,11 +92,13 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
 
             coEvery { emailGateway.sendEmail(any(), any(), any()) } just Runs
 
-            then("이메일 전송이 성공해야 한다") {
-                val output = runBlocking { sendMatchingEmailUseCase.execute(input) }
-
-                output.isSuccess shouldBe true
-                coVerify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any()) }
+            then("이메일 전송이 성공해야 한다")  {
+                runTest {
+                    val output = sendMatchingEmailUseCase.execute(input)
+                    output.isSuccess shouldBe true
+                    coVerify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any())
+                    }
+                }
             }
         }
 
@@ -155,11 +158,12 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
 
             then("EmailDomainNotFoundException 예외가 발생해야 한다") {
-                val exception = shouldThrow<EmailDomainNotFoundException> {
-                    runBlocking { sendMatchingEmailUseCase.execute(input) }
+                runTest {
+                    val exception = shouldThrow<EmailDomainNotFoundException> {
+                        runBlocking { sendMatchingEmailUseCase.execute(input) }
+                    }
+                    exception shouldBe EmailDomainNotFoundException
                 }
-
-                exception shouldBe EmailDomainNotFoundException
             }
         }
     }
