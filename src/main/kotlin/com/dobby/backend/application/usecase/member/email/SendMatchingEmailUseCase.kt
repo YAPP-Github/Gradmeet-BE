@@ -1,7 +1,6 @@
 package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.usecase.AsyncUseCase
-import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.gateway.UrlGeneratorGateway
@@ -9,7 +8,6 @@ import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.util.EmailUtils
-import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
