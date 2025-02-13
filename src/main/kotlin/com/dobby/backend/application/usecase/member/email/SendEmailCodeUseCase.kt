@@ -35,10 +35,13 @@ class SendEmailCodeUseCase(
         val code = EmailUtils.generateCode()
 
         CoroutineScope(dispatcherProvider.io).launch {
-            transactionExecutor.execute {
-                reflectVerification(input, code)
+            RetryUtils.retryWithBackOff {
+                transactionExecutor.execute {
+                    reflectVerification(input, code)
+                }
             }
         }
+
         CoroutineScope(dispatcherProvider.io).launch {
             sendVerificationEmail(input.univEmail, code)
         }
