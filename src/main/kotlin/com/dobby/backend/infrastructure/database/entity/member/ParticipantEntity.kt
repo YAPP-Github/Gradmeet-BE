@@ -15,7 +15,7 @@ class ParticipantEntity (
     @Column(name= "participant_id", columnDefinition = "CHAR(13)")
     val id: String,
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
