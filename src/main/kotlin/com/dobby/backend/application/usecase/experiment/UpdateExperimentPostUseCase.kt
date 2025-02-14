@@ -146,7 +146,8 @@ class UpdateExperimentPostUseCase (
     }
 
     private fun validateModificationPolicy(existingPost: ExperimentPost, input: Input){
-        if(!existingPost.recruitStatus){
+        val today = LocalDate.now()
+        if(!existingPost.recruitStatus || existingPost.endDate?.isBefore(today) == true){
             if(input.startDate != null || input.endDate != null) {
                 throw ExperimentPostUpdateDateException
             }

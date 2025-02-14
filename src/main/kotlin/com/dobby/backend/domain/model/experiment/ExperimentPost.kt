@@ -75,7 +75,7 @@ data class ExperimentPost(
         val currentImages = this.images.map { it.imageUrl }.toSet()
         val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
 
-        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, newImages)
+        validate(title, reward, content, leadResearcher, matchType, place, region, area, count, newImages)
 
         val updatedImages = if(currentImages == newImages) {
             this.images
@@ -94,8 +94,8 @@ data class ExperimentPost(
             applyMethod = this.applyMethod,
             title = title?: this.title,
             reward = reward?: this.reward,
-            startDate = startDate,
-            endDate = endDate,
+            startDate = startDate?: this.startDate,
+            endDate = endDate?: this.endDate,
             content = content?: this.content,
             count = count?: this.count,
             leadResearcher = leadResearcher?: this.leadResearcher,
@@ -144,7 +144,7 @@ data class ExperimentPost(
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
         ): ExperimentPost {
-            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, images = images.map { it.imageUrl })
+            validate(title, reward, content, leadResearcher, matchType, place, region, area, count, images = images.map { it.imageUrl })
 
             return ExperimentPost(
                 id = id,
@@ -181,11 +181,9 @@ data class ExperimentPost(
             place: String?,
             region: Region?,
             area: Area?,
-            endDate: LocalDate?,
             count: Int?,
             images: List<String>?
         ) {
-            val today = LocalDate.now()
             if (images != null && images.size > 3) throw ExperimentPostImageSizeException
             if (title == null) throw ExperimentPostTitleException
             if (reward == null) throw ExperimentPostRewardException
@@ -194,9 +192,6 @@ data class ExperimentPost(
             if (count == null || count <= 0) throw ExperimentPostCountException
             if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
                 throw ExperimentPostInvalidOnlineRequestException
-            }
-            if (endDate?.isBefore(today) == true) {
-                throw ExperimentPostUpdateDateException
             }
         }
     }
