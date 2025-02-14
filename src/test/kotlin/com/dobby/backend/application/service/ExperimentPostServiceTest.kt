@@ -92,8 +92,8 @@ class ExperimentPostServiceTest @Autowired constructor(
         every { mockInput.title } returns "새로운 실험"
         every { mockInput.content } returns "참여해 참여해"
         every { mockInput.alarmAgree } returns true
-        every { mockInput.startDate } returns LocalDate.of(2024, 6, 1)
-        every { mockInput.endDate } returns LocalDate.of(2024, 6, 30)
+        every { mockInput.startDate } returns LocalDate.of(3000, 6, 1)
+        every { mockInput.endDate } returns LocalDate.of(3000, 6, 30)
         every { mockInput.matchType } returns MatchType.OFFLINE
         every { mockInput.count } returns 3
         every { mockInput.timeRequired } returns TimeSlot.ABOUT_1H
