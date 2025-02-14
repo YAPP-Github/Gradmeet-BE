@@ -43,7 +43,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             id = "1",
             title = "야뿌 피자 먹방 테스트",
             views = 10,
-            univName = "야뿌 대학교",
+            place = "야뿌 대학교",
             reward = "스타벅스 1만원권 쿠폰",
             recruitStatus = false,
             startDate = LocalDate.now(),
@@ -106,7 +106,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             then("필터된 공고가 반환된다") {
                 result.size shouldBe 1
                 result.first().postInfo.title shouldBe "야뿌 피자 먹방 테스트"
-                result.first().postInfo.univName shouldBe "야뿌 대학교"
+                result.first().postInfo.place shouldBe "야뿌 대학교"
                 result.first().postInfo.reward shouldBe "스타벅스 1만원권 쿠폰"
                 result.first().postInfo.recruitStatus shouldBe false
             }
@@ -127,7 +127,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             id = "1",
             title = "Study Target Null Test",
             views = 10,
-            univName = "Test University",
+            place = "Test University",
             reward = "Test Reward",
             recruitStatus = false,
             startDate = LocalDate.now(),
@@ -208,7 +208,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             id = "1",
             title = "Location Target Null Test",
             views = 10,
-            univName = "Test University",
+            place = "Test University",
             reward = "Test Reward",
             recruitStatus = false,
             startDate = LocalDate.now(),
@@ -288,7 +288,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             id = "1",
             title = "Location Target Null Test",
             views = 10,
-            univName = "Test University",
+            place = "Test University",
             reward = "Test Reward",
             recruitStatus = false,
             startDate = LocalDate.now(),
@@ -368,7 +368,7 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
             id = "1",
             title = "야뿌 피자 먹방 테스트",
             views = 10,
-            univName = "Test University",
+            place = "Test University",
             reward = "Test Reward",
             recruitStatus = false,
             startDate = LocalDate.now(),

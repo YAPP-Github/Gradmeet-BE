@@ -26,7 +26,7 @@ data class ExperimentPost(
     var timeRequired: TimeSlot?,
     var count: Int,
     var matchType: MatchType,
-    var univName: String?,
+    var place: String?,
     var region: Region?,
     var area: Area?,
     var detailedAddress: String?,
@@ -67,7 +67,7 @@ data class ExperimentPost(
         leadResearcher: String?,
         detailedAddress: String?,
         matchType: MatchType?,
-        univName: String?,
+        place: String?,
         region: Region?,
         area: Area?,
         imageListInfo: List<String>?,
@@ -95,7 +95,7 @@ data class ExperimentPost(
             leadResearcher = leadResearcher ?: this.leadResearcher,
             detailedAddress = detailedAddress ?: this.detailedAddress,
             matchType = matchType ?: this.matchType,
-            univName = univName,
+            place = place,
             region = region,
             area = area,
             images = updatedImages.toMutableList(),
@@ -129,7 +129,7 @@ data class ExperimentPost(
             timeRequired: TimeSlot?,
             count: Int,
             matchType: MatchType,
-            univName: String?,
+            place: String?,
             region: Region?,
             area: Area?,
             detailedAddress: String?,
@@ -151,7 +151,7 @@ data class ExperimentPost(
             timeRequired = timeRequired,
             count = count,
             matchType = matchType,
-            univName = univName,
+            place = place,
             region = region,
             area = area,
             detailedAddress = detailedAddress,
@@ -164,7 +164,7 @@ data class ExperimentPost(
     }
 
     private fun validate() {
-        if (matchType == MatchType.ONLINE && listOf(univName, region, area).any { it != null }) {
+        if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
             throw ExperimentPostInvalidOnlineRequestException
         }
     }
