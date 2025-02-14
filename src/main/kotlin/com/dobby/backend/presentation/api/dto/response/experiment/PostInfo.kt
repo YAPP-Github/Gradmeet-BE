@@ -5,7 +5,7 @@ data class PostInfo(
     val experimentPostId: String,
     val title: String,
     val views: Int,
-    val univName: String?,
+    val place: String?,
     val reward: String?,
     val durationInfo: DurationInfo,
  )

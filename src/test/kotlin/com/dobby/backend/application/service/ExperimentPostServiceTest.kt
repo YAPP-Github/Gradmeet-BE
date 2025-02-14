@@ -84,7 +84,7 @@ class ExperimentPostServiceTest @Autowired constructor(
 
         every { mockInput.memberId } returns memberId
         every { mockInput.leadResearcher } returns "야뿌 연구 리더"
-        every { mockInput.univName } returns "야뿌대학교"
+        every { mockInput.place } returns "야뿌대학교"
         every { mockInput.region } returns Region.SEOUL
         every { mockInput.area } returns Area.GWANAKGU
         every { mockInput.detailedAddress } returns "야뿌 연구소"

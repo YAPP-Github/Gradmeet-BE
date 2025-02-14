@@ -94,8 +94,8 @@ data class ExperimentPostDetailResponse(
 
     @Schema(description = "주소 응답 DTO")
     data class AddressResponse(
-        @Schema(description = "학교", example = "건국대학교")
-        val univName: String?,
+        @Schema(description = "장소", example = "건국대학교 1층")
+        val place: String?,
 
         @Schema(description = "지역", example = "SEOUL")
         val region: Region?,

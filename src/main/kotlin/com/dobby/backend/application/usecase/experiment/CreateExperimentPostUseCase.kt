@@ -37,7 +37,7 @@ class CreateExperimentPostUseCase(
         val timeRequired: TimeSlot?,
 
         val leadResearcher: String,
-        val univName: String?,
+        val place: String?,
         val region: Region?,
         val area: Area?,
         val detailedAddress: String?,
@@ -73,7 +73,7 @@ class CreateExperimentPostUseCase(
         val postId: String,
         val title: String,
         val views: Int,
-        val univName: String?,
+        val place: String?,
         val reward: String?,
         val durationInfo: DurationInfo?,
     )
@@ -116,7 +116,7 @@ class CreateExperimentPostUseCase(
             timeRequired = input.timeRequired,
             count = input.count,
             matchType = input.matchType,
-            univName = input.univName,
+            place = input.place,
             region = input.region,
             area = input.area,
             detailedAddress = input.detailedAddress,
@@ -140,7 +140,7 @@ class CreateExperimentPostUseCase(
                 postId = savedExperimentPost.id,
                 title = savedExperimentPost.title,
                 views = savedExperimentPost.views,
-                univName = savedExperimentPost.univName,
+                place = savedExperimentPost.place,
                 durationInfo = DurationInfo(
                     startDate = savedExperimentPost.startDate,
                     endDate = savedExperimentPost.endDate

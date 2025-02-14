@@ -58,7 +58,7 @@ class SendMatchingEmailUseCase(
             """
         🔹 **${post.title}**
         -  기간: ${post.startDate} ~ ${post.endDate}
-        -  위치: ${post.univName ?: "공고참고"} 
+        -  위치: ${post.place ?: "공고참고"} 
         -  보상: ${post.reward}
         -  [공고 확인하기]($postUrl)
         """.trimIndent()
