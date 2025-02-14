@@ -60,7 +60,7 @@ class GetExperimentPostDetailForUpdateUseCaseTest : BehaviorSpec({
         applyMethod = applyMethod,
         region = Region.SEOUL,
         area = Area.GWANGJINGU,
-        univName = "건국대학교",
+        place = "건국대학교",
         detailedAddress = "건국대학교 공학관",
         content = "야뿌들의 한끼 식사량을 체크하는 테스트입니다.",
         alarmAgree = false,

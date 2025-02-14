@@ -30,7 +30,7 @@ class UpdateExperimentPostUseCase (
         val timeRequired: TimeSlot?,
 
         val leadResearcher: String?,
-        val univName: String?,
+        val place: String?,
         val region: Region?,
         val area: Area?,
         val detailedAddress : String?,
@@ -65,7 +65,7 @@ class UpdateExperimentPostUseCase (
         val postId: String,
         val title: String,
         val views: Int,
-        val univName: String?,
+        val place: String?,
         val reward: String?,
         val durationInfo: DurationInfo?,
     )
@@ -103,7 +103,7 @@ class UpdateExperimentPostUseCase (
             leadResearcher = input.leadResearcher,
             detailedAddress = input.detailedAddress,
             matchType = input.matchType,
-            univName = input.univName,
+            place = input.place,
             region = input.region,
             area = input.area,
             imageListInfo = input.imageListInfo?.images,
@@ -116,7 +116,7 @@ class UpdateExperimentPostUseCase (
                 postId = updatedPost.id,
                 title = updatedPost.title,
                 views = updatedPost.views,
-                univName = updatedPost.univName,
+                place = updatedPost.place,
                 reward = updatedPost.reward,
                 durationInfo = DurationInfo(
                     startDate = updatedPost.startDate,
