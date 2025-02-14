@@ -34,6 +34,7 @@ class UpdateExperimentPostUseCase (
         val region: Region?,
         val area: Area?,
         val detailedAddress : String?,
+        val recruitStatus: Boolean?,
 
         val reward: String?,
         val title: String?,
@@ -43,12 +44,12 @@ class UpdateExperimentPostUseCase (
     data class TargetGroupInfo(
         val startAge: Int?,
         val endAge: Int?,
-        val genderType: GenderType,
+        val genderType: GenderType?,
         val otherCondition: String?
     )
 
     data class ApplyMethodInfo(
-        val content: String,
+        val content: String?,
         val formUrl: String?,
         val phoneNum: String?
     )
@@ -106,7 +107,9 @@ class UpdateExperimentPostUseCase (
             univName = input.univName,
             region = input.region,
             area = input.area,
+            timeRequired = input.timeRequired,
             imageListInfo = input.imageListInfo?.images,
+            recruitStatus = input.recruitStatus,
             idGenerator = idGenerator
         )
         val updatedPost = experimentPostGateway.save(experimentPost)
@@ -129,6 +132,7 @@ class UpdateExperimentPostUseCase (
     private fun validate(input: Input): ExperimentPost {
         val existingPost = validateExistingPost(input)
         validatePermission(existingPost, input)
+        validateModificationPolicy(existingPost, input)
         validateImageCount(input)
         return existingPost
     }
@@ -140,6 +144,20 @@ class UpdateExperimentPostUseCase (
 
     private fun validatePermission(existingPost: ExperimentPost, input: Input) {
         if(existingPost.member.id != input.memberId) throw PermissionDeniedException
+    }
+
+    private fun validateModificationPolicy(existingPost: ExperimentPost, input: Input){
+        if(!existingPost.recruitStatus){
+            if(input.startDate != null) {
+                throw ExperimentPostUpdateDateException
+            }
+            if(input.endDate != null) {
+                throw ExperimentPostUpdateDateException
+            }
+            if(input.recruitStatus != null) {
+                throw ExperimentPostRecruitStatusException
+            }
+        }
     }
 
     private fun validateImageCount(input: Input) {
