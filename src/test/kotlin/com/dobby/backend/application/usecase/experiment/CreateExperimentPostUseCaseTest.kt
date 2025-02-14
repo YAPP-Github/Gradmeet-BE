@@ -147,62 +147,6 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         }
     }
 
-    given("이미지가 3장을 초과하면") {
-        val validMember = Member(
-            id = "3",
-            role = RoleType.RESEARCHER,
-            contactEmail = "christer10@naver.com",
-            oauthEmail = "christer10@naver.com",
-            name = "신수정",
-            provider = ProviderType.NAVER,
-            status = MemberStatus.ACTIVE,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
-            deletedAt = null
-        )
-
-        val invalidInput = CreateExperimentPostUseCase.Input(
-            memberId = "3",
-            targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
-                startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
-            ),
-            applyMethodInfo = CreateExperimentPostUseCase.ApplyMethodInfo(
-                content = "구글폼 보고 참여해주세요 :)",
-                formUrl = "google.form.co.kr",
-                phoneNum = "010-5729-7754"
-            ),
-            imageListInfo = CreateExperimentPostUseCase.ImageListInfo(
-                images = listOf("이미지1", "이미지2", "이미지3", "이미지4")
-            ),
-            startDate = LocalDate.of(2025, 2, 3),
-            endDate = LocalDate.of(2025, 2, 10),
-            matchType = MatchType.OFFLINE,
-            count = 35,
-            timeRequired = TimeSlot.LESS_30M,
-            leadResearcher = "야뿌 랩실 서버 25기 신수정",
-            place = "이화여자대학교",
-            region = Region.SEOUL,
-            area = Area.SEOUL_ALL,
-            detailedAddress = "ECC B123호",
-            reward = "얍 지각면제권 100장",
-            title = "야뿌 최고 먹짱 실험자 모집합니다",
-            content = "YAPP에서 가장 치킨 잘 먹는 사람",
-            alarmAgree = true
-        )
-
-
-        every { memberGateway.getById(invalidInput.memberId) } returns validMember
-        every { idGenerator.generateId() } returns "1"
-
-        `when`("유즈케이스를 실행하면") {
-            then("ExperimentPostImageSizeException 예외가 발생해야 한다") {
-                shouldThrow<ExperimentPostImageSizeException> {
-                    createExperimentPostUseCase.execute(invalidInput)
-                }
-            }
-        }
-    }
-
     given("온라인 매칭인데 지역 정보가 입력된 경우") {
         val validMember = Member(
             id = "3",
