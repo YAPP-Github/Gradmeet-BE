@@ -25,7 +25,7 @@ data class ExperimentPost(
     var timeRequired: TimeSlot?,
     var count: Int,
     var matchType: MatchType,
-    var univName: String?,
+    var place: String?,
     var region: Region?,
     var area: Area?,
     var detailedAddress: String?,
@@ -64,7 +64,7 @@ data class ExperimentPost(
         leadResearcher: String?,
         detailedAddress: String?,
         matchType: MatchType?,
-        univName: String?,
+        place: String?,
         region: Region?,
         area: Area?,
         timeRequired: TimeSlot?,
@@ -72,7 +72,7 @@ data class ExperimentPost(
         recruitStatus: Boolean?,
         idGenerator: IdGenerator
     ): ExperimentPost {
-        validate(title, reward, content, leadResearcher, matchType, univName, region, area, endDate)
+        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate)
         val currentImages = this.images.map { it.imageUrl }.toSet()
         val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
 
@@ -116,7 +116,7 @@ data class ExperimentPost(
             detailedAddress = detailedAddress,
             matchType = matchType ?: this.matchType,
             timeRequired = timeRequired ?: this.timeRequired,
-            univName = univName,
+            place = place,
             region = region,
             area = area,
             images = updatedImages,
@@ -150,7 +150,7 @@ data class ExperimentPost(
             timeRequired: TimeSlot?,
             count: Int,
             matchType: MatchType,
-            univName: String?,
+            place: String?,
             region: Region?,
             area: Area?,
             detailedAddress: String?,
@@ -158,7 +158,7 @@ data class ExperimentPost(
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
         ): ExperimentPost {
-            validate(title, reward, content, leadResearcher, matchType, univName, region, area, endDate)
+            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate)
 
             return ExperimentPost(
                 id = id,
@@ -175,7 +175,7 @@ data class ExperimentPost(
                 timeRequired = timeRequired,
                 count = count,
                 matchType = matchType,
-                univName = univName,
+                place = place,
                 region = region,
                 area = area,
                 detailedAddress = detailedAddress,
@@ -185,7 +185,7 @@ data class ExperimentPost(
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now()
             )
-        }
+    }
 
         private fun validate(
             title: String?,
@@ -193,7 +193,7 @@ data class ExperimentPost(
             content: String?,
             leadResearcher: String?,
             matchType: MatchType?,
-            univName: String?,
+            place: String?,
             region: Region?,
             area: Area?,
             endDate: LocalDate?
@@ -204,7 +204,7 @@ data class ExperimentPost(
             if (reward == null) throw ExperimentPostRewardException
             if (content == null) throw ExperimentPostContentExcpetion
             if (leadResearcher == null) throw ExperimentPostLeadResearcherException
-            if (matchType == MatchType.ONLINE && listOf(univName, region, area).any { it != null }) {
+            if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
                 throw ExperimentPostInvalidOnlineRequestException
             }
             if (endDate?.isBefore(today) == true) {

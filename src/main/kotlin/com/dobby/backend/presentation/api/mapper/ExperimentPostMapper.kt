@@ -28,7 +28,7 @@ object ExperimentPostMapper {
             title = request.title,
             content = request.content,
             alarmAgree = request.alarmAgree,
-            univName = request.univName,
+            place = request.place,
             count = request.count,
             region = request.region,
             area = request.area,
@@ -82,7 +82,7 @@ object ExperimentPostMapper {
                 endDate = input.durationInfo?.endDate
             ),
             reward = input.reward,
-            univName = input.univName
+            place = input.place
         )
     }
 
@@ -121,7 +121,7 @@ object ExperimentPostMapper {
                 endDate = input.durationInfo?.endDate
             ),
             reward = input.reward,
-            univName = input.univName
+            place = input.place
         )
     }
 
@@ -134,7 +134,7 @@ object ExperimentPostMapper {
             imageListInfo = toUpdateImageListInfo(request.imageListInfo),
             title = request.title,
             content = request.content,
-            univName = request.univName,
+            place = request.place,
             count = request.count,
             region = request.region,
             area = request.area,
@@ -204,7 +204,7 @@ object ExperimentPostMapper {
 
     private fun GetExperimentPostDetailForUpdateUseCase.ExperimentPostDetailForUpdate.Address.toResponse(): ExperimentPostDetailResponse.AddressResponse {
         return ExperimentPostDetailResponse.AddressResponse(
-            univName = this.univName,
+            place = this.place,
             region = this.region,
             area = this.area,
             detailedAddress = this.detailedAddress
@@ -260,7 +260,7 @@ object ExperimentPostMapper {
 
     private fun GetExperimentPostDetailUseCase.ExperimentPostDetail.Address.toResponse(): ExperimentPostDetailResponse.AddressResponse {
         return ExperimentPostDetailResponse.AddressResponse(
-            univName = this.univName,
+            place = this.place,
             region = this.region,
             area = this.area,
             detailedAddress = this.detailedAddress
@@ -376,7 +376,7 @@ object ExperimentPostMapper {
                         experimentPostId = post.postInfo.experimentPostId,
                         title = post.postInfo.title,
                         views = post.postInfo.views,
-                        univName = post.postInfo.univName,
+                        place = post.postInfo.place,
                         reward = post.postInfo.reward,
                         durationInfo = DurationInfo(
                             startDate = post.postInfo.durationInfo.startDate,

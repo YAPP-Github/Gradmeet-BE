@@ -64,7 +64,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
             leadResearcher = "야뿌 랩실 서버 25기 신수정",
-            univName = "이화여자대학교",
+            place = "이화여자대학교",
             region = Region.SEOUL,
             area = Area.SEOUL_ALL,
             detailedAddress = "ECC B123호",
@@ -87,7 +87,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             then("정상적으로 실험 게시글이 생성되어야 한다") {
                 result.postInfo.postId shouldBe "0"
                 result.postInfo.title shouldBe validInput.title
-                result.postInfo.univName shouldBe validInput.univName
+                result.postInfo.place shouldBe validInput.place
                 result.postInfo.reward shouldBe validInput.reward
             }
         }
@@ -126,7 +126,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
             leadResearcher = "야뿌 랩실 서버 25기 신수정",
-            univName = "이화여자대학교",
+            place = "이화여자대학교",
             region = Region.SEOUL,
             area = Area.SEOUL_ALL,
             detailedAddress = "ECC B123호",
@@ -180,7 +180,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
             leadResearcher = "야뿌 랩실 서버 25기 신수정",
-            univName = "이화여자대학교",
+            place = "이화여자대학교",
             region = Region.SEOUL,
             area = Area.SEOUL_ALL,
             detailedAddress = "ECC B123호",
@@ -236,7 +236,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
             leadResearcher = "야뿌 랩실 서버 25기 신수정",
-            univName = "이화여자대학교",
+            place = "이화여자대학교",
             region = Region.SEOUL,
             area = Area.SEOUL_ALL,
             detailedAddress = "ECC B123호",

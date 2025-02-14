@@ -62,12 +62,13 @@ data object ExperimentAreaInCorrectException : ClientException("EP0004", "Select
 data object ExperimentPostImageSizeException : ClientException("EP0005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostRecruitStatusException : ClientException("EP0006", "You cannot update recruitStatus with closed recruitment post.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostUpdateDateException : ClientException("EP0007", "You cannot update startDate, endDate with closed recruitment post.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "place, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostTitleException : ClientException ("EP0009", "Title cannot be null.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostRewardException: ClientException ("EP0010", "Reward cannot be null.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostContentExcpetion: ClientException ("EP0011", "Content cannot be null.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostCountException: ClientException ("EP0012", "Count could be more than zero", HttpStatus.BAD_REQUEST)
 data object ExperimentPostLeadResearcherException: ClientException ("EP0013", "Lead Researcher cannot be null.", HttpStatus.BAD_REQUEST)
+
 
 /**
  * ServerException: Exceptions caused by internal server issues

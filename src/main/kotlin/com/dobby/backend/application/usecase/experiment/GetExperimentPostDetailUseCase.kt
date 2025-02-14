@@ -59,7 +59,7 @@ class GetExperimentPostDetailUseCase(
         )
 
         data class Address(
-            val univName: String?,
+            val place: String?,
             val region: Region?,
             val area: Area?,
             val detailedAddress: String?
@@ -120,7 +120,7 @@ fun TargetGroup.toTargetGroup(): GetExperimentPostDetailUseCase.ExperimentPostDe
 
 fun ExperimentPost.toAddress(): GetExperimentPostDetailUseCase.ExperimentPostDetail.Address {
     return GetExperimentPostDetailUseCase.ExperimentPostDetail.Address(
-        univName = this.univName,
+        place = this.place,
         region = this.region,
         area = this.area,
         detailedAddress = this.detailedAddress
