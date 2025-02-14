@@ -86,6 +86,7 @@ class CreateExperimentPostUseCase(
     override fun execute(input: Input): Output {
         val member = memberGateway.getById(input.memberId)
         validateMemberRole(member)
+        validateImageCount(input)
 
         val targetGroup = TargetGroup.newTargetGroup(
             id = idGenerator.generateId(),
@@ -152,5 +153,13 @@ class CreateExperimentPostUseCase(
     private fun validateMemberRole(member :Member){
         if(member.role != RoleType.RESEARCHER)
             throw PermissionDeniedException
+    }
+
+    private fun validateImageCount(input: Input) {
+        input.imageListInfo.let {
+            if(it.images.size > 3) {
+                throw ExperimentPostImageSizeException
+            }
+        }
     }
 }
