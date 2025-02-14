@@ -72,9 +72,10 @@ data class ExperimentPost(
         recruitStatus: Boolean?,
         idGenerator: IdGenerator
     ): ExperimentPost {
-        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count)
         val currentImages = this.images.map { it.imageUrl }.toSet()
         val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
+
+        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, newImages)
 
         val updatedImages = if(currentImages == newImages) {
             this.images
@@ -88,26 +89,9 @@ data class ExperimentPost(
             }.toMutableList()
         }
 
-        val updatedTargetGroup = targetGroup?.let {
-            it.update(
-                startAge = it.startAge,
-                endAge = it.endAge,
-                genderType = it.genderType,
-                otherCondition = it.otherCondition
-            )
-        } ?: this.targetGroup
-
-        val updatedApplyMethod = applyMethod?.let {
-            it.update(
-                phoneNum = it.phoneNum,
-                formUrl = it.formUrl,
-                content = it.content
-            )
-        } ?: this.applyMethod
-
         return this.copy(
-            targetGroup = updatedTargetGroup,
-            applyMethod = updatedApplyMethod,
+            targetGroup = this.targetGroup,
+            applyMethod = this.applyMethod,
             title = title?: this.title,
             reward = reward?: this.reward,
             startDate = startDate,
@@ -160,7 +144,7 @@ data class ExperimentPost(
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
         ): ExperimentPost {
-            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count)
+            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, images = images.map { it.imageUrl })
 
             return ExperimentPost(
                 id = id,
@@ -187,8 +171,7 @@ data class ExperimentPost(
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now()
             )
-    }
-
+        }
         private fun validate(
             title: String?,
             reward: String?,
@@ -199,10 +182,11 @@ data class ExperimentPost(
             region: Region?,
             area: Area?,
             endDate: LocalDate?,
-            count: Int?
+            count: Int?,
+            images: List<String>?
         ) {
             val today = LocalDate.now()
-
+            if (images != null && images.size > 3) throw ExperimentPostImageSizeException
             if (title == null) throw ExperimentPostTitleException
             if (reward == null) throw ExperimentPostRewardException
             if (content == null) throw ExperimentPostContentException
@@ -215,6 +199,5 @@ data class ExperimentPost(
                 throw ExperimentPostUpdateDateException
             }
         }
-
     }
 }

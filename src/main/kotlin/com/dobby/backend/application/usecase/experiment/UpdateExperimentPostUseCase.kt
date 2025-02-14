@@ -133,7 +133,6 @@ class UpdateExperimentPostUseCase (
         val existingPost = validateExistingPost(input)
         validatePermission(existingPost, input)
         validateModificationPolicy(existingPost, input)
-        validateImageCount(input)
         return existingPost
     }
 
@@ -148,22 +147,11 @@ class UpdateExperimentPostUseCase (
 
     private fun validateModificationPolicy(existingPost: ExperimentPost, input: Input){
         if(!existingPost.recruitStatus){
-            if(input.startDate != null) {
-                throw ExperimentPostUpdateDateException
-            }
-            if(input.endDate != null) {
+            if(input.startDate != null || input.endDate != null) {
                 throw ExperimentPostUpdateDateException
             }
             if(input.recruitStatus != null) {
                 throw ExperimentPostRecruitStatusException
-            }
-        }
-    }
-
-    private fun validateImageCount(input: Input) {
-        input.imageListInfo?.let {
-            if(it.images.size > 3) {
-                throw ExperimentPostImageSizeException
             }
         }
     }
