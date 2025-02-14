@@ -65,8 +65,8 @@ data object ExperimentPostUpdateDateException : ClientException("EP0007", "You c
 data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "place, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostTitleException : ClientException ("EP0009", "Title cannot be null.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostRewardException: ClientException ("EP0010", "Reward cannot be null.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostContentExcpetion: ClientException ("EP0011", "Content cannot be null.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostCountException: ClientException ("EP0012", "Count could be more than zero", HttpStatus.BAD_REQUEST)
+data object ExperimentPostContentException: ClientException ("EP0011", "Content cannot be null.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostCountException: ClientException ("EP0012", "Count could be more than zero.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostLeadResearcherException: ClientException ("EP0013", "Lead Researcher cannot be null.", HttpStatus.BAD_REQUEST)
 
 

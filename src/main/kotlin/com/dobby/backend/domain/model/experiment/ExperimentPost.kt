@@ -72,19 +72,21 @@ data class ExperimentPost(
         recruitStatus: Boolean?,
         idGenerator: IdGenerator
     ): ExperimentPost {
-        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate)
+        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count)
         val currentImages = this.images.map { it.imageUrl }.toSet()
         val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
 
-        if(currentImages == newImages) return this
-
-        val updatedImages = newImages.map { imageUrl ->
-            ExperimentImage(
-                id = idGenerator.generateId(),
-                experimentPost = this,
-                imageUrl = imageUrl
-            )
-        }.toMutableList()
+        val updatedImages = if(currentImages == newImages) {
+            this.images
+        } else {
+            newImages.map { imageUrl ->
+                ExperimentImage(
+                    id = idGenerator.generateId(),
+                    experimentPost = this,
+                    imageUrl = imageUrl
+                )
+            }.toMutableList()
+        }
 
         val updatedTargetGroup = targetGroup?.let {
             it.update(
@@ -158,7 +160,7 @@ data class ExperimentPost(
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
         ): ExperimentPost {
-            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate)
+            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count)
 
             return ExperimentPost(
                 id = id,
@@ -196,14 +198,16 @@ data class ExperimentPost(
             place: String?,
             region: Region?,
             area: Area?,
-            endDate: LocalDate?
+            endDate: LocalDate?,
+            count: Int?
         ) {
             val today = LocalDate.now()
 
             if (title == null) throw ExperimentPostTitleException
             if (reward == null) throw ExperimentPostRewardException
-            if (content == null) throw ExperimentPostContentExcpetion
+            if (content == null) throw ExperimentPostContentException
             if (leadResearcher == null) throw ExperimentPostLeadResearcherException
+            if (count == null || count <= 0) throw ExperimentPostCountException
             if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
                 throw ExperimentPostInvalidOnlineRequestException
             }
