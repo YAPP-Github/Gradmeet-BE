@@ -12,10 +12,13 @@ data class TargetGroup(
 
     fun update(
         startAge: Int?, endAge: Int?, genderType: GenderType?, otherCondition: String?): TargetGroup{
+        if(startAge == this.startAge && endAge == this.endAge && genderType == this.genderType && otherCondition == this.otherCondition)
+            return this
+
         return this.copy(
-            startAge = startAge ?: this.startAge,
-            endAge = endAge ?: this.endAge,
-            otherCondition = otherCondition ?: this.otherCondition,
+            startAge = startAge,
+            endAge = endAge,
+            otherCondition = otherCondition,
             genderType = genderType ?: this.genderType
         )
     }
