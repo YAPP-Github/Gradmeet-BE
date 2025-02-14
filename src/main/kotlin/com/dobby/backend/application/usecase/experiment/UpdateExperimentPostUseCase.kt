@@ -129,7 +129,6 @@ class UpdateExperimentPostUseCase (
     private fun validate(input: Input): ExperimentPost {
         val existingPost = validateExistingPost(input)
         validatePermission(existingPost, input)
-        validateNotExpired(existingPost)
         validateImageCount(input)
         return existingPost
     }
@@ -141,10 +140,6 @@ class UpdateExperimentPostUseCase (
 
     private fun validatePermission(existingPost: ExperimentPost, input: Input) {
         if(existingPost.member.id != input.memberId) throw PermissionDeniedException
-    }
-
-    private fun validateNotExpired(existingPost: ExperimentPost){
-        if (!existingPost.recruitStatus) throw ExperimentPostUpdateDateException
     }
 
     private fun validateImageCount(input: Input) {
