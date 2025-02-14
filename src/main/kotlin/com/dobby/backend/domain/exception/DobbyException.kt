@@ -62,7 +62,7 @@ data object ExperimentAreaInCorrectException : ClientException("EP0004", "Select
 data object ExperimentPostImageSizeException : ClientException("EP0005", "Image can be uploaded maximum 3 images.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostRecruitStatusException : ClientException("EP0006", "This experiment post has already closed recruitment.", HttpStatus.BAD_REQUEST)
 data object ExperimentPostUpdateDateException : ClientException("EP0007", "You cannot update experiment post with past experiment dates.", HttpStatus.BAD_REQUEST)
-data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "univName, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
+data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "place, region, area field value must be null when MatchType is online.", HttpStatus.BAD_REQUEST)
 
 
 /**

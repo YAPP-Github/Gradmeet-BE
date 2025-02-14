@@ -161,7 +161,7 @@ class ExperimentPostCustomRepositoryImpl (
             .set(qExperimentPost.leadResearcher, experimentPost.leadResearcher)
             .set(qExperimentPost.detailedAddress, experimentPost.detailedAddress)
             .set(qExperimentPost.matchType, experimentPost.matchType)
-            .set(qExperimentPost.univName, experimentPost.univName)
+            .set(qExperimentPost.place, experimentPost.place)
             .set(qExperimentPost.region, experimentPost.region)
             .set(qExperimentPost.area, experimentPost.area)
             .set(qExperimentPost.updatedAt, LocalDateTime.now())

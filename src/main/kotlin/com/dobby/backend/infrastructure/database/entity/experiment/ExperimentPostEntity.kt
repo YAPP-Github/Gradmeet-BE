@@ -60,8 +60,8 @@ class ExperimentPostEntity(
     @Column(name = "match_type", nullable = false)
     var matchType: MatchType,
 
-    @Column(name = "univ_name", length = 100)
-    var univName: String?,
+    @Column(name = "place", length = 100)
+    var place: String?,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "region")
@@ -130,7 +130,7 @@ class ExperimentPostEntity(
         timeRequired = timeRequired,
         count = count,
         matchType = matchType,
-        univName = univName,
+        place = place,
         region = region,
         area = area,
         detailedAddress = detailedAddress,
@@ -158,7 +158,7 @@ class ExperimentPostEntity(
                 timeRequired = experimentPost.timeRequired,
                 count = experimentPost.count,
                 matchType = experimentPost.matchType,
-                univName = experimentPost.univName,
+                place = experimentPost.place,
                 region = experimentPost.region,
                 area = experimentPost.area,
                 detailedAddress = experimentPost.detailedAddress,
