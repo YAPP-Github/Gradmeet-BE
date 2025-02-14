@@ -1,8 +1,7 @@
 package com.dobby.backend.domain.model.experiment
 
 import com.dobby.backend.domain.IdGenerator
-import com.dobby.backend.domain.exception.ExperimentPostImageSizeException
-import com.dobby.backend.domain.exception.ExperimentPostInvalidOnlineRequestException
+import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
@@ -36,9 +35,7 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
-    init {
-        validate()
-    }
+
 
     fun incrementViews() {
         this.views += 1
@@ -70,42 +67,52 @@ data class ExperimentPost(
         place: String?,
         region: Region?,
         area: Area?,
+        timeRequired: TimeSlot?,
         imageListInfo: List<String>?,
+        recruitStatus: Boolean?,
         idGenerator: IdGenerator
     ): ExperimentPost {
-        val existingImageUrls = this.images.map { it.imageUrl }.toSet()
-        val newImages = imageListInfo?.filter { it !in existingImageUrls }?.map { imageUrl ->
-            ExperimentImage(
-                id = idGenerator.generateId(),
-                experimentPost = this,
-                imageUrl = imageUrl
-            )
-        } ?: emptyList()
-        val updatedImages = this.images.toMutableList().apply { addAll(newImages) }
+        val currentImages = this.images.map { it.imageUrl }.toSet()
+        val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
+
+        validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, newImages)
+
+        val updatedImages = if(currentImages == newImages) {
+            this.images
+        } else {
+            newImages.map { imageUrl ->
+                ExperimentImage(
+                    id = idGenerator.generateId(),
+                    experimentPost = this,
+                    imageUrl = imageUrl
+                )
+            }.toMutableList()
+        }
 
         return this.copy(
-            targetGroup = targetGroup ?: this.targetGroup,
-            applyMethod = applyMethod ?: this.applyMethod,
-            title = title ?: this.title,
-            reward = reward ?: this.reward,
+            targetGroup = this.targetGroup,
+            applyMethod = this.applyMethod,
+            title = title?: this.title,
+            reward = reward?: this.reward,
             startDate = startDate,
             endDate = endDate,
-            content = content ?: this.content,
-            count = count ?: this.count,
-            leadResearcher = leadResearcher ?: this.leadResearcher,
-            detailedAddress = detailedAddress ?: this.detailedAddress,
+            content = content?: this.content,
+            count = count?: this.count,
+            leadResearcher = leadResearcher?: this.leadResearcher,
+            detailedAddress = detailedAddress,
             matchType = matchType ?: this.matchType,
+            timeRequired = timeRequired ?: this.timeRequired,
             place = place,
             region = region,
             area = area,
-            images = updatedImages.toMutableList(),
-            updatedAt = LocalDateTime.now()
-        ).apply { validate() }
+            images = updatedImages,
+            updatedAt = LocalDateTime.now(),
+            recruitStatus = recruitStatus ?: this.recruitStatus
+        )
     }
 
-
     fun updateImages(newImages: List<ExperimentImage>) {
-        require(newImages.size <= 3) {
+        if(newImages.size > 3) {
             throw ExperimentPostImageSizeException
         }
         images.clear()
@@ -136,36 +143,61 @@ data class ExperimentPost(
             alarmAgree: Boolean,
             recruitStatus: Boolean,
             images: List<ExperimentImage> = listOf(),
-        ) = ExperimentPost(
-            id = id,
-            member = member,
-            targetGroup = targetGroup,
-            applyMethod = applyMethod,
-            views = 0,
-            title = title,
-            content = content,
-            leadResearcher = leadResearcher,
-            reward = reward,
-            startDate = startDate,
-            endDate = endDate,
-            timeRequired = timeRequired,
-            count = count,
-            matchType = matchType,
-            place = place,
-            region = region,
-            area = area,
-            detailedAddress = detailedAddress,
-            alarmAgree = alarmAgree,
-            recruitStatus = recruitStatus,
-            images = images.toMutableList(),
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
-        )
-    }
+        ): ExperimentPost {
+            validate(title, reward, content, leadResearcher, matchType, place, region, area, endDate, count, images = images.map { it.imageUrl })
 
-    private fun validate() {
-        if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
-            throw ExperimentPostInvalidOnlineRequestException
+            return ExperimentPost(
+                id = id,
+                member = member,
+                targetGroup = targetGroup,
+                applyMethod = applyMethod,
+                views = 0,
+                title = title,
+                content = content,
+                leadResearcher = leadResearcher,
+                reward = reward,
+                startDate = startDate,
+                endDate = endDate,
+                timeRequired = timeRequired,
+                count = count,
+                matchType = matchType,
+                place = place,
+                region = region,
+                area = area,
+                detailedAddress = detailedAddress,
+                alarmAgree = alarmAgree,
+                recruitStatus = recruitStatus,
+                images = images.toMutableList(),
+                createdAt = LocalDateTime.now(),
+                updatedAt = LocalDateTime.now()
+            )
+        }
+        private fun validate(
+            title: String?,
+            reward: String?,
+            content: String?,
+            leadResearcher: String?,
+            matchType: MatchType?,
+            place: String?,
+            region: Region?,
+            area: Area?,
+            endDate: LocalDate?,
+            count: Int?,
+            images: List<String>?
+        ) {
+            val today = LocalDate.now()
+            if (images != null && images.size > 3) throw ExperimentPostImageSizeException
+            if (title == null) throw ExperimentPostTitleException
+            if (reward == null) throw ExperimentPostRewardException
+            if (content == null) throw ExperimentPostContentException
+            if (leadResearcher == null) throw ExperimentPostLeadResearcherException
+            if (count == null || count <= 0) throw ExperimentPostCountException
+            if (matchType == MatchType.ONLINE && listOf(place, region, area).any { it != null }) {
+                throw ExperimentPostInvalidOnlineRequestException
+            }
+            if (endDate?.isBefore(today) == true) {
+                throw ExperimentPostUpdateDateException
+            }
         }
     }
 }

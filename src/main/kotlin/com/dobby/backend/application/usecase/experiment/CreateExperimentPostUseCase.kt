@@ -121,8 +121,8 @@ class CreateExperimentPostUseCase(
             area = input.area,
             detailedAddress = input.detailedAddress,
             alarmAgree = input.alarmAgree,
-            recruitStatus = true,
-            )
+            recruitStatus = true
+        )
 
         val experimentImages = input.imageListInfo.images.map { imageUrl ->
             ExperimentImage.newExperimentImage(

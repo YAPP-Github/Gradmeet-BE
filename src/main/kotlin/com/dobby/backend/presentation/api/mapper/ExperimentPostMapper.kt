@@ -145,6 +145,7 @@ object ExperimentPostMapper {
             matchType = request.matchType,
             detailedAddress = request.detailedAddress,
             leadResearcher = request.leadResearcher,
+            recruitStatus = request.recruitStatus
         )
     }
 
