@@ -59,7 +59,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
                 images = listOf("이미지1", "이미지2", "이미지3")
             ),
             startDate = LocalDate.of(2025, 2, 3),
-            endDate = LocalDate.of(2025, 2, 10),
+            endDate = LocalDate.of(3000, 2, 10),
             matchType = MatchType.OFFLINE,
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
