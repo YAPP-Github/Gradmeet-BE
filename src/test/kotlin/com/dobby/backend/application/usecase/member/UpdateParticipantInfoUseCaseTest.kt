@@ -2,6 +2,7 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
@@ -13,6 +14,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -23,9 +25,10 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
-    val participantGateway = mockk<ParticipantGateway>()
-    val memberGateway = mockk<MemberGateway>()
-    val useCase = UpdateParticipantInfoUseCase(participantGateway, memberGateway)
+    val participantGateway = mockk<ParticipantGateway>(relaxed = true)
+    val memberGateway = mockk<MemberGateway>(relaxed = true)
+    val memberConsentGateway = mockk<MemberConsentGateway>(relaxed = true)
+    val useCase = UpdateParticipantInfoUseCase(participantGateway, memberGateway, memberConsentGateway)
 
     given("유효한 memberId가 주어졌을 때") {
         val memberId = "1"
@@ -48,10 +51,13 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             name = "새로운 이름",
             basicAddressInfo = Participant.AddressInfo(Region.BUSAN, Area.BUSAN_ALL),
             additionalAddressInfo = Participant.AddressInfo(Region.DAEGU, Area.DAEGU_ALL),
-            matchType = MatchType.ONLINE
+            matchType = MatchType.ONLINE,
+            adConsent = true,
+            matchConsent = false
         )
 
         every { participantGateway.findByMemberId(memberId) } returns participant
+        every { memberConsentGateway.save(any()) } returnsArgument 0
         every { memberGateway.existsByContactEmail(input.contactEmail) } returns false
         every { participantGateway.save(any()) } answers { firstArg() }
 
@@ -72,6 +78,11 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             then("Gateway를 통해 save가 호출된다") {
                 verify { participantGateway.save(any()) }
             }
+            then("memberConsent가 호출된다") {
+                shouldNotThrowAny {
+                    verify { memberConsentGateway.save(any()) }
+                }
+            }
         }
     }
 
@@ -87,7 +98,9 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
                 name = "테스트",
                 basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
                 additionalAddressInfo = null,
-                matchType = null
+                matchType = null,
+                adConsent = true,
+                matchConsent = true
             )
 
             then("ParticipantNotFoundException이 발생한다") {
@@ -100,6 +113,9 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
 
     given("중복된 contactEmail이 주어졌을 때") {
         val memberId = "1"
+
+        every { participantGateway.findByMemberId(memberId) } returns mockk(relaxed = true)
+        every { memberGateway.existsByContactEmail("duplicate@example.com") } returns true
 
         val participant = Participant(
             id = memberId,
@@ -119,7 +135,9 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             name = "새로운 이름",
             basicAddressInfo = Participant.AddressInfo(Region.BUSAN, Area.BUSAN_ALL),
             additionalAddressInfo = Participant.AddressInfo(Region.DAEGU, Area.DAEGU_ALL),
-            matchType = MatchType.ONLINE
+            matchType = MatchType.ONLINE,
+            adConsent = true,
+            matchConsent = false
         )
 
         every { participantGateway.findByMemberId(memberId) } returns participant
@@ -165,7 +183,9 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             name = "새로운 이름",
             basicAddressInfo = Participant.AddressInfo(Region.BUSAN, Area.BUSAN_ALL),
             additionalAddressInfo = Participant.AddressInfo(Region.DAEGU, Area.DAEGU_ALL),
-            matchType = MatchType.ONLINE
+            matchType = MatchType.ONLINE,
+            adConsent = true,
+            matchConsent = false
         )
 
         every { participantGateway.findByMemberId(memberId) } returns participant

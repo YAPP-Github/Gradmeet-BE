@@ -2,9 +2,11 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.auth.TokenGateway
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
@@ -13,15 +15,17 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 
 class CreateResearcherUseCaseTest : BehaviorSpec({
 
     val memberGateway: MemberGateway = mockk()
     val researcherGateway: ResearcherGateway = mockk()
+    val memberConsentGateway: MemberConsentGateway = mockk()
     val tokenGateway: TokenGateway = mockk()
     val idGenerator: IdGenerator = mockk()
 
-    val createResearcherUseCase = CreateResearcherUseCase(memberGateway, researcherGateway, tokenGateway, idGenerator)
+    val createResearcherUseCase = CreateResearcherUseCase(memberGateway, researcherGateway, memberConsentGateway, tokenGateway, idGenerator)
 
     given("유효한 입력을 받았을 때") {
         val input = CreateResearcherUseCase.Input(
@@ -32,7 +36,8 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             univName = "이화여자대학교",
             name = "신수정",
             major = "컴퓨터공학과",
-            labInfo = "야뿌 랩실"
+            labInfo = "야뿌 랩실",
+            adConsent = true
         )
 
         val member = Member.newMember(
@@ -42,6 +47,12 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             provider = input.provider,
             role = RoleType.RESEARCHER,
             name = input.name
+        )
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = false,
         )
 
         val researcher = Researcher.newResearcher(
@@ -61,6 +72,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
 
         every { idGenerator.generateId() } returns "1"
         every { researcherGateway.save(any()) } returns savedResearcher
+        every { memberConsentGateway.save(match { it.memberId == member.id }) } returns memberConsent
         every { memberGateway.save(any()) } returns savedMember
         every { tokenGateway.generateAccessToken(savedMember) } returns accessToken
         every { tokenGateway.generateRefreshToken(savedMember) } returns refreshToken
@@ -83,6 +95,9 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
                 output.memberInfo.oauthEmail shouldBe  savedMember.oauthEmail
                 output.memberInfo.provider shouldBe savedMember.provider
                 output.memberInfo.role shouldBe savedMember.role
+            }
+            then("MemberConsent가 저장되어야 한다") {
+                verify { memberConsentGateway.save(match { it.memberId == member.id }) }
             }
         }
     }

@@ -1,9 +1,11 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.MatchType
@@ -19,18 +21,21 @@ import java.time.LocalDate
 class GetParticipantInfoUseCaseTest : BehaviorSpec({
     val memberGateway = mockk<MemberGateway>()
     val participantGateway = mockk<ParticipantGateway>()
-    val useCase = GetParticipantInfoUseCase(memberGateway, participantGateway)
+    val memberConsentGateway = mockk<MemberConsentGateway>()
+    val useCase = GetParticipantInfoUseCase(memberGateway, participantGateway, memberConsentGateway)
 
     given("유효한 memberId가 주어졌을 때") {
         val memberId = "1"
 
-        val member = mockk<Member>()
-        val participant = mockk<Participant>()
+        val member = mockk<Member>(relaxed = true)
+        val participant = mockk<Participant>(relaxed = true)
+        val memberConsent = mockk<MemberConsent>(relaxed = true)
         val basicAddressInfo = Participant.AddressInfo(region = Region.SEOUL, area = Area.GWANGJINGU)
         val additionalAddressInfo = Participant.AddressInfo(region = Region.INCHEON, area = Area.SEOGU)
 
         every { memberGateway.getById(memberId) } returns member
         every { participantGateway.findByMemberId(memberId) } returns participant
+        every { memberConsentGateway.findByMemberId(memberId) } returns memberConsent
         every { participant.gender } returns GenderType.FEMALE
         every { participant.birthDate } returns LocalDate.of(2000, 7, 8)
         every { participant.basicAddressInfo } returns basicAddressInfo
