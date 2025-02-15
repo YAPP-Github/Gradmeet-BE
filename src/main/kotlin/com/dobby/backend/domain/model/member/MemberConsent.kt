@@ -32,4 +32,20 @@ data class MemberConsent(
             )
         }
     }
+    fun update(
+        memberId: String,
+        adConsent: Boolean,
+        matchConsent: Boolean,
+        updatedAt: LocalDateTime = LocalDateTime.now()
+    ): MemberConsent {
+        val nowDate = updatedAt.toLocalDate()
+        return this.copy(
+            memberId = memberId,
+            adConsent = adConsent,
+            matchConsent = matchConsent,
+            adConsentedAt = if(adConsent) nowDate else null,
+            matchConsentedAt = if(matchConsent) nowDate else null,
+            updatedAt = updatedAt
+        )
+    }
 }
