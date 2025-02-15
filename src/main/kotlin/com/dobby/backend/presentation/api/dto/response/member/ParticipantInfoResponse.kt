@@ -24,4 +24,10 @@ data class ParticipantInfoResponse(
 
     @Schema(description = "매칭 선호 타입")
     val matchType: MatchType?,
+
+    @Schema(description = "광고성 정보 이메일/SMS 수신 동의 여부")
+    var adConsent: Boolean,
+
+    @Schema(description = "개인정보 수정 및 이용 동의/실험 추천 혜택 동의 여부")
+    var matchConsent: Boolean
 )
