@@ -90,8 +90,8 @@ data class ExperimentPost(
         }
 
         return this.copy(
-            targetGroup = this.targetGroup,
-            applyMethod = this.applyMethod,
+            targetGroup = targetGroup?.let { this.targetGroup.update(it.startAge, it.endAge, it.genderType, it.otherCondition) } ?: this.targetGroup,
+            applyMethod = applyMethod?.let { this.applyMethod.update(it.phoneNum, it.formUrl, it.content) } ?: this.applyMethod,
             title = title?: this.title,
             reward = reward?: this.reward,
             startDate = startDate?: this.startDate,
