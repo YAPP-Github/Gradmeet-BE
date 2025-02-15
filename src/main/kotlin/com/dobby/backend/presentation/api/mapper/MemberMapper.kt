@@ -188,7 +188,7 @@ object MemberMapper {
 
     fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse{
         return DefaultResponse(
-            success = output.isDuplicate
+            success = output.success
         )
     }
 

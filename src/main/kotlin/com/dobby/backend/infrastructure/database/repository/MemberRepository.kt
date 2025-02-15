@@ -11,7 +11,8 @@ interface MemberRepository : JpaRepository<MemberEntity, String> {
     fun findByOauthEmail(oauthEmail: String): MemberEntity?
     fun findByOauthEmailAndStatus(oauthEmail: String, status: MemberStatus): MemberEntity?
     fun existsByContactEmail(contactEmail: String): Boolean
-    fun findContactEmailById(memberId: String): String
+    @Query("SELECT m.contactEmail FROM MemberEntity m WHERE m.id = :memberId")
+    fun findContactEmailById(@Param("memberId") memberId: String): String
     fun findByContactEmail(contactEmail: String): MemberEntity?
     @Query("SELECT m.role FROM MemberEntity m WHERE m.id = :memberId AND m.deletedAt IS NULL")
     fun findRoleByIdAndDeletedAtIsNull(@Param("memberId") memberId: String): RoleType?

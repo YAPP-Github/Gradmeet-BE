@@ -1,6 +1,8 @@
 package com.dobby.backend.application.usecase.member
 
+import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -21,8 +23,8 @@ class ValidateContactEmailForUpdateUseCaseTest : BehaviorSpec({
             val input = ValidateContactEmailForUpdateUseCase.Input(memberId, currentEmail)
             val result = useCase.execute(input)
 
-            then("중복 이메일이 아니라고 판단해야 한다") {
-                result.isDuplicate shouldBe false
+            then("사용 가능하다고 판단해야 한다") {
+                result.success shouldBe true
             }
         }
     }
@@ -39,18 +41,19 @@ class ValidateContactEmailForUpdateUseCaseTest : BehaviorSpec({
             val input = ValidateContactEmailForUpdateUseCase.Input(memberId, newEmail)
             val result = useCase.execute(input)
 
-            then("중복 이메일이 아니라고 판단해야 한다") {
-                result.isDuplicate shouldBe false
+            then("사용 가능하다고 판단해야 한다") {
+                result.success shouldBe true
             }
         }
 
         `when`("입력된 이메일이 이미 존재하는 경우") {
             every { memberGateway.existsByContactEmail(newEmail) } returns true
             val input = ValidateContactEmailForUpdateUseCase.Input(memberId, newEmail)
-            val result = useCase.execute(input)
 
-            then("중복 이메일이라고 판단해야 한다") {
-                result.isDuplicate shouldBe true
+            then("ContactEmailDuplicateException 예외가 발생해야 한다") {
+                shouldThrow<ContactEmailDuplicateException> {
+                    useCase.execute(input)
+                }
             }
         }
     }

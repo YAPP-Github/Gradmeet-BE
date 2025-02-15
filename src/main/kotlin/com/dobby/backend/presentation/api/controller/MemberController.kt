@@ -121,7 +121,7 @@ class MemberController(
     @GetMapping("/me/validation/contact-email")
     @Operation(
         summary = "연락 받을 이메일 주소 검증 API",
-        description = "회원 정보 수정 시, 이메일 중복 확인을 위한 API입니다."
+        description = "회원 정보 수정 시, 이메일 중복 확인을 위한 API입니다. 사용가능하면 true, 아니면 예외를 반환합니다."
     )
     fun validateContactEmailForUpdate(
         @RequestParam contactEmail: String
