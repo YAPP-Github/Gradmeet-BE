@@ -19,7 +19,8 @@ object MemberMapper {
             univName = req.univName,
             name = req.name,
             major = req.major,
-            labInfo = req.labInfo
+            labInfo = req.labInfo,
+            adConsent = req.adConsent,
         )
     }
 
@@ -47,7 +48,9 @@ object MemberMapper {
                 region = req.additionalAddressInfo?.region ?: Region.NONE,
                 area = req.additionalAddressInfo?.area ?: Area.NONE
             ),
-            matchType = req.matchType
+            matchType = req.matchType,
+            adConsent = req.adConsent,
+            matchConsent = req.matchConsent
         )
     }
 
