@@ -1,6 +1,7 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
+import com.dobby.backend.domain.exception.ContactEmailDuplicateException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 
 class ValidateContactEmailForUpdateUseCase(
@@ -12,16 +13,14 @@ class ValidateContactEmailForUpdateUseCase(
     )
 
     data class Output(
-        val isDuplicate: Boolean
+        val success: Boolean
     )
 
     override fun execute(input: Input): Output {
         val currentContactEmail = memberGateway.findContactEmailByMemberId(input.memberId)
-        if (currentContactEmail == input.contactEmail) {
-            return Output(false)
-        }
-
-        val isDuplicate = memberGateway.existsByContactEmail(input.contactEmail)
-        return Output(isDuplicate)
+        if (currentContactEmail == input.contactEmail || !memberGateway.existsByContactEmail(input.contactEmail))
+            return Output(success = true)
+        else
+            throw ContactEmailDuplicateException
     }
 }
