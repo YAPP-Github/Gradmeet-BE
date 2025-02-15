@@ -128,7 +128,7 @@ class MemberController(
     ): DefaultResponse {
         val input = MemberMapper.toValidateContactEmailForUpdateUseCaseInput(contactEmail)
         val output = memberService.validateContactEmailForUpdate(input)
-        return DefaultResponse(output.isDuplicate)
+        return MemberMapper.toValidateContactEmailForUpdateResponse(output)
     }
 
     @DeleteMapping
