@@ -8,6 +8,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
+import io.swagger.v3.oas.annotations.media.Schema
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
@@ -113,6 +114,7 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
+            adConsent = response.adConsent
         )
     }
 
@@ -129,7 +131,9 @@ object MemberMapper {
             birthDate = output.birthDate,
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
-            matchType = output.matchType
+            matchType = output.matchType,
+            adConsent = output.adConsent,
+            matchConsent = output.matchConsent
         )
     }
 
@@ -140,7 +144,8 @@ object MemberMapper {
             name = request.name,
             univName = request.univName,
             major = request.major,
-            labInfo = request.labInfo
+            labInfo = request.labInfo,
+            adConsent = request.adConsent
         )
     }
 
@@ -151,6 +156,7 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
+            adConsent = response.adConsent
         )
     }
 
@@ -167,7 +173,9 @@ object MemberMapper {
                 region = request.additionalAddressInfo?.region ?: Region.NONE,
                 area = request.additionalAddressInfo?.area ?: Area.NONE
             ),
-            matchType = request.matchType
+            matchType = request.matchType,
+            adConsent = request.adConsent,
+            matchConsent = request.matchConsent
         )
     }
 
@@ -178,7 +186,9 @@ object MemberMapper {
             birthDate = output.birthDate,
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
-            matchType = output.matchType
+            matchType = output.matchType,
+            adConsent = output.adConsent,
+            matchConsent = output.matchConsent
         )
     }
 
