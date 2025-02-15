@@ -186,6 +186,12 @@ object MemberMapper {
         )
     }
 
+    fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse{
+        return DefaultResponse(
+            success = output.isDuplicate
+        )
+    }
+
     fun toDeleteMemberUseCaseInput(request: DeleteMemberRequest, roleType: RoleType): Any {
         return when (roleType) {
             RoleType.RESEARCHER -> DeleteResearcherUseCase.Input(
