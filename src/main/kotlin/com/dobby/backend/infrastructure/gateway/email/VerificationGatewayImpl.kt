@@ -35,11 +35,6 @@ class VerificationGatewayImpl(
         return savedEntity.toDomain()
     }
 
-    override fun updateCode(univEmail: String, code: String) {
-        verificationRepository.updateCode(univEmail, code)
-        verificationRepository.flush()
-    }
-
     override fun deleteByUnivEmail(univEmail: String) {
         verificationRepository.deleteByUnivEmail(univEmail)
     }

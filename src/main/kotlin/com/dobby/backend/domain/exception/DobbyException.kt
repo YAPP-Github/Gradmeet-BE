@@ -41,6 +41,7 @@ data object CodeNotCorrectException : ClientException("VE0004", "Verification co
 data object CodeExpiredException : ClientException("VE0005", "Verification code is expired", HttpStatus.BAD_REQUEST)
 data object EmailFormatInvalidException : ClientException("VE0006", "Email is invalid format", HttpStatus.BAD_REQUEST)
 data object EmailAlreadyVerifiedException : ClientException("VE0007", "This email is already verified", HttpStatus.CONFLICT)
+data object TooManyVerificationRequestException : ClientException("VE0008", "You can request verification up to 3 in one day.", HttpStatus.TOO_MANY_REQUESTS)
 
 /**
  * Member error codes
