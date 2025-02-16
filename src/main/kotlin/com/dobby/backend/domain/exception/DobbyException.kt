@@ -52,6 +52,7 @@ data object ParticipantNotFoundException : ClientException("ME0004", "Participan
 data object EmailNotValidateException : ClientException("ME0005", "You should validate your school email first", HttpStatus.BAD_REQUEST)
 data object SignupOauthEmailDuplicateException : ClientException("ME0006", "You've already joined with requested oauth email", HttpStatus.CONFLICT)
 data object ContactEmailDuplicateException: ClientException("ME0007", "This contact email is already in use.", HttpStatus.CONFLICT)
+data object MemberConsentNotFoundException : ClientException("ME0008", "Member Consent Not Found.", HttpStatus.NOT_FOUND)
 
 /**
  * Experiment error codes

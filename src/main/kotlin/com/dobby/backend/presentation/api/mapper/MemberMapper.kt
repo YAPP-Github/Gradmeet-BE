@@ -19,7 +19,8 @@ object MemberMapper {
             univName = req.univName,
             name = req.name,
             major = req.major,
-            labInfo = req.labInfo
+            labInfo = req.labInfo,
+            adConsent = req.adConsent,
         )
     }
 
@@ -47,7 +48,9 @@ object MemberMapper {
                 region = req.additionalAddressInfo?.region ?: Region.NONE,
                 area = req.additionalAddressInfo?.area ?: Area.NONE
             ),
-            matchType = req.matchType
+            matchType = req.matchType,
+            adConsent = req.adConsent,
+            matchConsent = req.matchConsent
         )
     }
 
@@ -110,6 +113,7 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
+            adConsent = response.adConsent
         )
     }
 
@@ -126,7 +130,9 @@ object MemberMapper {
             birthDate = output.birthDate,
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
-            matchType = output.matchType
+            matchType = output.matchType,
+            adConsent = output.adConsent,
+            matchConsent = output.matchConsent
         )
     }
 
@@ -137,7 +143,8 @@ object MemberMapper {
             name = request.name,
             univName = request.univName,
             major = request.major,
-            labInfo = request.labInfo
+            labInfo = request.labInfo,
+            adConsent = request.adConsent
         )
     }
 
@@ -148,6 +155,7 @@ object MemberMapper {
             univName = response.univName,
             major = response.major,
             labInfo = response.labInfo,
+            adConsent = response.adConsent
         )
     }
 
@@ -164,7 +172,9 @@ object MemberMapper {
                 region = request.additionalAddressInfo?.region ?: Region.NONE,
                 area = request.additionalAddressInfo?.area ?: Area.NONE
             ),
-            matchType = request.matchType
+            matchType = request.matchType,
+            adConsent = request.adConsent,
+            matchConsent = request.matchConsent
         )
     }
 
@@ -175,7 +185,9 @@ object MemberMapper {
             birthDate = output.birthDate,
             basicAddressInfo = AddressInfoResponse.fromDomain(output.basicAddressInfo),
             additionalAddressInfo = output.additionalAddressInfo?.let { AddressInfoResponse.fromDomain(it) },
-            matchType = output.matchType
+            matchType = output.matchType,
+            adConsent = output.adConsent,
+            matchConsent = output.matchConsent
         )
     }
 

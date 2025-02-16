@@ -4,7 +4,9 @@ import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.gateway.auth.TokenGateway
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.*
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
@@ -12,10 +14,12 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 
 class CreateParticipantUseCase (
     private val participantGateway: ParticipantGateway,
+    private val memberConsentGateway: MemberConsentGateway,
     private val tokenGateway: TokenGateway,
     private val idGenerator: IdGenerator
 ): UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output>
@@ -30,6 +34,8 @@ class CreateParticipantUseCase (
         var basicAddressInfo: AddressInfo,
         var additionalAddressInfo: AddressInfo,
         var matchType: MatchType?,
+        var adConsent: Boolean,
+        var matchConsent: Boolean
     )
 
     data class AddressInfo(
@@ -86,7 +92,7 @@ class CreateParticipantUseCase (
             name = input.name,
         )
 
-        return Participant.newParticipant(
+        val participant= Participant.newParticipant(
             id = idGenerator.generateId(),
             member = member,
             gender = input.gender,
@@ -101,5 +107,15 @@ class CreateParticipantUseCase (
             ),
             matchType = input.matchType
         )
+        participantGateway.save(participant)
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = input.matchConsent,
+        )
+        memberConsentGateway.save(memberConsent)
+
+        return participant
     }
 }
