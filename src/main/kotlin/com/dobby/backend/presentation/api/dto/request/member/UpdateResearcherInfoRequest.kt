@@ -3,6 +3,7 @@ package com.dobby.backend.presentation.api.dto.request.member
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 
 data class UpdateResearcherInfoRequest(
 
@@ -24,5 +25,9 @@ data class UpdateResearcherInfoRequest(
     val major: String,
 
     @Schema(description = "연구실 정보")
-    val labInfo: String?
+    val labInfo: String?,
+
+    @NotNull(message = "광고성 정보 수신 동의 여부는 필수입니다.")
+    @Schema(description = "광고성 정보 이메일/SMS 수신 동의 여부")
+    var adConsent: Boolean,
 )

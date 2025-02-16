@@ -2,8 +2,10 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.auth.TokenGateway
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
@@ -14,15 +16,17 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import java.time.LocalDate
 
 class CreateParticipantUseCaseTest: BehaviorSpec ({
 
     val participantGateway: ParticipantGateway = mockk()
+    val memberConsentGateway: MemberConsentGateway = mockk()
     val tokenGateway: TokenGateway = mockk()
     val idGenerator: IdGenerator = mockk()
 
-    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, tokenGateway, idGenerator)
+    val createParticipantUseCase = CreateParticipantUseCase(participantGateway, memberConsentGateway, tokenGateway, idGenerator)
 
     given("유효한 입력을 받았을 때") {
         val input = CreateParticipantUseCase.Input(
@@ -40,7 +44,9 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
                 region = Region.SEOUL,
                 area = Area.SEODAEMUNGU
             ),
-            matchType = null
+            matchType = null,
+            adConsent = true,
+            matchConsent = true
         )
 
         val member = Member.newMember(
@@ -51,7 +57,6 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             role = RoleType.PARTICIPANT,
             name = input.name
         )
-
         val participant = Participant.newParticipant(
             id = "1",
             member = member,
@@ -68,12 +73,20 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             matchType = input.matchType
         )
 
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = input.matchConsent,
+        )
+
+
         val savedParticipant = participant.copy(member = member.copy(id = "1"))
         val accessToken = "mock-access-token"
         val refreshToken = "mock-refresh-token"
 
         every { idGenerator.generateId() } returns "1"
         every { participantGateway.save(any()) } returns savedParticipant
+        every { memberConsentGateway.save(match { it.memberId == member.id }) } returns memberConsent
         every { tokenGateway.generateAccessToken(any()) } returns accessToken
         every { tokenGateway.generateRefreshToken(any()) } returns refreshToken
 
@@ -90,6 +103,9 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
                 output.memberInfo.oauthEmail shouldBe savedParticipant.member.oauthEmail
                 output.memberInfo.provider shouldBe savedParticipant.member.provider
                 output.memberInfo.role shouldBe savedParticipant.member.role
+            }
+            Then("MemberConsent가 저장되어야 한다") {
+                verify { memberConsentGateway.save(match { it.memberId == member.id }) }
             }
         }
     }
