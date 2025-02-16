@@ -54,14 +54,13 @@ class WebExceptionHandler(
         return responseFactory.create(HttpStatus.NOT_FOUND, InvalidRequestValueException)
     }
 
-    @ExceptionHandler(AuthorizationDeniedException::class)
-    protected fun handleAuthorizationDeniedException(exception: AuthorizationDeniedException): ExceptionResponseEntity {
-        log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
-        return responseFactory.create(HttpStatus.FORBIDDEN, PermissionDeniedException)
-    }
-
-    @ExceptionHandler(AccessDeniedException::class)
-    protected fun handleAccessDeniedException(exception: AccessDeniedException): ExceptionResponseEntity {
+    @ExceptionHandler(
+        value = [
+            AuthorizationDeniedException::class,
+            AccessDeniedException::class
+        ]
+    )
+    protected fun handlePermissionDeniedException(exception: Exception): ExceptionResponseEntity {
         log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
         return responseFactory.create(HttpStatus.FORBIDDEN, PermissionDeniedException)
     }
