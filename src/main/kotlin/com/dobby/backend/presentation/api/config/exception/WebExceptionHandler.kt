@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authorization.AuthorizationDeniedException
 import org.springframework.validation.BindException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -51,6 +52,18 @@ class WebExceptionHandler(
     protected fun handleNotFoundException(exception: NoResourceFoundException): ExceptionResponseEntity {
         log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
         return responseFactory.create(HttpStatus.NOT_FOUND, InvalidRequestValueException)
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException::class)
+    protected fun handleAuthorizationDeniedException(exception: AuthorizationDeniedException): ExceptionResponseEntity {
+        log.warn("Handling AuthorizationDeniedException: ${exception.message}")
+        return responseFactory.create(HttpStatus.FORBIDDEN, PermissionDeniedException)
+    }
+
+    @ExceptionHandler(AccessDeniedException::class)
+    protected fun handleAccessDeniedException(exception: AccessDeniedException): ExceptionResponseEntity {
+        log.warn("Handling AccessDeniedException: ${exception.message}")
+        return responseFactory.create(HttpStatus.FORBIDDEN, PermissionDeniedException)
     }
 
     @ExceptionHandler(DobbyException::class)
