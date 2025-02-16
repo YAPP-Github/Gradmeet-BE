@@ -9,7 +9,7 @@ import com.dobby.backend.presentation.api.dto.request.member.UpdateParticipantIn
 import com.dobby.backend.presentation.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
-import com.dobby.backend.presentation.api.dto.response.member.SignupResponse
+import com.dobby.backend.presentation.api.dto.response.member.SignUpResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
 import com.dobby.backend.util.getCurrentMemberId
 import io.swagger.v3.oas.annotations.Operation
@@ -29,12 +29,12 @@ class MemberController(
         summary = "참여자 회원가입 API- OAuth 로그인 필수",
         description = "참여자 OAuth 로그인 실패 시, 리다이렉팅하여 참여자 회원가입하는 API입니다."
     )
-    fun signupParticipants(
+    fun signUpParticipant(
         @RequestBody @Valid req: ParticipantSignupRequest
-    ): SignupResponse {
+    ): SignUpResponse {
         val input = MemberMapper.toCreateParticipantInput(req)
-        val output = memberService.participantSignup(input)
-        return MemberMapper.toParticipantSignupResponse(output)
+        val output = memberService.signUpParticipant(input)
+        return MemberMapper.toParticipantSignUpResponse(output)
     }
 
     @PostMapping("/signup/researcher")
@@ -45,12 +45,12 @@ class MemberController(
          ⚠️ 이메일 인증 성공 시에만 회원가입이 완료되어야 합니다.
             """
     )
-    fun signupResearchers(
+    fun signUpResearcher(
         @RequestBody @Valid req: ResearcherSignupRequest
-    ): SignupResponse {
+    ): SignUpResponse {
         val input = MemberMapper.toCreateResearcherInput(req)
-        val output = memberService.researcherSignup(input)
-        return MemberMapper.toResearcherSignupResponse(output)
+        val output = memberService.signUpResearcher(input)
+        return MemberMapper.toResearcherSignUpResponse(output)
     }
 
     @GetMapping("/signup/validation/contact-email")
