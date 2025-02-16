@@ -24,8 +24,8 @@ object MemberMapper {
         )
     }
 
-    fun toResearcherSignupResponse(output: CreateResearcherUseCase.Output): SignupResponse {
-        return SignupResponse(
+    fun toResearcherSignUpResponse(output: CreateResearcherUseCase.Output): SignUpResponse {
+        return SignUpResponse(
             accessToken = output.accessToken,
             refreshToken = output.refreshToken,
             memberInfo = toMemberResDto(output.memberInfo)
@@ -54,8 +54,8 @@ object MemberMapper {
         )
     }
 
-    fun toParticipantSignupResponse(output: CreateParticipantUseCase.Output): SignupResponse {
-        return SignupResponse(
+    fun toParticipantSignUpResponse(output: CreateParticipantUseCase.Output): SignUpResponse {
+        return SignUpResponse(
             accessToken = output.accessToken,
             refreshToken = output.refreshToken,
             memberInfo = toMemberResDto(output.memberInfo)
