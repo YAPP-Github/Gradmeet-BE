@@ -25,14 +25,14 @@ class MemberService(
     private val deleteResearcherUseCase: DeleteResearcherUseCase
 ) {
     @Transactional
-    fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
+    fun signUpParticipant(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if(existingMember != null) throw SignupOauthEmailDuplicateException
         return createParticipantUseCase.execute(input)
     }
 
     @Transactional
-    fun researcherSignup(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
+    fun signUpResearcher(input: CreateResearcherUseCase.Input) : CreateResearcherUseCase.Output{
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if (existingMember!= null) throw SignupOauthEmailDuplicateException
 

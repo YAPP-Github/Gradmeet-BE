@@ -2,7 +2,7 @@ package com.dobby.backend.presentation.api.dto.response.member
 
 import io.swagger.v3.oas.annotations.media.Schema
 
-data class SignupResponse(
+data class SignUpResponse(
     @Schema(description = "회원가입 후 발급되는 Access Token")
     val accessToken: String,
 
