@@ -67,7 +67,6 @@ class UpdateParticipantInfoUseCase(
 
         val updatedConsent = memberConsentGateway.save(
             participantConsent.update(
-                memberId = updatedParticipant.member.id,
                 adConsent = input.adConsent,
                 matchConsent = input.matchConsent
             )

@@ -49,12 +49,6 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             name = input.name
         )
 
-        val memberConsent = MemberConsent.newConsent(
-            memberId = member.id,
-            adConsent = input.adConsent,
-            matchConsent = false,
-        )
-
         val researcher = Researcher.newResearcher(
             id = "1",
             member = member,
@@ -63,6 +57,12 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             emailVerified = true,
             major = input.major,
             labInfo = input.labInfo
+        )
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = false,
         )
 
         val savedMember = member.copy(id = "1", status = MemberStatus.ACTIVE)

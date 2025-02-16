@@ -79,13 +79,6 @@ class CreateResearcherUseCase(
             name = input.name,
         )
 
-        val memberConsent = MemberConsent.newConsent(
-            memberId = member.id,
-            adConsent = input.adConsent,
-            matchConsent = false
-        )
-        memberConsentGateway.save(memberConsent)
-
         val researcher = Researcher.newResearcher(
             id = idGenerator.generateId(),
             member = member,
@@ -95,6 +88,13 @@ class CreateResearcherUseCase(
             major = input.major,
             labInfo = input.labInfo
         )
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = false
+        )
+        memberConsentGateway.save(memberConsent)
 
         return researcherGateway.save(researcher)
     }

@@ -57,13 +57,6 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             role = RoleType.PARTICIPANT,
             name = input.name
         )
-
-        val memberConsent = MemberConsent.newConsent(
-            memberId = member.id,
-            adConsent = input.adConsent,
-            matchConsent = input.matchConsent,
-        )
-
         val participant = Participant.newParticipant(
             id = "1",
             member = member,
@@ -79,6 +72,13 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
             ),
             matchType = input.matchType
         )
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = input.matchConsent,
+        )
+
 
         val savedParticipant = participant.copy(member = member.copy(id = "1"))
         val accessToken = "mock-access-token"

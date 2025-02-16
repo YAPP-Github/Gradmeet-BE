@@ -28,7 +28,7 @@ class MemberService(
     fun participantSignup(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
         val existingMember = memberGateway.findByOauthEmailAndStatus(input.oauthEmail, MemberStatus.ACTIVE)
         if(existingMember != null) throw SignupOauthEmailDuplicateException
-           return createParticipantUseCase.execute(input)
+        return createParticipantUseCase.execute(input)
     }
 
     @Transactional

@@ -92,13 +92,6 @@ class CreateParticipantUseCase (
             name = input.name,
         )
 
-        val memberConsent = MemberConsent.newConsent(
-            memberId = member.id,
-            adConsent = input.adConsent,
-            matchConsent = input.matchConsent,
-        )
-        memberConsentGateway.save(memberConsent)
-
         val participant= Participant.newParticipant(
             id = idGenerator.generateId(),
             member = member,
@@ -114,6 +107,13 @@ class CreateParticipantUseCase (
             ),
             matchType = input.matchType
         )
+
+        val memberConsent = MemberConsent.newConsent(
+            memberId = member.id,
+            adConsent = input.adConsent,
+            matchConsent = input.matchConsent,
+        )
+        memberConsentGateway.save(memberConsent)
 
         return participantGateway.save(participant)
     }

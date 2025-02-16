@@ -55,7 +55,6 @@ class UpdateResearcherInfoUseCase(
 
         val updatedConsent = memberConsentGateway.save(
             researcherConsent.update(
-                memberId = updatedResearcher.member.id,
                 adConsent = input.adConsent,
                 matchConsent = false
             )
