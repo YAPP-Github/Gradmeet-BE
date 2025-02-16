@@ -21,24 +21,11 @@ class VerifyResearcherEmailUseCaseTest : BehaviorSpec ({
             every { status } returns VerificationStatus.VERIFIED
         }
 
-        every { verificationGateway.findByUnivEmail(validEmail) } returns verifiedInfo
+        every { verificationGateway.findByUnivEmailAndStatus(validEmail, VerificationStatus.VERIFIED) } returns verifiedInfo
 
         `when`("useCase의 execute가 실행되고, 이메일 검증을 실행하면") {
             then("예외가 발생하지 않는다") {
                 verifyResearcherUseCase.execute(validEmail)
-            }
-        }
-    }
-
-    given("존재하지 않는 이메일이 주어졌을 때") {
-        val invalidEmail = "invalid.yapp.kr"
-        every { verificationGateway.findByUnivEmail(invalidEmail) } returns null
-
-        `when`("useCase의 execute가 실행되고, 이메일 검증을 실행하면") {
-            then("VerifyInfoNotFoundException 예외가 발생해야 한다") {
-                shouldThrow<VerifyInfoNotFoundException> {
-                    verifyResearcherUseCase.execute(invalidEmail)
-                }
             }
         }
     }
@@ -49,12 +36,24 @@ class VerifyResearcherEmailUseCaseTest : BehaviorSpec ({
             every { status } returns VerificationStatus.HOLD
         }
 
-        every { verificationGateway.findByUnivEmail(unverifiedEmail) } returns unverifiedInfo
+        every { verificationGateway.findByUnivEmailAndStatus(unverifiedEmail, VerificationStatus.VERIFIED) } returns null
 
         `when`("useCase의 execute가 실행되면") {
             then("EmailNotValidateException 예외가 발생해야 한다") {
                 shouldThrow<EmailNotValidateException> {
                     verifyResearcherUseCase.execute(unverifiedEmail)
+                }
+            }
+        }
+    }
+    given("이메일이 존재하지 않는 경우") {
+        val invalidEmail = "invalid@univ.edu"
+        every { verificationGateway.findByUnivEmailAndStatus(invalidEmail, VerificationStatus.VERIFIED) } returns null
+
+        `when`("이메일 인증을 요청하면") {
+            then("EmailNotValidateException 예외가 발생해야 한다") {
+                shouldThrow<EmailNotValidateException> {
+                    verifyResearcherUseCase.execute(invalidEmail) // 이메일 정보가 없으면 예외 발생
                 }
             }
         }

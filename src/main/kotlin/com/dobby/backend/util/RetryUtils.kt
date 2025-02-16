@@ -1,5 +1,6 @@
 package com.dobby.backend.util
 
+import com.dobby.backend.domain.exception.EmailAlreadyVerifiedException
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import kotlin.math.pow
@@ -18,6 +19,8 @@ object RetryUtils {
         while(true){
             try {
                 return block()
+            } catch (e: EmailAlreadyVerifiedException) {
+                throw e
             } catch (ex: Exception) {
                 if (curAttempt >= maxRetries) {
                     logger.error("Operation failed after $maxRetries attmpets.", ex)

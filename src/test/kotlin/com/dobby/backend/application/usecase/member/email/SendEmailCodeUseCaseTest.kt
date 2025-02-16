@@ -5,6 +5,7 @@ import com.dobby.backend.application.service.TransactionExecutor
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.exception.EmailNotUnivException
 import com.dobby.backend.domain.IdGenerator
+import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.util.EmailUtils
@@ -17,11 +18,12 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
 
     val verificationGateway: VerificationGateway = mockk(relaxed = true)
     val emailGateway: EmailGateway = mockk(relaxed = true)
+    val cacheGateway: CacheGateway = mockk(relaxed = true)
     val idGenerator: IdGenerator = mockk(relaxed = true)
     val dispatcherProvider: CoroutineDispatcherProvider = mockk(relaxed = true)
     val transactionExecutor: TransactionExecutor = mockk(relaxed = true)
 
-    val sendEmailCodeUseCase = SendEmailCodeUseCase(verificationGateway, emailGateway, idGenerator, dispatcherProvider, transactionExecutor)
+    val sendEmailCodeUseCase = SendEmailCodeUseCase(verificationGateway, emailGateway, cacheGateway, idGenerator, dispatcherProvider, transactionExecutor)
 
     beforeSpec {
         mockkObject(EmailUtils)
