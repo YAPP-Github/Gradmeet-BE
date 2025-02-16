@@ -107,6 +107,7 @@ class CreateParticipantUseCase (
             ),
             matchType = input.matchType
         )
+        participantGateway.save(participant)
 
         val memberConsent = MemberConsent.newConsent(
             memberId = member.id,
@@ -115,6 +116,6 @@ class CreateParticipantUseCase (
         )
         memberConsentGateway.save(memberConsent)
 
-        return participantGateway.save(participant)
+        return participant
     }
 }
