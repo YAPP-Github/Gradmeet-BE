@@ -7,6 +7,5 @@ interface VerificationGateway {
     fun findByUnivEmailAndStatus(univEmail: String, status: VerificationStatus): Verification?
     fun findByUnivEmail(univEmail: String): Verification?
     fun save(verification: Verification): Verification
-    fun updateCode(univEmail: String, code: String)
     fun deleteByUnivEmail(univEmail: String)
 }
