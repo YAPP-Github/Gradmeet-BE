@@ -11,6 +11,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.*
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
+import com.dobby.backend.infrastructure.database.entity.member.QMemberConsentEntity
 import com.dobby.backend.infrastructure.database.entity.member.QMemberEntity
 import com.dobby.backend.infrastructure.database.entity.member.QParticipantEntity
 import com.querydsl.core.types.OrderSpecifier
@@ -221,6 +222,7 @@ class ExperimentPostCustomRepositoryImpl (
         val targetGroup = QTargetGroupEntity.targetGroupEntity
         val participant = QParticipantEntity.participantEntity
         val member = QMemberEntity.memberEntity
+        val memberConsent = QMemberConsentEntity.memberConsentEntity
 
         val currentTime = LocalDateTime.now()
 
@@ -243,7 +245,11 @@ class ExperimentPostCustomRepositoryImpl (
             .select(participant, member.contactEmail)
             .from(participant)
             .join(participant.member, member)
-            .where(participant.member.deletedAt.isNull)
+            .join(memberConsent).on(member.id.eq(memberConsent.memberId))
+            .where(
+                participant.member.deletedAt.isNull,
+                memberConsent.matchConsent.isTrue
+                )
             .fetch()
 
         logger.info("[쿼리 결과] participants count: {}", participants.size)

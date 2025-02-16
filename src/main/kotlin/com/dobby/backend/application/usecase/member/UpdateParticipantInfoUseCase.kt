@@ -2,7 +2,9 @@ package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ContactEmailDuplicateException
+import com.dobby.backend.domain.exception.MemberConsentNotFoundException
 import com.dobby.backend.domain.exception.ParticipantNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
@@ -13,7 +15,8 @@ import java.time.LocalDate
 
 class UpdateParticipantInfoUseCase(
     private val participantGateway: ParticipantGateway,
-    private val memberGateway: MemberGateway
+    private val memberGateway: MemberGateway,
+    private val memberConsentGateway: MemberConsentGateway
 ) : UseCase<UpdateParticipantInfoUseCase.Input, UpdateParticipantInfoUseCase.Output> {
 
     data class Input(
@@ -22,7 +25,9 @@ class UpdateParticipantInfoUseCase(
         val name: String,
         val basicAddressInfo: Participant.AddressInfo,
         val additionalAddressInfo: Participant.AddressInfo?,
-        val matchType: MatchType?
+        val matchType: MatchType?,
+        val adConsent: Boolean,
+        val matchConsent: Boolean
     )
 
     data class Output(
@@ -31,12 +36,16 @@ class UpdateParticipantInfoUseCase(
         val birthDate: LocalDate,
         val basicAddressInfo: Participant.AddressInfo,
         val additionalAddressInfo: Participant.AddressInfo?,
-        val matchType: MatchType?
+        val matchType: MatchType?,
+        val adConsent: Boolean,
+        val matchConsent: Boolean
     )
 
     override fun execute(input: Input): Output {
         val participant = participantGateway.findByMemberId(input.memberId)
             ?: throw ParticipantNotFoundException
+        val participantConsent = memberConsentGateway.findByMemberId(input.memberId)
+            ?: throw MemberConsentNotFoundException
         if (memberGateway.existsByContactEmail(input.contactEmail) && participant.member.contactEmail != input.contactEmail) {
             throw ContactEmailDuplicateException
         }
@@ -56,13 +65,23 @@ class UpdateParticipantInfoUseCase(
             )
         )
 
+        val updatedConsent = memberConsentGateway.save(
+            participantConsent.update(
+                adConsent = input.adConsent,
+                matchConsent = input.matchConsent
+            )
+        )
+
+
         return Output(
             member = updatedParticipant.member,
             gender = updatedParticipant.gender,
             birthDate = updatedParticipant.birthDate,
             basicAddressInfo = updatedParticipant.basicAddressInfo,
             additionalAddressInfo = updatedParticipant.additionalAddressInfo,
-            matchType = updatedParticipant.matchType
+            matchType = updatedParticipant.matchType,
+            adConsent = updatedConsent.adConsent,
+            matchConsent = updatedConsent.matchConsent
         )
     }
 }

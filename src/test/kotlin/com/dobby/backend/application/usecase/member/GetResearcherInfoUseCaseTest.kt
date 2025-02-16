@@ -1,8 +1,10 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.domain.exception.ResearcherNotFoundException
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.Member
+import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
@@ -17,7 +19,8 @@ import kotlin.test.assertFailsWith
 class GetResearcherInfoUseCaseTest : BehaviorSpec({
     Given("Gateway에 유효한 memberId와 researcherId가 있다면") {
         val researcherGateway = mockk<ResearcherGateway>()
-        val useCase = GetResearcherInfoUseCase(researcherGateway)
+        val memberConsentGateway = mockk<MemberConsentGateway>()
+        val useCase = GetResearcherInfoUseCase(researcherGateway, memberConsentGateway)
 
         val input = GetResearcherInfoUseCase.Input(memberId = "1")
         val mockMember = Member(
@@ -42,7 +45,9 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
             emailVerified = true,
         )
 
+        val mockMemberConsent = mockk<MemberConsent>(relaxed = true)
         every { researcherGateway.findByMemberId(input.memberId) } returns mockResearcher
+        every { memberConsentGateway.findByMemberId(input.memberId) } returns mockMemberConsent
 
         `when`("GetResearcherInfoUseCase가 실행되면") {
             val result = useCase.execute(input)
@@ -59,11 +64,13 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
 
     given("gateway에 해당 member 정보가 없으면") {
         val researcherGateway = mockk<ResearcherGateway>()
-        val useCase = GetResearcherInfoUseCase(researcherGateway)
+        val memberConsentGateway = mockk<MemberConsentGateway>()
+        val useCase = GetResearcherInfoUseCase(researcherGateway, memberConsentGateway)
 
         val input = GetResearcherInfoUseCase.Input(memberId = "2")
 
         every { researcherGateway.findByMemberId(input.memberId) } returns null
+        every { memberConsentGateway.findByMemberId(input.memberId) } returns null
 
         `when`("GetResearcherInfoUseCase가 실행됐을때") {
             then("ResearcherNotFoundException 예외가 반환된다.") {

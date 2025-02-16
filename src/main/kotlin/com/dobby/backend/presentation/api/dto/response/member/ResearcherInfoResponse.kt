@@ -18,4 +18,7 @@ data class ResearcherInfoResponse(
 
     @Schema(description = "연구실 정보")
     val labInfo: String?,
+
+    @Schema(description = "광고성 정보 이메일/SMS 수신 동의 여부")
+    val adConsent: Boolean,
 )
