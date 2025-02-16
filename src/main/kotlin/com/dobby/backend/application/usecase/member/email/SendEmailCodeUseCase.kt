@@ -5,6 +5,7 @@ import com.dobby.backend.application.service.TransactionExecutor
 import com.dobby.backend.application.usecase.AsyncUseCase
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.IdGenerator
+import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
@@ -13,10 +14,12 @@ import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
     private val emailGateway: EmailGateway,
+    private val cacheGateway: CacheGateway,
     private val idGenerator: IdGenerator,
     private val dispatcherProvider: CoroutineDispatcherProvider,
     private val transactionExecutor: TransactionExecutor
@@ -32,12 +35,18 @@ class SendEmailCodeUseCase(
     override suspend fun execute(input: Input): Output {
         validateEmail(input.univEmail)
 
-        val code = EmailUtils.generateCode()
+        val requestCountKey = "request_count:${input.univEmail}"
+        val currentCount = cacheGateway.get(requestCountKey)?.toIntOrNull() ?: 0
+        if(currentCount >= 3) {
+            throw TooManyRequestException
+        }
 
+        cacheGateway.incrementRequestCount(requestCountKey)
+        val code = EmailUtils.generateCode()
         CoroutineScope(dispatcherProvider.io).launch {
             RetryUtils.retryWithBackOff {
                 transactionExecutor.execute {
-                    reflectVerification(input, code)
+                    reflectVerification(input.univEmail, code)
                 }
             }
         }
@@ -57,23 +66,27 @@ class SendEmailCodeUseCase(
         if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
     }
 
-    private fun reflectVerification(input: Input, code: String) {
-        val existingInfo = verificationGateway.findByUnivEmail(input.univEmail)
+    private fun reflectVerification(univEmail: String, code: String) {
+        val existingInfo = verificationGateway.findByUnivEmail(univEmail)
 
-        if (existingInfo != null) {
-            if (existingInfo.status == VerificationStatus.VERIFIED) {
+        if(existingInfo != null) {
+            if(existingInfo.status == VerificationStatus.VERIFIED) {
                 throw EmailAlreadyVerifiedException
             }
-            verificationGateway.updateCode(existingInfo.univEmail, code)
-            return
+            cacheGateway.evict("verification:${univEmail}")
+            cacheGateway.setCode("verification:${univEmail}", code)
+            existingInfo.updatedAt = LocalDateTime.now()
+            existingInfo.status = VerificationStatus.HOLD
+
+            verificationGateway.save(existingInfo)
         }
         else {
             val newVerification = Verification.newVerification(
                 id = idGenerator.generateId(),
-                univEmail = input.univEmail,
-                verificationCode = code
+                univEmail = univEmail
             )
             verificationGateway.save(newVerification)
+            cacheGateway.setCode("verification:${univEmail}", code)
         }
     }
 
