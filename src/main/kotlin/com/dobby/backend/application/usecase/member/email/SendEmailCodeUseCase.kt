@@ -14,6 +14,7 @@ import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
 class SendEmailCodeUseCase(
@@ -37,9 +38,9 @@ class SendEmailCodeUseCase(
 
         val requestCountKey = "request_count:${input.univEmail}"
         val currentCount = cacheGateway.get(requestCountKey)?.toIntOrNull() ?: 0
-        if(currentCount >= 3) {
-            throw TooManyRequestException
-        }
+        //if(currentCount >= 3) {
+          //  throw TooManyVerificationRequestException
+        //}
 
         cacheGateway.incrementRequestCount(requestCountKey)
         val code = EmailUtils.generateCode()
@@ -64,21 +65,17 @@ class SendEmailCodeUseCase(
     private fun validateEmail(email : String){
         if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
         if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
+        if(verificationGateway.findByUnivEmailAndStatus(email, VerificationStatus.VERIFIED) != null)
+            throw EmailAlreadyVerifiedException
     }
 
     private fun reflectVerification(univEmail: String, code: String) {
-        val existingInfo = verificationGateway.findByUnivEmail(univEmail)
+        val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
 
         if(existingInfo != null) {
-            if(existingInfo.status == VerificationStatus.VERIFIED) {
-                throw EmailAlreadyVerifiedException
-            }
-            cacheGateway.evict("verification:${univEmail}")
             cacheGateway.setCode("verification:${univEmail}", code)
-            existingInfo.updatedAt = LocalDateTime.now()
-            existingInfo.status = VerificationStatus.HOLD
-
-            verificationGateway.save(existingInfo)
+            val updatedVerification = existingInfo.update()
+            verificationGateway.save(updatedVerification)
         }
         else {
             val newVerification = Verification.newVerification(
