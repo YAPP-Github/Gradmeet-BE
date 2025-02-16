@@ -26,8 +26,8 @@ class UpdateParticipantInfoUseCase(
         val basicAddressInfo: Participant.AddressInfo,
         val additionalAddressInfo: Participant.AddressInfo?,
         val matchType: MatchType?,
-        var adConsent: Boolean,
-        var matchConsent: Boolean
+        val adConsent: Boolean,
+        val matchConsent: Boolean
     )
 
     data class Output(

@@ -8,7 +8,6 @@ import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId
-import io.swagger.v3.oas.annotations.media.Schema
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{

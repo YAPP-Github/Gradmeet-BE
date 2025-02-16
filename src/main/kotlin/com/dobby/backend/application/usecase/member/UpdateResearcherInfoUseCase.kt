@@ -22,7 +22,7 @@ class UpdateResearcherInfoUseCase(
         val univName: String,
         val major: String,
         val labInfo: String?,
-        var adConsent: Boolean,
+        val adConsent: Boolean,
     )
 
     data class Output(
