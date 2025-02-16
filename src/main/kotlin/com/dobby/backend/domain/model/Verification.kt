@@ -13,6 +13,10 @@ data class Verification(
         return this.copy(status = VerificationStatus.VERIFIED)
     }
 
+    fun update(): Verification {
+        return this.copy(updatedAt = LocalDateTime.now())
+    }
+
     companion object {
         fun newVerification(
             id : String,
