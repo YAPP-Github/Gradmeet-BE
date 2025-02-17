@@ -1,5 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
+import com.dobby.backend.application.aop.DistributedLock
+import com.dobby.backend.application.aop.LockKeyProvider
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
@@ -10,16 +12,24 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
+import org.springframework.context.ApplicationContext
+import org.springframework.stereotype.Component
 import java.time.LocalDate
 
-class GetExperimentPostDetailUseCase(
-    private val experimentPostGateway: ExperimentPostGateway
+@Component
+open class GetExperimentPostDetailUseCase(
+    private val experimentPostGateway: ExperimentPostGateway,
+    private val applicationContext: ApplicationContext
 ) : UseCase<GetExperimentPostDetailUseCase.Input, GetExperimentPostDetailUseCase.Output> {
 
     data class Input(
         val experimentPostId: String,
         val memberId: String?
-    )
+    ) : LockKeyProvider {
+        override fun getLockKey(): String {
+            return "experimentPost:$experimentPostId"
+        }
+    }
 
     data class Output(
         val experimentPostDetail: ExperimentPostDetail
@@ -66,7 +76,13 @@ class GetExperimentPostDetailUseCase(
         )
     }
 
-    override fun execute(input: Input): Output {
+    fun process(input: Input): Output {
+        val proxy = applicationContext.getBean(GetExperimentPostDetailUseCase::class.java)
+        return proxy.execute(input)
+    }
+
+    @DistributedLock(keyPrefix = "lock:experimentPost")
+    open override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException
         experimentPost.incrementViews()
