@@ -3,6 +3,7 @@ package com.dobby.backend.infrastructure.lock
 import com.dobby.backend.infrastructure.identifier.TsidIdGenerator
 import org.slf4j.LoggerFactory
 import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.data.redis.core.script.RedisScript
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
@@ -21,10 +22,19 @@ class RedisLockManager(
     }
 
     fun unlock(key: String, lockValue: String) {
-        val currentLock = redisTemplate.opsForValue().get(key)
-        // 현재 락이 내가 설정한 값과 같은 경우만 삭제
-        if (currentLock == lockValue) {
-            redisTemplate.delete(key)
+        val script = """
+            if redis.call("get", KEYS[1]) == ARGV[1] then
+                return redis.call("del", KEYS[1])
+            else
+                return 0
+            end
+        """.trimIndent()
+        val result = redisTemplate.execute(
+            RedisScript.of(script, Long::class.java),
+            listOf(key),
+            lockValue
+        )
+        if (result == 1L) {
             logger.info("Lock released successfully for key: {}", key)
         } else {
             logger.warn("Unlock failed: Lock value mismatch for key {}", key)
