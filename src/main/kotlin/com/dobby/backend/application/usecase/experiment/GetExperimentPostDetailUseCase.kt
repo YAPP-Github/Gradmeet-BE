@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.aop.DistributedLock
-import com.dobby.backend.application.aop.LockKeyProvider
+import com.dobby.backend.application.common.LockKeyProvider
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway

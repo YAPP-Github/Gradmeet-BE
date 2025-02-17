@@ -1,5 +1,6 @@
 package com.dobby.backend.application.aop
 
+import com.dobby.backend.application.common.LockKeyProvider
 import com.dobby.backend.infrastructure.lock.RedisLockManager
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
