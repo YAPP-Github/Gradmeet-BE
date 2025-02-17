@@ -53,6 +53,7 @@ dependencies {
 	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
@@ -79,6 +80,7 @@ dependencies {
 	testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
 	testImplementation("io.kotest:kotest-property:$koTestVersion")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
 
 	testImplementation("io.mockk:mockk:1.13.10")
 
