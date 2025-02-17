@@ -29,12 +29,13 @@ class RedisLockManager(
                 return 0
             end
         """.trimIndent()
-        val result = redisTemplate.execute(
+        val success = redisTemplate.execute(
             RedisScript.of(script, Long::class.java),
             listOf(key),
             lockValue
-        )
-        if (result == 1L) {
+        ) == 1L
+
+        if (success) {
             logger.info("Lock released successfully for key: {}", key)
         } else {
             logger.warn("Unlock failed: Lock value mismatch for key {}", key)
@@ -42,6 +43,6 @@ class RedisLockManager(
     }
 
     fun isLocked(key: String): Boolean {
-        return redisTemplate.opsForValue().get(key) != null
+        return redisTemplate.hasKey(key)
     }
 }
