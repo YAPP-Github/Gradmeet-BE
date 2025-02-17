@@ -54,7 +54,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
-	implementation("org.redisson:redisson-spring-boot-starter:3.44.0")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
