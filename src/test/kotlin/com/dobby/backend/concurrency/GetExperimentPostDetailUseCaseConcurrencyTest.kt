@@ -14,10 +14,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -125,20 +122,23 @@ class GetExperimentPostDetailUseCaseConcurrencyTest {
         val successCounter = AtomicInteger(0)
 
         // when
-        (1..numberOfRequests).forEach { index ->
-            GlobalScope.launch(Dispatchers.IO) {
-                try {
-                    getExperimentPostDetailUseCase.process(
-                        GetExperimentPostDetailUseCase.Input(
-                            experimentPostId = experimentPostId,
-                            memberId = "member-$index"
+        runBlocking {
+            val scope = CoroutineScope(Dispatchers.IO)
+            (1..numberOfRequests).forEach { index ->
+                scope.launch {
+                    try {
+                        getExperimentPostDetailUseCase.process(
+                            GetExperimentPostDetailUseCase.Input(
+                                experimentPostId = experimentPostId,
+                                memberId = "member-$index"
+                            )
                         )
-                    )
-                    successCounter.incrementAndGet()
-                } catch (e: Exception) {
-                    println("요청 $index 에서 예외 발생: ${e.message}")
-                } finally {
-                    latch.countDown()
+                        successCounter.incrementAndGet()
+                    } catch (e: Exception) {
+                        println("요청 $index 에서 예외 발생: ${e.message}")
+                    } finally {
+                        latch.countDown()
+                    }
                 }
             }
         }
