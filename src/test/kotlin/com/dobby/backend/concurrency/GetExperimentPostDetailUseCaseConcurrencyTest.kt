@@ -123,21 +123,21 @@ class GetExperimentPostDetailUseCaseConcurrencyTest {
 
         // when
         runBlocking {
-            val scope = CoroutineScope(Dispatchers.IO)
-            (1..numberOfRequests).forEach { index ->
-                scope.launch {
-                    try {
-                        getExperimentPostDetailUseCase.process(
-                            GetExperimentPostDetailUseCase.Input(
-                                experimentPostId = experimentPostId,
-                                memberId = "member-$index"
+            coroutineScope {
+                (1..numberOfRequests).forEach { index ->
+                    launch(Dispatchers.IO) {
+                        try {
+                            getExperimentPostDetailUseCase.process(
+                                GetExperimentPostDetailUseCase.Input(
+                                    experimentPostId = experimentPostId,
+                                    memberId = "member-$index"
+                                )
                             )
-                        )
-                        successCounter.incrementAndGet()
-                    } catch (e: Exception) {
-                        println("요청 $index 에서 예외 발생: ${e.message}")
-                    } finally {
-                        latch.countDown()
+                            successCounter.incrementAndGet()
+                        } catch (_: Exception) {
+                        } finally {
+                            latch.countDown()
+                        }
                     }
                 }
             }
