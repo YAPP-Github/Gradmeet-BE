@@ -15,14 +15,12 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.context.ApplicationContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
     val experimentPostGateway = mockk<ExperimentPostGateway>()
-    val applicationContext = mockk<ApplicationContext>()
-    val getExperimentPostDetailUseCase = GetExperimentPostDetailUseCase(experimentPostGateway, applicationContext)
+    val getExperimentPostDetailUseCase = GetExperimentPostDetailUseCase(experimentPostGateway)
 
     given("유효한 experimentPostId가 주어졌을 때") {
         val experimentPostId = "1"

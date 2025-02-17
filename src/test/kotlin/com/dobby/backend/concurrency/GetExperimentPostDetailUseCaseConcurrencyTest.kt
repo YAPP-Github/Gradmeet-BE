@@ -1,6 +1,7 @@
 package com.dobby.backend.concurrency
 
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.backend.config.RedisTestContainer
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
@@ -14,44 +15,33 @@ import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
 import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
 import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
-import org.springframework.beans.factory.annotation.Autowired
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.ApplicationContext
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.util.ReflectionTestUtils
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
 
-@ExtendWith(SpringExtension::class)
 @SpringBootTest
 @ActiveProfiles("test")
-class GetExperimentPostDetailUseCaseConcurrencyTest {
+class GetExperimentPostDetailUseCaseConcurrencyTest(
+    private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
+    private val experimentPostGateway: ExperimentPostGateway
+) : BehaviorSpec({
 
-    @Autowired
-    private lateinit var applicationContext: ApplicationContext
-    private lateinit var getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase
-    private lateinit var experimentPostGateway: ExperimentPostGateway
+    listeners(RedisTestContainer)
 
-    @BeforeEach
-    fun setUp() {
-        experimentPostGateway = mock(ExperimentPostGateway::class.java)
-        getExperimentPostDetailUseCase = applicationContext.getBean(GetExperimentPostDetailUseCase::class.java)
-        ReflectionTestUtils.setField(getExperimentPostDetailUseCase, "experimentPostGateway", experimentPostGateway)
-    }
-
-    @Test
-    fun `동시에 여러 요청이 들어와도 조회수가 정확히 1 증가해야 한다`() = runBlocking {
-        // given
+    Given("동시에 여러 요청이 들어오는 경우") {
         val experimentPostId = "123"
         val initialViews = 100
 
@@ -109,44 +99,55 @@ class GetExperimentPostDetailUseCaseConcurrencyTest {
             images = mutableListOf()
         )
 
-        `when`(experimentPostGateway.findById(experimentPostId)).thenReturn(experimentPost)
+        whenever(experimentPostGateway.findById(experimentPostId))
+            .thenReturn(experimentPost)
 
         doAnswer { invocation ->
-            invocation.arguments[0] as ExperimentPost
+            val savedPost = invocation.arguments[0] as ExperimentPost
+            experimentPost.views = savedPost.views
             null
-        }.`when`(experimentPostGateway).save(any())
+        }.whenever(experimentPostGateway).save(any())
 
-        // 동시에 요청할 횟수
         val numberOfRequests = 10
         val latch = CountDownLatch(numberOfRequests)
         val successCounter = AtomicInteger(0)
 
-        // when
-        runBlocking {
-            coroutineScope {
-                (1..numberOfRequests).forEach { index ->
-                    launch(Dispatchers.IO) {
-                        try {
-                            getExperimentPostDetailUseCase.process(
-                                GetExperimentPostDetailUseCase.Input(
-                                    experimentPostId = experimentPostId,
-                                    memberId = "member-$index"
+        `when`("동시에 여러 요청이 들어오면") {
+            runBlocking {
+                coroutineScope {
+                    repeat(numberOfRequests) { index ->
+                        launch(Dispatchers.IO) {
+                            try {
+                                getExperimentPostDetailUseCase.execute(
+                                    GetExperimentPostDetailUseCase.Input(
+                                        experimentPostId = experimentPostId,
+                                        memberId = "member-$index"
+                                    )
                                 )
-                            )
-                            successCounter.incrementAndGet()
-                        } catch (_: Exception) {
-                        } finally {
-                            latch.countDown()
+                                successCounter.incrementAndGet()
+                            } catch (_: Exception) {
+                                // 예외 무시
+                            } finally {
+                                latch.countDown()
+                            }
                         }
                     }
                 }
             }
+
+            latch.await()
+
+            Then("조회수는 단 1회 증가해야 한다") {
+                verify(experimentPostGateway)
+                    .save(any())
+                experimentPost.views shouldBe (initialViews + 1)
+            }
         }
-
-        latch.await()
-
-        // then
-        verify(experimentPostGateway, times(1)).save(experimentPost)
-        assertEquals(initialViews + 1, experimentPost.views, "조회수가 단 1회 증가해야 합니다.")
+    }
+}) {
+    @TestConfiguration
+    class TestConfig {
+        @Bean
+        fun experimentPostGateway(): ExperimentPostGateway = mock()
     }
 }

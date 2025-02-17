@@ -12,14 +12,10 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
 import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
-import org.springframework.context.ApplicationContext
-import org.springframework.stereotype.Component
 import java.time.LocalDate
 
-@Component
 open class GetExperimentPostDetailUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
-    private val applicationContext: ApplicationContext
 ) : UseCase<GetExperimentPostDetailUseCase.Input, GetExperimentPostDetailUseCase.Output> {
 
     data class Input(
@@ -74,11 +70,6 @@ open class GetExperimentPostDetailUseCase(
             val area: Area?,
             val detailedAddress: String?
         )
-    }
-
-    fun process(input: Input): Output {
-        val proxy = applicationContext.getBean(GetExperimentPostDetailUseCase::class.java)
-        return proxy.execute(input)
     }
 
     @DistributedLock(keyPrefix = "lock:experimentPost")
