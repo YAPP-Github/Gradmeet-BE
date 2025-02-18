@@ -36,7 +36,7 @@ class MemberEntity(
     @Column(name = "name", length = 10, nullable = true)
     val name: String,
 
-    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     val experimentPosts: List<ExperimentPostEntity> = mutableListOf(),
 
     @Column(name = "created_at", nullable = false)
