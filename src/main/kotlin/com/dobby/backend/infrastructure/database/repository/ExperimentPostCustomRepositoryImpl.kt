@@ -24,6 +24,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.Period
 
 @Repository
 class ExperimentPostCustomRepositoryImpl (
@@ -222,7 +223,7 @@ class ExperimentPostCustomRepositoryImpl (
         val targetGroup = QTargetGroupEntity.targetGroupEntity
         val participant = QParticipantEntity.participantEntity
         val member = QMemberEntity.memberEntity
-        val memberConsent = QMemberConsentEntity.memberConsentEntity
+       val memberConsent = QMemberConsentEntity.memberConsentEntity
 
         val currentTime = LocalDateTime.now()
 
@@ -266,8 +267,8 @@ class ExperimentPostCustomRepositoryImpl (
             val birthDate = participantEntity.birthDate
 
             contactEmail?.let {
-                val currentYear = LocalDate.now().year
-                val participantAge = currentYear - birthDate.year + 1
+                val today = LocalDate.now()
+                val participantAge = Period.between(birthDate, today).years
 
                 val matchedPosts = todayPosts.filter { post ->
                     val matchResults = listOf(
@@ -333,7 +334,7 @@ class ExperimentPostCustomRepositoryImpl (
     ): Boolean {
         if (participantMatchType == ALL || participantMatchType == null)
             return true
-        if (postMatchType == null)
+        if (postMatchType == OFFLINE || postMatchType == ALL || postMatchType == null)
             return true
         return postMatchType == participantMatchType
     }
