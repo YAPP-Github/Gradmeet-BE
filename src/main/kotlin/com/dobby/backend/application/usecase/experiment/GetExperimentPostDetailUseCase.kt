@@ -73,15 +73,20 @@ open class GetExperimentPostDetailUseCase(
     }
 
     @DistributedLock(keyPrefix = "lock:experimentPost")
-    open override fun execute(input: Input): Output {
+    override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException
-        experimentPost.incrementViews()
-        experimentPostGateway.save(experimentPost)
+        incrementViewsWithLock(experimentPost)
 
         return Output(
             experimentPostDetail = experimentPost.toExperimentPostDetail(input.memberId)
         )
+    }
+
+    @DistributedLock(keyPrefix = "lock:experimentPost")
+    open fun incrementViewsWithLock(experimentPost: ExperimentPost) {
+        experimentPost.incrementViews()
+        experimentPostGateway.save(experimentPost)
     }
 }
 
