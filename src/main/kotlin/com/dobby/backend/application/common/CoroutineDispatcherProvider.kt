@@ -1,4 +1,4 @@
-package com.dobby.backend.application.service
+package com.dobby.backend.application.common
 
 import kotlinx.coroutines.CoroutineDispatcher
 

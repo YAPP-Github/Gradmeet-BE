@@ -1,5 +1,6 @@
 package com.dobby.backend.application.usecase.member.email
 
+import com.dobby.backend.domain.EmailTemplateLoader
 import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.domain.model.member.Member
@@ -10,6 +11,7 @@ import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
+import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
@@ -31,7 +33,9 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
     val emailGateway = mockk<EmailGateway>(relaxed = true)
     val memberGateway = mockk<MemberGateway>(relaxed = true)
     val urlGeneratorGateway = mockk<UrlGeneratorGateway>(relaxed = true)
-    val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway, memberGateway)
+    val memberConsentGateway = mockk<MemberConsentGateway>(relaxed = true)
+    val emailTemplateLoader = mockk<EmailTemplateLoader>(relaxed = true)
+    val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway, memberGateway, memberConsentGateway, emailTemplateLoader)
 
     given("이메일 매칭 발송을 실행할 때") {
 
@@ -90,13 +94,13 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             )
             val input = SendMatchingEmailUseCase.Input(contactEmail, experimentPosts, LocalDateTime.now())
 
-            coEvery { emailGateway.sendEmail(any(), any(), any()) } just Runs
+            coEvery { emailGateway.sendEmail(any(), any(), any(), true) } just Runs
 
             then("이메일 전송이 성공해야 한다")  {
                 runTest {
                     val output = sendMatchingEmailUseCase.execute(input)
                     output.isSuccess shouldBe true
-                    coVerify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any())
+                    coVerify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any(), true)
                     }
                 }
             }

@@ -1,8 +1,9 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.service.CoroutineDispatcherProvider
-import com.dobby.backend.application.service.TransactionExecutor
+import com.dobby.backend.application.common.CoroutineDispatcherProvider
+import com.dobby.backend.application.common.TransactionExecutor
 import com.dobby.backend.application.usecase.AsyncUseCase
+import com.dobby.backend.domain.EmailTemplateLoader
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.CacheGateway
@@ -14,8 +15,6 @@ import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
@@ -23,7 +22,8 @@ class SendEmailCodeUseCase(
     private val cacheGateway: CacheGateway,
     private val idGenerator: IdGenerator,
     private val dispatcherProvider: CoroutineDispatcherProvider,
-    private val transactionExecutor: TransactionExecutor
+    private val transactionExecutor: TransactionExecutor,
+    private val emailTemplateLoader: EmailTemplateLoader
 ) : AsyncUseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
 
     data class Input(
@@ -46,9 +46,7 @@ class SendEmailCodeUseCase(
         val code = EmailUtils.generateCode()
         CoroutineScope(dispatcherProvider.io).launch {
             RetryUtils.retryWithBackOff {
-                transactionExecutor.execute {
-                    reflectVerification(input.univEmail, code)
-                }
+                reflectVerification(input.univEmail, code)
             }
         }
 
@@ -69,42 +67,39 @@ class SendEmailCodeUseCase(
             throw EmailAlreadyVerifiedException
     }
 
-    private fun reflectVerification(univEmail: String, code: String) {
-        val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
+    private suspend fun reflectVerification(univEmail: String, code: String) {
+        val isNew = try {
+            transactionExecutor.execute {
+                val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
 
-        if(existingInfo != null) {
-            cacheGateway.setCode("verification:${univEmail}", code)
-            val updatedVerification = existingInfo.update()
-            verificationGateway.save(updatedVerification)
+                if(existingInfo != null) {
+                    val updatedVerification = existingInfo.update()
+                    verificationGateway.save(updatedVerification)
+                    false
+                }
+                else {
+                    val newVerification = Verification.newVerification(
+                        id = idGenerator.generateId(),
+                        univEmail = univEmail
+                    )
+                    verificationGateway.save(newVerification)
+                    true
+                }
+            }
+        } catch (e: Exception) {
+            return
         }
-        else {
-            val newVerification = Verification.newVerification(
-                id = idGenerator.generateId(),
-                univEmail = univEmail
-            )
-            verificationGateway.save(newVerification)
-            cacheGateway.setCode("verification:${univEmail}", code)
-        }
-    }
-
-    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
-        val content = EMAIL_CONTENT_TEMPLATE.format(code)
-
-        RetryUtils.retryWithBackOff {
-            emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
-        }
+        cacheGateway.setCode("verification:${univEmail}", code)
     }
 
     companion object {
-        private const val EMAIL_SUBJECT = "그라밋 - 이메일 인증 코드 입니다."
-        private const val EMAIL_CONTENT_TEMPLATE = """
-            안녕하세요, 그라밋입니다.
-            
-            아래의 코드는 이메일 인증을 위한 코드입니다:
-            
-            %s
-            
-            10분 이내에 인증을 완료해주세요.
-        """
+        private const val EMAIL_SUBJECT = "[그라밋] 학교 메일 인증 코드가 도착했어요."
+    }
+
+    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
+        val content = emailTemplateLoader.loadVerificationTemplate(code)
+        RetryUtils.retryWithBackOff {
+            emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content, isHtml = true)
+        }
     }
 }
