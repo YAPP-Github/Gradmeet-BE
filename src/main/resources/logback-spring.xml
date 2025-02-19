@@ -34,7 +34,7 @@
             <accessKeyId>${AWS_ACCESS_KEY_ID}</accessKeyId>
             <secretAccessKey>${AWS_SECRET_ACCESS_KEY}</secretAccessKey>
         </appender>
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="aws_cloud_watch_log"/>
         </root>
     </springProfile>
