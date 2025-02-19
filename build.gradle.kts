@@ -50,9 +50,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
-	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4") {
-		exclude(group = "com.amazonaws")
-	}
+	implementation("software.amazon.awssdk:s3:2.20.59")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
