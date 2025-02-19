@@ -31,6 +31,8 @@
             <maxFlushTimeMillis>30000</maxFlushTimeMillis>
             <maxBlockTimeMillis>5000</maxBlockTimeMillis>
             <retentionTimeDays>0</retentionTimeDays>
+            <accessKeyId>${AWS_ACCESS_KEY_ID}</accessKeyId>
+            <secretAccessKey>${AWS_SECRET_ACCESS_KEY}</secretAccessKey>
         </appender>
         <root level="DEBUG">
             <appender-ref ref="aws_cloud_watch_log"/>
@@ -51,6 +53,8 @@
             <maxFlushTimeMillis>30000</maxFlushTimeMillis>
             <maxBlockTimeMillis>5000</maxBlockTimeMillis>
             <retentionTimeDays>0</retentionTimeDays>
+            <accessKeyId>${AWS_ACCESS_KEY_ID}</accessKeyId>
+            <secretAccessKey>${AWS_SECRET_ACCESS_KEY}</secretAccessKey>
         </appender>
         <root level="INFO">
             <appender-ref ref="aws_cloud_watch_log"/>
