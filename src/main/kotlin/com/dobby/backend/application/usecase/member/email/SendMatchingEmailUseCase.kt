@@ -75,9 +75,7 @@ class SendMatchingEmailUseCase(
                     "title" to post.title,
                     "place" to if (index == 0) place else "",
                     "uploadDate" to LocalDate.now().toString(),
-                    "timeRequired" to (post.timeRequired?.toDisplayString() ?: "공고 참고"),
                     "reward" to post.reward,
-                    "time" to post.count.toString()+"회",
                     "postUrl" to postUrl
                 )
             }
