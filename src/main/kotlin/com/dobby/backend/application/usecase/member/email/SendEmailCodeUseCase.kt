@@ -3,6 +3,7 @@ package com.dobby.backend.application.usecase.member.email
 import com.dobby.backend.application.service.CoroutineDispatcherProvider
 import com.dobby.backend.application.service.TransactionExecutor
 import com.dobby.backend.application.usecase.AsyncUseCase
+import com.dobby.backend.domain.EmailTemplateLoader
 import com.dobby.backend.domain.exception.*
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.domain.gateway.CacheGateway
@@ -14,8 +15,6 @@ import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
@@ -23,7 +22,8 @@ class SendEmailCodeUseCase(
     private val cacheGateway: CacheGateway,
     private val idGenerator: IdGenerator,
     private val dispatcherProvider: CoroutineDispatcherProvider,
-    private val transactionExecutor: TransactionExecutor
+    private val transactionExecutor: TransactionExecutor,
+    private val emailTemplateLoader: EmailTemplateLoader
 ) : AsyncUseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
 
     data class Input(
@@ -87,24 +87,14 @@ class SendEmailCodeUseCase(
         }
     }
 
-    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
-        val content = EMAIL_CONTENT_TEMPLATE.format(code)
-
-        RetryUtils.retryWithBackOff {
-            emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content)
-        }
+    companion object {
+        private const val EMAIL_SUBJECT = "[그라밋🥼] 연구자님, 이메일 인증 코드가 왔어요."
     }
 
-    companion object {
-        private const val EMAIL_SUBJECT = "그라밋 - 이메일 인증 코드 입니다."
-        private const val EMAIL_CONTENT_TEMPLATE = """
-            안녕하세요, 그라밋입니다.
-            
-            아래의 코드는 이메일 인증을 위한 코드입니다:
-            
-            %s
-            
-            10분 이내에 인증을 완료해주세요.
-        """
+    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
+        val content = emailTemplateLoader.loadVerificationTemplate(code)
+        RetryUtils.retryWithBackOff {
+            emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content, isHtml = true)
+        }
     }
 }
