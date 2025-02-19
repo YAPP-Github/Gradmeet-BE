@@ -1,13 +1,12 @@
 package com.dobby.backend.infrastructure.config
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.dobby.backend.infrastructure.config.properties.S3Properties
-import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
 @Configuration
 class S3Config(
@@ -15,12 +14,13 @@ class S3Config(
 ) {
 
     @Bean
-    fun amazonS3Client(): AmazonS3 {
-        val awsCredentialsProvider = BasicAWSCredentials(properties.credentials.accessKey, properties.credentials.secretKey)
-
-        return AmazonS3ClientBuilder.standard()
-            .withRegion(properties.region.static)
-            .withCredentials(AWSStaticCredentialsProvider(awsCredentialsProvider))
+    fun s3Presigner(): S3Presigner {
+        val awsCredentialsProvider = StaticCredentialsProvider.create(
+            AwsBasicCredentials.create(properties.credentials.accessKey, properties.credentials.secretKey)
+        )
+        return S3Presigner.builder()
+            .region(Region.AP_NORTHEAST_2)
+            .credentialsProvider(awsCredentialsProvider)
             .build()
     }
 }

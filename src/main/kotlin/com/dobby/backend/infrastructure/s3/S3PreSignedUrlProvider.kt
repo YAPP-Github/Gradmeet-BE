@@ -1,20 +1,17 @@
 package com.dobby.backend.infrastructure.s3
 
-import com.amazonaws.AmazonServiceException
-import com.amazonaws.HttpMethod
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.Headers
-import com.amazonaws.services.s3.model.CannedAccessControlList
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.domain.IdGenerator
 import com.dobby.backend.infrastructure.config.properties.S3Properties
 import org.springframework.stereotype.Component
-import java.util.*
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
+import software.amazon.awssdk.services.s3.model.PutObjectRequest
+import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest
+import java.time.Duration
 
 @Component
 class S3PreSignedUrlProvider(
-    private val amazonS3Client: AmazonS3,
+    private val s3Presigner: S3Presigner,
     private val idGenerator: IdGenerator,
     properties: S3Properties
 ) {
@@ -25,27 +22,30 @@ class S3PreSignedUrlProvider(
         return generatePreSignedUrl(generatePreSignedUrlRequest)
     }
 
-    private fun generatePreSignedUrl(generatePresignedUrlRequest: GeneratePresignedUrlRequest): String {
+    private fun generatePreSignedUrl(putObjectPresignRequest: PutObjectPresignRequest): String {
         return try {
-            amazonS3Client.generatePresignedUrl(generatePresignedUrlRequest).toString()
-        } catch (e: AmazonServiceException) {
+            s3Presigner.presignPutObject(putObjectPresignRequest).url().toString()
+        } catch (e: Exception) {
             throw IllegalStateException("Pre-signed Url 생성 실패했습니다.")
         }
     }
 
-    private fun getGenerateImagePreSignedUrlRequest(directory: String, fileName: String): GeneratePresignedUrlRequest {
+    private fun getGenerateImagePreSignedUrlRequest(directory: String, fileName: String): PutObjectPresignRequest {
         val savedImageName = generateUniqueImageName(fileName)
         val savedImagePath = "images/$directory/$savedImageName"
         return getPreSignedUrlRequest(bucket, savedImagePath)
     }
 
-    private fun getPreSignedUrlRequest(bucket: String, fileName: String): GeneratePresignedUrlRequest {
-        return GeneratePresignedUrlRequest(bucket, fileName)
-            .withMethod(HttpMethod.PUT)
-            .withExpiration(Date(System.currentTimeMillis() + 180000))
-            .apply {
-                addRequestParameter(Headers.S3_CANNED_ACL, CannedAccessControlList.PublicRead.toString())
-            }
+    private fun getPreSignedUrlRequest(bucket: String, key: String): PutObjectPresignRequest {
+        val putObjectRequest = PutObjectRequest.builder()
+            .bucket(bucket)
+            .key(key)
+            .build()
+
+        return PutObjectPresignRequest.builder()
+            .putObjectRequest(putObjectRequest)
+            .signatureDuration(Duration.ofSeconds(300))
+            .build()
     }
 
     private fun generateUniqueImageName(fileName: String): String {
