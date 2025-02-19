@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.service.CoroutineDispatcherProvider
-import com.dobby.backend.application.service.TransactionExecutor
+import com.dobby.backend.application.common.CoroutineDispatcherProvider
+import com.dobby.backend.application.common.TransactionExecutor
 import com.dobby.backend.domain.EmailTemplateLoader
 import com.dobby.backend.domain.exception.EmailDomainNotFoundException
 import com.dobby.backend.domain.exception.EmailNotUnivException

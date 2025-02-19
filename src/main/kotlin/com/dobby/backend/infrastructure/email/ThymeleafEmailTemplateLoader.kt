@@ -1,7 +1,6 @@
 package com.dobby.backend.infrastructure.email
 
 import com.dobby.backend.domain.EmailTemplateLoader
-import com.dobby.backend.infrastructure.config.properties.EmailProperties
 import com.dobby.backend.infrastructure.config.properties.TemplateProperties
 import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine

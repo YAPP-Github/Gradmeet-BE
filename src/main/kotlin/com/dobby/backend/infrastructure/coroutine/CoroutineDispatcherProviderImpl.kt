@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.coroutine
 
-import com.dobby.backend.application.service.CoroutineDispatcherProvider
+import com.dobby.backend.application.common.CoroutineDispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.springframework.stereotype.Component

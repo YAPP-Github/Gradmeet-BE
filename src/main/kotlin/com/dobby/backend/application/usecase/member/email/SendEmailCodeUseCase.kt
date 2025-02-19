@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.service.CoroutineDispatcherProvider
-import com.dobby.backend.application.service.TransactionExecutor
+import com.dobby.backend.application.common.CoroutineDispatcherProvider
+import com.dobby.backend.application.common.TransactionExecutor
 import com.dobby.backend.application.usecase.AsyncUseCase
 import com.dobby.backend.domain.EmailTemplateLoader
 import com.dobby.backend.domain.exception.*
@@ -46,9 +46,7 @@ class SendEmailCodeUseCase(
         val code = EmailUtils.generateCode()
         CoroutineScope(dispatcherProvider.io).launch {
             RetryUtils.retryWithBackOff {
-                transactionExecutor.execute {
-                    reflectVerification(input.univEmail, code)
-                }
+                reflectVerification(input.univEmail, code)
             }
         }
 
@@ -69,22 +67,29 @@ class SendEmailCodeUseCase(
             throw EmailAlreadyVerifiedException
     }
 
-    private fun reflectVerification(univEmail: String, code: String) {
-        val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
+    private suspend fun reflectVerification(univEmail: String, code: String) {
+        val isNew = try {
+            transactionExecutor.execute {
+                val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
 
-        if(existingInfo != null) {
-            cacheGateway.setCode("verification:${univEmail}", code)
-            val updatedVerification = existingInfo.update()
-            verificationGateway.save(updatedVerification)
+                if(existingInfo != null) {
+                    val updatedVerification = existingInfo.update()
+                    verificationGateway.save(updatedVerification)
+                    false
+                }
+                else {
+                    val newVerification = Verification.newVerification(
+                        id = idGenerator.generateId(),
+                        univEmail = univEmail
+                    )
+                    verificationGateway.save(newVerification)
+                    true
+                }
+            }
+        } catch (e: Exception) {
+            return
         }
-        else {
-            val newVerification = Verification.newVerification(
-                id = idGenerator.generateId(),
-                univEmail = univEmail
-            )
-            verificationGateway.save(newVerification)
-            cacheGateway.setCode("verification:${univEmail}", code)
-        }
+        cacheGateway.setCode("verification:${univEmail}", code)
     }
 
     companion object {

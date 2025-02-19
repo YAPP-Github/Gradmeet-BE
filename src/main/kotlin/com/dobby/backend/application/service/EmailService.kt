@@ -1,5 +1,7 @@
 package com.dobby.backend.application.service
 
+import com.dobby.backend.application.common.CoroutineDispatcherProvider
+import com.dobby.backend.application.common.TransactionExecutor
 import com.dobby.backend.application.usecase.member.email.SendEmailCodeUseCase
 import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
 import com.dobby.backend.application.usecase.member.email.VerifyEmailUseCase
