@@ -14,4 +14,5 @@ interface MemberGateway {
     fun findContactEmailByMemberId(memberId: String): String
     fun findByContactEmail(contactEmail: String): Member?
     fun findRoleByIdAndDeletedAtIsNull(memberId: String): RoleType?
+    fun findMemberIdByName(name: String): String?
 }

@@ -26,8 +26,8 @@ class SchedulerController(
         description = "데모데이용 테스트 API입니다."
     )
     fun updateMemberConsent(
-        @RequestParam memberId: String
+        @RequestParam name: String
     ) {
-        schedulerService.updateMemberConsent(memberId)
+        schedulerService.updateMemberConsent(name)
     }
 }
