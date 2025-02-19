@@ -59,4 +59,8 @@ class MemberGatewayImpl(
     override fun findRoleByIdAndDeletedAtIsNull(memberId: String): RoleType? {
         return memberRepository.findRoleByIdAndDeletedAtIsNull(memberId)
     }
+
+    override fun findMemberIdByName(name: String): String? {
+        return memberRepository.findTopByNameOrderByIdDesc(name)?.id
+    }
 }

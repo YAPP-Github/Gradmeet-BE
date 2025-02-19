@@ -18,14 +18,16 @@ class MemberConsentEntity (
     @Column(name = "ad_consent", nullable = false)
     val adConsent: Boolean,
 
+    // TODO: 데모데이 이후 val로 변경 예정
     @Column(name = "match_consent", nullable = false)
-    val matchConsent: Boolean,
+    var matchConsent: Boolean,
 
     @Column(name = "ad_consented_at")
     val adConsentedAt: LocalDate?,
 
+    // TODO: 데모데이 이후 val로 변경 예정
     @Column(name = "match_consented_at")
-    val matchConsentedAt: LocalDate?,
+    var matchConsentedAt: LocalDate?,
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,

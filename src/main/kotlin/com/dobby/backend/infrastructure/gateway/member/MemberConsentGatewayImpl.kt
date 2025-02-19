@@ -2,9 +2,7 @@ package com.dobby.backend.infrastructure.gateway.member
 
 import com.dobby.backend.domain.gateway.member.MemberConsentGateway
 import com.dobby.backend.domain.model.member.MemberConsent
-import com.dobby.backend.domain.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.MemberConsentEntity
-import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 import com.dobby.backend.infrastructure.database.repository.MemberConsentRepository
 import org.springframework.stereotype.Component
 
@@ -21,5 +19,14 @@ class MemberConsentGatewayImpl(
     override fun findByMemberId(memberId: String): MemberConsent? {
         return memberConsentRepository
                 .findByMemberId(memberId)?.toDomain()
+    }
+
+    override fun updateMatchConsent(memberId: String, matchConsent: Boolean): MemberConsent {
+        val entity = memberConsentRepository.findByMemberId(memberId)
+            ?: throw IllegalArgumentException("MemberConsent not found for memberId: $memberId")
+        entity.matchConsent = matchConsent
+        entity.matchConsentedAt = null
+        val updatedEntity = memberConsentRepository.save(entity)
+        return updatedEntity.toDomain()
     }
 }
