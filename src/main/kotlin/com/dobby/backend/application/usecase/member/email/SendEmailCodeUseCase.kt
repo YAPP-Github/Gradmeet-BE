@@ -88,7 +88,7 @@ class SendEmailCodeUseCase(
     }
 
     companion object {
-        private const val EMAIL_SUBJECT = "[그라밋🥼] 연구자님, 이메일 인증 코드가 왔어요."
+        private const val EMAIL_SUBJECT = "[그라밋] 학교 메일 인증 코드가 도착했어요."
     }
 
     private suspend fun sendVerificationEmail(univEmail: String, code: String) {

@@ -42,7 +42,7 @@ class SendMatchingEmailUseCase(
         val consentDate = memberConsentGateway.findByMemberId(member.id)!!.matchConsentedAt!!
             .format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 
-        val title = getEmailTitle(input.currentDateTime)
+        val title = getEmailTitle(member.name)
         val matchingPostList = formatPostList(input.experimentPosts)
         val content = emailTemplateLoader.loadMatchingTemplate(member.name, matchingPostList, consentDate)
 
@@ -60,9 +60,8 @@ class SendMatchingEmailUseCase(
         if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
     }
 
-    private fun getEmailTitle(currentDateTime: LocalDateTime): String {
-        val todayDate = currentDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        return "[그라밋🔬] $todayDate 오늘의 추천 실험 공고를 확인해보세요!"
+    private fun getEmailTitle(memberName: String): String {
+        return "[그라밋] $memberName 님에게 딱 맞는 오늘의 실험 공고! 참여하면 보상이 기다려요 💰"
     }
 
     private fun formatPostList(experimentPosts: List<ExperimentPost>): List<Map<String, String>> {
