@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="x-apple-disable-message-reformatting"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
+</head>
+
+<body style="background-color: #fff; font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; color: #353b3d; margin: 0 auto; width: 335px; max-height: 800px; overflow-y: auto;">
+
+<!-- ✅ 이메일 컨테이너 -->
+<table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 400px; min-width: 335px;">
+    <tbody>
+    <tr>
+        <td>
+            <!-- 로고 -->
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-bottom: 8px;">
+                <tbody>
+                <tr>
+                    <td>
+                        <img alt="그라밋 로고" height="24"
+                             src="https://dobby-prod-bucket.s3.ap-northeast-2.amazonaws.com/images/logo/gradmeet_logo.png"
+                             style="display: block; outline: none; border: none; text-decoration: none;" width="80.4"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- ✅ 메인 박스 -->
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                   style="background-color: #f6f8f9; border-radius: 5px; padding: 30px 20px 40px 20px;">
+                <tbody>
+                <tr>
+                    <td>
+                        <h1 style="font-size: 20px; line-height: 26px;">
+                            <span th:text="${memberName}"></span>님과 꼭 맞는 <br/> 공고를 찾아왔어요! 🧚
+                        </h1>
+                        <p style="font-size: 11px; line-height: 16px; margin-top: 8px; margin-bottom: 20px; color: #535d62;">
+                            자세한 실험 내용은 공고 내용을 확인해 주세요.
+                        </p>
+
+                        <div th:each="post : ${matchingPosts}" style="margin-top: 12px; margin-bottom: 16px;">
+                            <p style="font-size: 11px; color: #6d7b82; padding-bottom: 6px;">
+                                <img src="https://dobby-prod-bucket.s3.ap-northeast-2.amazonaws.com/images/logo/ic_ping.png" width="14" height="14" style="vertical-align: middle; margin-right: 4px;" />
+                                <span th:text="${post.place ?: '비대면'}"></span>
+                            </p>
+
+                            <a th:href="${post.postUrl}" style="text-decoration: none; color: inherit; display: block;">
+                                <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                       style="background-color: #ffffff; padding: 16px; border-radius: 8px;">
+                                    <tbody>
+                                    <tr>
+                                        <td style="font-size: 11px; color: #6d7b82; padding-bottom: 6px;">
+                                            <span th:text="${post.uploadDate}"></span> |
+                                            <span style="font-weight: bold; color: #26b5be;"
+                                                  th:utext="${post.reward} + ' (' + ${post.time} + ' 참여시)'"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 14px; color: #353b3d; font-weight: bold;">
+                                            <span th:utext="${post.title}"></span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </a>
+                        </div>
+
+                        <!-- ✅ 더 많은 공고 보기 버튼 -->
+                        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-bottom: 0px; padding-bottom: 0px;">
+                            <tbody>
+                            <tr>
+                                <td style="text-align: center; padding: 15px 0 0 0;">
+                                    <a href="https://gradmeet.co.kr/" target="_blank" rel="noopener noreferrer"
+                                       style="background-color: #26b5be; border-radius: 30px; color: #fff;
+                          font-size: 14px; font-weight: 500; padding: 12px 20px;
+                          text-decoration: none; display: inline-block;">
+                                        더 많은 공고 보기
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- ✅ 푸터 -->
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                   style="background-color: #e4e8eb; padding: 16px 16px 24px 16px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                <tbody>
+                <tr>
+                    <td>
+                        <p style="font-size: 9px; color: #6d7b82;">
+                            본 메일은 발신전용입니다. <br/>
+                            궁금하신 사항은 <a href="mailto:team.gradmeet@gmail.com" style="color:#26B5BE; text-decoration: none; font-size: 9px;">
+                            team.gradmeet@gmail.com</a> 로 문의해 주시면 답변 드리겠습니다.
+                        </p><br/>
+                        <p style="font-size: 9px; color: #6d7b82;">
+                            회원님은 <span th:text="${consentDate}"></span> 현재 메일수신에 동의하셨기에 본 메일을 발송합니다.<br/>
+                            메일 수신을 원하지 않으시면 로그인 후 [내 정보 수정] 페이지에서 수신 여부를 변경할 수 있습니다.
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
