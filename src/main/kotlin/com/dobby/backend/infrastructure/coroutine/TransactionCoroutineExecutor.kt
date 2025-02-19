@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.coroutine
 
-import com.dobby.backend.application.service.TransactionExecutor
+import com.dobby.backend.application.common.TransactionExecutor
 import kotlinx.coroutines.*
 import org.springframework.stereotype.Component
 import org.springframework.transaction.support.TransactionTemplate
