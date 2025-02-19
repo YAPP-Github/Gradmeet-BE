@@ -17,4 +17,5 @@ interface MemberRepository : JpaRepository<MemberEntity, String> {
     @Query("SELECT m.role FROM MemberEntity m WHERE m.id = :memberId AND m.deletedAt IS NULL")
     fun findRoleByIdAndDeletedAtIsNull(@Param("memberId") memberId: String): RoleType?
     fun findByIdAndDeletedAtIsNull(memberId: String): MemberEntity?
+    fun findTopByNameOrderByIdDesc(name: String): MemberEntity?
 }
