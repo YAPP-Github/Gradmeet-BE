@@ -52,9 +52,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
+	implementation("software.amazon.awssdk:s3:2.20.59")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("ca.pjer:logback-awslogs-appender:1.6.0")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2")
