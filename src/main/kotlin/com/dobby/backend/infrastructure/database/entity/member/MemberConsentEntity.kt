@@ -19,13 +19,13 @@ class MemberConsentEntity (
     val adConsent: Boolean,
 
     @Column(name = "match_consent", nullable = false)
-    val matchConsent: Boolean,
+    var matchConsent: Boolean,
 
     @Column(name = "ad_consented_at")
     val adConsentedAt: LocalDate?,
 
     @Column(name = "match_consented_at")
-    val matchConsentedAt: LocalDate?,
+    var matchConsentedAt: LocalDate?,
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime,
