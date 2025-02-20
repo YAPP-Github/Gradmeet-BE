@@ -1,7 +1,5 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.backend.application.aop.DistributedLock
-import com.dobby.backend.application.common.LockKeyProvider
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.exception.ExperimentPostNotFoundException
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
@@ -14,18 +12,14 @@ import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlo
 import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
 import java.time.LocalDate
 
-open class GetExperimentPostDetailUseCase(
-    private val experimentPostGateway: ExperimentPostGateway,
+class GetExperimentPostDetailUseCase(
+    private val experimentPostGateway: ExperimentPostGateway
 ) : UseCase<GetExperimentPostDetailUseCase.Input, GetExperimentPostDetailUseCase.Output> {
 
     data class Input(
         val experimentPostId: String,
         val memberId: String?
-    ) : LockKeyProvider {
-        override fun getLockKey(): String {
-            return "experimentPost:$experimentPostId"
-        }
-    }
+    )
 
     data class Output(
         val experimentPostDetail: ExperimentPostDetail
@@ -72,21 +66,15 @@ open class GetExperimentPostDetailUseCase(
         )
     }
 
-    @DistributedLock(keyPrefix = "lock:experimentPost")
     override fun execute(input: Input): Output {
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException
-        incrementViewsWithLock(experimentPost)
+        experimentPost.incrementViews()
+        experimentPostGateway.save(experimentPost)
 
         return Output(
             experimentPostDetail = experimentPost.toExperimentPostDetail(input.memberId)
         )
-    }
-
-    @DistributedLock(keyPrefix = "lock:experimentPost")
-    open fun incrementViewsWithLock(experimentPost: ExperimentPost) {
-        experimentPost.incrementViews()
-        experimentPostGateway.save(experimentPost)
     }
 }
 
