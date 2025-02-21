@@ -334,7 +334,7 @@ class ExperimentPostCustomRepositoryImpl (
     ): Boolean {
         if (participantMatchType == ALL || participantMatchType == null)
             return true
-        if (postMatchType == OFFLINE || postMatchType == ALL || postMatchType == null)
+        if (postMatchType == ONLINE || postMatchType == ALL || postMatchType == null)
             return true
         return postMatchType == participantMatchType
     }
