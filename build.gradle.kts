@@ -57,6 +57,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 	implementation("ca.pjer:logback-awslogs-appender:1.6.0")
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-mysql")
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
