@@ -14,6 +14,10 @@ spring:
         show_sql: false
         format_sql: false
         dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false
+
   security:
     oauth2:
       client:
