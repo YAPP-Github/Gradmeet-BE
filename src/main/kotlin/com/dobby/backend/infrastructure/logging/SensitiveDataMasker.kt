@@ -8,8 +8,10 @@ object SensitiveDataMasker {
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
     private val maskPatterns = mapOf(
-        "contactEmail" to "*****",
-        "labInfo" to "*****"
+        "oauthEmail" to { value: String -> value.replaceBefore("@", "*****") },
+        "univEmail" to { value: String -> value.replaceBefore("@", "*****") },
+        "contactEmail" to { value: String -> value.replaceBefore("@", "*****") },
+        "labInfo" to { _: String -> "*****" }
     )
 
     /**
@@ -21,8 +23,10 @@ object SensitiveDataMasker {
         return try {
             val jsonString = objectMapper.writeValueAsString(data)
             var maskedString = jsonString
-            for ((key, mask) in maskPatterns) {
-                maskedString = maskedString.replace(Regex("(?<=\"$key\":\\s?\")[^\"]+"), mask)
+            for ((key, maskFunction) in maskPatterns) {
+                maskedString = maskedString.replace(Regex("(?<=\"$key\":\\s?\")[^\"]+")) {
+                    maskFunction(it.value)
+                }
             }
 
             objectMapper.readValue<Map<String, Any>>(maskedString)
