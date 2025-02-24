@@ -30,7 +30,7 @@
             <maxBatchLogEvents>50</maxBatchLogEvents>
             <maxFlushTimeMillis>30000</maxFlushTimeMillis>
             <maxBlockTimeMillis>5000</maxBlockTimeMillis>
-            <retentionTimeDays>0</retentionTimeDays>
+            <retentionTimeDays>7</retentionTimeDays>
             <accessKeyId>${AWS_ACCESS_KEY_ID}</accessKeyId>
             <secretAccessKey>${AWS_SECRET_ACCESS_KEY}</secretAccessKey>
         </appender>
@@ -53,7 +53,7 @@
             <maxBatchLogEvents>50</maxBatchLogEvents>
             <maxFlushTimeMillis>30000</maxFlushTimeMillis>
             <maxBlockTimeMillis>5000</maxBlockTimeMillis>
-            <retentionTimeDays>0</retentionTimeDays>
+            <retentionTimeDays>7</retentionTimeDays>
             <accessKeyId>${AWS_ACCESS_KEY_ID}</accessKeyId>
             <secretAccessKey>${AWS_SECRET_ACCESS_KEY}</secretAccessKey>
         </appender>
