@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity
 
 import com.dobby.backend.domain.model.Verification
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
+import com.dobby.backend.domain.enums.VerificationStatus
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -16,7 +16,7 @@ class VerificationEntity (
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    var status: VerificationStatus= VerificationStatus.HOLD,
+    var status: VerificationStatus = VerificationStatus.HOLD,
 
     @Column(name = "created_at", nullable = false)
     val createdAt: LocalDateTime ? = null,

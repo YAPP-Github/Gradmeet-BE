@@ -1,9 +1,9 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.member.GenderType
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.areaInfo.Region
 import java.time.LocalDate
 import java.time.LocalDateTime
 

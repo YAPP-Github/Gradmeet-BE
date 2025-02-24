@@ -7,10 +7,10 @@ import com.dobby.backend.domain.gateway.member.ParticipantGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Participant
-import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.member.GenderType
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow

@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.member
 
-import com.dobby.backend.infrastructure.database.entity.enums.member.WithdrawalReasonType
+import com.dobby.backend.domain.enums.member.WithdrawalReasonType
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
 

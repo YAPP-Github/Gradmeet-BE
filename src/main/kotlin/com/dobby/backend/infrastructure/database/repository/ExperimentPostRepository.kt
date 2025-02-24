@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.repository
 
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import jakarta.persistence.Tuple
 import org.springframework.data.jpa.repository.JpaRepository
