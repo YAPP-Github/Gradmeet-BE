@@ -21,6 +21,7 @@ class LoggingAspect {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
+    @Suppress("EmptyFunctionBlock")
     @Pointcut("execution(* com.dobby.backend.presentation.api.controller..*Controller.*(..))")
     private fun allController() {}
 
