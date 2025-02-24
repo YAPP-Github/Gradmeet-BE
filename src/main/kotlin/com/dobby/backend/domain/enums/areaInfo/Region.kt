@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
+package com.dobby.backend.domain.enums.areaInfo
 
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 

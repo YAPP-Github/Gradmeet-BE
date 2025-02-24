@@ -7,7 +7,7 @@ import com.dobby.backend.domain.exception.EmailAlreadyVerifiedException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
+import com.dobby.backend.domain.enums.VerificationStatus
 
 class VerifyEmailUseCase(
     private val verificationGateway: VerificationGateway,

@@ -1,9 +1,9 @@
 package com.dobby.backend.domain.model.member
 
 import com.dobby.backend.domain.policy.MemberMaskingPolicy
-import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import com.dobby.backend.domain.enums.member.MemberStatus
+import com.dobby.backend.domain.enums.member.ProviderType
+import com.dobby.backend.domain.enums.member.RoleType
 import java.time.LocalDateTime
 
 data class Member(

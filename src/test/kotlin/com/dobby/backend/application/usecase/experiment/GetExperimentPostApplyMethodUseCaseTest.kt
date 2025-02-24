@@ -6,10 +6,10 @@ import com.dobby.backend.domain.model.experiment.ApplyMethod
 import com.dobby.backend.domain.model.experiment.ExperimentPost
 import com.dobby.backend.domain.model.experiment.TargetGroup
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.experiment.TimeSlot
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow

@@ -2,13 +2,13 @@ package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.domain.model.experiment.*
-import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType.*
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area.Companion.isAll
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
+import com.dobby.backend.domain.enums.member.GenderType
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.MatchType.*
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.areaInfo.Area.Companion.isAll
+import com.dobby.backend.domain.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.experiment.RecruitStatus
 import com.dobby.backend.infrastructure.database.entity.experiment.*
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.entity.member.QMemberConsentEntity

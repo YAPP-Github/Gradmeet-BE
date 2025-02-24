@@ -4,7 +4,7 @@ import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.ExperimentPost
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustomRepository
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostRepository
