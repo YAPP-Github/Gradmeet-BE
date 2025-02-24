@@ -1,6 +1,6 @@
 package com.dobby.backend.domain.model.member
 
-import com.dobby.backend.infrastructure.database.entity.enums.member.WithdrawalReasonType
+import com.dobby.backend.domain.enums.member.WithdrawalReasonType
 import java.time.LocalDateTime
 
 data class MemberWithdrawal(

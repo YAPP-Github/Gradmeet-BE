@@ -1,8 +1,8 @@
 package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
-import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import com.dobby.backend.domain.enums.member.MemberStatus
+import com.dobby.backend.domain.enums.member.RoleType
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

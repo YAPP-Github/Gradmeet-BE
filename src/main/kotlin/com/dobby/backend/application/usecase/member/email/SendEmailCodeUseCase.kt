@@ -10,7 +10,7 @@ import com.dobby.backend.domain.gateway.CacheGateway
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
+import com.dobby.backend.domain.enums.VerificationStatus
 import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope

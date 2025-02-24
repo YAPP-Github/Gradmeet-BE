@@ -1,9 +1,9 @@
 package com.dobby.backend.infrastructure.gateway.member
 
 import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.domain.enums.member.MemberStatus
 import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import com.dobby.backend.domain.enums.member.RoleType
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
 import com.dobby.backend.infrastructure.database.repository.MemberRepository
 import org.springframework.stereotype.Component

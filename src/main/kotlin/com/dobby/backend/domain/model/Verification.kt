@@ -1,5 +1,5 @@
 package com.dobby.backend.domain.model
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
+import com.dobby.backend.domain.enums.VerificationStatus
 import java.time.LocalDateTime
 
 data class Verification(

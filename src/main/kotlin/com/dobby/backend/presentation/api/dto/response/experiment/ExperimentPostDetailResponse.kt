@@ -1,11 +1,11 @@
 package com.dobby.backend.presentation.api.dto.response.experiment
 
-import com.dobby.backend.infrastructure.database.entity.enums.member.GenderType
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.TimeSlot
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
+import com.dobby.backend.domain.enums.member.GenderType
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.experiment.TimeSlot
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.member.MemberStatus
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 

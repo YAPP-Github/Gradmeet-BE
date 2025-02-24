@@ -11,8 +11,8 @@ import com.dobby.backend.domain.exception.ExperimentAreaInCorrectException
 import com.dobby.backend.domain.exception.ExperimentAreaOverflowException
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 import com.dobby.backend.domain.gateway.CacheGateway
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Area
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
+import com.dobby.backend.domain.enums.areaInfo.Area
+import com.dobby.backend.domain.enums.experiment.RecruitStatus
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service

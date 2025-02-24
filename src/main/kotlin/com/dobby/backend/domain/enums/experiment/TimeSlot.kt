@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.experiment
+package com.dobby.backend.domain.enums.experiment
 
 enum class TimeSlot(
     val timeSlotName : String

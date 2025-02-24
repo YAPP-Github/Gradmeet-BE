@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.areaInfo
+package com.dobby.backend.domain.enums.areaInfo
 
 enum class Area (val region: Region, val displayName: String){
     // 서울
