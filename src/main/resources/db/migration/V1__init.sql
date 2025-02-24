@@ -68,13 +68,10 @@ CREATE TABLE IF NOT EXISTS `target_group` (
 CREATE TABLE IF NOT EXISTS `verification` (
     `verification_id` CHAR(13) NOT NULL PRIMARY KEY,
     `created_at` DATETIME(6) NOT NULL,
-    `expires_at` DATETIME(6) NOT NULL,
     `status` ENUM ('HOLD', 'VERIFIED') NOT NULL,
     `univ_email` VARCHAR(255) NOT NULL,
     `updated_at` DATETIME(6) NOT NULL,
-    `verification_code` VARCHAR(6) NOT NULL,
-    CONSTRAINT UK8nj313m4fya5vr4emod227psv UNIQUE (univ_email),
-    CONSTRAINT UKh1ganastgcw00w0sl7wwib132 UNIQUE (verification_code)
+    CONSTRAINT UK8nj313m4fya5vr4emod227psv UNIQUE (univ_email)
 ) COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `apply_method` (
