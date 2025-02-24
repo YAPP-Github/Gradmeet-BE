@@ -7,11 +7,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 object SensitiveDataMasker {
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
-    private val maskPatterns = mapOf(
-        "oauthEmail" to { value: String -> value.replaceBefore("@", "*****") },
-        "univEmail" to { value: String -> value.replaceBefore("@", "*****") },
-        "contactEmail" to { value: String -> value.replaceBefore("@", "*****") },
-        "labInfo" to { _: String -> "*****" }
+    private val maskPatterns: Map<String, (String) -> String> = mapOf(
+        "name" to { value -> value.take(1) + "*****" },
+        "oauthEmail" to { value -> value.first() + "*****@" + value.substringAfter("@") },
+        "univEmail" to { value -> value.first() + "*****@" + value.substringAfter("@") },
+        "contactEmail" to { value -> value.first() + "*****@" + value.substringAfter("@") },
+        "univName" to { value -> value.take(1) + "*******" },
+        "major" to { value -> value.take(1) + "********" },
+        "labInfo" to { _ -> "*****" }
     )
 
     /**
@@ -31,7 +34,7 @@ object SensitiveDataMasker {
 
             objectMapper.readValue<Map<String, Any>>(maskedString)
         } catch (e: Exception) {
-            maskPatterns.mapValues { it.value }
+            maskPatterns.mapValues { it.value("*****") }
         }
     }
 }
