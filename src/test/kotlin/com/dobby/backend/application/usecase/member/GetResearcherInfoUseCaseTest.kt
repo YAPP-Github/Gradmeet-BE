@@ -6,9 +6,9 @@ import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.Member
 import com.dobby.backend.domain.model.member.MemberConsent
 import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.infrastructure.database.entity.enums.member.MemberStatus
-import com.dobby.backend.infrastructure.database.entity.enums.member.ProviderType
-import com.dobby.backend.infrastructure.database.entity.enums.member.RoleType
+import com.dobby.backend.domain.enums.member.MemberStatus
+import com.dobby.backend.domain.enums.member.ProviderType
+import com.dobby.backend.domain.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk

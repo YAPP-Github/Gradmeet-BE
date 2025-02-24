@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.experiment
+package com.dobby.backend.domain.enums.experiment
 
 import com.dobby.backend.domain.exception.InvalidRequestValueException
 

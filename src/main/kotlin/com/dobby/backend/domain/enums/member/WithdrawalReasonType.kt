@@ -1,4 +1,4 @@
-package com.dobby.backend.infrastructure.database.entity.enums.member
+package com.dobby.backend.domain.enums.member
 
 enum class WithdrawalReasonType(
     val reasonType: String

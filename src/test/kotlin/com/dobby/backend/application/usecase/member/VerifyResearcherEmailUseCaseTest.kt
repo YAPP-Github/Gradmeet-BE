@@ -4,7 +4,7 @@ import com.dobby.backend.domain.exception.EmailNotValidateException
 import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
-import com.dobby.backend.infrastructure.database.entity.enums.VerificationStatus
+import com.dobby.backend.domain.enums.VerificationStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every

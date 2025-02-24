@@ -5,7 +5,7 @@ import com.dobby.backend.domain.exception.MemberNotFoundException
 import com.dobby.backend.domain.gateway.member.MemberGateway
 import com.dobby.backend.domain.gateway.member.MemberWithdrawalGateway
 import com.dobby.backend.domain.model.member.MemberWithdrawal
-import com.dobby.backend.infrastructure.database.entity.enums.member.WithdrawalReasonType
+import com.dobby.backend.domain.enums.member.WithdrawalReasonType
 
 class DeleteParticipantUseCase(
     private val memberGateway: MemberGateway,

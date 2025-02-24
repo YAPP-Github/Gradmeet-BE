@@ -2,8 +2,8 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
 import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.infrastructure.database.entity.enums.areaInfo.Region
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
+import com.dobby.backend.domain.enums.areaInfo.Region
+import com.dobby.backend.domain.enums.experiment.RecruitStatus
 
 class GetExperimentPostCountsByRegionUseCase(
     private val experimentPostGateway: ExperimentPostGateway

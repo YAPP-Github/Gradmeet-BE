@@ -5,8 +5,8 @@ import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
 import com.dobby.backend.domain.model.experiment.CustomFilter
 import com.dobby.backend.domain.model.experiment.LocationTarget
 import com.dobby.backend.domain.model.experiment.StudyTarget
-import com.dobby.backend.infrastructure.database.entity.enums.MatchType
-import com.dobby.backend.infrastructure.database.entity.enums.experiment.RecruitStatus
+import com.dobby.backend.domain.enums.MatchType
+import com.dobby.backend.domain.enums.experiment.RecruitStatus
 
 class GetExperimentPostTotalCountByCustomFilterUseCase(
     private val experimentPostGateway: ExperimentPostGateway

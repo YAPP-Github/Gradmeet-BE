@@ -6,7 +6,7 @@ import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.gateway.member.MemberWithdrawalGateway
 import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.domain.model.member.MemberWithdrawal
-import com.dobby.backend.infrastructure.database.entity.enums.member.WithdrawalReasonType
+import com.dobby.backend.domain.enums.member.WithdrawalReasonType
 
 class DeleteResearcherUseCase(
     private val researcherGateway: ResearcherGateway,
