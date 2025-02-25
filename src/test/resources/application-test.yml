@@ -58,5 +58,15 @@ cloud:
       access-key: test
       secret-key: test
 
+aws:
+  ses:
+    email:
+      sender: test
+    region:
+      static: test
+    credentials:
+      access-key: test
+      secret-key: test
+
 discord:
   webhook-url: test
