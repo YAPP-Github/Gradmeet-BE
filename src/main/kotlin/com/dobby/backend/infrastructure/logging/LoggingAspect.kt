@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut
 import org.aspectj.lang.reflect.MethodSignature
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
@@ -30,7 +31,7 @@ class LoggingAspect {
     @Around("allController()")
     fun logRequest(joinPoint: ProceedingJoinPoint): Any? {
         val taskId = generateTaskId()
-        setTaskId(taskId)
+        MDC.put("taskId", taskId)
 
         val request = (RequestContextHolder.getRequestAttributes() as? ServletRequestAttributes)?.request
         val method = request?.method ?: "UNKNOWN_METHOD"
@@ -41,7 +42,11 @@ class LoggingAspect {
 
         log.info("[{}] {} -> {} args={}", taskId, method, decodedURI, args)
 
-        return joinPoint.proceed()
+        try {
+            return joinPoint.proceed()
+        } finally {
+            MDC.remove("taskId") // 요청이 끝난 후 MDC에서 taskId 제거 (메모리 누수 방지)
+        }
     }
 
     @AfterReturning(
@@ -49,25 +54,11 @@ class LoggingAspect {
         returning = "result"
     )
     fun logResponse(joinPoint: JoinPoint, result: Any?) {
-        val taskId = getTaskId() ?: generateTaskId()
+        val taskId = MDC.get("taskId") ?: generateTaskId()
         val methodSignature = joinPoint.signature as MethodSignature
         val controllerMethodName = methodSignature.method.name
 
         log.info("[{}] <- method: {}, result: {}", taskId, controllerMethodName, SensitiveDataMasker.mask(result))
-    }
-
-    /**
-     * 요청 컨텍스트에 taskId 저장
-     */
-    private fun setTaskId(taskId: String) {
-        RequestContextHolder.getRequestAttributes()?.setAttribute("taskId", taskId, 0)
-    }
-
-    /**
-     * 요청 컨텍스트에서 taskId 가져오기
-     */
-    private fun getTaskId(): String? {
-        return RequestContextHolder.getRequestAttributes()?.getAttribute("taskId", 0) as? String
     }
 
     /**
