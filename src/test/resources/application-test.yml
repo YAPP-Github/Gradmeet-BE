@@ -25,17 +25,6 @@ spring:
           google:
             client-id: "dummy-client-id"
             client-secret: "dummy-client-secret"
-  mail:
-    host: smtp.example.com
-    port: 587
-    username: gradmeet_test@example.com
-    password: testpassword
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
   data:
     redis:
       host: 127.0.0.1
