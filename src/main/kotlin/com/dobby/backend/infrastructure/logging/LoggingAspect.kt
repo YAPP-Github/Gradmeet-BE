@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.logging
 
-import com.aventrix.jnanoid.jnanoid.NanoIdUtils
+import com.dobby.backend.infrastructure.identifier.TsidIdGenerator
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.AfterReturning
@@ -15,12 +15,15 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import java.net.URLDecoder
-import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Aspect
 @Component
-class LoggingAspect {
+class LoggingAspect(
+    private val tsidIdGenerator: TsidIdGenerator
+) {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -65,8 +68,9 @@ class LoggingAspect {
      * 타임스탬프 + Nano ID 기반 taskId 생성
      */
     private fun generateTaskId(): String {
-        val timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(Instant.now())
-        val nanoId = NanoIdUtils.randomNanoId()
-        return "$timestamp-$nanoId"
+        val timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+            .format(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
+        val tsid = tsidIdGenerator.generateId()
+        return "$timestamp-$tsid"
     }
 }
