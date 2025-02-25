@@ -28,4 +28,8 @@ class ResearcherGatewayImpl(
             .save(ResearcherEntity.fromDomain(researcher))
         return savedEntity.toDomain()
     }
+
+    override fun existsByUnivEmail(univEmail: String): Boolean {
+        return researcherRepository.existsByUnivEmail(univEmail)
+    }
 }
