@@ -1,5 +1,6 @@
 package com.dobby.backend.infrastructure.logging
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.AfterReturning
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import java.net.URLDecoder
-import java.util.UUID
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 
 @Aspect
 @Component
@@ -27,7 +29,7 @@ class LoggingAspect {
 
     @Around("allController()")
     fun logRequest(joinPoint: ProceedingJoinPoint): Any? {
-        val taskId = UUID.randomUUID().toString().substring(0, 8)
+        val taskId = generateTaskId()
         setTaskId(taskId)
 
         val request = (RequestContextHolder.getRequestAttributes() as? ServletRequestAttributes)?.request
@@ -47,7 +49,7 @@ class LoggingAspect {
         returning = "result"
     )
     fun logResponse(joinPoint: JoinPoint, result: Any?) {
-        val taskId = getTaskId() ?: UUID.randomUUID().toString().substring(0, 8)
+        val taskId = getTaskId() ?: generateTaskId()
         val methodSignature = joinPoint.signature as MethodSignature
         val controllerMethodName = methodSignature.method.name
 
@@ -66,5 +68,14 @@ class LoggingAspect {
      */
     private fun getTaskId(): String? {
         return RequestContextHolder.getRequestAttributes()?.getAttribute("taskId", 0) as? String
+    }
+
+    /**
+     * 타임스탬프 + Nano ID 기반 taskId 생성
+     */
+    private fun generateTaskId(): String {
+        val timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(Instant.now())
+        val nanoId = NanoIdUtils.randomNanoId()
+        return "$timestamp-$nanoId"
     }
 }
