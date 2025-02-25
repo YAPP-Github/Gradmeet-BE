@@ -11,6 +11,7 @@ import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.domain.gateway.email.VerificationGateway
 import com.dobby.backend.domain.model.Verification
 import com.dobby.backend.domain.enums.VerificationStatus
+import com.dobby.backend.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
+    private val researcherGateway: ResearcherGateway,
     private val emailGateway: EmailGateway,
     private val cacheGateway: CacheGateway,
     private val idGenerator: IdGenerator,
@@ -63,6 +65,8 @@ class SendEmailCodeUseCase(
     private fun validateEmail(email : String){
         if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
         if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
+        if (researcherGateway.existsByUnivEmail(email))
+            throw SignupUnivEmailDuplicateException
         if(verificationGateway.findByUnivEmailAndStatus(email, VerificationStatus.VERIFIED) != null)
             throw EmailAlreadyVerifiedException
     }
