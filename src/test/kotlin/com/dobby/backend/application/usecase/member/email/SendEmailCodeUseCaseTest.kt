@@ -102,6 +102,25 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
             }
         }
     }
+
+    given("이메일 인증 코드 요청 횟수가 초과된 경우") {
+        val limitedEmail = "limited@ewhain.net"
+        every { EmailUtils.isDomainExists(limitedEmail) } returns true
+        every { EmailUtils.isUnivMail(limitedEmail) } returns true
+        every { researcherGateway.existsByUnivEmail(limitedEmail) } returns false
+        every { verificationGateway.findByUnivEmailAndStatus(limitedEmail, VerificationStatus.VERIFIED) } returns null
+        every { cacheGateway.get("request_count:$limitedEmail") } returns "3"
+
+        `when`("이메일 인증 코드 전송을 실행하면") {
+            then("TooManyVerificationRequestException 예외가 발생해야 한다") {
+                runTest {
+                    shouldThrow<TooManyVerificationRequestException> {
+                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(limitedEmail))
+                    }
+                }
+            }
+        }
+    }
 })
 
 

@@ -41,7 +41,7 @@ class SendEmailCodeUseCase(
         val requestCountKey = "request_count:${input.univEmail}"
         val currentCount = cacheGateway.get(requestCountKey)?.toIntOrNull() ?: 0
         if(currentCount >= 3) {
-            //throw TooManyVerificationRequestException
+            throw TooManyVerificationRequestException
         }
 
         cacheGateway.incrementRequestCount(requestCountKey)
