@@ -51,7 +51,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	implementation("io.awspring.csloud:spring-cloud-starter-aws:2.4.4")
+	implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 	implementation("software.amazon.awssdk:s3:2.20.59")
 	implementation("software.amazon.awssdk:ses:2.20.100")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
