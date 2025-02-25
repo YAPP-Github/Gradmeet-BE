@@ -45,11 +45,7 @@ class LoggingAspect(
 
         log.info("[{}] {} -> {} args={}", taskId, method, decodedURI, args)
 
-        try {
-            return joinPoint.proceed()
-        } finally {
-            MDC.remove("taskId") // 요청이 끝난 후 MDC에서 taskId 제거 (메모리 누수 방지)
-        }
+        return joinPoint.proceed()
     }
 
     @AfterReturning(
@@ -62,6 +58,7 @@ class LoggingAspect(
         val controllerMethodName = methodSignature.method.name
 
         log.info("[{}] <- method: {}, result: {}", taskId, controllerMethodName, SensitiveDataMasker.mask(result))
+        MDC.remove("taskId") // 요청이 끝난 후 MDC에서 taskId 제거 (메모리 누수 방지)
     }
 
     /**
