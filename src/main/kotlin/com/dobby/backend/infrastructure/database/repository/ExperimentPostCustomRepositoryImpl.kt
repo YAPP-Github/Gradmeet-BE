@@ -214,8 +214,6 @@ class ExperimentPostCustomRepositoryImpl (
         entityManager.merge(experimentPost)
     }
 
-    private var lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
-
     override fun findMatchingExperimentPostsForAllParticipants(): Map<String, List<ExperimentPostEntity>> {
         val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -223,16 +221,18 @@ class ExperimentPostCustomRepositoryImpl (
         val targetGroup = QTargetGroupEntity.targetGroupEntity
         val participant = QParticipantEntity.participantEntity
         val member = QMemberEntity.memberEntity
-       val memberConsent = QMemberConsentEntity.memberConsentEntity
+        val memberConsent = QMemberConsentEntity.memberConsentEntity
 
         val currentTime = LocalDateTime.now()
+        val lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
 
         logger.info("[쿼리 범위] lastProcessedTime: {}, currentTime: {}", lastProcessedTime, currentTime)
         val todayPosts = jpaQueryFactory.selectFrom(experimentPost)
             .join(experimentPost.targetGroup, targetGroup).fetchJoin()
             .where(
                 experimentPost.createdAt.between(lastProcessedTime, currentTime),
-                experimentPost.alarmAgree.isTrue
+                experimentPost.alarmAgree.isTrue,
+                experimentPost.recruitStatus.isTrue
             )
             .fetch()
 
