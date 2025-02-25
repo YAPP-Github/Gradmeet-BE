@@ -40,7 +40,7 @@ data object VerifyInfoNotFoundException : ClientException("VE0003", "Verificatio
 data object CodeNotCorrectException : ClientException("VE0004", "Verification code is not correct", HttpStatus.BAD_REQUEST)
 data object CodeExpiredException : ClientException("VE0005", "Verification code is expired", HttpStatus.BAD_REQUEST)
 data object EmailFormatInvalidException : ClientException("VE0006", "Email is invalid format", HttpStatus.BAD_REQUEST)
-data object EmailAlreadyVerifiedException : ClientException("VE0007", "This email is already verified", HttpStatus.CONFLICT)
+data object EmailAlreadyVerifiedException : ClientException("VE0007", "This email is already verified. All you have to do is just completing the signup.", HttpStatus.CONFLICT)
 data object TooManyVerificationRequestException : ClientException("VE0008", "You can request verification up to 3 in one day.", HttpStatus.TOO_MANY_REQUESTS)
 
 /**
@@ -54,6 +54,7 @@ data object EmailNotValidateException : ClientException("ME0005", "You should va
 data object SignupOauthEmailDuplicateException : ClientException("ME0006", "You've already joined with requested oauth email", HttpStatus.CONFLICT)
 data object ContactEmailDuplicateException: ClientException("ME0007", "This contact email is already in use.", HttpStatus.CONFLICT)
 data object MemberConsentNotFoundException : ClientException("ME0008", "Member Consent Not Found.", HttpStatus.NOT_FOUND)
+data object SignupUnivEmailDuplicateException: ClientException("ME009", "You've already joined with requested univ email", HttpStatus.CONFLICT)
 
 /**
  * Experiment error codes
