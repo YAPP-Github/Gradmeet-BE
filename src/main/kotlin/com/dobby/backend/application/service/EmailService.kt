@@ -5,7 +5,6 @@ import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCa
 import com.dobby.backend.application.usecase.member.email.VerifyEmailUseCase
 import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
 import jakarta.transaction.Transactional
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
