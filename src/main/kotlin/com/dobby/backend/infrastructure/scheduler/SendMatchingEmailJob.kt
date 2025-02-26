@@ -3,7 +3,6 @@ package com.dobby.backend.infrastructure.scheduler
 import com.dobby.backend.application.service.EmailService
 import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
 import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
-import kotlinx.coroutines.runBlocking
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.slf4j.Logger
@@ -20,40 +19,38 @@ class SendMatchingEmailJob(
     }
 
     override fun execute(context: JobExecutionContext) {
-        runBlocking {
-            logger.info("BulkSendMatchingEmailJob started at ${LocalDateTime.now()}")
+        logger.info("BulkSendMatchingEmailJob started at ${LocalDateTime.now()}")
 
-            val input = GetMatchingExperimentPostsUseCase.Input(
-                requestTime = LocalDateTime.now()
+        val input = GetMatchingExperimentPostsUseCase.Input(
+            requestTime = LocalDateTime.now()
+        )
+        val output = emailService.getMatchingInfo(input)
+        val matchingExperimentPosts = output.matchingPosts
+
+        var successCount = 0
+        var failureCount = 0
+
+        for ((contactEmail, jobList) in matchingExperimentPosts) {
+            if (jobList.isEmpty()) continue
+            val emailInput = SendMatchingEmailUseCase.Input(
+                contactEmail = contactEmail,
+                experimentPosts = jobList,
+                currentDateTime = LocalDateTime.now()
             )
-            val output = emailService.getMatchingInfo(input)
-            val matchingExperimentPosts = output.matchingPosts
-
-            var successCount = 0
-            var failureCount = 0
-
-            for ((contactEmail, jobList) in matchingExperimentPosts) {
-                if (jobList.isEmpty()) continue
-                val emailInput = SendMatchingEmailUseCase.Input(
-                    contactEmail = contactEmail,
-                    experimentPosts = jobList,
-                    currentDateTime = LocalDateTime.now()
-                )
-                try {
-                    val emailOutput = emailService.sendMatchingEmail(emailInput)
-                    if (emailOutput.isSuccess) {
-                        successCount++
-                        logger.info("Email sent successfully to $contactEmail")
-                    } else {
-                        failureCount++
-                        logger.error("Failed to send email to $contactEmail: ${emailOutput.message}")
-                    }
-                } catch (e: Exception) {
+            try {
+                val emailOutput = emailService.sendMatchingEmail(emailInput)
+                if (emailOutput.isSuccess) {
+                    successCount++
+                    logger.info("Email sent successfully to $contactEmail")
+                } else {
                     failureCount++
-                    logger.error("Exception occurred while sending email to $contactEmail", e)
+                    logger.error("Failed to send email to $contactEmail: ${emailOutput.message}")
                 }
+            } catch (e: Exception) {
+                failureCount++
+                logger.error("Exception occurred while sending email to $contactEmail", e)
             }
-            logger.info("SendMatchingEmailJob completed. Success: $successCount, Failures: $failureCount")
         }
+        logger.info("SendMatchingEmailJob completed. Success: $successCount, Failures: $failureCount")
     }
 }
