@@ -18,7 +18,6 @@ class EmailService(
 
     @Transactional
     fun sendEmail(req: SendEmailCodeUseCase.Input): SendEmailCodeUseCase.Output {
-        val startTime = System.nanoTime()
         return sendEmailCodeUseCase.execute(req)
     }
 
