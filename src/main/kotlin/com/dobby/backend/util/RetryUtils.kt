@@ -1,7 +1,6 @@
 package com.dobby.backend.util
 
 import com.dobby.backend.domain.exception.EmailAlreadyVerifiedException
-import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import kotlin.math.pow
 import kotlin.random.Random
@@ -9,11 +8,11 @@ import kotlin.random.Random
 object RetryUtils {
     private val logger = LoggerFactory.getLogger(RetryUtils::class.java)
 
-    suspend fun <T> retryWithBackOff(
+    fun <T> retryWithBackOff(
         maxRetries: Int = 3,
         defaultDelay: Long = 1000L,
         maxJitter: Long = 500L,
-        block: suspend() -> T
+        block: () -> T
     ): T {
         var curAttempt = 1
         while(true){
@@ -28,7 +27,7 @@ object RetryUtils {
                 }
                 val backOffTime = calculateBackOff(curAttempt, defaultDelay, maxJitter)
                 logger.warn("Retrying... Current Attempt: $curAttempt, Waiting: ${backOffTime}ms")
-                delay(backOffTime)
+                Thread.sleep(backOffTime)
                 curAttempt +=1
             }
         }

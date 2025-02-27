@@ -2,15 +2,8 @@ package com.dobby.backend.infrastructure.gateway.email
 
 import com.dobby.backend.domain.gateway.email.EmailGateway
 import com.dobby.backend.infrastructure.config.properties.SESProperties
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.future.await
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Component
-import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.ses.SesAsyncClient
-import software.amazon.awssdk.services.ses.SesClient
 import software.amazon.awssdk.services.ses.model.*
 
 @Component
@@ -19,7 +12,7 @@ class EmailGatewayImpl(
     private val sesProperties: SESProperties
 ) : EmailGateway {
 
-    override suspend fun sendEmail(to: String, subject: String, content: String, isHtml: Boolean) {
+    override fun sendEmail(to: String, subject: String, content: String, isHtml: Boolean) {
         val body = if(isHtml) {
             Body.builder().html(Content.builder().data(content).build()).build()
         } else {
