@@ -87,8 +87,6 @@ dependencies {
 	testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
 	testImplementation("io.kotest:kotest-property:$koTestVersion")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
-	testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
-
 	testImplementation("io.mockk:mockk:1.13.10")
 
 	testImplementation("org.testcontainers:testcontainers:1.19.3")
