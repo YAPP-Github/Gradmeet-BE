@@ -1,8 +1,8 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.ContactEmailDuplicateException
-import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.exception.ContactEmailDuplicateException
+import com.dobby.gateway.member.MemberGateway
 
 class ValidateContactEmailForUpdateUseCase(
     private val memberGateway: MemberGateway

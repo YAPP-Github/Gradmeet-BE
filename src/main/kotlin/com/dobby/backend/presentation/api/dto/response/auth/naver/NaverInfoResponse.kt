@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.response.auth.naver
 
-import com.dobby.domain.model.auth.NaverUserInfo
+import com.dobby.model.auth.NaverUserInfo
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class NaverInfoResponse(

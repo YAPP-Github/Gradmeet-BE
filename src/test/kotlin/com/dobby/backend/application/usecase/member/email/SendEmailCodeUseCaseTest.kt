@@ -1,14 +1,14 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.domain.EmailTemplateLoader
-import com.dobby.domain.IdGenerator
-import com.dobby.domain.enums.VerificationStatus
-import com.dobby.domain.exception.*
-import com.dobby.domain.gateway.CacheGateway
-import com.dobby.domain.gateway.email.EmailGateway
-import com.dobby.domain.gateway.email.VerificationGateway
-import com.dobby.domain.gateway.member.ResearcherGateway
+import com.dobby.EmailTemplateLoader
+import com.dobby.IdGenerator
+import com.dobby.enums.VerificationStatus
+import com.dobby.gateway.CacheGateway
+import com.dobby.gateway.email.EmailGateway
+import com.dobby.gateway.email.VerificationGateway
+import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.backend.util.EmailUtils
+import com.dobby.exception.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*

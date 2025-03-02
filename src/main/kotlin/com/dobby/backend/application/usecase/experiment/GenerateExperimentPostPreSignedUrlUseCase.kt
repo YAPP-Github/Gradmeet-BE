@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.gateway.S3Gateway
+import com.dobby.gateway.S3Gateway
 
 class GenerateExperimentPostPreSignedUrlUseCase(
     private val s3Gateway: S3Gateway

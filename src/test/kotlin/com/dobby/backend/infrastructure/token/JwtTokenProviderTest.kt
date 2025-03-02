@@ -1,10 +1,10 @@
 package com.dobby.backend.infrastructure.token
 
-import com.dobby.domain.exception.AuthenticationTokenNotValidException
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.enums.member.MemberStatus
-import com.dobby.domain.enums.member.ProviderType
-import com.dobby.domain.enums.member.RoleType
+import com.dobby.exception.AuthenticationTokenNotValidException
+import com.dobby.model.member.Member
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

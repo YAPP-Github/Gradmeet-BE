@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.response.auth.google
 
-import com.dobby.domain.model.auth.GoogleToken
+import com.dobby.model.auth.GoogleToken
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class GoogleTokenResponse (

@@ -1,16 +1,16 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.domain.exception.ParticipantNotFoundException
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.gateway.member.ParticipantGateway
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.model.member.MemberConsent
-import com.dobby.domain.model.member.Participant
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.exception.ParticipantNotFoundException
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.gateway.member.ParticipantGateway
+import com.dobby.model.member.Member
+import com.dobby.model.member.MemberConsent
+import com.dobby.model.member.Participant
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow

@@ -1,8 +1,8 @@
 package com.dobby.backend.infrastructure.database.repository
 
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
-import com.dobby.domain.model.experiment.ExperimentPostStats
+import com.dobby.model.experiment.ExperimentPostStats
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

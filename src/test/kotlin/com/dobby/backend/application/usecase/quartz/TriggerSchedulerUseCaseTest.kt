@@ -1,6 +1,6 @@
 package com.dobby.backend.application.usecase.quartz
 
-import com.dobby.domain.gateway.SchedulerTriggerGateway
+import com.dobby.gateway.SchedulerTriggerGateway
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*

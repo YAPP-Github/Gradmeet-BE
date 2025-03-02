@@ -3,11 +3,11 @@ package com.dobby.backend.presentation.api.controller
 import com.dobby.backend.application.service.ExperimentPostService
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.CreateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse

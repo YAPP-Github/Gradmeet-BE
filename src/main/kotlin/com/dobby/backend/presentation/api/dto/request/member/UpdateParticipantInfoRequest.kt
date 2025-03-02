@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.member
 
-import com.dobby.domain.enums.MatchType
+import com.dobby.enums.MatchType
 import com.dobby.backend.presentation.api.dto.response.member.AddressInfoResponse
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email

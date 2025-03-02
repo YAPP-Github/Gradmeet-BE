@@ -2,6 +2,7 @@ package com.dobby.backend.presentation.api.config.exception
 
 import com.dobby.domain.exception.*
 import com.dobby.backend.presentation.api.dto.response.ExceptionResponse
+import com.dobby.exception.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component

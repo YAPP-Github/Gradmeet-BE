@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway
 
-import com.dobby.domain.gateway.S3Gateway
+import com.dobby.gateway.S3Gateway
 import com.dobby.backend.infrastructure.s3.S3PreSignedUrlProvider
 import org.springframework.stereotype.Component
 

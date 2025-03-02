@@ -1,9 +1,9 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.quartz.TriggerSchedulerUseCase
-import com.dobby.domain.exception.MemberNotFoundException
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.exception.MemberNotFoundException
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

@@ -1,8 +1,8 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByRegionUseCase
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.experiment.RecruitStatus
-import com.dobby.domain.model.experiment.ExperimentPostStats
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.model.experiment.ExperimentPostStats
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
