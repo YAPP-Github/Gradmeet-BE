@@ -1,6 +1,5 @@
 package com.dobby.backend.infrastructure.token
 
-import com.dobby.domain.exception.*
 import com.dobby.backend.infrastructure.config.properties.TokenProperties
 import com.dobby.exception.*
 import io.jsonwebtoken.ExpiredJwtException

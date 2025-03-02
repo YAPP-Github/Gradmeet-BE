@@ -12,10 +12,10 @@ interface ExperimentPostRepository : JpaRepository<ExperimentPostEntity, String>
 
     fun countByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
 
-    @Query("SELECT new com.dobby.domain.model.experiment.ExperimentPostStats(e.region, e.area, COUNT(e)) FROM experiment_post e WHERE e.region = :region GROUP BY e.area")
+    @Query("SELECT new com.dobby.model.experiment.ExperimentPostStats(e.region, e.area, COUNT(e)) FROM experiment_post e WHERE e.region = :region GROUP BY e.area")
     fun countExperimentPostByRegionGroupedByArea(@Param("region") region: Region): List<ExperimentPostStats>
 
-    @Query("SELECT new com.dobby.domain.model.experiment.ExperimentPostStats(e.region, e.area, COUNT(e)) FROM experiment_post e WHERE e.region = :region AND e.recruitStatus = :recruitStatus GROUP BY e.area")
+    @Query("SELECT new com.dobby.model.experiment.ExperimentPostStats(e.region, e.area, COUNT(e)) FROM experiment_post e WHERE e.region = :region AND e.recruitStatus = :recruitStatus GROUP BY e.area")
     fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(@Param("region") region: Region, @Param("recruitStatus") recruitStatus: Boolean): List<ExperimentPostStats>
 
     @Query(nativeQuery = true, value = "SELECT e.region AS region, NULL AS area, COUNT(e) AS count FROM experiment_post e GROUP BY e.region")
