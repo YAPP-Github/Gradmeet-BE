@@ -2,6 +2,7 @@ package com.dobby.backend.presentation.api.config.filter
 
 import com.dobby.exception.AuthenticationTokenNotValidException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
+import com.dobby.token.JwtTokenManager
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -10,7 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.servlet.HandlerExceptionResolver
 
 class JwtOptionalAuthenticationFilter(
-    private val jwtTokenProvider: JwtTokenProvider,
+    private val jwtTokenManager: JwtTokenManager,
     private val handlerExceptionResolver: HandlerExceptionResolver,
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
@@ -26,7 +27,7 @@ class JwtOptionalAuthenticationFilter(
                     authenticationHeader.substring(7)
                 else throw AuthenticationTokenNotValidException
 
-                val authentication = jwtTokenProvider.parseAuthentication(accessToken)
+                val authentication = jwtTokenManager.parseAuthentication(accessToken)
                 SecurityContextHolder.getContext().authentication = authentication
             }
 

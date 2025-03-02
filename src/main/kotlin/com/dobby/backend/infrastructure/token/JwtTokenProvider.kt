@@ -2,6 +2,7 @@ package com.dobby.backend.infrastructure.token
 
 import com.dobby.backend.infrastructure.config.properties.TokenProperties
 import com.dobby.exception.*
+import com.dobby.token.JwtTokenManager
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
@@ -16,14 +17,14 @@ import javax.crypto.spec.SecretKeySpec
 @Component
 class JwtTokenProvider(
     private val tokenProperties: TokenProperties
-) {
+): JwtTokenManager {
     private final val signKey: SecretKey = SecretKeySpec(tokenProperties.secretKey.toByteArray(), "AES")
     private val jwtParser = Jwts
         .parser()
         .decryptWith(signKey)
         .build()
 
-    fun generateAccessToken(authentication: Authentication): String {
+    override fun generateAccessToken(authentication: Authentication): String {
         return generateToken(
             tokenType = ACCESS_TOKEN_TYPE_VALUE,
             authentication = authentication,
@@ -31,7 +32,7 @@ class JwtTokenProvider(
         )
     }
 
-    fun generateRefreshToken(authentication: Authentication): String {
+    override fun generateRefreshToken(authentication: Authentication): String {
         return generateToken(
             tokenType = REFRESH_TOKEN_TYPE_VALUE,
             authentication = authentication,
@@ -60,7 +61,7 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun parseAuthentication(accessToken: String): Authentication {
+    override fun parseAuthentication(accessToken: String): Authentication {
         try {
             val claims = jwtParser.parseEncryptedClaims(accessToken)
             val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY] ?: throw InvalidTokenTypeException
@@ -80,7 +81,7 @@ class JwtTokenProvider(
         }
     }
 
-    fun getMemberIdFromRefreshToken(refreshToken: String): String {
+    override fun getMemberIdFromRefreshToken(refreshToken: String): String {
         return try {
             val claims = jwtParser.parseEncryptedClaims(refreshToken)
             val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]
@@ -94,7 +95,7 @@ class JwtTokenProvider(
         }
     }
 
-    fun getMemberIdFromAccessToken(accessToken: String): String {
+    override fun getMemberIdFromAccessToken(accessToken: String): String {
         return try {
             val claims = jwtParser.parseEncryptedClaims(accessToken)
             val tokenType = claims.header[TOKEN_TYPE_HEADER_KEY]

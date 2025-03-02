@@ -12,8 +12,8 @@ import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*
 import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
-import com.dobby.backend.util.getCurrentMemberId
-import com.dobby.backend.util.getCurrentMemberIdOrNull
+import com.dobby.util.getCurrentMemberId
+import com.dobby.util.getCurrentMemberIdOrNull
 
 object ExperimentPostMapper {
     fun toCreatePostUseCaseInput(request: CreateExperimentPostRequest): CreateExperimentPostUseCase.Input {

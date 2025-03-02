@@ -7,7 +7,7 @@ import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
-import com.dobby.backend.util.getCurrentMemberId
+import com.dobby.util.getCurrentMemberId
 
 object MemberMapper {
     fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{

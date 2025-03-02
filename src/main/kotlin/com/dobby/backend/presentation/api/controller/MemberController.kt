@@ -10,7 +10,7 @@ import com.dobby.backend.presentation.api.dto.response.member.ParticipantInfoRes
 import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.backend.presentation.api.dto.response.member.SignUpResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
-import com.dobby.backend.util.getCurrentMemberId
+import com.dobby.util.getCurrentMemberId
 import com.dobby.service.MemberService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
