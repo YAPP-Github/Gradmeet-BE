@@ -160,7 +160,7 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             )
             val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
 
-            then("Emailcom.dobby.domainNotFoundException 예외가 발생해야 한다") {
+            then("EmailDomainNotFoundException 예외가 발생해야 한다") {
                 runTest {
                     val exception = shouldThrow<EmailDomainNotFoundException> {
                         runBlocking { sendMatchingEmailUseCase.execute(input) }
