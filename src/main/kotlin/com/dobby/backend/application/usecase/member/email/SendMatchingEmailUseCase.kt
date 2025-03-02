@@ -1,6 +1,5 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.usecase.AsyncUseCase
 import com.dobby.domain.EmailTemplateLoader
 import com.dobby.domain.exception.ContactEmailDuplicateException
 import com.dobby.domain.exception.EmailDomainNotFoundException
@@ -9,6 +8,8 @@ import com.dobby.domain.gateway.email.EmailGateway
 import com.dobby.domain.gateway.member.MemberConsentGateway
 import com.dobby.domain.gateway.member.MemberGateway
 import com.dobby.domain.model.experiment.ExperimentPost
+import com.dobby.backend.application.usecase.UseCase
+
 import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
 import java.time.LocalDate
@@ -21,7 +22,7 @@ class SendMatchingEmailUseCase(
     private val memberGateway: MemberGateway,
     private val memberConsentGateway: MemberConsentGateway,
     private val emailTemplateLoader: EmailTemplateLoader
-): AsyncUseCase<SendMatchingEmailUseCase.Input, SendMatchingEmailUseCase.Output>{
+): UseCase<SendMatchingEmailUseCase.Input, SendMatchingEmailUseCase.Output>{
 
     data class Input(
         val contactEmail: String,
@@ -34,7 +35,7 @@ class SendMatchingEmailUseCase(
         val message: String
     )
 
-    override suspend fun execute(input: Input): Output {
+    override fun execute(input: Input): Output {
         validateEmail(input.contactEmail)
         val member = memberGateway.findByContactEmail(input.contactEmail)
             ?: throw ContactEmailDuplicateException

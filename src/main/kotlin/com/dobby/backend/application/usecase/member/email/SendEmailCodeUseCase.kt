@@ -1,8 +1,6 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.common.CoroutineDispatcherProvider
-import com.dobby.backend.application.common.TransactionExecutor
-import com.dobby.backend.application.usecase.AsyncUseCase
+import com.dobby.backend.application.usecase.UseCase
 import com.dobby.domain.EmailTemplateLoader
 import com.dobby.domain.exception.*
 import com.dobby.domain.IdGenerator
@@ -14,8 +12,6 @@ import com.dobby.domain.enums.VerificationStatus
 import com.dobby.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.util.EmailUtils
 import com.dobby.backend.util.RetryUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 class SendEmailCodeUseCase(
     private val verificationGateway: VerificationGateway,
@@ -23,10 +19,8 @@ class SendEmailCodeUseCase(
     private val emailGateway: EmailGateway,
     private val cacheGateway: CacheGateway,
     private val idGenerator: IdGenerator,
-    private val dispatcherProvider: CoroutineDispatcherProvider,
-    private val transactionExecutor: TransactionExecutor,
     private val emailTemplateLoader: EmailTemplateLoader
-) : AsyncUseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
+) : UseCase<SendEmailCodeUseCase.Input, SendEmailCodeUseCase.Output> {
 
     data class Input(
         val univEmail: String
@@ -35,7 +29,7 @@ class SendEmailCodeUseCase(
         val isSuccess: Boolean,
         val message: String
     )
-    override suspend fun execute(input: Input): Output {
+    override fun execute(input: Input): Output {
         validateEmail(input.univEmail)
 
         val requestCountKey = "request_count:${input.univEmail}"
@@ -46,15 +40,11 @@ class SendEmailCodeUseCase(
 
         cacheGateway.incrementRequestCount(requestCountKey)
         val code = EmailUtils.generateCode()
-        CoroutineScope(dispatcherProvider.io).launch {
-            RetryUtils.retryWithBackOff {
-                reflectVerification(input.univEmail, code)
-            }
+        RetryUtils.retryWithBackOff {
+            reflectVerification(input.univEmail, code)
         }
 
-        CoroutineScope(dispatcherProvider.io).launch {
-            sendVerificationEmail(input.univEmail, code)
-        }
+        sendVerificationEmail(input.univEmail, code)
 
         return Output(
             isSuccess = true,
@@ -71,25 +61,21 @@ class SendEmailCodeUseCase(
             throw EmailAlreadyVerifiedException
     }
 
-    private suspend fun reflectVerification(univEmail: String, code: String) {
-        val isNew = try {
-            transactionExecutor.execute {
-                val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
+    private fun reflectVerification(univEmail: String, code: String) {
+      try {
+          val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
 
-                if(existingInfo != null) {
-                    val updatedVerification = existingInfo.update()
-                    verificationGateway.save(updatedVerification)
-                    false
-                }
-                else {
-                    val newVerification = Verification.newVerification(
-                        id = idGenerator.generateId(),
-                        univEmail = univEmail
-                    )
-                    verificationGateway.save(newVerification)
-                    true
-                }
-            }
+          if(existingInfo != null) {
+              val updatedVerification = existingInfo.update()
+              verificationGateway.save(updatedVerification)
+          }
+          else {
+              val newVerification = Verification.newVerification(
+                  id = idGenerator.generateId(),
+                  univEmail = univEmail
+              )
+              verificationGateway.save(newVerification)
+          }
         } catch (e: Exception) {
             return
         }
@@ -100,7 +86,7 @@ class SendEmailCodeUseCase(
         private const val EMAIL_SUBJECT = "[그라밋] 학교 메일 인증 코드가 도착했어요."
     }
 
-    private suspend fun sendVerificationEmail(univEmail: String, code: String) {
+    private fun sendVerificationEmail(univEmail: String, code: String) {
         val content = emailTemplateLoader.loadVerificationTemplate(code)
         RetryUtils.retryWithBackOff {
             emailGateway.sendEmail(univEmail, EMAIL_SUBJECT, content, isHtml = true)

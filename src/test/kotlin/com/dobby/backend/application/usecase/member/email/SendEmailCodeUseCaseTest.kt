@@ -1,7 +1,5 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.application.common.CoroutineDispatcherProvider
-import com.dobby.backend.application.common.TransactionExecutor
 import com.dobby.domain.EmailTemplateLoader
 import com.dobby.domain.IdGenerator
 import com.dobby.domain.enums.VerificationStatus
@@ -14,7 +12,6 @@ import com.dobby.backend.util.EmailUtils
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
-import kotlinx.coroutines.test.runTest
 
 class SendEmailCodeUseCaseTest : BehaviorSpec({
 
@@ -23,11 +20,9 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
     val emailGateway: EmailGateway = mockk(relaxed = true)
     val cacheGateway: CacheGateway = mockk(relaxed = true)
     val idGenerator: IdGenerator = mockk(relaxed = true)
-    val dispatcherProvider: CoroutineDispatcherProvider = mockk(relaxed = true)
-    val transactionExecutor: TransactionExecutor = mockk(relaxed = true)
     val emailTemplateLoader: EmailTemplateLoader = mockk(relaxed = true)
 
-    val sendEmailCodeUseCase = SendEmailCodeUseCase(verificationGateway, researcherGateway, emailGateway, cacheGateway, idGenerator, dispatcherProvider, transactionExecutor, emailTemplateLoader)
+    val sendEmailCodeUseCase = SendEmailCodeUseCase(verificationGateway, researcherGateway, emailGateway, cacheGateway, idGenerator, emailTemplateLoader)
 
     beforeSpec {
         mockkObject(EmailUtils)
@@ -42,11 +37,9 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         every { EmailUtils.isDomainExists(invalidEmail) } returns false
 
         `when`("이메일 인증 코드 전송을 실행하면") {
-            then("Emailcom.dobby.domainNotFoundException 예외가 발생해야 한다") {
-                runTest {
-                    shouldThrow<EmailDomainNotFoundException> {
-                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(invalidEmail))
-                    }
+            then("EmailDomainNotFoundException 예외가 발생해야 한다") {
+                shouldThrow<EmailDomainNotFoundException> {
+                    sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(invalidEmail))
                 }
             }
         }
@@ -59,10 +52,8 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
 
         `when`("이메일 인증 코드 전송을 실행하면") {
             then("EmailNotUnivException 예외가 발생해야 한다") {
-                runTest {
-                    shouldThrow<EmailNotUnivException> {
-                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(personalEmail))
-                    }
+                shouldThrow<EmailNotUnivException> {
+                    sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(personalEmail))
                 }
             }
         }
@@ -76,10 +67,8 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
 
         `when`("이메일 인증 코드 전송을 실행하면") {
             then("SignupUnivEmailDuplicateException 예외가 발생해야 한다") {
-                runTest {
-                    shouldThrow<SignupUnivEmailDuplicateException> {
-                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(duplicateEmail))
-                    }
+                shouldThrow<SignupUnivEmailDuplicateException> {
+                    sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(duplicateEmail))
                 }
             }
         }
@@ -94,10 +83,8 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
 
         `when`("이메일 인증 코드 전송을 실행하면") {
             then("EmailAlreadyVerifiedException 예외가 발생해야 한다") {
-                runTest {
-                    shouldThrow<EmailAlreadyVerifiedException> {
-                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(verifiedEmail))
-                    }
+                shouldThrow<EmailAlreadyVerifiedException> {
+                    sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(verifiedEmail))
                 }
             }
         }
@@ -113,10 +100,8 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
 
         `when`("이메일 인증 코드 전송을 실행하면") {
             then("TooManyVerificationRequestException 예외가 발생해야 한다") {
-                runTest {
-                    shouldThrow<TooManyVerificationRequestException> {
-                        sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(limitedEmail))
-                    }
+                shouldThrow<TooManyVerificationRequestException> {
+                    sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(limitedEmail))
                 }
             }
         }
