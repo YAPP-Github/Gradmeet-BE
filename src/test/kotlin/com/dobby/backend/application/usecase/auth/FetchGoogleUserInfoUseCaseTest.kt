@@ -1,13 +1,14 @@
 package com.dobby.backend.application.usecase.auth
 
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.gateway.auth.GoogleAuthGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.gateway.auth.GoogleAuthGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
+import com.dobby.domain.model.auth.GoogleToken
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -43,7 +44,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         )
 
         val mockEmptyMember = null
-        val mockGoogleTokenResponse = GoogleTokenResponse("mock-access-token")
+        val mockGoogleTokenResponse = GoogleToken("mock-access-token")
         every { googleAuthGateway.getAccessToken(any()) } returns mockGoogleTokenResponse
         every { googleAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"

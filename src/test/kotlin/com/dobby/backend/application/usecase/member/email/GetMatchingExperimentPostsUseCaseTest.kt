@@ -1,16 +1,16 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.*
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.experiment.TimeSlot
-import com.dobby.backend.domain.enums.member.GenderType
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.model.experiment.*
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.experiment.TimeSlot
+import com.dobby.domain.enums.member.GenderType
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

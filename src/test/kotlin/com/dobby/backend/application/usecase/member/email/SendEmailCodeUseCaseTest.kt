@@ -2,14 +2,14 @@ package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.common.CoroutineDispatcherProvider
 import com.dobby.backend.application.common.TransactionExecutor
-import com.dobby.backend.domain.EmailTemplateLoader
-import com.dobby.backend.domain.IdGenerator
-import com.dobby.backend.domain.enums.VerificationStatus
-import com.dobby.backend.domain.exception.*
-import com.dobby.backend.domain.gateway.CacheGateway
-import com.dobby.backend.domain.gateway.email.EmailGateway
-import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.domain.gateway.member.ResearcherGateway
+import com.dobby.domain.EmailTemplateLoader
+import com.dobby.domain.IdGenerator
+import com.dobby.domain.enums.VerificationStatus
+import com.dobby.domain.exception.*
+import com.dobby.domain.gateway.CacheGateway
+import com.dobby.domain.gateway.email.EmailGateway
+import com.dobby.domain.gateway.email.VerificationGateway
+import com.dobby.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.util.EmailUtils
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -42,7 +42,7 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         every { EmailUtils.isDomainExists(invalidEmail) } returns false
 
         `when`("이메일 인증 코드 전송을 실행하면") {
-            then("EmailDomainNotFoundException 예외가 발생해야 한다") {
+            then("Emailcom.dobby.domainNotFoundException 예외가 발생해야 한다") {
                 runTest {
                     shouldThrow<EmailDomainNotFoundException> {
                         sendEmailCodeUseCase.execute(SendEmailCodeUseCase.Input(invalidEmail))

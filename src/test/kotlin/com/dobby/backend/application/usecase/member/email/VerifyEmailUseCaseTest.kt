@@ -1,12 +1,12 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.domain.exception.CodeExpiredException
-import com.dobby.backend.domain.exception.CodeNotCorrectException
-import com.dobby.backend.domain.exception.VerifyInfoNotFoundException
-import com.dobby.backend.domain.gateway.CacheGateway
-import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.domain.model.Verification
-import com.dobby.backend.domain.enums.VerificationStatus
+import com.dobby.domain.exception.CodeExpiredException
+import com.dobby.domain.exception.CodeNotCorrectException
+import com.dobby.domain.exception.VerifyInfoNotFoundException
+import com.dobby.domain.gateway.CacheGateway
+import com.dobby.domain.gateway.email.VerificationGateway
+import com.dobby.domain.model.Verification
+import com.dobby.domain.enums.VerificationStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
