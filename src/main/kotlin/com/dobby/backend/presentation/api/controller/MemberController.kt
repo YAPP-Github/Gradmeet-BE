@@ -1,6 +1,5 @@
 package com.dobby.backend.presentation.api.controller
 
-import com.dobby.backend.application.service.MemberService
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
 import com.dobby.backend.presentation.api.dto.request.member.ParticipantSignupRequest
@@ -12,6 +11,7 @@ import com.dobby.backend.presentation.api.dto.response.member.ResearcherInfoResp
 import com.dobby.backend.presentation.api.dto.response.member.SignUpResponse
 import com.dobby.backend.presentation.api.mapper.MemberMapper
 import com.dobby.backend.util.getCurrentMemberId
+import com.dobby.service.MemberService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

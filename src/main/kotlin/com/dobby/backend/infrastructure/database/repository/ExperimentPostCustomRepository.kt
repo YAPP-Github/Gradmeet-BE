@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.repository
 
-import com.dobby.backend.application.model.Pagination
+import com.dobby.model.Pagination
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity

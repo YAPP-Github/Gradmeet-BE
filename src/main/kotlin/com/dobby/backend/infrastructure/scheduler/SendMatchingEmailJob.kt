@@ -1,8 +1,8 @@
 package com.dobby.backend.infrastructure.scheduler
 
-import com.dobby.backend.application.service.EmailService
-import com.dobby.backend.application.usecase.member.email.SendMatchingEmailUseCase
-import com.dobby.backend.application.usecase.member.email.GetMatchingExperimentPostsUseCase
+import com.dobby.service.EmailService
+import com.dobby.usecase.member.email.SendMatchingEmailUseCase
+import com.dobby.usecase.member.email.GetMatchingExperimentPostsUseCase
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.slf4j.Logger
