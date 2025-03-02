@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":application"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -32,6 +33,15 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
     testImplementation("io.kotest:kotest-property:$koTestVersion")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
 }
 
 tasks.withType<Test> {

@@ -1,4 +1,4 @@
-package com.dobby.backend.util
+package com.dobby.util
 
 import org.springframework.security.core.context.SecurityContextHolder
 
