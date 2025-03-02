@@ -72,7 +72,7 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countExperimentPostGroupedByRegion()
             .map { row ->
                 ExperimentPostStats(
-                    regionName = row[0] as String,
+                    regionName = row[0] as? String,
                     areaName = row[1] as? String,
                     count = (row[2] as Number).toLong()
                 )
