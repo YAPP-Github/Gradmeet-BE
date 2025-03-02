@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.FilterType
 
 @ComponentScan(
-	// TODO: presentation 계층 모듈 전환 후, basePackages 삭제
+	// TODO: 모든 레이어에 대해 모듈 전환 후, basePackages 삭제
 	basePackages = ["com.dobby"],
 	includeFilters = [ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE,
