@@ -1,6 +1,5 @@
 package com.dobby.backend.presentation.api.controller
 
-import com.dobby.backend.application.service.ExperimentPostService
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.enums.member.GenderType
@@ -19,6 +18,7 @@ import com.dobby.backend.presentation.api.dto.response.experiment.ExperimentPost
 import com.dobby.backend.presentation.api.dto.response.member.DefaultResponse
 import com.dobby.backend.presentation.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.backend.presentation.api.mapper.ExperimentPostMapper
+import com.dobby.service.ExperimentPostService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

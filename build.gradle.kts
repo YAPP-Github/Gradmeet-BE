@@ -34,9 +34,9 @@ repositories {
 
 dependencies {
 	implementation(project(":domain"))
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa") {
-		exclude(group = "org.hibernate", module = "hibernate-core")
-	}
+	implementation(project(":application"))
+
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -88,7 +88,6 @@ dependencies {
 	testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
 	testImplementation("io.kotest:kotest-property:$koTestVersion")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
-	testImplementation("io.mockk:mockk:1.13.10")
 
 	testImplementation("org.testcontainers:testcontainers:1.19.3")
 	testImplementation("org.testcontainers:junit-jupiter:1.19.3")
@@ -101,6 +100,7 @@ dependencyManagement {
 }
 
 dependencies {
+	implementation(project(mapOf("path" to ":application")))
 	implementation("org.slf4j:slf4j-api")
 	implementation("ch.qos.logback:logback-classic")
 }

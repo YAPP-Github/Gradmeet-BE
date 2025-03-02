@@ -1,6 +1,5 @@
 package com.dobby.backend.presentation.api.controller
 
-import com.dobby.backend.application.service.AuthService
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.auth.GoogleOauthLoginRequest
@@ -8,6 +7,7 @@ import com.dobby.backend.presentation.api.dto.request.auth.MemberRefreshTokenReq
 import com.dobby.backend.presentation.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import com.dobby.backend.presentation.api.mapper.AuthMapper
+import com.dobby.service.AuthService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

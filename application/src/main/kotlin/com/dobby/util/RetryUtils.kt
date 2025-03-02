@@ -1,0 +1,40 @@
+package com.dobby.util
+
+import com.dobby.exception.EmailAlreadyVerifiedException
+
+import org.slf4j.LoggerFactory
+import kotlin.math.pow
+import kotlin.random.Random
+
+object RetryUtils {
+    private val logger = LoggerFactory.getLogger(RetryUtils::class.java)
+
+    fun <T> retryWithBackOff(
+        maxRetries: Int = 3,
+        defaultDelay: Long = 1000L,
+        maxJitter: Long = 500L,
+        block: () -> T
+    ): T {
+        var curAttempt = 1
+        while(true){
+            try {
+                return block()
+            } catch (e: EmailAlreadyVerifiedException) {
+                throw e
+            } catch (ex: Exception) {
+                if (curAttempt >= maxRetries) {
+                    logger.error("Operation failed after $maxRetries attmpets.", ex)
+                    throw ex
+                }
+                val backOffTime = calculateBackOff(curAttempt, defaultDelay, maxJitter)
+                logger.warn("Retrying... Current Attempt: $curAttempt, Waiting: ${backOffTime}ms")
+                Thread.sleep(backOffTime)
+                curAttempt +=1
+            }
+        }
+    }
+
+    private fun calculateBackOff(curAttempt: Int, defaultDelay: Long, maxJitter: Long): Long {
+        return defaultDelay * (2.0.pow(curAttempt)).toLong() + Random.nextLong(0, maxJitter)
+    }
+}
