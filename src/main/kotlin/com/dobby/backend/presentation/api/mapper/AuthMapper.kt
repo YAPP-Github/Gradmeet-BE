@@ -1,9 +1,9 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
-import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
-import com.dobby.backend.application.usecase.auth.GenerateTestTokenUseCase
-import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
+import com.dobby.usecase.auth.FetchGoogleUserInfoUseCase
+import com.dobby.usecase.auth.FetchNaverUserInfoUseCase
+import com.dobby.usecase.auth.GenerateTestTokenUseCase
+import com.dobby.usecase.auth.GenerateTokenWithRefreshTokenUseCase
 import com.dobby.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse

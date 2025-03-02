@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway.experiment
 
-import com.dobby.backend.application.model.Pagination
+import com.dobby.model.Pagination
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost

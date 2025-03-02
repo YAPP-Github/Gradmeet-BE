@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.member.*
+import com.dobby.usecase.member.*
 import com.dobby.model.member.Participant
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region

@@ -1,11 +1,11 @@
 package com.dobby.backend.presentation.api.controller
 
-import com.dobby.backend.application.service.EmailService
 import com.dobby.backend.presentation.api.dto.request.member.EmailSendRequest
 import com.dobby.backend.presentation.api.dto.request.member.EmailVerificationRequest
 import com.dobby.backend.presentation.api.dto.response.member.EmailSendResponse
 import com.dobby.backend.presentation.api.dto.response.member.EmailVerificationResponse
 import com.dobby.backend.presentation.api.mapper.EmailMapper
+import com.dobby.service.EmailService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid

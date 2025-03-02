@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.scheduler
 
-import com.dobby.backend.application.service.ExperimentPostService
-import com.dobby.backend.application.usecase.experiment.UpdateExpiredExperimentPostUseCase
+import com.dobby.service.ExperimentPostService
+import com.dobby.usecase.experiment.UpdateExpiredExperimentPostUseCase
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.slf4j.Logger
