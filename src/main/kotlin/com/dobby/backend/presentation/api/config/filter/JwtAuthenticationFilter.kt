@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.config.filter
 
-import com.dobby.backend.domain.exception.AuthenticationTokenNotFoundException
-import com.dobby.backend.domain.exception.AuthenticationTokenNotValidException
+import com.dobby.domain.exception.AuthenticationTokenNotFoundException
+import com.dobby.domain.exception.AuthenticationTokenNotValidException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

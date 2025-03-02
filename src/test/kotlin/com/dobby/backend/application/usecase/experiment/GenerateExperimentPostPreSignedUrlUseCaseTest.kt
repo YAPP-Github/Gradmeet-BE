@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import com.dobby.backend.domain.gateway.S3Gateway
+import com.dobby.domain.gateway.S3Gateway
 import io.kotest.assertions.throwables.shouldThrow
 
 class GenerateExperimentPostPreSignedUrlUseCaseTest : BehaviorSpec({

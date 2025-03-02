@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.ContactEmailDuplicateException
-import com.dobby.backend.domain.exception.MemberConsentNotFoundException
-import com.dobby.backend.domain.exception.ResearcherNotFoundException
-import com.dobby.backend.domain.gateway.member.MemberConsentGateway
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.member.ResearcherGateway
-import com.dobby.backend.domain.model.member.Member
+import com.dobby.domain.exception.ContactEmailDuplicateException
+import com.dobby.domain.exception.MemberConsentNotFoundException
+import com.dobby.domain.exception.ResearcherNotFoundException
+import com.dobby.domain.gateway.member.MemberConsentGateway
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.member.ResearcherGateway
+import com.dobby.domain.model.member.Member
 import io.swagger.v3.oas.annotations.media.Schema
 
 class UpdateResearcherInfoUseCase(

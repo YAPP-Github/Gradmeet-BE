@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.backend.domain.model.member.MemberConsent
+import com.dobby.domain.model.member.MemberConsent
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

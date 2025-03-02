@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway
 
-import com.dobby.backend.domain.gateway.UrlGeneratorGateway
+import com.dobby.domain.gateway.UrlGeneratorGateway
 import com.dobby.backend.infrastructure.config.properties.UrlProperties
 import org.springframework.stereotype.Component
 

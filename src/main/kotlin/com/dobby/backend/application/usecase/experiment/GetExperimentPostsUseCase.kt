@@ -2,15 +2,15 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.CustomFilter
-import com.dobby.backend.domain.model.experiment.LocationTarget
-import com.dobby.backend.domain.model.experiment.StudyTarget
-import com.dobby.backend.domain.enums.member.GenderType
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.experiment.RecruitStatus
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.model.experiment.CustomFilter
+import com.dobby.domain.model.experiment.LocationTarget
+import com.dobby.domain.model.experiment.StudyTarget
+import com.dobby.domain.enums.member.GenderType
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.experiment.RecruitStatus
 import java.time.LocalDate
 
 class GetExperimentPostsUseCase (
@@ -70,10 +70,10 @@ class GetExperimentPostsUseCase (
             locationTarget = input.customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
             input.customFilter.recruitStatus
         )
-        val pagination = Pagination(input.pagination.page, input.pagination.count)
         val posts = experimentPostGateway.findExperimentPostsByCustomFilter(
             domainFilter,
-            pagination,
+            input.pagination.page,
+            input.pagination.count,
             input.pagination.order
         )
 

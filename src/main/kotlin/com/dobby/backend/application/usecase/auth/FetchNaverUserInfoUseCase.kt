@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.MemberRoleMismatchException
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.exception.MemberRoleMismatchException
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.auth.NaverAuthGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 
 class FetchNaverUserInfoUseCase(
     private val naverAuthGateway: NaverAuthGateway,
@@ -36,7 +36,7 @@ class FetchNaverUserInfoUseCase(
     override fun execute(input: Input): Output {
         val oauthToken = naverAuthGateway.getAccessToken(input.authorizationCode, input.state).accessToken
         val userInfo = naverAuthGateway.getUserInfo(oauthToken)
-        val email = userInfo.response.email
+        val email = userInfo.email
         val member = email.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
 
         return if (member != null) {
