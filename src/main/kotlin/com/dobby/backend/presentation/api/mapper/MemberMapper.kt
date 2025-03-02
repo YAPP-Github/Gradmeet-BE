@@ -1,10 +1,10 @@
 package com.dobby.backend.presentation.api.mapper
 
 import com.dobby.backend.application.usecase.member.*
-import com.dobby.domain.model.member.Participant
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.member.RoleType
+import com.dobby.model.member.Participant
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.request.member.*
 import com.dobby.backend.presentation.api.dto.response.member.*
 import com.dobby.backend.util.getCurrentMemberId

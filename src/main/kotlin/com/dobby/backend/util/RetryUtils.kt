@@ -1,6 +1,6 @@
 package com.dobby.backend.util
 
-import com.dobby.domain.exception.EmailAlreadyVerifiedException
+import com.dobby.exception.EmailAlreadyVerifiedException
 
 import org.slf4j.LoggerFactory
 import kotlin.math.pow

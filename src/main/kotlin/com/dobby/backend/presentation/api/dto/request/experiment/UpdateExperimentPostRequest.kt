@@ -1,9 +1,9 @@
 package com.dobby.backend.presentation.api.dto.request.experiment
 
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.experiment.TimeSlot
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.enums.MatchType
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
 import java.time.LocalDate
 
 data class UpdateExperimentPostRequest (

@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import com.dobby.domain.model.experiment.ExperimentImage
+import com.dobby.model.experiment.ExperimentImage
 import jakarta.persistence.*
 
 @Entity(name = "experiment_image")

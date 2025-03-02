@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.s3
 
-import com.dobby.domain.exception.InvalidRequestValueException
-import com.dobby.domain.IdGenerator
+import com.dobby.exception.InvalidRequestValueException
+import com.dobby.IdGenerator
 import com.dobby.backend.infrastructure.config.properties.S3Properties
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.s3.presigner.S3Presigner

@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway.cache
 
-import com.dobby.domain.gateway.CacheGateway
+import com.dobby.gateway.CacheGateway
 import org.springframework.core.env.Environment
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component

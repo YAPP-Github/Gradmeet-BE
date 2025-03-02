@@ -1,10 +1,10 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.domain.exception.EmailNotValidateException
-import com.dobby.domain.exception.VerifyInfoNotFoundException
-import com.dobby.domain.gateway.email.VerificationGateway
-import com.dobby.domain.model.Verification
-import com.dobby.domain.enums.VerificationStatus
+import com.dobby.exception.EmailNotValidateException
+import com.dobby.exception.VerifyInfoNotFoundException
+import com.dobby.gateway.email.VerificationGateway
+import com.dobby.model.Verification
+import com.dobby.enums.VerificationStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every

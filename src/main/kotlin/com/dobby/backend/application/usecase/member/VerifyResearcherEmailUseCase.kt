@@ -2,10 +2,10 @@ package com.dobby.backend.application.usecase.member
 
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.EmailNotValidateException
-import com.dobby.domain.exception.VerifyInfoNotFoundException
-import com.dobby.domain.gateway.email.VerificationGateway
-import com.dobby.domain.enums.VerificationStatus
+import com.dobby.exception.EmailNotValidateException
+import com.dobby.exception.VerifyInfoNotFoundException
+import com.dobby.gateway.email.VerificationGateway
+import com.dobby.enums.VerificationStatus
 
 class VerifyResearcherEmailUseCase(
     private val verificationGateway: VerificationGateway

@@ -1,10 +1,10 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByAreaUseCase
-import com.dobby.domain.exception.InvalidRequestValueException
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.experiment.RecruitStatus
-import com.dobby.domain.model.experiment.ExperimentPostStats
+import com.dobby.exception.InvalidRequestValueException
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.model.experiment.ExperimentPostStats
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -20,8 +20,8 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
         val region = Region.fromDisplayName(regionName)
 
         val regionData = listOf(
-            ExperimentPostStats(region = region, area = Area.SEOUL_ALL, count = 5L),
-            ExperimentPostStats(region = region, area = Area.GEUMCHEONGU, count = 10L)
+            ExperimentPostStats(regionName = regionName, areaName = "SEOUL_ALL", count = 5L),
+            ExperimentPostStats(regionName = regionName, areaName = "GEUMCHEONGU", count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPostsByRegion(region) } returns 15

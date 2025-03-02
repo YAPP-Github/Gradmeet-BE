@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.domain.model.member.Researcher
+import com.dobby.model.member.Researcher
 import jakarta.persistence.*
 
 @Entity

@@ -1,9 +1,9 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.enums.member.MemberStatus
-import com.dobby.domain.enums.member.ProviderType
-import com.dobby.domain.enums.member.RoleType
+import com.dobby.model.member.Member
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime

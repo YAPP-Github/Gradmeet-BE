@@ -1,14 +1,14 @@
 package com.dobby.backend.infrastructure.gateway.experiment
 
 import com.dobby.backend.application.model.Pagination
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.model.experiment.CustomFilter
-import com.dobby.domain.model.experiment.ExperimentPost
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.CustomFilter
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustomRepository
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostRepository
-import com.dobby.domain.model.experiment.ExperimentPostStats
+import com.dobby.model.experiment.ExperimentPostStats
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
@@ -72,8 +72,8 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countExperimentPostGroupedByRegion()
             .map { row ->
                 ExperimentPostStats(
-                    region = row[0] as Region,
-                    area = null,
+                    regionName = row[0] as String,
+                    areaName = null,
                     count = (row[2] as Number).toLong()
                 )
             }

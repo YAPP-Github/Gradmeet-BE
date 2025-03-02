@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.MemberRoleMismatchException
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.gateway.auth.TokenGateway
-import com.dobby.domain.gateway.auth.GoogleAuthGateway
-import com.dobby.domain.enums.member.MemberStatus
-import com.dobby.domain.enums.member.ProviderType
-import com.dobby.domain.enums.member.RoleType
+import com.dobby.exception.MemberRoleMismatchException
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.auth.GoogleAuthGateway
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 
 class FetchGoogleUserInfoUseCase(
     private val googleAuthGateway: GoogleAuthGateway,

@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.member.email
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.CodeExpiredException
-import com.dobby.domain.exception.CodeNotCorrectException
-import com.dobby.domain.exception.EmailAlreadyVerifiedException
-import com.dobby.domain.exception.VerifyInfoNotFoundException
-import com.dobby.domain.gateway.CacheGateway
-import com.dobby.domain.gateway.email.VerificationGateway
-import com.dobby.domain.enums.VerificationStatus
+import com.dobby.exception.CodeExpiredException
+import com.dobby.exception.CodeNotCorrectException
+import com.dobby.exception.EmailAlreadyVerifiedException
+import com.dobby.exception.VerifyInfoNotFoundException
+import com.dobby.gateway.CacheGateway
+import com.dobby.gateway.email.VerificationGateway
+import com.dobby.enums.VerificationStatus
 
 class VerifyEmailUseCase(
     private val verificationGateway: VerificationGateway,
