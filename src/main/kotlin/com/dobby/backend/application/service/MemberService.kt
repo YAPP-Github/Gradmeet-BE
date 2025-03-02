@@ -1,11 +1,11 @@
 package com.dobby.backend.application.service
 
 import com.dobby.backend.application.usecase.member.*
-import com.dobby.backend.domain.exception.MemberNotFoundException
-import com.dobby.backend.domain.exception.SignupOauthEmailDuplicateException
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.exception.MemberNotFoundException
+import com.dobby.domain.exception.SignupOauthEmailDuplicateException
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.RoleType
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

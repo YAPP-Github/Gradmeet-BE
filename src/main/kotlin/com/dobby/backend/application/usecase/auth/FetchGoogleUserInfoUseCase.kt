@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.MemberRoleMismatchException
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.gateway.auth.GoogleAuthGateway
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.exception.MemberRoleMismatchException
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.gateway.auth.GoogleAuthGateway
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 
 class FetchGoogleUserInfoUseCase(
     private val googleAuthGateway: GoogleAuthGateway,
@@ -36,7 +36,7 @@ class FetchGoogleUserInfoUseCase(
         val oauthToken = googleAuthGateway.getAccessToken(input.authorizationCode).accessToken
         val userInfo = googleAuthGateway.getUserInfo(oauthToken)
         val email = userInfo.email
-        val member = email.let { memberGateway.findByOauthEmailAndStatus(it, MemberStatus.ACTIVE) }
+        val member = email.let { memberGateway.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE) }
 
         return if (member != null) {
             val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
