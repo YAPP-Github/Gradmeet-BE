@@ -20,8 +20,8 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
         val region = Region.fromDisplayName(regionName)
 
         val regionData = listOf(
-            ExperimentPostStats(region = region, area = Area.SEOUL_ALL, count = 5L),
-            ExperimentPostStats(region = region, area = Area.GEUMCHEONGU, count = 10L)
+            ExperimentPostStats(regionName = regionName, areaName = "SEOUL_ALL", count = 5L),
+            ExperimentPostStats(regionName = regionName, areaName = "GEUMCHEONGU", count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPostsByRegion(region) } returns 15

@@ -1,7 +1,6 @@
 package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.application.model.Pagination
-import com.dobby.domain.model.experiment.*
 import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.MatchType.*

@@ -15,8 +15,8 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
 
     given("유효한 지역 이름이 주어졌을 때") {
         val regionData = listOf(
-            ExperimentPostStats(region = Region.SEOUL, area = null, count = 5L),
-            ExperimentPostStats(region = Region.GYEONGGI, area = null, count = 10L)
+            ExperimentPostStats(regionName = "SEOUL", areaName = null, count = 5L),
+            ExperimentPostStats(regionName = "GYEONGGI", areaName = null, count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPosts() } returns 20
@@ -58,8 +58,8 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
 
     given("지역이 null로 주어졌을 때") {
         val regionData = listOf(
-            ExperimentPostStats(region = Region.SEOUL, area = null, count = 5L),
-            ExperimentPostStats(region = Region.GYEONGGI, area = null, count = 10L)
+            ExperimentPostStats(regionName = "SEOUL", areaName = null, count = 5L),
+            ExperimentPostStats(regionName = "GYEONGGI", areaName = null, count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPosts() } returns 20
