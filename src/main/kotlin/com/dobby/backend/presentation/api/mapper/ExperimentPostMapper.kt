@@ -1,9 +1,6 @@
 package com.dobby.backend.presentation.api.mapper
 
-import com.dobby.backend.application.usecase.experiment.*
-import com.dobby.backend.application.usecase.experiment.CreateExperimentPostUseCase
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMethodUseCase
-import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.usecase.experiment.*
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
 import com.dobby.enums.member.GenderType
