@@ -30,26 +30,7 @@ class ExceptionResponseFactory(
             is AuthenticationTokenNotValidException,
             is AuthenticationTokenExpiredException -> HttpStatus.UNAUTHORIZED
 
-            is InvalidRequestValueException,
-            is EmailDomainNotFoundException,
-            is VerifyInfoNotFoundException,
-            is CodeNotCorrectException,
-            is EmailNotUnivException,
-            is CodeExpiredException,
-            is EmailFormatInvalidException,
-            is EmailAlreadyVerifiedException,
-            is TooManyVerificationRequestException,
-            is ExperimentAreaOverflowException,
-            is ExperimentAreaInCorrectException,
-            is ExperimentPostImageSizeException,
-            is ExperimentPostRecruitStatusException,
-            is ExperimentPostUpdateDateException,
-            is ExperimentPostInvalidOnlineRequestException,
-            is ExperimentPostTitleException,
-            is ExperimentPostRewardException,
-            is ExperimentPostContentException,
-            is ExperimentPostCountException,
-            is ExperimentPostLeadResearcherException -> HttpStatus.BAD_REQUEST
+            is ClientException -> HttpStatus.BAD_REQUEST
 
             is PermissionDeniedException -> HttpStatus.FORBIDDEN
 
