@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.config.exception
 
-import com.dobby.backend.domain.exception.DobbyException
+import com.dobby.domain.exception.DobbyException
 import com.dobby.backend.presentation.api.dto.response.ExceptionResponse
 import org.springframework.stereotype.Component
 

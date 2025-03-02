@@ -1,11 +1,11 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.experiment.RecruitStatus
-import jakarta.persistence.Tuple
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.experiment.RecruitStatus
+import com.dobby.domain.model.experiment.ExperimentPostStats
 
 class GetExperimentPostCountsByAreaUseCase(
     private val experimentPostGateway: ExperimentPostGateway
@@ -43,17 +43,16 @@ class GetExperimentPostCountsByAreaUseCase(
         return Output(total, areaCounts)
     }
 
-    private fun getAreaCounts(region: Region?, regionData: List<Tuple>): List<PostCountsByArea> {
+    private fun getAreaCounts(region: Region?, regionData: List<ExperimentPostStats>): List<PostCountsByArea> {
         return region?.getAreas()?.map { area ->
             val areaCount = findAreaCount(regionData, area)
             PostCountsByArea(name = area.displayName, count = areaCount)
         } ?: emptyList()
     }
 
-    private fun findAreaCount(regionData: List<Tuple>, area: Area): Int {
-        return regionData.find { tuple ->
-            val regionArea = tuple.get(0, Area::class.java)
-            regionArea == area
-        }?.get(1, Long::class.java)?.toInt() ?: 0
+    private fun findAreaCount(regionData: List<ExperimentPostStats>, area: Area): Int {
+        return regionData.find { stats ->
+            stats.area == area
+        }?.count?.toInt() ?: 0
     }
 }

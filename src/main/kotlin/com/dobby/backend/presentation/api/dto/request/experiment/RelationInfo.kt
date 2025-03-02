@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.dto.request.experiment
 
-import com.dobby.backend.domain.enums.member.GenderType
+import com.dobby.domain.enums.member.GenderType
 
 data class RelationInfo (
     val targetGroupInfo: TargetGroupInfo,

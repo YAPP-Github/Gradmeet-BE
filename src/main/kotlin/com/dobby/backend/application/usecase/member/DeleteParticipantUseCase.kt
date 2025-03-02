@@ -1,11 +1,11 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.exception.MemberNotFoundException
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.member.MemberWithdrawalGateway
-import com.dobby.backend.domain.model.member.MemberWithdrawal
-import com.dobby.backend.domain.enums.member.WithdrawalReasonType
+import com.dobby.domain.exception.MemberNotFoundException
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.member.MemberWithdrawalGateway
+import com.dobby.domain.model.member.MemberWithdrawal
+import com.dobby.domain.enums.member.WithdrawalReasonType
 
 class DeleteParticipantUseCase(
     private val memberGateway: MemberGateway,

@@ -1,24 +1,23 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.domain.EmailTemplateLoader
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.model.experiment.ApplyMethod
-import com.dobby.backend.domain.model.experiment.TargetGroup
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-
-import com.dobby.backend.domain.exception.EmailDomainNotFoundException
-import com.dobby.backend.domain.gateway.UrlGeneratorGateway
-import com.dobby.backend.domain.gateway.email.EmailGateway
-import com.dobby.backend.domain.gateway.member.MemberConsentGateway
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.model.experiment.ExperimentPost
-import com.dobby.backend.domain.enums.experiment.TimeSlot
-import com.dobby.backend.domain.enums.member.GenderType
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.EmailTemplateLoader
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.model.experiment.ApplyMethod
+import com.dobby.domain.model.experiment.TargetGroup
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.gateway.UrlGeneratorGateway
+import com.dobby.domain.gateway.email.EmailGateway
+import com.dobby.domain.gateway.member.MemberConsentGateway
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.model.experiment.ExperimentPost
+import com.dobby.domain.enums.experiment.TimeSlot
+import com.dobby.domain.enums.member.GenderType
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
+import com.dobby.domain.exception.EmailDomainNotFoundException
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -161,7 +160,7 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             )
             val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
 
-            then("EmailDomainNotFoundException 예외가 발생해야 한다") {
+            then("Emailcom.dobby.domainNotFoundException 예외가 발생해야 한다") {
                 runTest {
                     val exception = shouldThrow<EmailDomainNotFoundException> {
                         runBlocking { sendMatchingEmailUseCase.execute(input) }

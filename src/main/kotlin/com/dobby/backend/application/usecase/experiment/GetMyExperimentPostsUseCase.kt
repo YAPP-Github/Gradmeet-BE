@@ -2,7 +2,7 @@ package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.model.Pagination
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
 import java.time.LocalDate
 
 class GetMyExperimentPostsUseCase(
@@ -32,7 +32,8 @@ class GetMyExperimentPostsUseCase(
     override fun execute(input: Input): List<Output> {
         val posts = experimentPostGateway.findExperimentPostsByMemberIdWithPagination(
             memberId = input.memberId,
-            pagination = Pagination(input.pagination.page, input.pagination.count),
+            page = input.pagination.page,
+            count = input.pagination.count,
             order = input.pagination.order
         )
 

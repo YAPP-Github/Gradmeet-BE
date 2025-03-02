@@ -1,9 +1,9 @@
 package com.dobby.backend.application.usecase.auth
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.model.member.Member
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.model.member.Member
 
 class GenerateTokenWithRefreshTokenUseCase(
     private val tokenGateway: TokenGateway,

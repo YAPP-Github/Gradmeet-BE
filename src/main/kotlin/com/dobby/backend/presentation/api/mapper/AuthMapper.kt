@@ -4,7 +4,7 @@ import com.dobby.backend.application.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTestTokenUseCase
 import com.dobby.backend.application.usecase.auth.GenerateTokenWithRefreshTokenUseCase
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.OauthLoginResponse
 import com.dobby.backend.presentation.api.dto.response.auth.TestMemberSignInResponse
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse

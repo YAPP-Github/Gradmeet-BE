@@ -1,17 +1,17 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.IdGenerator
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.member.ResearcherGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.gateway.member.MemberConsentGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.model.member.MemberConsent
-import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.IdGenerator
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.member.ResearcherGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.gateway.member.MemberConsentGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.model.member.MemberConsent
+import com.dobby.domain.model.member.Researcher
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,

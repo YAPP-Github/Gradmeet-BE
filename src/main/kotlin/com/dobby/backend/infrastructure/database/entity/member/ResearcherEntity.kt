@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.member
 
-import com.dobby.backend.domain.model.member.Researcher
+import com.dobby.domain.model.member.Researcher
 import jakarta.persistence.*
 
 @Entity
@@ -30,15 +30,15 @@ class ResearcherEntity (
     val labInfo : String?,
 ) {
     companion object {
-        fun fromDomain(domain: Researcher): ResearcherEntity {
+        fun fromDomain(researcher: Researcher): ResearcherEntity {
             return ResearcherEntity(
-                id = domain.id,
-                member = MemberEntity.fromDomain(domain.member),
-                univEmail = domain.univEmail,
-                emailVerified = domain.emailVerified,
-                univName = domain.univName,
-                major = domain.major,
-                labInfo = domain.labInfo
+                id = researcher.id,
+                member = MemberEntity.fromDomain(researcher.member),
+                univEmail = researcher.univEmail,
+                emailVerified = researcher.emailVerified,
+                univName = researcher.univName,
+                major = researcher.major,
+                labInfo = researcher.labInfo
             )
         }
     }

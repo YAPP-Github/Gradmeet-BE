@@ -1,9 +1,8 @@
 package com.dobby.backend.infrastructure.gateway.discord
 
-import com.dobby.backend.domain.gateway.AlertGateway
+import com.dobby.domain.gateway.AlertGateway
 import com.dobby.backend.infrastructure.feign.discord.DiscordFeignClient
 import com.dobby.backend.presentation.api.dto.request.DiscordMessageRequest
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -12,13 +11,13 @@ import java.time.LocalDateTime
 @Component
 class AlertGatewayImpl(
     private val discordFeignClient: DiscordFeignClient
-): AlertGateway {
+) : AlertGateway {
 
-    override fun sendError(e: Exception, request: HttpServletRequest) {
-        sendMessage(createMessage(e, request))
+    override fun sendError(e: Exception, requestUrl: String, clientIp: String?) {
+        sendMessage(createMessage(e, requestUrl, clientIp))
     }
 
-    private fun createMessage(e: Exception, request: HttpServletRequest): DiscordMessageRequest {
+    private fun createMessage(e: Exception, requestUrl: String, clientIp: String?): DiscordMessageRequest {
         return DiscordMessageRequest(
             content = "# 🚨 에러 발생 비이이이이사아아아앙",
             embeds = listOf(
@@ -29,7 +28,10 @@ class AlertGatewayImpl(
                         ${LocalDateTime.now()}
                         
                         ### 🔗 요청 URL
-                        ${createRequestFullPath(request)}
+                        $requestUrl
+                        
+                        ### 🖥️ 클라이언트 IP
+                        ${clientIp ?: "알 수 없음"}
                         
                         ### 📄 Stack Trace
                         ```
@@ -39,17 +41,6 @@ class AlertGatewayImpl(
                 )
             )
         )
-    }
-
-    private fun createRequestFullPath(request: HttpServletRequest): String {
-        var fullPath = "${request.method} ${request.requestURL}"
-
-        val queryString = request.queryString
-        if (queryString != null) {
-            fullPath += "?$queryString"
-        }
-
-        return fullPath
     }
 
     private fun getStackTrace(e: Exception): String {

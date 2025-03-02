@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.gateway.member
 
-import com.dobby.backend.domain.gateway.member.MemberWithdrawalGateway
-import com.dobby.backend.domain.model.member.MemberWithdrawal
+import com.dobby.domain.gateway.member.MemberWithdrawalGateway
+import com.dobby.domain.model.member.MemberWithdrawal
 import com.dobby.backend.infrastructure.database.entity.member.MemberWithdrawalEntity
 import com.dobby.backend.infrastructure.database.repository.MemberWithdrawalRepository
 import org.springframework.stereotype.Component
