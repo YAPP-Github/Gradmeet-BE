@@ -1,11 +1,11 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.MemberConsentNotFoundException
-import com.dobby.domain.exception.ResearcherNotFoundException
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.ResearcherGateway
-import com.dobby.domain.model.member.Member
+import com.dobby.exception.MemberConsentNotFoundException
+import com.dobby.exception.ResearcherNotFoundException
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.ResearcherGateway
+import com.dobby.model.member.Member
 import com.dobby.backend.presentation.api.dto.response.member.MemberResponse
 import io.swagger.v3.oas.annotations.media.Schema
 

@@ -1,15 +1,15 @@
 package com.dobby.backend.application.usecase.experiment
 
-import com.dobby.domain.exception.ExperimentPostNotFoundException
-import com.dobby.domain.exception.ExperimentPostRecruitStatusException
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.model.experiment.ApplyMethod
-import com.dobby.domain.model.experiment.ExperimentPost
-import com.dobby.domain.model.experiment.TargetGroup
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.experiment.TimeSlot
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.exception.ExperimentPostNotFoundException
+import com.dobby.exception.ExperimentPostRecruitStatusException
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.ApplyMethod
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

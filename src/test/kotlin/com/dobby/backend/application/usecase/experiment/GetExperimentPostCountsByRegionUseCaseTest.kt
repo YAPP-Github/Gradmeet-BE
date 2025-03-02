@@ -1,8 +1,8 @@
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostCountsByRegionUseCase
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.experiment.RecruitStatus
-import com.dobby.domain.model.experiment.ExperimentPostStats
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.model.experiment.ExperimentPostStats
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -15,8 +15,8 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
 
     given("유효한 지역 이름이 주어졌을 때") {
         val regionData = listOf(
-            ExperimentPostStats(region = Region.SEOUL, area = null, count = 5L),
-            ExperimentPostStats(region = Region.GYEONGGI, area = null, count = 10L)
+            ExperimentPostStats(regionName = "SEOUL", areaName = null, count = 5L),
+            ExperimentPostStats(regionName = "GYEONGGI", areaName = null, count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPosts() } returns 20
@@ -58,8 +58,8 @@ class GetExperimentPostCountsByRegionUseCaseTest : BehaviorSpec({
 
     given("지역이 null로 주어졌을 때") {
         val regionData = listOf(
-            ExperimentPostStats(region = Region.SEOUL, area = null, count = 5L),
-            ExperimentPostStats(region = Region.GYEONGGI, area = null, count = 10L)
+            ExperimentPostStats(regionName = "SEOUL", areaName = null, count = 5L),
+            ExperimentPostStats(regionName = "GYEONGGI", areaName = null, count = 10L)
         )
 
         every { experimentPostGateway.countExperimentPosts() } returns 20

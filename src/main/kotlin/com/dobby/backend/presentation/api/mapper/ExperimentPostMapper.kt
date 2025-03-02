@@ -6,11 +6,11 @@ import com.dobby.backend.application.usecase.experiment.GetExperimentPostApplyMe
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.backend.presentation.api.dto.request.PreSignedUrlRequest
 import com.dobby.backend.presentation.api.dto.response.PreSignedUrlResponse
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.RecruitStatus
 import com.dobby.backend.presentation.api.dto.request.experiment.*
 import com.dobby.backend.presentation.api.dto.response.PaginatedResponse
 import com.dobby.backend.presentation.api.dto.response.experiment.*

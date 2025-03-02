@@ -1,16 +1,16 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.domain.IdGenerator
-import com.dobby.domain.gateway.auth.TokenGateway
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.gateway.member.ResearcherGateway
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.model.member.MemberConsent
-import com.dobby.domain.model.member.Researcher
-import com.dobby.domain.enums.member.MemberStatus
-import com.dobby.domain.enums.member.ProviderType
-import com.dobby.domain.enums.member.RoleType
+import com.dobby.IdGenerator
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.gateway.member.ResearcherGateway
+import com.dobby.model.member.Member
+import com.dobby.model.member.MemberConsent
+import com.dobby.model.member.Researcher
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

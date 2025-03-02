@@ -1,15 +1,18 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.IdGenerator
-import com.dobby.domain.exception.*
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.model.experiment.ExperimentPost
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.experiment.TimeSlot
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.IdGenerator
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.exception.ExperimentPostNotFoundException
+import com.dobby.exception.ExperimentPostRecruitStatusException
+import com.dobby.exception.ExperimentPostUpdateDateException
+import com.dobby.exception.PermissionDeniedException
 import java.time.LocalDate
 
 class UpdateExperimentPostUseCase (

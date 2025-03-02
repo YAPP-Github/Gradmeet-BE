@@ -1,8 +1,8 @@
 package com.dobby.backend.presentation.api.config.exception
 
-import com.dobby.domain.exception.*
-import com.dobby.domain.gateway.AlertGateway
+import com.dobby.gateway.AlertGateway
 import com.dobby.backend.presentation.api.dto.response.ExceptionResponse
+import com.dobby.exception.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.Logger

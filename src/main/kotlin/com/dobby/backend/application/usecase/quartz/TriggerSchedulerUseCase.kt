@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.quartz
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.gateway.SchedulerTriggerGateway
+import com.dobby.gateway.SchedulerTriggerGateway
 
 class TriggerSchedulerUseCase(
     private val schedulerTriggerGateway: SchedulerTriggerGateway

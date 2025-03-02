@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import com.dobby.domain.model.experiment.TargetGroup
-import com.dobby.domain.enums.member.GenderType
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.enums.member.GenderType
 import jakarta.persistence.*
 
 @Entity(name = "target_group")

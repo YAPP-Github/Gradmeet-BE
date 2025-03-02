@@ -1,8 +1,8 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.ExperimentPostNotFoundException
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.exception.ExperimentPostNotFoundException
+import com.dobby.gateway.experiment.ExperimentPostGateway
 
 class DeleteExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway

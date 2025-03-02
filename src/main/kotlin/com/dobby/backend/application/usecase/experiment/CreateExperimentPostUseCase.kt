@@ -1,21 +1,21 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.*
-import com.dobby.domain.IdGenerator
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.model.experiment.ApplyMethod
-import com.dobby.domain.model.experiment.ExperimentImage
-import com.dobby.domain.model.experiment.ExperimentPost
-import com.dobby.domain.model.experiment.TargetGroup
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.member.RoleType
-import com.dobby.domain.enums.experiment.TimeSlot
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.IdGenerator
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.experiment.ApplyMethod
+import com.dobby.model.experiment.ExperimentImage
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.model.member.Member
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.member.RoleType
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.exception.PermissionDeniedException
 import java.time.LocalDate
 
 class CreateExperimentPostUseCase(
@@ -149,7 +149,7 @@ class CreateExperimentPostUseCase(
             )
         )
     }
-    private fun validateMemberRole(member :Member){
+    private fun validateMemberRole(member : Member){
         if(member.role != RoleType.RESEARCHER)
             throw PermissionDeniedException
     }

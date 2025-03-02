@@ -1,12 +1,12 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.domain.model.experiment.CustomFilter
-import com.dobby.domain.model.experiment.LocationTarget
-import com.dobby.domain.model.experiment.StudyTarget
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.enums.experiment.RecruitStatus
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.CustomFilter
+import com.dobby.model.experiment.LocationTarget
+import com.dobby.model.experiment.StudyTarget
+import com.dobby.enums.MatchType
+import com.dobby.enums.experiment.RecruitStatus
 
 class GetExperimentPostTotalCountByCustomFilterUseCase(
     private val experimentPostGateway: ExperimentPostGateway

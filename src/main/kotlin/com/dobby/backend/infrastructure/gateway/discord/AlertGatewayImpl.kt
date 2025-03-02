@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway.discord
 
-import com.dobby.domain.gateway.AlertGateway
+import com.dobby.gateway.AlertGateway
 import com.dobby.backend.infrastructure.feign.discord.DiscordFeignClient
 import com.dobby.backend.presentation.api.dto.request.DiscordMessageRequest
 import org.springframework.stereotype.Component
