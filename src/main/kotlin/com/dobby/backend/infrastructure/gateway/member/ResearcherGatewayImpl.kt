@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.gateway.member
 
-import com.dobby.domain.gateway.member.ResearcherGateway
-import com.dobby.domain.model.member.Researcher
+import com.dobby.gateway.member.ResearcherGateway
+import com.dobby.model.member.Researcher
 import com.dobby.backend.infrastructure.database.entity.member.ResearcherEntity
 import com.dobby.backend.infrastructure.database.repository.ResearcherRepository
 import org.springframework.stereotype.Component

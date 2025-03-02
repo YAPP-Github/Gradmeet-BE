@@ -1,16 +1,16 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.exception.ContactEmailDuplicateException
-import com.dobby.domain.exception.MemberConsentNotFoundException
-import com.dobby.domain.exception.ParticipantNotFoundException
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.gateway.member.ParticipantGateway
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.model.member.Participant
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.MatchType
+import com.dobby.exception.ContactEmailDuplicateException
+import com.dobby.exception.MemberConsentNotFoundException
+import com.dobby.exception.ParticipantNotFoundException
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.gateway.member.ParticipantGateway
+import com.dobby.model.member.Member
+import com.dobby.model.member.Participant
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
 import java.time.LocalDate
 
 class UpdateParticipantInfoUseCase(

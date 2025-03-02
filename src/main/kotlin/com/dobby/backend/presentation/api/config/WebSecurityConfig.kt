@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.config
 
-import com.dobby.domain.exception.PermissionDeniedException
-import com.dobby.domain.exception.UnAuthorizedException
+import com.dobby.exception.PermissionDeniedException
+import com.dobby.exception.UnAuthorizedException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import com.dobby.backend.presentation.api.config.filter.JwtAuthenticationFilter
 import com.dobby.backend.presentation.api.config.filter.JwtOptionalAuthenticationFilter

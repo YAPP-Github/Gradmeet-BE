@@ -1,6 +1,6 @@
 package com.dobby.backend.presentation.api.config.filter
 
-import com.dobby.domain.exception.AuthenticationTokenNotValidException
+import com.dobby.exception.AuthenticationTokenNotValidException
 import com.dobby.backend.infrastructure.token.JwtTokenProvider
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

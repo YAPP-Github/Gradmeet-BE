@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.database.entity
 
-import com.dobby.domain.model.Verification
-import com.dobby.domain.enums.VerificationStatus
+import com.dobby.model.Verification
+import com.dobby.enums.VerificationStatus
 import jakarta.persistence.*
 import java.time.LocalDateTime
 

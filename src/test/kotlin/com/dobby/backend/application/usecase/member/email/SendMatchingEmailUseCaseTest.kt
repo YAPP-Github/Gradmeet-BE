@@ -1,23 +1,23 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.domain.EmailTemplateLoader
-import com.dobby.domain.enums.MatchType
-import com.dobby.domain.model.experiment.ApplyMethod
-import com.dobby.domain.model.experiment.TargetGroup
-import com.dobby.domain.model.member.Member
-import com.dobby.domain.enums.areaInfo.Area
-import com.dobby.domain.enums.areaInfo.Region
-import com.dobby.domain.gateway.UrlGeneratorGateway
-import com.dobby.domain.gateway.email.EmailGateway
-import com.dobby.domain.gateway.member.MemberConsentGateway
-import com.dobby.domain.gateway.member.MemberGateway
-import com.dobby.domain.model.experiment.ExperimentPost
-import com.dobby.domain.enums.experiment.TimeSlot
-import com.dobby.domain.enums.member.GenderType
-import com.dobby.domain.enums.member.MemberStatus
-import com.dobby.domain.enums.member.ProviderType
-import com.dobby.domain.enums.member.RoleType
-import com.dobby.domain.exception.EmailDomainNotFoundException
+import com.dobby.EmailTemplateLoader
+import com.dobby.enums.MatchType
+import com.dobby.model.experiment.ApplyMethod
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.model.member.Member
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.gateway.UrlGeneratorGateway
+import com.dobby.gateway.email.EmailGateway
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
+import com.dobby.exception.EmailDomainNotFoundException
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.assertions.throwables.shouldThrow
@@ -160,7 +160,7 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             )
             val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
 
-            then("Emailcom.dobby.domainNotFoundException 예외가 발생해야 한다") {
+            then("EmailDomainNotFoundException 예외가 발생해야 한다") {
                 runTest {
                     val exception = shouldThrow<EmailDomainNotFoundException> {
                         runBlocking { sendMatchingEmailUseCase.execute(input) }

@@ -1,7 +1,7 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.gateway.experiment.ExperimentPostGateway
 import java.time.LocalDate
 
 class UpdateExpiredExperimentPostUseCase(
