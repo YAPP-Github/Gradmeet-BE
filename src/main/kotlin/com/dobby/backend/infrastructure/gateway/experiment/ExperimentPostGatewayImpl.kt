@@ -1,17 +1,16 @@
 package com.dobby.backend.infrastructure.gateway.experiment
 
 import com.dobby.backend.application.model.Pagination
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.CustomFilter
-import com.dobby.backend.domain.model.experiment.ExperimentPost
-import com.dobby.backend.domain.enums.areaInfo.Region
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.model.experiment.CustomFilter
+import com.dobby.domain.model.experiment.ExperimentPost
+import com.dobby.domain.enums.areaInfo.Region
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostCustomRepository
 import com.dobby.backend.infrastructure.database.repository.ExperimentPostRepository
-import jakarta.persistence.Tuple
+import com.dobby.domain.model.experiment.ExperimentPostStats
 import org.springframework.stereotype.Component
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Component
 class ExperimentPostGatewayImpl(
@@ -26,9 +25,11 @@ class ExperimentPostGatewayImpl(
 
     override fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
-        pagination: Pagination,
+        page: Int,
+        count: Int,
         order: String
     ): List<ExperimentPost>? {
+        val pagination = Pagination(page, count)
         return experimentPostCustomRepository.findExperimentPostsByCustomFilter(
             customFilter,
             pagination,
@@ -59,19 +60,28 @@ class ExperimentPostGatewayImpl(
         return experimentPostRepository.countByRecruitStatus(recruitStatus)
     }
 
-    override fun countExperimentPostByRegionGroupedByArea(region: Region): List<Tuple> {
+    override fun countExperimentPostByRegionGroupedByArea(region: Region): List<ExperimentPostStats> {
         return experimentPostRepository.countExperimentPostByRegionGroupedByArea(region)
     }
 
-    override fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<Tuple> {
+    override fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<ExperimentPostStats> {
         return experimentPostRepository.countExperimentPostByRegionAndRecruitStatusGroupedByArea(region, recruitStatus)
     }
 
-    override fun countExperimentPostGroupedByRegion(): List<Tuple> {
+    override fun countExperimentPostGroupedByRegion(): List<ExperimentPostStats> {
         return experimentPostRepository.countExperimentPostGroupedByRegion()
+            .map { row ->
+                ExperimentPostStats(
+                    region = row[0] as Region,
+                    area = null,
+                    count = (row[2] as Number).toLong()
+                )
+            }
     }
 
-    override fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<Tuple> {
+
+
+    override fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<ExperimentPostStats> {
         return experimentPostRepository.countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus)
     }
 
@@ -85,9 +95,11 @@ class ExperimentPostGatewayImpl(
 
     override fun findExperimentPostsByMemberIdWithPagination(
         memberId: String,
-        pagination: Pagination,
+        page: Int,
+        count: Int,
         order: String
     ): List<ExperimentPost>? {
+        val pagination = Pagination(page, count)
         return experimentPostCustomRepository.findExperimentPostsByMemberIdWithPagination(
             memberId,
             pagination,

@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway.email
 
-import com.dobby.backend.domain.gateway.email.EmailGateway
+import com.dobby.domain.gateway.email.EmailGateway
 import com.dobby.backend.infrastructure.config.properties.SESProperties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -1,7 +1,7 @@
 package com.dobby.backend.presentation.api.config.exception
 
-import com.dobby.backend.domain.exception.*
-import com.dobby.backend.domain.gateway.AlertGateway
+import com.dobby.domain.exception.*
+import com.dobby.domain.gateway.AlertGateway
 import com.dobby.backend.presentation.api.dto.response.ExceptionResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
@@ -32,7 +32,7 @@ class WebExceptionHandler(
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     protected fun handleMethodNotAllowedException(exception: HttpRequestMethodNotSupportedException): ExceptionResponseEntity {
         log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
-        return responseFactory.create(HttpStatus.METHOD_NOT_ALLOWED, InvalidRequestValueException)
+        return responseFactory.create(InvalidRequestValueException)
     }
 
     @ExceptionHandler(
@@ -51,7 +51,7 @@ class WebExceptionHandler(
     @ExceptionHandler(NoResourceFoundException::class)
     protected fun handleNotFoundException(exception: NoResourceFoundException): ExceptionResponseEntity {
         log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
-        return responseFactory.create(HttpStatus.NOT_FOUND, InvalidRequestValueException)
+        return responseFactory.create(InvalidRequestValueException)
     }
 
     @ExceptionHandler(
@@ -62,7 +62,7 @@ class WebExceptionHandler(
     )
     protected fun handlePermissionDeniedException(exception: Exception): ExceptionResponseEntity {
         log.warn("Handling ${exception::class.simpleName}: ${exception.message}")
-        return responseFactory.create(HttpStatus.FORBIDDEN, PermissionDeniedException)
+        return responseFactory.create(PermissionDeniedException)
     }
 
     @ExceptionHandler(DobbyException::class)
@@ -82,7 +82,9 @@ class WebExceptionHandler(
         request: HttpServletRequest
     ): ExceptionResponseEntity {
         if (isProductionOrDevelopmentInstance()) {
-            alertGateway.sendError(exception, request)
+            val requestUrl = request.method + " " + request.requestURL.toString()
+            val clientIp = request.remoteAddr
+            alertGateway.sendError(exception, requestUrl, clientIp)
         }
 
         log.error("[UnhandledException] " + exception.stackTraceToString())

@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.gateway
 
-import com.dobby.backend.domain.gateway.SchedulerTriggerGateway
+import com.dobby.domain.gateway.SchedulerTriggerGateway
 import org.quartz.Scheduler
 import org.quartz.JobKey
 import org.springframework.stereotype.Component
