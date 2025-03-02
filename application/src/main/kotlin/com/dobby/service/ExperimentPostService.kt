@@ -7,7 +7,6 @@ import com.dobby.exception.InvalidRequestValueException
 import com.dobby.gateway.CacheGateway
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.experiment.RecruitStatus
-import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -29,7 +28,6 @@ class ExperimentPostService(
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
     private val cacheGateway: CacheGateway,
-    private val objectMapper: ObjectMapper,
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -94,14 +92,12 @@ class ExperimentPostService(
 
     private fun getCachedExperimentPostCounts(recruitStatus: RecruitStatus): GetExperimentPostCountsByRegionUseCase.Output? {
         val cacheKey = "experimentPostCounts:$recruitStatus"
-        return cacheGateway.get(cacheKey)?.let {
-            objectMapper.readValue(it, GetExperimentPostCountsByRegionUseCase.Output::class.java)
-        }
+        return cacheGateway.getObject(cacheKey, GetExperimentPostCountsByRegionUseCase.Output::class.java)
     }
 
     private fun cacheExperimentPostCounts(recruitStatus: RecruitStatus, output: Any) {
         val cacheKey = "experimentPostCounts:$recruitStatus"
-        cacheGateway.set(cacheKey, objectMapper.writeValueAsString(output))
+        cacheGateway.setObject(cacheKey, output)
     }
 
     private fun validateFilter(input: GetExperimentPostsUseCase.Input) {
