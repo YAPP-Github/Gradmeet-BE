@@ -1,19 +1,19 @@
 package com.dobby.backend.application.usecase.member
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.IdGenerator
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.gateway.member.ParticipantGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.gateway.member.MemberConsentGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.model.member.MemberConsent
-import com.dobby.backend.domain.model.member.Participant
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.member.GenderType
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.IdGenerator
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.gateway.member.ParticipantGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.gateway.member.MemberConsentGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.model.member.MemberConsent
+import com.dobby.domain.model.member.Participant
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.member.GenderType
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import java.time.LocalDate
 
 class CreateParticipantUseCase (

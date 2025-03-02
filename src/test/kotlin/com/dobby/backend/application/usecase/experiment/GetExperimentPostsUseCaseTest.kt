@@ -6,18 +6,18 @@ import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCas
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
 import com.dobby.backend.application.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.model.experiment.*
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.experiment.RecruitStatus
-import com.dobby.backend.domain.enums.experiment.TimeSlot
-import com.dobby.backend.domain.enums.member.GenderType
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.model.experiment.*
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.experiment.RecruitStatus
+import com.dobby.domain.enums.experiment.TimeSlot
+import com.dobby.domain.enums.member.GenderType
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -95,7 +95,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination(pagination.page, pagination.count),
+                pagination.page,
+                pagination.count,
                 pagination.order
             )
         } returns listOf(mockPost)
@@ -179,7 +180,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination(pagination.page, pagination.count),
+                pagination.page,
+                pagination.count,
                 pagination.order
             )
         } returns listOf(mockPost)
@@ -260,7 +262,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination(pagination.page, pagination.count),
+                pagination.page,
+                pagination.count,
                 pagination.order
             )
         } returns listOf(mockPost)
@@ -340,7 +343,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination(pagination.page, pagination.count),
+                pagination.page,
+                pagination.count,
                 pagination.order
             )
         } returns mutableListOf()
@@ -420,7 +424,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                     customFilter.locationTarget?.let { LocationTarget(it.region, it.areas) },
                     customFilter.recruitStatus
                 ),
-                Pagination(pagination.page, pagination.count),
+                pagination.page,
+                pagination.count,
                 pagination.order
             )
         } returns listOf(mockPost)

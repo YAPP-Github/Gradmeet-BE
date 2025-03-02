@@ -1,8 +1,8 @@
 package com.dobby.backend.infrastructure.database.repository
 
 import com.dobby.backend.application.model.Pagination
-import com.dobby.backend.domain.model.experiment.CustomFilter
-import com.dobby.backend.domain.model.experiment.ExperimentPost
+import com.dobby.domain.model.experiment.CustomFilter
+import com.dobby.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.experiment.ExperimentPostEntity
 import org.springframework.stereotype.Repository
 import java.time.LocalDate

@@ -1,8 +1,8 @@
 package com.dobby.backend.infrastructure.gateway.email
 
-import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.domain.model.Verification
-import com.dobby.backend.domain.enums.VerificationStatus
+import com.dobby.domain.gateway.email.VerificationGateway
+import com.dobby.domain.model.Verification
+import com.dobby.domain.enums.VerificationStatus
 import com.dobby.backend.infrastructure.database.repository.VerificationRepository
 import com.dobby.backend.infrastructure.database.entity.VerificationEntity
 import org.springframework.stereotype.Component

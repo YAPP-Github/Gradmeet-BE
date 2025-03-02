@@ -1,11 +1,13 @@
 package com.dobby.backend.infrastructure.gateway.auth
 
-import com.dobby.backend.domain.gateway.auth.GoogleAuthGateway
+import com.dobby.domain.gateway.auth.GoogleAuthGateway
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleInfoResponse
 import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
+import com.dobby.domain.model.auth.GoogleToken
+import com.dobby.domain.model.auth.GoogleUserInfo
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,17 +17,18 @@ class GoogleAuthGatewayImpl(
     private val googleUserInfoFeignClient: GoogleUserInfoFeginClient
 ): GoogleAuthGateway {
 
-    override fun getAccessToken(code: String): GoogleTokenResponse {
+    override fun getAccessToken(code: String): GoogleToken {
         return googleAuthFeignClient.getAccessToken(
             clientId = googleAuthProperties.clientId,
             redirectUri = googleAuthProperties.redirectUri,
             code = code,
             clientSecret = googleAuthProperties.clientSecret,
             grantType = googleAuthProperties.grantType
-        )
+        ).toDomain()
     }
 
-    override fun getUserInfo(accessToken: String): GoogleInfoResponse {
+    override fun getUserInfo(accessToken: String): GoogleUserInfo {
         return googleUserInfoFeignClient.getUserInfo("Bearer $accessToken")
+            .toDomain()
     }
 }

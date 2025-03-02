@@ -1,7 +1,7 @@
 package com.dobby.backend.infrastructure.gateway.member
 
-import com.dobby.backend.domain.gateway.member.ParticipantGateway
-import com.dobby.backend.domain.model.member.Participant
+import com.dobby.domain.gateway.member.ParticipantGateway
+import com.dobby.domain.model.member.Participant
 import com.dobby.backend.infrastructure.database.entity.member.ParticipantEntity
 import com.dobby.backend.infrastructure.database.repository.ParticipantRepository
 import org.springframework.stereotype.Component

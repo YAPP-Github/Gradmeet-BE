@@ -1,14 +1,14 @@
 package com.dobby.backend.application.usecase.member
 
-import com.dobby.backend.domain.exception.ResearcherNotFoundException
-import com.dobby.backend.domain.gateway.member.MemberConsentGateway
-import com.dobby.backend.domain.gateway.member.ResearcherGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.model.member.MemberConsent
-import com.dobby.backend.domain.model.member.Researcher
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.exception.ResearcherNotFoundException
+import com.dobby.domain.gateway.member.MemberConsentGateway
+import com.dobby.domain.gateway.member.ResearcherGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.model.member.MemberConsent
+import com.dobby.domain.model.member.Researcher
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk

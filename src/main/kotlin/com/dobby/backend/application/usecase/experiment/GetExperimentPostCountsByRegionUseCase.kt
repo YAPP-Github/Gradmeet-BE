@@ -1,9 +1,9 @@
 package com.dobby.backend.application.usecase.experiment
 
 import com.dobby.backend.application.usecase.UseCase
-import com.dobby.backend.domain.gateway.experiment.ExperimentPostGateway
-import com.dobby.backend.domain.enums.areaInfo.Region
-import com.dobby.backend.domain.enums.experiment.RecruitStatus
+import com.dobby.domain.gateway.experiment.ExperimentPostGateway
+import com.dobby.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.experiment.RecruitStatus
 
 class GetExperimentPostCountsByRegionUseCase(
     private val experimentPostGateway: ExperimentPostGateway
@@ -35,11 +35,11 @@ class GetExperimentPostCountsByRegionUseCase(
             RecruitStatus.ALL -> experimentPostGateway.countExperimentPostGroupedByRegion()
             RecruitStatus.OPEN -> experimentPostGateway.countExperimentPostsByRecruitStatusGroupedByRegion(true)
         }
-        val regionDataMap = regionData.associateBy { it.get(0, Region::class.java) }
+        val regionDataMap = regionData.associateBy { it.region }
 
         val area = allRegions.map { region ->
             val areaName = region.toString()
-            val count = regionDataMap[region]?.get(1, Long::class.java)?.toInt() ?: 0
+            val count = regionDataMap[region]?.count?.toInt() ?: 0
 
             PostCountsByRegion(name = areaName, count = count)
         }

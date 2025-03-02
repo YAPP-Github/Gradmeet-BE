@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import com.dobby.backend.domain.model.experiment.ApplyMethod
+import com.dobby.domain.model.experiment.ApplyMethod
 import jakarta.persistence.*
 
 @Entity(name = "apply_method")

@@ -1,14 +1,16 @@
 package com.dobby.backend.application.usecase.auth
 
-import com.dobby.backend.domain.gateway.member.MemberGateway
-import com.dobby.backend.domain.gateway.auth.NaverAuthGateway
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.gateway.member.MemberGateway
+import com.dobby.domain.gateway.auth.NaverAuthGateway
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResponse
 import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverUserResponse
+import com.dobby.domain.model.auth.NaverToken
+import com.dobby.domain.model.auth.NaverUserInfo
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -43,14 +45,11 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
             deletedAt = null
         )
 
-        val mockEmptyMember = null
-        val mockNaverTokenResponse = NaverTokenResponse("mock-access-token")
+        val mockNaverTokenResponse = NaverToken(accessToken = "mock-access-token")
+        val mockNaverUserInfo = NaverUserInfo(email = "test@example.com")
+
         every { naverAuthGateway.getAccessToken(any(), any()) } returns mockNaverTokenResponse
-        every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockk {
-            every { response } returns NaverUserResponse(
-                email = "test@example.com"
-            )
-        }
+        every { naverAuthGateway.getUserInfo("mock-access-token") } returns mockNaverUserInfo
 
         every { tokenGateway.generateAccessToken(any()) } returns "mock-jwt-access-token"
         every { tokenGateway.generateRefreshToken(any()) } returns "mock-jwt-refresh-token"
@@ -71,7 +70,7 @@ class FetchNaverUserInfoUseCaseTest : BehaviorSpec({
         }
 
         // 테스트 2: 등록된 멤버가 없는 경우
-        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockEmptyMember
+        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns null
 
         `when`("등록되지 않은 유저가 있는 경우") {
             val result: FetchNaverUserInfoUseCase.Output = fetchNaverUserInfoUseCase.execute(input)

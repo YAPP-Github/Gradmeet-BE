@@ -1,13 +1,13 @@
 package com.dobby.backend.application.usecase.auth
 
-import com.dobby.backend.domain.exception.MemberNotFoundException
-import com.dobby.backend.domain.gateway.member.MemberGateway
+import com.dobby.domain.exception.MemberNotFoundException
+import com.dobby.domain.gateway.member.MemberGateway
 import io.kotest.core.spec.style.BehaviorSpec
-import com.dobby.backend.domain.gateway.auth.TokenGateway
-import com.dobby.backend.domain.model.member.Member
-import com.dobby.backend.domain.enums.member.MemberStatus
-import com.dobby.backend.domain.enums.member.ProviderType
-import com.dobby.backend.domain.enums.member.RoleType
+import com.dobby.domain.gateway.auth.TokenGateway
+import com.dobby.domain.model.member.Member
+import com.dobby.domain.enums.member.MemberStatus
+import com.dobby.domain.enums.member.ProviderType
+import com.dobby.domain.enums.member.RoleType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every

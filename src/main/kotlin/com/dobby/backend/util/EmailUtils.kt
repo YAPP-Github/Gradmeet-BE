@@ -1,6 +1,6 @@
 package com.dobby.backend.util
 
-import com.dobby.backend.domain.exception.EmailFormatInvalidException
+import com.dobby.domain.exception.EmailFormatInvalidException
 import java.util.*
 import javax.naming.directory.Attributes
 import javax.naming.directory.InitialDirContext

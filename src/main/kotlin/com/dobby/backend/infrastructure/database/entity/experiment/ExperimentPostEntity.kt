@@ -1,11 +1,11 @@
 package com.dobby.backend.infrastructure.database.entity.experiment
 
-import com.dobby.backend.domain.model.experiment.ExperimentPost
+import com.dobby.domain.model.experiment.ExperimentPost
 import com.dobby.backend.infrastructure.database.entity.member.MemberEntity
-import com.dobby.backend.domain.enums.MatchType
-import com.dobby.backend.domain.enums.experiment.TimeSlot
-import com.dobby.backend.domain.enums.areaInfo.Area
-import com.dobby.backend.domain.enums.areaInfo.Region
+import com.dobby.domain.enums.MatchType
+import com.dobby.domain.enums.experiment.TimeSlot
+import com.dobby.domain.enums.areaInfo.Area
+import com.dobby.domain.enums.areaInfo.Region
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalDateTime

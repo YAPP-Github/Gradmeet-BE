@@ -1,18 +1,17 @@
 package com.dobby.backend.application.usecase.member.email
 
-import com.dobby.backend.domain.EmailTemplateLoader
-import com.dobby.backend.domain.IdGenerator
-import com.dobby.backend.domain.enums.VerificationStatus
-import com.dobby.backend.domain.exception.*
-import com.dobby.backend.domain.gateway.CacheGateway
-import com.dobby.backend.domain.gateway.email.EmailGateway
-import com.dobby.backend.domain.gateway.email.VerificationGateway
-import com.dobby.backend.domain.gateway.member.ResearcherGateway
+import com.dobby.domain.EmailTemplateLoader
+import com.dobby.domain.IdGenerator
+import com.dobby.domain.enums.VerificationStatus
+import com.dobby.domain.exception.*
+import com.dobby.domain.gateway.CacheGateway
+import com.dobby.domain.gateway.email.EmailGateway
+import com.dobby.domain.gateway.email.VerificationGateway
+import com.dobby.domain.gateway.member.ResearcherGateway
 import com.dobby.backend.util.EmailUtils
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
-import kotlinx.coroutines.test.runTest
 
 class SendEmailCodeUseCaseTest : BehaviorSpec({
 
