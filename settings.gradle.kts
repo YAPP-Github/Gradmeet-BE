@@ -1,3 +1,3 @@
 rootProject.name = "dobby-backend"
 
-include("domain", "application")
+include("domain", "application", "presentation")
