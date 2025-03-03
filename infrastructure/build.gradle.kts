@@ -36,6 +36,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.github.f4b6a3:tsid-creator:5.2.6")
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("ca.pjer:logback-awslogs-appender:1.6.0")
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-mysql")
+
+    implementation("org.slf4j:slf4j-api")
+    implementation("ch.qos.logback:logback-classic")
 
     val jjwtVersion = "0.12.5"
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
@@ -48,8 +56,10 @@ dependencies {
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
 
+    compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")
     runtimeOnly("com.h2database:h2")
+    annotationProcessor("org.projectlombok:lombok")
 }
 
 dependencyManagement {
@@ -88,9 +98,9 @@ kapt {
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
-    enabled = false
+    enabled = true
 }
 
 tasks.getByName<Jar>("jar") {
-    enabled = true
+    enabled = false
 }
