@@ -1,8 +1,9 @@
 package com.dobby.external.gateway.auth
 
 import com.dobby.config.properties.NaverAuthProperties
-import com.dobby.feign.naver.NaverAuthFeignClient
-import com.dobby.feign.naver.NaverUserInfoFeignClient
+import com.dobby.external.feign.naver.NaverAuthFeignClient
+import com.dobby.external.feign.naver.NaverUserInfoFeignClient
+import com.dobby.gateway.auth.NaverAuthGateway
 import com.dobby.model.auth.NaverToken
 import com.dobby.model.auth.NaverUserInfo
 import org.springframework.stereotype.Component

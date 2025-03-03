@@ -1,6 +1,7 @@
 package com.dobby.external.gateway
 
-import com.dobby.s3.S3PreSignedUrlProvider
+import com.dobby.external.s3.S3PreSignedUrlProvider
+import com.dobby.gateway.S3Gateway
 import org.springframework.stereotype.Component
 
 @Component

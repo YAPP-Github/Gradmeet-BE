@@ -1,6 +1,7 @@
 package com.dobby.external.gateway
 
 import com.dobby.config.properties.UrlProperties
+import com.dobby.gateway.UrlGeneratorGateway
 import org.springframework.stereotype.Component
 
 @Component

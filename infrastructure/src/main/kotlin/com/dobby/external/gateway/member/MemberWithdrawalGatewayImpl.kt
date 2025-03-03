@@ -1,5 +1,6 @@
 package com.dobby.external.gateway.member
 
+import com.dobby.gateway.member.MemberWithdrawalGateway
 import com.dobby.model.member.MemberWithdrawal
 import com.dobby.persistence.entity.member.MemberWithdrawalEntity
 import com.dobby.persistence.repository.MemberWithdrawalRepository

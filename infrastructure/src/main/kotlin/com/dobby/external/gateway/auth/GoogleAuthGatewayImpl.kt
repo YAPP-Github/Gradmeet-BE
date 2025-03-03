@@ -1,8 +1,9 @@
 package com.dobby.external.gateway.auth
 
 import com.dobby.config.properties.GoogleAuthProperties
-import com.dobby.feign.google.GoogleAuthFeignClient
-import com.dobby.feign.google.GoogleUserInfoFeginClient
+import com.dobby.external.feign.google.GoogleAuthFeignClient
+import com.dobby.external.feign.google.GoogleUserInfoFeginClient
+import com.dobby.gateway.auth.GoogleAuthGateway
 import com.dobby.model.auth.GoogleToken
 import com.dobby.model.auth.GoogleUserInfo
 import org.springframework.stereotype.Component

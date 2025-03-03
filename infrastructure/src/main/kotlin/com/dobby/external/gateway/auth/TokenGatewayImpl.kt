@@ -1,5 +1,6 @@
 package com.dobby.external.gateway.auth
 
+import com.dobby.gateway.auth.TokenGateway
 import com.dobby.model.member.Member
 import com.dobby.security.token.JwtTokenProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

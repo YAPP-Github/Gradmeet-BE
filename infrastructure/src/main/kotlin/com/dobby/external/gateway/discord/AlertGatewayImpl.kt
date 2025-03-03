@@ -1,7 +1,7 @@
 package com.dobby.external.gateway.discord
 
 import com.dobby.api.dto.request.DiscordMessageRequest
-import com.dobby.feign.discord.DiscordFeignClient
+import com.dobby.external.feign.discord.DiscordFeignClient
 import com.dobby.gateway.AlertGateway
 import org.springframework.stereotype.Component
 import java.io.PrintWriter

@@ -1,5 +1,6 @@
 package com.dobby.external.gateway.member
 
+import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.Researcher
 import com.dobby.persistence.entity.member.ResearcherEntity
 import com.dobby.persistence.repository.ResearcherRepository

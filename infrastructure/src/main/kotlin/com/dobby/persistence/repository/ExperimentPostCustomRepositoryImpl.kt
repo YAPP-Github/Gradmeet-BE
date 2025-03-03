@@ -1,10 +1,6 @@
 package com.dobby.persistence.repository
 
-import com.dobby.database.entity.experiment.*
 import com.dobby.persistence.entity.member.ParticipantEntity
-import com.dobby.database.entity.member.QMemberConsentEntity
-import com.dobby.database.entity.member.QMemberEntity
-import com.dobby.database.entity.member.QParticipantEntity
 import com.dobby.model.Pagination
 import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
@@ -16,8 +12,10 @@ import com.dobby.enums.experiment.RecruitStatus
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentImage
 import com.dobby.model.experiment.ExperimentPost
-import com.dobby.persistence.entity.experiment.ExperimentImageEntity
-import com.dobby.persistence.entity.experiment.ExperimentPostEntity
+import com.dobby.persistence.entity.experiment.*
+import com.dobby.persistence.entity.member.QMemberConsentEntity
+import com.dobby.persistence.entity.member.QMemberEntity
+import com.dobby.persistence.entity.member.QParticipantEntity
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory

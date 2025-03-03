@@ -1,5 +1,6 @@
 package com.dobby.external.gateway
 
+import com.dobby.gateway.SchedulerTriggerGateway
 import org.quartz.Scheduler
 import org.quartz.JobKey
 import org.springframework.stereotype.Component

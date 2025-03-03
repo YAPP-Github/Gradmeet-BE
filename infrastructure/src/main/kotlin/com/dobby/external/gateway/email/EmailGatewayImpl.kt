@@ -1,6 +1,7 @@
 package com.dobby.external.gateway.email
 
 import com.dobby.config.properties.SESProperties
+import com.dobby.gateway.email.EmailGateway
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.ses.SesAsyncClient
 import software.amazon.awssdk.services.ses.model.*

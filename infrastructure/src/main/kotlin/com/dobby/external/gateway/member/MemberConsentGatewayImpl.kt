@@ -1,5 +1,6 @@
 package com.dobby.external.gateway.member
 
+import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.model.member.MemberConsent
 import com.dobby.persistence.entity.member.MemberConsentEntity
 import com.dobby.persistence.repository.MemberConsentRepository

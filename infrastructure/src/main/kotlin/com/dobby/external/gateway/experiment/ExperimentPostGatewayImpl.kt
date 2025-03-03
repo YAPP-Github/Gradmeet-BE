@@ -4,6 +4,7 @@ import com.dobby.model.Pagination
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.enums.areaInfo.Region
+import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import com.dobby.persistence.repository.ExperimentPostCustomRepository
 import com.dobby.persistence.repository.ExperimentPostRepository
