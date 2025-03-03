@@ -4,7 +4,7 @@ import com.dobby.api.config.filter.JwtAuthenticationFilter
 import com.dobby.api.config.filter.JwtOptionalAuthenticationFilter
 import com.dobby.exception.PermissionDeniedException
 import com.dobby.exception.UnAuthorizedException
-import com.dobby.token.JwtTokenManager
+import com.dobby.token.SecurityManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -27,7 +27,7 @@ class WebSecurityConfig {
     @Order(1)
     fun authSecurityFilterChain(
         httpSecurity: HttpSecurity,
-        jwtTokenManager: JwtTokenManager,
+        securityManager: SecurityManager,
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/auth/**",
@@ -56,7 +56,7 @@ class WebSecurityConfig {
     @Order(2)
     fun publicApiSecurityFilterChain(
         httpSecurity: HttpSecurity,
-        jwtTokenManager: JwtTokenManager,
+        securityManager: SecurityManager,
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/experiment-posts/{postId}/details")
@@ -69,7 +69,7 @@ class WebSecurityConfig {
             it.requestMatchers("/v1/experiment-posts/{postId}/details").permitAll()
         }
         .addFilterBefore(
-            JwtOptionalAuthenticationFilter(jwtTokenManager, handlerExceptionResolver),
+            JwtOptionalAuthenticationFilter(securityManager, handlerExceptionResolver),
             UsernamePasswordAuthenticationFilter::class.java
         )
         .build()
@@ -82,7 +82,7 @@ class WebSecurityConfig {
     @Order(3)
     fun securityFilterChain(
         httpSecurity: HttpSecurity,
-        jwtTokenManager: JwtTokenManager,
+        securityManager: SecurityManager,
         handlerExceptionResolver: HandlerExceptionResolver,
     ): SecurityFilterChain = httpSecurity
         .securityMatcher("/v1/**")
@@ -95,7 +95,7 @@ class WebSecurityConfig {
             it.anyRequest().authenticated()
         }
         .addFilterBefore(
-            JwtAuthenticationFilter(jwtTokenManager, handlerExceptionResolver),
+            JwtAuthenticationFilter(securityManager, handlerExceptionResolver),
             UsernamePasswordAuthenticationFilter::class.java
         )
         .exceptionHandling {

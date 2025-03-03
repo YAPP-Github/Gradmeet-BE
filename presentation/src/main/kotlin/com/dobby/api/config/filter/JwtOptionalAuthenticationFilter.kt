@@ -1,16 +1,19 @@
 package com.dobby.api.config.filter
 
-import com.dobby.exception.AuthenticationTokenNotValidException
-import com.dobby.token.JwtTokenManager
+import com.dobby.token.SecurityManager
+import com.dobby.token.SecurityUser
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.servlet.HandlerExceptionResolver
 
 class JwtOptionalAuthenticationFilter(
-    private val jwtTokenManager: JwtTokenManager,
+    private val securityManager: SecurityManager,
     private val handlerExceptionResolver: HandlerExceptionResolver,
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
@@ -22,11 +25,9 @@ class JwtOptionalAuthenticationFilter(
             val authenticationHeader = request.getHeader("Authorization")
 
             if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
-                val accessToken = if (authenticationHeader.startsWith("Bearer "))
-                    authenticationHeader.substring(7)
-                else throw AuthenticationTokenNotValidException
-
-                val authentication = jwtTokenManager.parseAuthentication(accessToken)
+                val accessToken = authenticationHeader.substring(7)
+                val securityUser = securityManager.parseAuthentication(accessToken)
+                val authentication = createAuthentication(securityUser)
                 SecurityContextHolder.getContext().authentication = authentication
             }
 
@@ -35,5 +36,13 @@ class JwtOptionalAuthenticationFilter(
         } catch (e: Exception) {
             handlerExceptionResolver.resolveException(request, response, null, e)
         }
+    }
+
+    private fun createAuthentication(securityUser: SecurityUser): Authentication {
+        return UsernamePasswordAuthenticationToken(
+            securityUser.memberId,
+            null,
+            securityUser.roles.map { SimpleGrantedAuthority(it) }
+        )
     }
 }
