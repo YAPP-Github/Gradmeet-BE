@@ -102,5 +102,5 @@ tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar
 }
 
 tasks.getByName<Jar>("jar") {
-    enabled = false
+    enabled = true
 }

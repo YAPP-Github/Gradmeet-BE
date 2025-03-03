@@ -26,11 +26,6 @@ repositories {
 }
 
 dependencies {
-	implementation(project(":domain"))
-	implementation(project(":application"))
-	implementation(project(":presentation"))
-	implementation(project(":infrastructure"))
-
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
@@ -75,4 +70,12 @@ kotlin {
 	compilerOptions {
 		freeCompilerArgs.addAll("-Xjsr305=strict")
 	}
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	enabled = false
+}
+
+tasks.getByName<Jar>("jar") {
+	enabled = true
 }
