@@ -1,6 +1,6 @@
 package com.dobby.logging
 
-import com.dobby.identifier.TsidIdGenerator
+import com.dobby.persistence.identifier.TsidIdGenerator
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.AfterReturning
