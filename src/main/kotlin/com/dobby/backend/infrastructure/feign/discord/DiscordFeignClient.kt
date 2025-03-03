@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.feign.discord
 
-import com.dobby.backend.presentation.api.dto.request.DiscordMessageRequest
+import com.dobby.api.dto.request.DiscordMessageRequest
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping

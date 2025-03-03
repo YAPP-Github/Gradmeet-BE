@@ -4,8 +4,6 @@ import com.dobby.gateway.auth.NaverAuthGateway
 import com.dobby.backend.infrastructure.config.properties.NaverAuthProperties
 import com.dobby.backend.infrastructure.feign.naver.NaverAuthFeignClient
 import com.dobby.backend.infrastructure.feign.naver.NaverUserInfoFeignClient
-import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverInfoResponse
-import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverTokenResponse
 import com.dobby.model.auth.NaverToken
 import com.dobby.model.auth.NaverUserInfo
 import org.springframework.stereotype.Component

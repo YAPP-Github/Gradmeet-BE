@@ -1,6 +1,6 @@
 package com.dobby.backend.infrastructure.feign.naver
 
-import com.dobby.backend.presentation.api.dto.response.auth.naver.NaverInfoResponse
+import com.dobby.api.dto.response.auth.naver.NaverInfoResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader

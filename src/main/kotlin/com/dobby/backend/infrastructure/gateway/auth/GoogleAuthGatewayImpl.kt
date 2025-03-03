@@ -4,8 +4,6 @@ import com.dobby.gateway.auth.GoogleAuthGateway
 import com.dobby.backend.infrastructure.config.properties.GoogleAuthProperties
 import com.dobby.backend.infrastructure.feign.google.GoogleAuthFeignClient
 import com.dobby.backend.infrastructure.feign.google.GoogleUserInfoFeginClient
-import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleInfoResponse
-import com.dobby.backend.presentation.api.dto.response.auth.google.GoogleTokenResponse
 import com.dobby.model.auth.GoogleToken
 import com.dobby.model.auth.GoogleUserInfo
 import org.springframework.stereotype.Component
