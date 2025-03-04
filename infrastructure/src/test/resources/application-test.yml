@@ -1,0 +1,61 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:dobby;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        create_empty_composites:
+          enabled: true
+        show_sql: false
+        format_sql: false
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "dummy-client-id"
+            client-secret: "dummy-client-secret"
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+app:
+  token:
+    secret_key: testtesttestteyyysttestteyyystte
+    expiration:
+      access: 86400
+      refresh: 604800
+
+cloud:
+  aws:
+    s3:
+      bucket: test
+    region:
+      static: test
+    credentials:
+      access-key: test
+      secret-key: test
+
+aws:
+  ses:
+    email:
+      sender: test
+    region:
+      static: test
+    credentials:
+      access-key: test
+      secret-key: test
+
+discord:
+  webhook-url: test
