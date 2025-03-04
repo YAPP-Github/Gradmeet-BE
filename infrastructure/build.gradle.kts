@@ -60,6 +60,18 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.springframework.security:spring-security-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    val koTestVersion = "5.8.1"
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:$koTestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
+    testImplementation("io.kotest:kotest-property:$koTestVersion")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
 }
 
 dependencyManagement {
@@ -95,6 +107,10 @@ tasks.named("clean") {
 kapt {
     includeCompileClasspath = true
     generateStubs = true
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
