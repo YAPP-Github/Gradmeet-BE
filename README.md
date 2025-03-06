@@ -34,7 +34,7 @@
 
 |             | infrastructure | presentation | application | domain |
 |-------------|---|---------|------|--------|
-| 의존 가능 여부 | - | -       | -    | -      |
+| 사용 가능한 모듈 여부 | - | -       | -    | -      |
 
 
 ### application: 응용 서비스/UseCase 모듈
@@ -46,7 +46,7 @@
 
 |             | infrastructure | presentation | application | domain |
 |-------------|---|---------|------|--------|
-| 의존 가능 여부 | - | -       | -    | O      |
+| 사용 가능한 모듈 여부 | - | -       | -    | O      |
 
 ### presentation : 요청 처리 모듈
 
@@ -58,7 +58,7 @@
 
 |             | infrastructure | presentation | application | domain |
 |-------------|---|---------|-------------|--------|
-| 의존 가능 여부 | - | -       | O           | O      |
+| 사용 가능한 모듈 여부 | - | -       | O           | O      |
 
 ### infrastructure : 외부 통신 모듈
 
@@ -70,7 +70,7 @@
 
 |             | infrastructure | presentation | application | domain |
 |-------------|---|---------|------|--------|
-| 의존 가능 여부 | - | O       | O    | O      |
+| 사용 가능한 모듈 여부 | - | O       | O    | O      |
 
 
 <br>
