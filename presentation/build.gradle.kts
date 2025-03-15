@@ -19,6 +19,7 @@ repositories {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
+    implementation(project(":common"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
