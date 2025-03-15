@@ -29,10 +29,7 @@ class UpdateExperimentPostRecruitStatusUseCase(
 
         validateRecruitStatus(post)
         val updatedPost = experimentPostGateway.save(
-            post.updateRecruitStatus(
-                recruitStatus = false,
-                updatedAt = TimeProvider.currentDateTime()
-            )
+            post.updateRecruitStatus(recruitStatus = false)
         )
 
         return Output(

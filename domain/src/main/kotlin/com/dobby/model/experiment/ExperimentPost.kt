@@ -44,12 +44,11 @@ data class ExperimentPost(
     }
 
     fun updateRecruitStatus(
-        recruitStatus: Boolean = this.recruitStatus,
-        updatedAt: LocalDateTime = this.updatedAt
+        recruitStatus: Boolean = this.recruitStatus
     ): ExperimentPost {
         return this.copy(
             recruitStatus = recruitStatus,
-            updatedAt = updatedAt
+            updatedAt = TimeProvider.currentDateTime()
         )
     }
 
