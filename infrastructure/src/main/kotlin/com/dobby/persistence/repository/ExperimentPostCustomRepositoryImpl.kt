@@ -1,7 +1,7 @@
 package com.dobby.persistence.repository
 
 import com.dobby.persistence.entity.member.ParticipantEntity
-import com.dobby.model.Pagination
+import com.dobby.dto.Pagination
 import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.MatchType.*
