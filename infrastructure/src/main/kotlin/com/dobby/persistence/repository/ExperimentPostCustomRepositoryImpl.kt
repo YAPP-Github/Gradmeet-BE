@@ -16,6 +16,7 @@ import com.dobby.persistence.entity.experiment.*
 import com.dobby.persistence.entity.member.QMemberConsentEntity
 import com.dobby.persistence.entity.member.QMemberEntity
 import com.dobby.persistence.entity.member.QParticipantEntity
+import com.dobby.util.TimeProvider
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -168,7 +169,7 @@ class ExperimentPostCustomRepositoryImpl (
             .set(qExperimentPost.place, experimentPost.place)
             .set(qExperimentPost.region, experimentPost.region)
             .set(qExperimentPost.area, experimentPost.area)
-            .set(qExperimentPost.updatedAt, LocalDateTime.now())
+            .set(qExperimentPost.updatedAt, TimeProvider.currentDateTime())
             .where(qExperimentPost.id.eq(experimentPost.id))
             .execute()
 
@@ -225,7 +226,7 @@ class ExperimentPostCustomRepositoryImpl (
         val member = QMemberEntity.memberEntity
         val memberConsent = QMemberConsentEntity.memberConsentEntity
 
-        val currentTime = LocalDateTime.now()
+        val currentTime = TimeProvider.currentDateTime()
         val lastProcessedTime: LocalDateTime = LocalDate.now().minusDays(1).atTime(8, 1)
 
         logger.info("[쿼리 범위] lastProcessedTime: {}, currentTime: {}", lastProcessedTime, currentTime)

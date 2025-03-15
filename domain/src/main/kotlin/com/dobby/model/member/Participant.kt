@@ -4,6 +4,7 @@ import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
+import com.dobby.util.TimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -53,7 +54,7 @@ data class Participant(
             member = member.copy(
                 contactEmail = contactEmail,
                 name = name,
-                updatedAt = LocalDateTime.now()
+                updatedAt = TimeProvider.currentDateTime()
             ),
             basicAddressInfo = basicAddressInfo,
             additionalAddressInfo = additionalAddressInfo?.copy() ?: AddressInfo(

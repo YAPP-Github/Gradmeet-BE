@@ -1,6 +1,7 @@
 package com.dobby.model.member
 
 import com.dobby.policy.ResearcherMaskingPolicy
+import com.dobby.util.TimeProvider
 import java.time.LocalDateTime
 
 data class Researcher(
@@ -44,7 +45,7 @@ data class Researcher(
             member = member.copy(
                 contactEmail = contactEmail,
                 name = name,
-                updatedAt = LocalDateTime.now()
+                updatedAt = TimeProvider.currentDateTime()
             ),
             univName = univName,
             major = major,

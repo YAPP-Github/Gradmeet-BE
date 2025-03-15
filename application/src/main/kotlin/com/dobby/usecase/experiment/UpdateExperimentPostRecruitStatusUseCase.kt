@@ -5,6 +5,7 @@ import com.dobby.exception.ExperimentPostNotFoundException
 import com.dobby.exception.ExperimentPostRecruitStatusException
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ExperimentPost
+import com.dobby.util.TimeProvider
 import java.time.LocalDateTime
 
 class UpdateExperimentPostRecruitStatusUseCase(
@@ -30,7 +31,7 @@ class UpdateExperimentPostRecruitStatusUseCase(
         val updatedPost = experimentPostGateway.save(
             post.updateRecruitStatus(
                 recruitStatus = false,
-                updatedAt = LocalDateTime.now()
+                updatedAt = TimeProvider.currentDateTime()
             )
         )
 
