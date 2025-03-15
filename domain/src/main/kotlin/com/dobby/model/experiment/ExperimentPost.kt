@@ -1,6 +1,6 @@
 package com.dobby.model.experiment
 
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.model.member.Member
 import com.dobby.enums.MatchType
 import com.dobby.enums.experiment.TimeSlot

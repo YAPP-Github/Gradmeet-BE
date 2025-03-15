@@ -1,7 +1,7 @@
 package com.dobby.usecase.experiment
 
 import com.dobby.usecase.UseCase
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.enums.member.GenderType
