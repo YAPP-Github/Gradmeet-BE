@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
 	implementation(project(":domain"))
+	implementation(project(":common"))
 
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
