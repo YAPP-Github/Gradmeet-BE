@@ -1,4 +1,4 @@
-package com.dobby.token
+package com.dobby.security
 
 data class SecurityUser(
     val memberId: String,

@@ -1,5 +1,6 @@
 package com.dobby.model
 import com.dobby.enums.VerificationStatus
+import com.dobby.util.TimeProvider
 import java.time.LocalDateTime
 
 data class Verification(
@@ -14,7 +15,7 @@ data class Verification(
     }
 
     fun update(): Verification {
-        return this.copy(updatedAt = LocalDateTime.now())
+        return this.copy(updatedAt = TimeProvider.currentDateTime())
     }
 
     companion object {
@@ -24,8 +25,8 @@ data class Verification(
         ) = Verification(
             id = id,
             univEmail = univEmail,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            createdAt = TimeProvider.currentDateTime(),
+            updatedAt = TimeProvider.currentDateTime()
         )
     }
 }

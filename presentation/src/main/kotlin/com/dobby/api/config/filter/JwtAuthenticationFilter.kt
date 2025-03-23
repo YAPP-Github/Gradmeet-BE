@@ -2,8 +2,8 @@ package com.dobby.api.config.filter
 
 import com.dobby.exception.AuthenticationTokenNotFoundException
 import com.dobby.exception.AuthenticationTokenNotValidException
-import com.dobby.token.SecurityManager
-import com.dobby.token.SecurityUser
+import com.dobby.security.SecurityManager
+import com.dobby.security.SecurityUser
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

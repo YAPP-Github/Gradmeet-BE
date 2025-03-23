@@ -3,6 +3,7 @@ package com.dobby.scheduler
 import com.dobby.service.EmailService
 import com.dobby.usecase.member.email.SendMatchingEmailUseCase
 import com.dobby.usecase.member.email.GetMatchingExperimentPostsUseCase
+import com.dobby.util.TimeProvider
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.slf4j.Logger
@@ -19,10 +20,10 @@ class SendMatchingEmailJob(
     }
 
     override fun execute(context: JobExecutionContext) {
-        logger.info("BulkSendMatchingEmailJob started at ${LocalDateTime.now()}")
+        logger.info("BulkSendMatchingEmailJob started at ${TimeProvider.currentDateTime()}")
 
         val input = GetMatchingExperimentPostsUseCase.Input(
-            requestTime = LocalDateTime.now()
+            requestTime = TimeProvider.currentDateTime()
         )
         val output = emailService.getMatchingInfo(input)
         val matchingExperimentPosts = output.matchingPosts
@@ -35,7 +36,7 @@ class SendMatchingEmailJob(
             val emailInput = SendMatchingEmailUseCase.Input(
                 contactEmail = contactEmail,
                 experimentPosts = jobList,
-                currentDateTime = LocalDateTime.now()
+                currentDateTime = TimeProvider.currentDateTime()
             )
             try {
                 val emailOutput = emailService.sendMatchingEmail(emailInput)
