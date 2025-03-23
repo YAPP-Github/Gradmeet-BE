@@ -1,5 +1,6 @@
 package com.dobby.model.member
 
+import com.dobby.util.TimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -17,7 +18,7 @@ data class MemberConsent(
             memberId: String,
             adConsent: Boolean,
             matchConsent: Boolean,
-            createdAt: LocalDateTime = LocalDateTime.now()
+            createdAt: LocalDateTime = TimeProvider.currentDateTime()
         ) : MemberConsent {
             val nowDate = createdAt.toLocalDate()
 
@@ -35,7 +36,7 @@ data class MemberConsent(
     fun update(
         adConsent: Boolean,
         matchConsent: Boolean,
-        updatedAt: LocalDateTime = LocalDateTime.now()
+        updatedAt: LocalDateTime = TimeProvider.currentDateTime()
     ): MemberConsent {
         val nowDate = updatedAt.toLocalDate()
         return this.copy(

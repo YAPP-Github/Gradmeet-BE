@@ -1,7 +1,7 @@
 package com.dobby.usecase.member
 
 import com.dobby.usecase.UseCase
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.enums.MatchType
 import com.dobby.gateway.member.ParticipantGateway
 import com.dobby.gateway.auth.TokenGateway

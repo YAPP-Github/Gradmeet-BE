@@ -1,6 +1,6 @@
 package com.dobby.logging
 
-import com.dobby.persistence.identifier.TsidIdGenerator
+import com.dobby.util.IdGenerator
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.AfterReturning
@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter
 @Aspect
 @Component
 class LoggingAspect(
-    private val tsidIdGenerator: TsidIdGenerator
+    private val idGenerator: IdGenerator
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
@@ -67,7 +67,7 @@ class LoggingAspect(
     private fun generateTaskId(): String {
         val timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
             .format(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
-        val tsid = tsidIdGenerator.generateId()
+        val tsid = idGenerator.generateId()
         return "$timestamp-$tsid"
     }
 }

@@ -1,12 +1,13 @@
 package com.dobby.model.experiment
 
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.model.member.Member
 import com.dobby.enums.MatchType
 import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.exception.*
+import com.dobby.util.TimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -39,16 +40,15 @@ data class ExperimentPost(
 
     fun incrementViews() {
         this.views += 1
-        this.updatedAt = LocalDateTime.now()
+        this.updatedAt = TimeProvider.currentDateTime()
     }
 
     fun updateRecruitStatus(
-        recruitStatus: Boolean = this.recruitStatus,
-        updatedAt: LocalDateTime = this.updatedAt
+        recruitStatus: Boolean = this.recruitStatus
     ): ExperimentPost {
         return this.copy(
             recruitStatus = recruitStatus,
-            updatedAt = updatedAt
+            updatedAt = TimeProvider.currentDateTime()
         )
     }
 
@@ -106,7 +106,7 @@ data class ExperimentPost(
             region = region,
             area = area,
             images = updatedImages,
-            updatedAt = LocalDateTime.now(),
+            updatedAt = TimeProvider.currentDateTime(),
             recruitStatus = recruitStatus ?: this.recruitStatus
         )
     }
@@ -117,7 +117,7 @@ data class ExperimentPost(
         }
         images.clear()
         images.addAll(newImages)
-        updatedAt = LocalDateTime.now()
+        updatedAt = TimeProvider.currentDateTime()
     }
 
 
@@ -168,8 +168,8 @@ data class ExperimentPost(
                 alarmAgree = alarmAgree,
                 recruitStatus = recruitStatus,
                 images = images.toMutableList(),
-                createdAt = LocalDateTime.now(),
-                updatedAt = LocalDateTime.now()
+                createdAt = TimeProvider.currentDateTime(),
+                updatedAt = TimeProvider.currentDateTime()
             )
         }
         private fun validate(

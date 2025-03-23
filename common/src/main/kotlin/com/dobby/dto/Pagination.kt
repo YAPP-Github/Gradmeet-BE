@@ -1,4 +1,4 @@
-package com.dobby.model
+package com.dobby.dto
 
 data class Pagination(
     val page: Int,

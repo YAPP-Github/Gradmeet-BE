@@ -1,6 +1,6 @@
 package com.dobby.external.gateway.experiment
 
-import com.dobby.model.Pagination
+import com.dobby.dto.Pagination
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.enums.areaInfo.Region

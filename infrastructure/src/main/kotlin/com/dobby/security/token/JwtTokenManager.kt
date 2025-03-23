@@ -1,10 +1,7 @@
 package com.dobby.security.token
 
-import com.dobby.token.SecurityManager
-import com.dobby.token.SecurityUser
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.Authentication
+import com.dobby.security.SecurityManager
+import com.dobby.security.SecurityUser
 import org.springframework.stereotype.Component
 
 @Component
@@ -12,32 +9,10 @@ class JwtTokenManager(
     private val jwtTokenProvider: JwtTokenProvider
 ) : SecurityManager {
 
-    override fun generateAccessToken(memberId: String): String {
-        val authentication = createAuthentication(memberId)
-        return jwtTokenProvider.generateAccessToken(authentication)
-    }
-
-    override fun generateRefreshToken(memberId: String): String {
-        val authentication = createAuthentication(memberId)
-        return jwtTokenProvider.generateRefreshToken(authentication)
-    }
-
     override fun parseAuthentication(token: String): SecurityUser {
         val authentication = jwtTokenProvider.parseAuthentication(token)
         val memberId = authentication.name
         val roles = authentication.authorities.map { it.authority }
         return SecurityUser(memberId, roles)
-    }
-
-    override fun getMemberIdFromRefreshToken(refreshToken: String): String {
-        return jwtTokenProvider.getMemberIdFromRefreshToken(refreshToken)
-    }
-
-    override fun getMemberIdFromAccessToken(accessToken: String): String {
-        return jwtTokenProvider.getMemberIdFromAccessToken(accessToken)
-    }
-
-    private fun createAuthentication(memberId: String): Authentication {
-        return UsernamePasswordAuthenticationToken(memberId, null, listOf(SimpleGrantedAuthority("ROLE_USER")))
     }
 }
