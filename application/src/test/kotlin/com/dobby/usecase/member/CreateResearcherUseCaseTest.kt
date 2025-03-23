@@ -1,6 +1,6 @@
 package com.dobby.usecase.member
 
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.gateway.auth.TokenGateway
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.MemberGateway

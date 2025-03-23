@@ -2,7 +2,7 @@ package com.dobby.usecase.experiment
 
 import com.dobby.exception.ExperimentPostInvalidOnlineRequestException
 import com.dobby.exception.PermissionDeniedException
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.enums.MatchType
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.gateway.member.MemberGateway

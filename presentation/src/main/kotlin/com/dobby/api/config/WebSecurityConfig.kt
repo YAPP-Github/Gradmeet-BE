@@ -4,7 +4,7 @@ import com.dobby.api.config.filter.JwtAuthenticationFilter
 import com.dobby.api.config.filter.JwtOptionalAuthenticationFilter
 import com.dobby.exception.PermissionDeniedException
 import com.dobby.exception.UnAuthorizedException
-import com.dobby.token.SecurityManager
+import com.dobby.security.SecurityManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order

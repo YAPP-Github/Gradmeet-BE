@@ -1,6 +1,7 @@
 package com.dobby.model.member
 
 import com.dobby.enums.member.WithdrawalReasonType
+import com.dobby.util.TimeProvider
 import java.time.LocalDateTime
 
 data class MemberWithdrawal(
@@ -14,7 +15,7 @@ data class MemberWithdrawal(
             memberId: String,
             reasonType: WithdrawalReasonType,
             otherReason: String? = null,
-            createdAt: LocalDateTime = LocalDateTime.now()
+            createdAt: LocalDateTime = TimeProvider.currentDateTime()
         ) = MemberWithdrawal(
             memberId,
             reasonType,

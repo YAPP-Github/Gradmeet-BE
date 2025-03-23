@@ -1,7 +1,7 @@
 package com.dobby.usecase.member.email
 
 import com.dobby.EmailTemplateLoader
-import com.dobby.IdGenerator
+import com.dobby.util.IdGenerator
 import com.dobby.enums.VerificationStatus
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.EmailGateway

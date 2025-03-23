@@ -1,7 +1,7 @@
 package com.dobby.persistence.repository
 
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
-import com.dobby.model.Pagination
+import com.dobby.dto.Pagination
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
 import org.springframework.stereotype.Repository
