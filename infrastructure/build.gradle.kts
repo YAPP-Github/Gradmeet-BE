@@ -31,6 +31,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-quartz")
     implementation("software.amazon.awssdk:s3:2.20.59")
     implementation("software.amazon.awssdk:ses:2.20.100")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
