@@ -1,7 +1,14 @@
 package com.dobby.persistence.entity.member
 
 import com.dobby.model.member.Researcher
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
+import jakarta.persistence.Id
+import jakarta.persistence.Column
+import jakarta.persistence.OneToOne
+import jakarta.persistence.FetchType
+import jakarta.persistence.CascadeType
+import jakarta.persistence.JoinColumn
 
 @Entity
 @Table(name = "researcher")

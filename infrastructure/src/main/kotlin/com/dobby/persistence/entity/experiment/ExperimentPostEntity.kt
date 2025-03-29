@@ -6,7 +6,17 @@ import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.TimeSlot
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.persistence.entity.member.MemberEntity
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToOne
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
 import java.time.LocalDate
 import java.time.LocalDateTime
 

@@ -1,7 +1,9 @@
 package com.dobby.persistence.entity.experiment
 
 import com.dobby.model.experiment.ApplyMethod
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 
 @Entity(name = "apply_method")
 class ApplyMethodEntity(

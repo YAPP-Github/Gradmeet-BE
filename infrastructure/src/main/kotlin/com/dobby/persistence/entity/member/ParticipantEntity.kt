@@ -5,7 +5,20 @@ import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.GenderType
 import com.dobby.model.member.Participant
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Id
+import jakarta.persistence.OneToOne
+import jakarta.persistence.FetchType
+import jakarta.persistence.CascadeType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.Enumerated
+import jakarta.persistence.EnumType
+import jakarta.persistence.Embedded
+import jakarta.persistence.AttributeOverrides
+import jakarta.persistence.AttributeOverride
+import jakarta.persistence.Embeddable
 import java.time.LocalDate
 
 @Entity

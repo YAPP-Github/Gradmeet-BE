@@ -4,7 +4,12 @@ import com.dobby.config.properties.SESProperties
 import com.dobby.gateway.email.EmailGateway
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.ses.SesAsyncClient
-import software.amazon.awssdk.services.ses.model.*
+import software.amazon.awssdk.services.ses.model.Body
+import software.amazon.awssdk.services.ses.model.Content
+import software.amazon.awssdk.services.ses.model.Destination
+import software.amazon.awssdk.services.ses.model.Message
+import software.amazon.awssdk.services.ses.model.SendEmailRequest
+import software.amazon.awssdk.services.ses.model.SesException
 
 @Component
 class EmailGatewayImpl(

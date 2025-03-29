@@ -5,7 +5,14 @@ import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
 import com.dobby.model.member.Member
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Id
+import jakarta.persistence.Enumerated
+import jakarta.persistence.EnumType
+import jakarta.persistence.OneToMany
+import jakarta.persistence.CascadeType
 import java.time.LocalDateTime
 
 @Entity

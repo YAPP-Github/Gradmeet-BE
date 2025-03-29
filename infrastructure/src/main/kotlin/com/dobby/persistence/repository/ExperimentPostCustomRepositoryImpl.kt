@@ -11,7 +11,12 @@ import com.dobby.enums.member.GenderType
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentImage
 import com.dobby.model.experiment.ExperimentPost
-import com.dobby.persistence.entity.experiment.*
+import com.dobby.persistence.entity.experiment.ExperimentImageEntity
+import com.dobby.persistence.entity.experiment.ExperimentPostEntity
+import com.dobby.persistence.entity.experiment.QExperimentImageEntity
+import com.dobby.persistence.entity.experiment.QExperimentPostEntity
+import com.dobby.persistence.entity.experiment.QApplyMethodEntity
+import com.dobby.persistence.entity.experiment.QTargetGroupEntity
 import com.dobby.persistence.entity.member.ParticipantEntity
 import com.dobby.persistence.entity.member.QMemberConsentEntity
 import com.dobby.persistence.entity.member.QMemberEntity

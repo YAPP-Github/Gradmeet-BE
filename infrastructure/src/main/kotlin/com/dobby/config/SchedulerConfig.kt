@@ -2,7 +2,11 @@ package com.dobby.config
 
 import com.dobby.scheduler.ExpiredExperimentPostJob
 import com.dobby.scheduler.SendMatchingEmailJob
-import org.quartz.*
+import org.quartz.JobDetail
+import org.quartz.Trigger
+import org.quartz.JobBuilder
+import org.quartz.TriggerBuilder
+import org.quartz.CronScheduleBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
