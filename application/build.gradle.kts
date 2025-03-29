@@ -4,6 +4,7 @@ plugins {
 	kotlin("kapt")
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 java {
