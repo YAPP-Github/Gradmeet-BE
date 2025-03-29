@@ -2,11 +2,11 @@ package com.dobby.persistence.entity
 
 import com.dobby.enums.VerificationStatus
 import com.dobby.model.Verification
-import jakarta.persistence.Entity
 import jakarta.persistence.Column
-import jakarta.persistence.Id
-import jakarta.persistence.Enumerated
+import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
 import jakarta.persistence.PrePersist
 import java.time.LocalDateTime
 

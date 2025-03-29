@@ -1,21 +1,30 @@
 package com.dobby.api.mapper
 
-import com.dobby.api.dto.request.member.*
-import com.dobby.api.dto.response.member.*
+import com.dobby.api.dto.request.member.DeleteMemberRequest
+import com.dobby.api.dto.request.member.ParticipantSignupRequest
+import com.dobby.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.api.dto.request.member.UpdateParticipantInfoRequest
+import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
+import com.dobby.api.dto.response.member.AddressInfoResponse
+import com.dobby.api.dto.response.member.DefaultResponse
+import com.dobby.api.dto.response.member.MemberResponse
+import com.dobby.api.dto.response.member.ParticipantInfoResponse
+import com.dobby.api.dto.response.member.ResearcherInfoResponse
+import com.dobby.api.dto.response.member.SignUpResponse
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.RoleType
 import com.dobby.model.member.Participant
-import com.dobby.usecase.member.CreateResearcherUseCase
 import com.dobby.usecase.member.CreateParticipantUseCase
-import com.dobby.usecase.member.GetResearcherInfoUseCase
+import com.dobby.usecase.member.CreateResearcherUseCase
+import com.dobby.usecase.member.DeleteParticipantUseCase
+import com.dobby.usecase.member.DeleteResearcherUseCase
 import com.dobby.usecase.member.GetParticipantInfoUseCase
-import com.dobby.usecase.member.UpdateResearcherInfoUseCase
+import com.dobby.usecase.member.GetResearcherInfoUseCase
 import com.dobby.usecase.member.UpdateParticipantInfoUseCase
+import com.dobby.usecase.member.UpdateResearcherInfoUseCase
 import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
 import com.dobby.usecase.member.ValidateContactEmailForUpdateUseCase
-import com.dobby.usecase.member.DeleteResearcherUseCase
-import com.dobby.usecase.member.DeleteParticipantUseCase
 import com.dobby.util.getCurrentMemberId
 
 object MemberMapper {

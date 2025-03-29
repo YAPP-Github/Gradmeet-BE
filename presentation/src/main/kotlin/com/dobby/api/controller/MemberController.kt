@@ -1,10 +1,10 @@
 package com.dobby.api.controller
 
+import com.dobby.api.dto.request.member.DeleteMemberRequest
 import com.dobby.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.api.dto.request.member.ResearcherSignupRequest
-import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.api.dto.request.member.UpdateParticipantInfoRequest
-import com.dobby.api.dto.request.member.DeleteMemberRequest
+import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.api.dto.response.member.DefaultResponse
 import com.dobby.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.api.dto.response.member.ResearcherInfoResponse
@@ -16,7 +16,14 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "회원 API - /v1/members")
 @RestController

@@ -2,7 +2,8 @@ package com.dobby.persistence.repository
 
 import com.dobby.dto.Pagination
 import com.dobby.enums.MatchType
-import com.dobby.enums.MatchType.*
+import com.dobby.enums.MatchType.ALL
+import com.dobby.enums.MatchType.ONLINE
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Area.Companion.isAll
 import com.dobby.enums.areaInfo.Region
@@ -13,9 +14,9 @@ import com.dobby.model.experiment.ExperimentImage
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.persistence.entity.experiment.ExperimentImageEntity
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
+import com.dobby.persistence.entity.experiment.QApplyMethodEntity
 import com.dobby.persistence.entity.experiment.QExperimentImageEntity
 import com.dobby.persistence.entity.experiment.QExperimentPostEntity
-import com.dobby.persistence.entity.experiment.QApplyMethodEntity
 import com.dobby.persistence.entity.experiment.QTargetGroupEntity
 import com.dobby.persistence.entity.member.ParticipantEntity
 import com.dobby.persistence.entity.member.QMemberConsentEntity
