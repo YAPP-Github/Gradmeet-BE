@@ -6,7 +6,16 @@ import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.RoleType
 import com.dobby.model.member.Participant
-import com.dobby.usecase.member.*
+import com.dobby.usecase.member.CreateResearcherUseCase
+import com.dobby.usecase.member.CreateParticipantUseCase
+import com.dobby.usecase.member.GetResearcherInfoUseCase
+import com.dobby.usecase.member.GetParticipantInfoUseCase
+import com.dobby.usecase.member.UpdateResearcherInfoUseCase
+import com.dobby.usecase.member.UpdateParticipantInfoUseCase
+import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
+import com.dobby.usecase.member.ValidateContactEmailForUpdateUseCase
+import com.dobby.usecase.member.DeleteResearcherUseCase
+import com.dobby.usecase.member.DeleteParticipantUseCase
 import com.dobby.util.getCurrentMemberId
 
 object MemberMapper {

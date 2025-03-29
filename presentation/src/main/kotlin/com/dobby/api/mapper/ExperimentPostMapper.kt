@@ -1,10 +1,22 @@
 package com.dobby.api.mapper
 
 import com.dobby.api.dto.request.PreSignedUrlRequest
-import com.dobby.api.dto.request.experiment.*
+import com.dobby.api.dto.request.experiment.ApplyMethodInfo
+import com.dobby.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.api.dto.request.experiment.ImageListInfo
+import com.dobby.api.dto.request.experiment.TargetGroupInfo
+import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.api.dto.response.PaginatedResponse
 import com.dobby.api.dto.response.PreSignedUrlResponse
-import com.dobby.api.dto.response.experiment.*
+import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
+import com.dobby.api.dto.response.experiment.DataCount
+import com.dobby.api.dto.response.experiment.DurationInfo
+import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostResponse
+import com.dobby.api.dto.response.experiment.PostInfo
+import com.dobby.api.dto.response.experiment.UpdateExperimentPostResponse
 import com.dobby.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
