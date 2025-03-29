@@ -2,7 +2,11 @@ package com.dobby.usecase.member.email
 
 import com.dobby.EmailTemplateLoader
 import com.dobby.enums.VerificationStatus
-import com.dobby.exception.*
+import com.dobby.exception.EmailAlreadyVerifiedException
+import com.dobby.exception.EmailDomainNotFoundException
+import com.dobby.exception.EmailNotUnivException
+import com.dobby.exception.SignupUnivEmailDuplicateException
+import com.dobby.exception.TooManyVerificationRequestException
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.EmailGateway
 import com.dobby.gateway.email.VerificationGateway
