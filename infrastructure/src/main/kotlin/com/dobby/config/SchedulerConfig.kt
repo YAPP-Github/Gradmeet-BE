@@ -2,7 +2,11 @@ package com.dobby.config
 
 import com.dobby.scheduler.ExpiredExperimentPostJob
 import com.dobby.scheduler.SendMatchingEmailJob
-import org.quartz.*
+import org.quartz.CronScheduleBuilder
+import org.quartz.JobBuilder
+import org.quartz.JobDetail
+import org.quartz.Trigger
+import org.quartz.TriggerBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -45,14 +49,14 @@ class SchedulerConfig {
     }
 
     @Bean
-    fun sendEmailMatchingPostTrigger() : Trigger {
+    fun sendEmailMatchingPostTrigger(): Trigger {
         logger.info("Registering SendEmailMatchingPostTrigger...")
         return TriggerBuilder.newTrigger()
             .forJob(sendEmailMatchingJobDetail())
             .withIdentity("send_matching_email_trigger", "DEFAULT")
             .startNow()
             .withSchedule(
-                CronScheduleBuilder.dailyAtHourAndMinute(8,0)
+                CronScheduleBuilder.dailyAtHourAndMinute(8, 0)
                     .inTimeZone(TimeZone.getTimeZone("Asia/Seoul"))
             )
             .build()

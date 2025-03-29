@@ -1,17 +1,17 @@
 package com.dobby.usecase.member
 
+import com.dobby.enums.VerificationStatus
 import com.dobby.exception.EmailNotValidateException
 import com.dobby.gateway.email.VerificationGateway
 import com.dobby.model.Verification
-import com.dobby.enums.VerificationStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk
 
-class VerifyResearcherEmailUseCaseTest : BehaviorSpec ({
+class VerifyResearcherEmailUseCaseTest : BehaviorSpec({
 
-    val verificationGateway : VerificationGateway = mockk()
+    val verificationGateway: VerificationGateway = mockk()
     val verifyResearcherUseCase = VerifyResearcherEmailUseCase(verificationGateway)
 
     given("존재하는 이메일이 주어졌을 때") {

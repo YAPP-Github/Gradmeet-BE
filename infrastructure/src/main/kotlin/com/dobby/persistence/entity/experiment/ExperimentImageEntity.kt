@@ -1,7 +1,12 @@
 package com.dobby.persistence.entity.experiment
 
 import com.dobby.model.experiment.ExperimentImage
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 
 @Entity(name = "experiment_image")
 class ExperimentImageEntity(
@@ -14,7 +19,7 @@ class ExperimentImageEntity(
     var experimentPost: ExperimentPostEntity? = null,
 
     @Column(name = "image_url", nullable = false)
-    val imageUrl: String,
+    val imageUrl: String
 ) {
 
     fun toDomain(): ExperimentImage = ExperimentImage(

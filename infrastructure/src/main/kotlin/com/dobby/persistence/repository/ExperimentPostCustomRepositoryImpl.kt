@@ -1,18 +1,24 @@
 package com.dobby.persistence.repository
 
-import com.dobby.persistence.entity.member.ParticipantEntity
 import com.dobby.dto.Pagination
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
-import com.dobby.enums.MatchType.*
+import com.dobby.enums.MatchType.ALL
+import com.dobby.enums.MatchType.ONLINE
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Area.Companion.isAll
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentImage
 import com.dobby.model.experiment.ExperimentPost
-import com.dobby.persistence.entity.experiment.*
+import com.dobby.persistence.entity.experiment.ExperimentImageEntity
+import com.dobby.persistence.entity.experiment.ExperimentPostEntity
+import com.dobby.persistence.entity.experiment.QApplyMethodEntity
+import com.dobby.persistence.entity.experiment.QExperimentImageEntity
+import com.dobby.persistence.entity.experiment.QExperimentPostEntity
+import com.dobby.persistence.entity.experiment.QTargetGroupEntity
+import com.dobby.persistence.entity.member.ParticipantEntity
 import com.dobby.persistence.entity.member.QMemberConsentEntity
 import com.dobby.persistence.entity.member.QMemberEntity
 import com.dobby.persistence.entity.member.QParticipantEntity
@@ -22,15 +28,15 @@ import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.time.Period
 
 @Repository
-class ExperimentPostCustomRepositoryImpl (
+class ExperimentPostCustomRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory
 ) : ExperimentPostCustomRepository {
     @PersistenceContext
@@ -104,13 +110,14 @@ class ExperimentPostCustomRepositoryImpl (
 
     private fun matchTypeEq(post: QExperimentPostEntity, matchType: MatchType?): BooleanExpression? {
         return matchType?.let {
-            if(it == ALL) null else post.matchType.eq(it)
+            if (it == ALL) null else post.matchType.eq(it)
         }
     }
 
     private fun genderEq(post: QExperimentPostEntity, gender: GenderType?): BooleanExpression? {
         return gender?.let {
-            post.targetGroup.genderType.eq(it).or(post.targetGroup.genderType.eq(GenderType.ALL)) }
+            post.targetGroup.genderType.eq(it).or(post.targetGroup.genderType.eq(GenderType.ALL))
+        }
     }
 
     private fun ageBetween(post: QExperimentPostEntity, age: Int?): BooleanExpression? {
@@ -253,7 +260,7 @@ class ExperimentPostCustomRepositoryImpl (
             .where(
                 participant.member.deletedAt.isNull,
                 memberConsent.matchConsent.isTrue
-                )
+            )
             .fetch()
 
         logger.info("[쿼리 결과] participants count: {}", participants.size)
@@ -278,9 +285,12 @@ class ExperimentPostCustomRepositoryImpl (
                         customGenderEq(post.targetGroup.genderType, participantEntity.gender),
                         customAgeBetween(post.targetGroup.startAge, post.targetGroup.endAge, participantAge),
                         customAddressInfoEq(
-                            post.region, post.area,
-                            participantEntity.basicAddressInfo.region, participantEntity.basicAddressInfo.area,
-                            participantEntity.additionalAddressInfo.region, participantEntity.additionalAddressInfo.area
+                            post.region,
+                            post.area,
+                            participantEntity.basicAddressInfo.region,
+                            participantEntity.basicAddressInfo.area,
+                            participantEntity.additionalAddressInfo.region,
+                            participantEntity.additionalAddressInfo.area
                         ),
                         customMatchTypeEq(post.matchType, participantEntity.matchType)
                     )
@@ -314,20 +324,22 @@ class ExperimentPostCustomRepositoryImpl (
         endAge: Int?,
         participantAge: Int
     ): Boolean {
-        if(startAge == null || endAge == null) return true
+        if (startAge == null || endAge == null) return true
         return (startAge <= participantAge) && (participantAge <= endAge)
     }
 
     private fun customAddressInfoEq(
         region: Region?,
         area: Area?,
-        basicRegion: Region, basicArea: Area,
-        additionalRegion: Region?, additionalArea: Area?
+        basicRegion: Region,
+        basicArea: Area,
+        additionalRegion: Region?,
+        additionalArea: Area?
     ): Boolean {
-        if(region == null && area == null) return true
+        if (region == null && area == null) return true
         val isBasicMatch = (region == basicRegion) && (area == basicArea)
-        val isAdditionalMatch = (additionalRegion != null) && (additionalArea != null)
-                && (region == additionalRegion && area == additionalArea)
+        val isAdditionalMatch = (additionalRegion != null) && (additionalArea != null) &&
+            (region == additionalRegion && area == additionalArea)
         return isBasicMatch || isAdditionalMatch
     }
 
@@ -335,10 +347,12 @@ class ExperimentPostCustomRepositoryImpl (
         postMatchType: MatchType?,
         participantMatchType: MatchType?
     ): Boolean {
-        if (participantMatchType == ALL || participantMatchType == null)
+        if (participantMatchType == ALL || participantMatchType == null) {
             return true
-        if (postMatchType == ONLINE || postMatchType == ALL || postMatchType == null)
+        }
+        if (postMatchType == ONLINE || postMatchType == ALL || postMatchType == null) {
             return true
+        }
         return postMatchType == participantMatchType
     }
 }

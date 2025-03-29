@@ -1,13 +1,6 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase.Input
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase.CustomFilterInput
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
 import com.dobby.enums.MatchType
-import com.dobby.gateway.experiment.ExperimentPostGateway
-import com.dobby.model.member.Member
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
@@ -16,7 +9,19 @@ import com.dobby.enums.member.GenderType
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
-import com.dobby.model.experiment.*
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.ApplyMethod
+import com.dobby.model.experiment.CustomFilter
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.experiment.LocationTarget
+import com.dobby.model.experiment.StudyTarget
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.model.member.Member
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase.CustomFilterInput
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase.Input
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase.LocationTargetInput
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase.PaginationInput
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase.StudyTargetInput
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -439,4 +444,3 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
         }
     }
 })
-

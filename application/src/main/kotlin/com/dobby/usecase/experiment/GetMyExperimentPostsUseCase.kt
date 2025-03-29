@@ -1,12 +1,12 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
 import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.usecase.UseCase
 import java.time.LocalDate
 
 class GetMyExperimentPostsUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetMyExperimentPostsUseCase.Input, List<GetMyExperimentPostsUseCase.Output>> {
+) : UseCase<GetMyExperimentPostsUseCase.Input, List<GetMyExperimentPostsUseCase.Output>> {
 
     data class Input(
         val memberId: String,

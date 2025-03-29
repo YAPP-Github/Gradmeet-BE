@@ -1,16 +1,20 @@
 package com.dobby.usecase.member.email
 
-import com.dobby.usecase.UseCase
 import com.dobby.EmailTemplateLoader
-import com.dobby.util.IdGenerator
+import com.dobby.enums.VerificationStatus
+import com.dobby.exception.EmailAlreadyVerifiedException
+import com.dobby.exception.EmailDomainNotFoundException
+import com.dobby.exception.EmailNotUnivException
+import com.dobby.exception.SignupUnivEmailDuplicateException
+import com.dobby.exception.TooManyVerificationRequestException
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.EmailGateway
 import com.dobby.gateway.email.VerificationGateway
-import com.dobby.model.Verification
-import com.dobby.enums.VerificationStatus
 import com.dobby.gateway.member.ResearcherGateway
-import com.dobby.exception.*
+import com.dobby.model.Verification
+import com.dobby.usecase.UseCase
 import com.dobby.util.EmailUtils
+import com.dobby.util.IdGenerator
 import com.dobby.util.RetryUtils
 
 class SendEmailCodeUseCase(
@@ -34,7 +38,7 @@ class SendEmailCodeUseCase(
 
         val requestCountKey = "request_count:${input.univEmail}"
         val currentCount = cacheGateway.get(requestCountKey)?.toIntOrNull() ?: 0
-        if(currentCount >= 3) {
+        if (currentCount >= 3) {
             throw TooManyVerificationRequestException
         }
 
@@ -52,34 +56,35 @@ class SendEmailCodeUseCase(
         )
     }
 
-    private fun validateEmail(email : String){
-        if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
-        if(!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
-        if (researcherGateway.existsByUnivEmail(email))
+    private fun validateEmail(email: String) {
+        if (!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
+        if (!EmailUtils.isUnivMail(email)) throw EmailNotUnivException
+        if (researcherGateway.existsByUnivEmail(email)) {
             throw SignupUnivEmailDuplicateException
-        if(verificationGateway.findByUnivEmailAndStatus(email, VerificationStatus.VERIFIED) != null)
+        }
+        if (verificationGateway.findByUnivEmailAndStatus(email, VerificationStatus.VERIFIED) != null) {
             throw EmailAlreadyVerifiedException
+        }
     }
 
     private fun reflectVerification(univEmail: String, code: String) {
-      try {
-          val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
+        try {
+            val existingInfo = verificationGateway.findByUnivEmailAndStatus(univEmail, VerificationStatus.HOLD)
 
-          if(existingInfo != null) {
-              val updatedVerification = existingInfo.update()
-              verificationGateway.save(updatedVerification)
-          }
-          else {
-              val newVerification = Verification.newVerification(
-                  id = idGenerator.generateId(),
-                  univEmail = univEmail
-              )
-              verificationGateway.save(newVerification)
-          }
+            if (existingInfo != null) {
+                val updatedVerification = existingInfo.update()
+                verificationGateway.save(updatedVerification)
+            } else {
+                val newVerification = Verification.newVerification(
+                    id = idGenerator.generateId(),
+                    univEmail = univEmail
+                )
+                verificationGateway.save(newVerification)
+            }
         } catch (e: Exception) {
             return
         }
-        cacheGateway.setCode("verification:${univEmail}", code)
+        cacheGateway.setCode("verification:$univEmail", code)
     }
 
     companion object {

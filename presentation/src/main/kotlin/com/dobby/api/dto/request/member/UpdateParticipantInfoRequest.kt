@@ -8,14 +8,14 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 
 data class UpdateParticipantInfoRequest(
-    @Email(message= "연락 받을 이메일이 유효하지 않습니다.")
+    @Email(message = "연락 받을 이메일이 유효하지 않습니다.")
     @NotBlank(message = "연락 받을 이메일은 공백일 수 없습니다.")
     @Schema(description = "연락 받을 이메일")
     val contactEmail: String,
 
     @NotBlank(message = "이름은 공백일 수 없습니다.")
     @Schema(description = "이름")
-    val name : String,
+    val name: String,
 
     @NotBlank(message = "거주 지역은 공백일 수 없습니다.")
     @Schema(description = "기본 주소 정보")

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class ParticipantGatewayImpl(
     private val participantRepository: ParticipantRepository
-): ParticipantGateway {
-    override fun save(participant: Participant) : Participant {
+) : ParticipantGateway {
+    override fun save(participant: Participant): Participant {
         val savedEntity = participantRepository
             .save(ParticipantEntity.fromDomain(participant))
         return savedEntity.toDomain()

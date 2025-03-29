@@ -13,7 +13,7 @@ class NaverAuthGatewayImpl(
     private val naverAuthProperties: NaverAuthProperties,
     private val naverAuthFeignClient: NaverAuthFeignClient,
     private val naverUserInfoFeignClient: NaverUserInfoFeignClient
-): NaverAuthGateway {
+) : NaverAuthGateway {
 
     override fun getAccessToken(authorizationCode: String, state: String): NaverToken {
         return naverAuthFeignClient.getAccessToken(

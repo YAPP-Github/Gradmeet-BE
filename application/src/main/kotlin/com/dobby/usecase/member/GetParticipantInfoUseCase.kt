@@ -1,6 +1,7 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
+import com.dobby.enums.MatchType
+import com.dobby.enums.member.GenderType
 import com.dobby.exception.MemberConsentNotFoundException
 import com.dobby.exception.ParticipantNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
@@ -8,17 +9,16 @@ import com.dobby.gateway.member.MemberGateway
 import com.dobby.gateway.member.ParticipantGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.Participant
-import com.dobby.enums.member.GenderType
-import com.dobby.enums.MatchType
+import com.dobby.usecase.UseCase
 import java.time.LocalDate
 
 class GetParticipantInfoUseCase(
     private val memberGateway: MemberGateway,
     private val participantGateway: ParticipantGateway,
     private val memberConsentGateway: MemberConsentGateway
-) : UseCase<GetParticipantInfoUseCase.Input, GetParticipantInfoUseCase.Output>{
+) : UseCase<GetParticipantInfoUseCase.Input, GetParticipantInfoUseCase.Output> {
     data class Input(
-        val memberId: String,
+        val memberId: String
     )
 
     data class Output(

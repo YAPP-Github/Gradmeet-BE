@@ -15,7 +15,7 @@ data class ResearcherSignupRequest(
     @Schema(description = "OAuth provider")
     val provider: ProviderType,
 
-    @Email(message= "연락 받을 이메일이 유효하지 않습니다.")
+    @Email(message = "연락 받을 이메일이 유효하지 않습니다.")
     @NotBlank(message = "연락 받을 이메일은 공백일 수 없습니다.")
     @Schema(description = "연락 받을 이메일")
     val contactEmail: String,
@@ -23,7 +23,7 @@ data class ResearcherSignupRequest(
     @Email(message = "학교 이메일이 유효하지 않습니다.")
     @NotBlank(message = "학교 이메일은 공백일 수 없습니다.")
     @Schema(description = "대학교 이메일")
-    val univEmail : String,
+    val univEmail: String,
 
     @NotBlank(message = "이름은 공백일 수 없습니다.")
     @Schema(description = "이름")
@@ -41,5 +41,5 @@ data class ResearcherSignupRequest(
     val labInfo: String?,
 
     @Schema(description = "광고성 정보 이메일/SMS 수신 동의 여부")
-    var adConsent: Boolean,
+    var adConsent: Boolean
 )

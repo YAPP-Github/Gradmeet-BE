@@ -25,8 +25,10 @@ class EmailController(
         summary = "학교 메일 코드 전송 API- 연구자 회원가입 과정",
         description = "연구자 회원가입 시, 학교 메일 인증 코드를 전송하는 API입니다."
     )
-    suspend fun sendCode(@RequestBody @Valid emailSendRequest: EmailSendRequest)
-            : EmailSendResponse {
+    suspend fun sendCode(
+        @RequestBody @Valid
+        emailSendRequest: EmailSendRequest
+    ): EmailSendResponse {
         val input = EmailMapper.toEmailCodeSendUseCaseInput(emailSendRequest)
         val output = emailService.sendEmail(input)
         return EmailMapper.toEmailSendResponse(output)
@@ -37,8 +39,10 @@ class EmailController(
         summary = "학교 메일 코드 인증 API- 연구자 회원가입 과정",
         description = "연구자 회원가입 시, 코드를 인증하는 API입니다."
     )
-    fun verifyCode(@RequestBody @Valid emailVerificationRequest: EmailVerificationRequest)
-            : EmailVerificationResponse {
+    fun verifyCode(
+        @RequestBody @Valid
+        emailVerificationRequest: EmailVerificationRequest
+    ): EmailVerificationResponse {
         val input = EmailMapper.toEmailVerificationUseCaseInput(emailVerificationRequest)
         val output = emailService.verifyCode(input)
         return EmailMapper.toEmailVerificationResponse(output)

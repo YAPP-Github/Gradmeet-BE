@@ -1,10 +1,10 @@
 package com.dobby.external.gateway.email
 
-import com.dobby.model.Verification
 import com.dobby.enums.VerificationStatus
 import com.dobby.gateway.email.VerificationGateway
-import com.dobby.persistence.repository.VerificationRepository
+import com.dobby.model.Verification
 import com.dobby.persistence.entity.VerificationEntity
+import com.dobby.persistence.repository.VerificationRepository
 import org.springframework.stereotype.Component
 
 @Component
@@ -13,7 +13,7 @@ class VerificationGatewayImpl(
 ) : VerificationGateway {
 
     override fun findByUnivEmailAndStatus(univEmail: String, status: VerificationStatus): Verification? {
-        val entity =  verificationRepository
+        val entity = verificationRepository
             .findByUnivEmailAndStatus(univEmail, status)
         if (entity != null) {
             return entity.toDomain()

@@ -1,5 +1,9 @@
 package com.dobby.usecase.member
 
+import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.member.GenderType
 import com.dobby.exception.ParticipantNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.MemberGateway
@@ -7,13 +11,9 @@ import com.dobby.gateway.member.ParticipantGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.MemberConsent
 import com.dobby.model.member.Participant
-import com.dobby.enums.member.GenderType
-import com.dobby.enums.MatchType
-import com.dobby.enums.areaInfo.Area
-import com.dobby.enums.areaInfo.Region
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDate

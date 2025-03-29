@@ -1,16 +1,16 @@
 package com.dobby.usecase.experiment
 
+import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.member.GenderType
 import com.dobby.exception.ExperimentPostNotFoundException
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ApplyMethod
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.model.experiment.TargetGroup
 import com.dobby.model.member.Member
-import com.dobby.enums.MatchType
-import com.dobby.enums.areaInfo.Area
-import com.dobby.enums.areaInfo.Region
-import com.dobby.enums.experiment.TimeSlot
-import com.dobby.enums.member.GenderType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

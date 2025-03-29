@@ -10,5 +10,5 @@ data class NaverOauthLoginRequest(
 
     @NotBlank(message = "state는 공백일 수 없습니다.")
     @Schema(description = "state")
-    val state: String,
+    val state: String
 )

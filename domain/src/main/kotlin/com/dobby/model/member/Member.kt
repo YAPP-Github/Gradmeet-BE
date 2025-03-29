@@ -1,9 +1,9 @@
 package com.dobby.model.member
 
-import com.dobby.policy.MemberMaskingPolicy
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.policy.MemberMaskingPolicy
 import com.dobby.util.TimeProvider
 import java.time.LocalDateTime
 
@@ -27,7 +27,7 @@ data class Member(
             oauthEmail: String,
             contactEmail: String,
             provider: ProviderType,
-            role: RoleType,
+            role: RoleType
         ) = Member(
             id = id,
             name = name,
@@ -48,6 +48,6 @@ data class Member(
         contactEmail = MemberMaskingPolicy.maskSensitiveData(this.id),
         status = MemberStatus.HOLD,
         updatedAt = TimeProvider.currentDateTime(),
-        deletedAt = TimeProvider.currentDateTime(),
+        deletedAt = TimeProvider.currentDateTime()
     )
 }

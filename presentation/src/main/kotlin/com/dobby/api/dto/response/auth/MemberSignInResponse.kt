@@ -12,6 +12,5 @@ data class MemberSignInResponse(
     val refreshToken: String,
 
     @Schema(description = "사용자 정보")
-    val member: MemberResponse,
-) {
-}
+    val member: MemberResponse
+)

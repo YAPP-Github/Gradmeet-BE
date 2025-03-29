@@ -1,7 +1,7 @@
 package com.dobby.enums.experiment
 
 enum class TimeSlot(
-    val timeSlotName : String
+    val timeSlotName: String
 ) {
     LESS_30M("LESS_30M"),
     ABOUT_30M("ABOUT_30M"),

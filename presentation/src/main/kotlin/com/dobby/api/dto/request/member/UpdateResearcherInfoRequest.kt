@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull
 
 data class UpdateResearcherInfoRequest(
 
-    @Email(message= "연락 받을 이메일이 유효하지 않습니다.")
+    @Email(message = "연락 받을 이메일이 유효하지 않습니다.")
     @NotBlank(message = "연락 받을 이메일은 공백일 수 없습니다.")
     @Schema(description = "연락 받을 이메일")
     val contactEmail: String,
@@ -29,5 +29,5 @@ data class UpdateResearcherInfoRequest(
 
     @NotNull(message = "광고성 정보 수신 동의 여부는 필수입니다.")
     @Schema(description = "광고성 정보 이메일/SMS 수신 동의 여부")
-    var adConsent: Boolean,
+    var adConsent: Boolean
 )

@@ -2,9 +2,9 @@ package com.dobby.usecase.member
 
 import com.dobby.exception.ContactEmailDuplicateException
 import com.dobby.gateway.member.MemberGateway
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.every
 import io.mockk.mockk
 

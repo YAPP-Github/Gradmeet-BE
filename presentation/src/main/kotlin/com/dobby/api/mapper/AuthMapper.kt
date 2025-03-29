@@ -6,12 +6,11 @@ import com.dobby.api.dto.request.auth.NaverOauthLoginRequest
 import com.dobby.api.dto.response.auth.OauthLoginResponse
 import com.dobby.api.dto.response.auth.TestMemberSignInResponse
 import com.dobby.api.dto.response.member.MemberResponse
+import com.dobby.enums.member.RoleType
 import com.dobby.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.usecase.auth.GenerateTestTokenUseCase
 import com.dobby.usecase.auth.GenerateTokenWithRefreshTokenUseCase
-import com.dobby.enums.member.RoleType
-
 
 object AuthMapper {
     fun toGoogleOauthLoginInput(request: GoogleOauthLoginRequest, role: RoleType): FetchGoogleUserInfoUseCase.Input {
@@ -37,7 +36,9 @@ object AuthMapper {
         )
     }
 
-    fun toNaverOauthLoginInput(request: NaverOauthLoginRequest, role: RoleType
+    fun toNaverOauthLoginInput(
+        request: NaverOauthLoginRequest,
+        role: RoleType
     ): FetchNaverUserInfoUseCase.Input {
         return FetchNaverUserInfoUseCase.Input(
             authorizationCode = request.authorizationCode,

@@ -14,12 +14,12 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 class JwtOptionalAuthenticationFilter(
     private val securityManager: SecurityManager,
-    private val handlerExceptionResolver: HandlerExceptionResolver,
+    private val handlerExceptionResolver: HandlerExceptionResolver
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain,
+        filterChain: FilterChain
     ) {
         try {
             val authenticationHeader = request.getHeader("Authorization")

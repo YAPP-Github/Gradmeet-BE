@@ -1,17 +1,24 @@
 package com.dobby.usecase.member.email
 
 import com.dobby.EmailTemplateLoader
-import com.dobby.util.IdGenerator
 import com.dobby.enums.VerificationStatus
+import com.dobby.exception.EmailAlreadyVerifiedException
+import com.dobby.exception.EmailDomainNotFoundException
+import com.dobby.exception.EmailNotUnivException
+import com.dobby.exception.SignupUnivEmailDuplicateException
+import com.dobby.exception.TooManyVerificationRequestException
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.EmailGateway
 import com.dobby.gateway.email.VerificationGateway
 import com.dobby.gateway.member.ResearcherGateway
-import com.dobby.exception.*
 import com.dobby.util.EmailUtils
+import com.dobby.util.IdGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 
 class SendEmailCodeUseCaseTest : BehaviorSpec({
 
@@ -107,5 +114,3 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         }
     }
 })
-
-

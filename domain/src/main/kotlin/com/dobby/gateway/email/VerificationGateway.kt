@@ -1,7 +1,7 @@
 package com.dobby.gateway.email
 
-import com.dobby.model.Verification
 import com.dobby.enums.VerificationStatus
+import com.dobby.model.Verification
 
 interface VerificationGateway {
     fun findByUnivEmailAndStatus(univEmail: String, status: VerificationStatus): Verification?

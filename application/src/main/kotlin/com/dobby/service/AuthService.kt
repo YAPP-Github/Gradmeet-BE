@@ -12,7 +12,7 @@ class AuthService(
     private val fetchGoogleUserInfoUseCase: FetchGoogleUserInfoUseCase,
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
     private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
-    private val generateTestTokenUseCase: GenerateTestTokenUseCase,
+    private val generateTestTokenUseCase: GenerateTestTokenUseCase
 ) {
     fun getGoogleUserInfo(input: FetchGoogleUserInfoUseCase.Input): FetchGoogleUserInfoUseCase.Output {
         return fetchGoogleUserInfoUseCase.execute(input)

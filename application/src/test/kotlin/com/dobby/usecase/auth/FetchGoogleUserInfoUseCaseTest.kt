@@ -1,13 +1,13 @@
 package com.dobby.usecase.auth
 
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.gateway.auth.TokenGateway
-import com.dobby.gateway.auth.GoogleAuthGateway
-import com.dobby.model.member.Member
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.gateway.auth.GoogleAuthGateway
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.auth.GoogleToken
+import com.dobby.model.member.Member
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

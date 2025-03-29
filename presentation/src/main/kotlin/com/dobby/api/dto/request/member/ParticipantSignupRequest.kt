@@ -1,8 +1,8 @@
 package com.dobby.api.dto.request.member
 
 import com.dobby.api.dto.response.member.AddressInfoResponse
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
+import com.dobby.enums.member.GenderType
 import com.dobby.enums.member.ProviderType
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
@@ -22,20 +22,21 @@ data class ParticipantSignupRequest(
     @Schema(description = "OAuth provider")
     val provider: ProviderType,
 
-    @Email(message= "연락 받을 이메일이 유효하지 않습니다.")
+    @Email(message = "연락 받을 이메일이 유효하지 않습니다.")
     @NotBlank(message = "연락 받을 이메일은 공백일 수 없습니다.")
     @Schema(description = "연락 받을 이메일")
     val contactEmail: String,
 
     @NotBlank(message = "이름은 공백일 수 없습니다.")
     @Schema(description = "이름")
-    val name : String,
+    val name: String,
 
     @NotBlank(message = "성별은 공백일 수 없습니다.")
     @Schema(description = "성별")
     val gender: GenderType,
 
-    @Past @NotNull(message = "생년월일은 공백일 수 없습니다.")
+    @Past
+    @NotNull(message = "생년월일은 공백일 수 없습니다.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Schema(description = "생년월일")
     val birthDate: LocalDate,

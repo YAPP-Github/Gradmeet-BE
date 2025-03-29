@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "spring.security.oauth2.client.registration.google")
-data class GoogleAuthProperties (
+data class GoogleAuthProperties(
     val grantType: String = "authorization_code",
     var clientId: String = "",
-    var clientSecret: String= "",
-    var redirectUri : String = ""
+    var clientSecret: String = "",
+    var redirectUri: String = ""
 )
