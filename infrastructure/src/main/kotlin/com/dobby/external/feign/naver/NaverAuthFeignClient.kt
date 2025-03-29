@@ -16,6 +16,6 @@ interface NaverAuthFeignClient {
         @RequestParam(name = "client_id") clientId: String,
         @RequestParam(name = "client_secret") clientSecret: String,
         @RequestParam(name = "state") state: String,
-        @RequestParam(name = "grant_type") grantType: String,
+        @RequestParam(name = "grant_type") grantType: String
     ): NaverTokenResponse
 }

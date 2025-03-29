@@ -71,11 +71,13 @@ class DeleteResearcherUseCaseTest : BehaviorSpec({
 
             then("memberWithdrawalGateway.save가 올바른 탈퇴 기록으로 호출되어야 한다") {
                 verify {
-                    memberWithdrawalGateway.save(match {
-                        it.memberId == memberId &&
+                    memberWithdrawalGateway.save(
+                        match {
+                            it.memberId == memberId &&
                                 it.reasonType == reasonType &&
                                 it.otherReason == reason
-                    })
+                        }
+                    )
                 }
             }
         }

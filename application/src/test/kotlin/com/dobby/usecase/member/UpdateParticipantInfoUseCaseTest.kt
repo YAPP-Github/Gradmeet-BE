@@ -1,6 +1,12 @@
 package com.dobby.usecase.member
 
 import com.dobby.enums.MatchType
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.exception.ContactEmailDuplicateException
 import com.dobby.exception.ParticipantNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
@@ -8,16 +14,10 @@ import com.dobby.gateway.member.MemberGateway
 import com.dobby.gateway.member.ParticipantGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.Participant
-import com.dobby.enums.areaInfo.Area
-import com.dobby.enums.areaInfo.Region
-import com.dobby.enums.member.GenderType
-import com.dobby.enums.member.MemberStatus
-import com.dobby.enums.member.ProviderType
-import com.dobby.enums.member.RoleType
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -35,9 +35,11 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
 
         val participant = Participant(
             id = memberId,
-            member = Member(id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
+            member = Member(
+                id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null),
+                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
+            ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
             basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
@@ -119,9 +121,11 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
 
         val participant = Participant(
             id = memberId,
-            member = Member(id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
+            member = Member(
+                id = memberId, name = "기존 이름", contactEmail = "old@example.com", oauthEmail = "oauth@example.com",
                 provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, status = MemberStatus.ACTIVE,
-                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null),
+                createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
+            ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
             basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),

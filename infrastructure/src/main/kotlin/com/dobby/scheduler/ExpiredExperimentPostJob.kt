@@ -12,9 +12,9 @@ import java.time.LocalDate
 @Component
 class ExpiredExperimentPostJob(
     private val experimentPostService: ExperimentPostService
-) : Job{
+) : Job {
     companion object {
-        private val logger : Logger = LoggerFactory.getLogger(ExpiredExperimentPostJob::class.java)
+        private val logger: Logger = LoggerFactory.getLogger(ExpiredExperimentPostJob::class.java)
     }
 
     override fun execute(context: JobExecutionContext) {
@@ -24,5 +24,4 @@ class ExpiredExperimentPostJob(
         val output = experimentPostService.updateExpiredExperimentPosts(input)
         logger.info("${output.affectedRowsCount} expired posts have been updated during scheduling jobs.")
     }
-
 }

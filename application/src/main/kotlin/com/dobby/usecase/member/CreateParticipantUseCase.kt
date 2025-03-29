@@ -1,33 +1,32 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
-import com.dobby.util.IdGenerator
 import com.dobby.enums.MatchType
-import com.dobby.gateway.member.ParticipantGateway
-import com.dobby.gateway.auth.TokenGateway
-import com.dobby.gateway.member.MemberConsentGateway
-import com.dobby.model.member.Member
-import com.dobby.model.member.MemberConsent
-import com.dobby.model.member.Participant
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.GenderType
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.ParticipantGateway
+import com.dobby.model.member.Member
+import com.dobby.model.member.MemberConsent
+import com.dobby.model.member.Participant
+import com.dobby.usecase.UseCase
+import com.dobby.util.IdGenerator
 import java.time.LocalDate
 
-class CreateParticipantUseCase (
+class CreateParticipantUseCase(
     private val participantGateway: ParticipantGateway,
     private val memberConsentGateway: MemberConsentGateway,
     private val tokenGateway: TokenGateway,
     private val idGenerator: IdGenerator
-): UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output>
-{
-    data class Input (
+) : UseCase<CreateParticipantUseCase.Input, CreateParticipantUseCase.Output> {
+    data class Input(
         val oauthEmail: String,
         val provider: ProviderType,
         val contactEmail: String,
-        val name : String,
+        val name: String,
         val gender: GenderType,
         val birthDate: LocalDate,
         var basicAddressInfo: AddressInfo,
@@ -53,7 +52,7 @@ class CreateParticipantUseCase (
         val oauthEmail: String?,
         val provider: ProviderType?,
         val contactEmail: String?,
-        val role: RoleType?,
+        val role: RoleType?
     )
 
     override fun execute(input: Input): Output {
@@ -87,10 +86,10 @@ class CreateParticipantUseCase (
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.PARTICIPANT,
-            name = input.name,
+            name = input.name
         )
 
-        val participant= Participant.newParticipant(
+        val participant = Participant.newParticipant(
             id = idGenerator.generateId(),
             member = member,
             gender = input.gender,
@@ -101,7 +100,7 @@ class CreateParticipantUseCase (
             ),
             additionalAddressInfo = Participant.AddressInfo(
                 region = input.additionalAddressInfo.region,
-                area = input.additionalAddressInfo.area,
+                area = input.additionalAddressInfo.area
             ),
             matchType = input.matchType
         )
@@ -110,7 +109,7 @@ class CreateParticipantUseCase (
         val memberConsent = MemberConsent.newConsent(
             memberId = member.id,
             adConsent = input.adConsent,
-            matchConsent = input.matchConsent,
+            matchConsent = input.matchConsent
         )
         memberConsentGateway.save(memberConsent)
 

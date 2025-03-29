@@ -1,21 +1,21 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
-import com.dobby.util.IdGenerator
-import com.dobby.gateway.experiment.ExperimentPostGateway
-import com.dobby.model.experiment.ExperimentPost
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.member.GenderType
 import com.dobby.exception.ExperimentPostNotFoundException
 import com.dobby.exception.ExperimentPostRecruitStatusException
 import com.dobby.exception.ExperimentPostUpdateDateException
 import com.dobby.exception.PermissionDeniedException
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.usecase.UseCase
+import com.dobby.util.IdGenerator
 import java.time.LocalDate
 
-class UpdateExperimentPostUseCase (
+class UpdateExperimentPostUseCase(
     private val experimentPostGateway: ExperimentPostGateway,
     private val idGenerator: IdGenerator
 ) : UseCase<UpdateExperimentPostUseCase.Input, UpdateExperimentPostUseCase.Output> {
@@ -36,7 +36,7 @@ class UpdateExperimentPostUseCase (
         val place: String?,
         val region: Region?,
         val area: Area?,
-        val detailedAddress : String?,
+        val detailedAddress: String?,
         val recruitStatus: Boolean?,
 
         val reward: String?,
@@ -71,7 +71,7 @@ class UpdateExperimentPostUseCase (
         val views: Int,
         val place: String?,
         val reward: String?,
-        val durationInfo: DurationInfo?,
+        val durationInfo: DurationInfo?
     )
 
     data class DurationInfo(
@@ -145,16 +145,16 @@ class UpdateExperimentPostUseCase (
     }
 
     private fun validatePermission(existingPost: ExperimentPost, input: Input) {
-        if(existingPost.member.id != input.memberId) throw PermissionDeniedException
+        if (existingPost.member.id != input.memberId) throw PermissionDeniedException
     }
 
-    private fun validateModificationPolicy(existingPost: ExperimentPost, input: Input){
+    private fun validateModificationPolicy(existingPost: ExperimentPost, input: Input) {
         val today = LocalDate.now()
-        if(!existingPost.recruitStatus || existingPost.endDate?.isBefore(today) == true){
-            if(input.startDate != existingPost.startDate || input.endDate != existingPost.endDate) {
+        if (!existingPost.recruitStatus || existingPost.endDate?.isBefore(today) == true) {
+            if (input.startDate != existingPost.startDate || input.endDate != existingPost.endDate) {
                 throw ExperimentPostUpdateDateException
             }
-            if(input.recruitStatus != null) {
+            if (input.recruitStatus != null) {
                 throw ExperimentPostRecruitStatusException
             }
         }

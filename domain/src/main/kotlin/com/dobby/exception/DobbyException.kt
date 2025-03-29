@@ -1,11 +1,9 @@
 package com.dobby.exception
 
-
 /**
  * Top-level exception class for Dobby application
  */
 sealed class DobbyException(val code: String, message: String, cause: Throwable? = null) : RuntimeException(message, cause)
-
 
 /**
  * ClientException: Exceptions caused by invalid client requests
@@ -51,9 +49,9 @@ data object ResearcherNotFoundException : ClientException("ME0003", "Researcher 
 data object ParticipantNotFoundException : ClientException("ME0004", "Participant Not Found.")
 data object EmailNotValidateException : ClientException("ME0005", "You should validate your school email first")
 data object SignupOauthEmailDuplicateException : ClientException("ME0006", "You've already joined with requested OAuth email")
-data object ContactEmailDuplicateException: ClientException("ME0007", "This contact email is already in use.")
+data object ContactEmailDuplicateException : ClientException("ME0007", "This contact email is already in use.")
 data object MemberConsentNotFoundException : ClientException("ME0008", "Member Consent Not Found.")
-data object SignupUnivEmailDuplicateException: ClientException("ME0009", "You've already joined with requested university email")
+data object SignupUnivEmailDuplicateException : ClientException("ME0009", "You've already joined with requested university email")
 
 /**
  * Experiment error codes
@@ -66,11 +64,10 @@ data object ExperimentPostRecruitStatusException : ClientException("EP0006", "Yo
 data object ExperimentPostUpdateDateException : ClientException("EP0007", "You cannot update startDate, endDate with closed recruitment post.")
 data object ExperimentPostInvalidOnlineRequestException : ClientException("EP0008", "place, region, area field value must be null when MatchType is online.")
 data object ExperimentPostTitleException : ClientException("EP0009", "Title cannot be null.")
-data object ExperimentPostRewardException: ClientException("EP0010", "Reward cannot be null.")
-data object ExperimentPostContentException: ClientException("EP0011", "Content cannot be null.")
-data object ExperimentPostCountException: ClientException("EP0012", "Count could be more than zero.")
-data object ExperimentPostLeadResearcherException: ClientException("EP0013", "Lead Researcher cannot be null.")
-
+data object ExperimentPostRewardException : ClientException("EP0010", "Reward cannot be null.")
+data object ExperimentPostContentException : ClientException("EP0011", "Content cannot be null.")
+data object ExperimentPostCountException : ClientException("EP0012", "Count could be more than zero.")
+data object ExperimentPostLeadResearcherException : ClientException("EP0013", "Lead Researcher cannot be null.")
 
 /**
  * ServerException: Exceptions caused by internal server issues

@@ -1,14 +1,30 @@
 package com.dobby.api.config.exception
 
 import com.dobby.api.dto.response.ExceptionResponse
-import com.dobby.exception.*
+import com.dobby.exception.AuthenticationTokenExpiredException
+import com.dobby.exception.AuthenticationTokenNotFoundException
+import com.dobby.exception.AuthenticationTokenNotValidException
+import com.dobby.exception.ClientException
+import com.dobby.exception.ContactEmailDuplicateException
+import com.dobby.exception.DobbyException
+import com.dobby.exception.ExperimentPostNotFoundException
+import com.dobby.exception.MemberConsentNotFoundException
+import com.dobby.exception.MemberNotFoundException
+import com.dobby.exception.ParticipantNotFoundException
+import com.dobby.exception.PermissionDeniedException
+import com.dobby.exception.ResearcherNotFoundException
+import com.dobby.exception.ServerException
+import com.dobby.exception.SignupOauthEmailDuplicateException
+import com.dobby.exception.SignupUnivEmailDuplicateException
+import com.dobby.exception.UnAuthorizedException
+import com.dobby.exception.UnknownServerErrorException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 
 @Component
 class ExceptionResponseFactory(
-    private val exceptionHandler: DobbyExceptionHandler,
+    private val exceptionHandler: DobbyExceptionHandler
 ) {
     /**
      * DobbyException을 받아 ResponseEntity<ExceptionResponse> 형태로 변환

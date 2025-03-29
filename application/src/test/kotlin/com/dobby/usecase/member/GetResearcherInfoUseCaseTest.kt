@@ -1,14 +1,14 @@
 package com.dobby.usecase.member
 
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.exception.ResearcherNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.MemberConsent
 import com.dobby.model.member.Researcher
-import com.dobby.enums.member.MemberStatus
-import com.dobby.enums.member.ProviderType
-import com.dobby.enums.member.RoleType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk
@@ -42,7 +42,7 @@ class GetResearcherInfoUseCaseTest : BehaviorSpec({
             univName = "이화여자대학교",
             major = "컴퓨터공학과",
             labInfo = "야뿌 서버 연구실",
-            emailVerified = true,
+            emailVerified = true
         )
 
         val mockMemberConsent = mockk<MemberConsent>(relaxed = true)

@@ -1,12 +1,12 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
 import com.dobby.exception.ExperimentPostNotFoundException
 import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.usecase.UseCase
 
 class GetExperimentPostApplyMethodUseCase(
-    private val experimentPostGateway: ExperimentPostGateway,
-): UseCase<GetExperimentPostApplyMethodUseCase.Input, GetExperimentPostApplyMethodUseCase.Output> {
+    private val experimentPostGateway: ExperimentPostGateway
+) : UseCase<GetExperimentPostApplyMethodUseCase.Input, GetExperimentPostApplyMethodUseCase.Output> {
 
     data class Input(
         val experimentPostId: String

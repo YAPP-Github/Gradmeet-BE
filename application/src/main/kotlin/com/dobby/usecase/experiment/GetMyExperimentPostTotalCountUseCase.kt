@@ -1,11 +1,11 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
 import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.usecase.UseCase
 
 class GetMyExperimentPostTotalCountUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetMyExperimentPostTotalCountUseCase.Input, GetMyExperimentPostTotalCountUseCase.Output> {
+) : UseCase<GetMyExperimentPostTotalCountUseCase.Input, GetMyExperimentPostTotalCountUseCase.Output> {
 
     data class Input(
         val memberId: String

@@ -1,22 +1,22 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
 import com.dobby.exception.MemberConsentNotFoundException
 import com.dobby.exception.ResearcherNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.Member
+import com.dobby.usecase.UseCase
 
 class GetResearcherInfoUseCase(
     private val researcherGateway: ResearcherGateway,
     private val memberConsentGateway: MemberConsentGateway
-) : UseCase<GetResearcherInfoUseCase.Input, GetResearcherInfoUseCase.Output>{
+) : UseCase<GetResearcherInfoUseCase.Input, GetResearcherInfoUseCase.Output> {
     data class Input(
         val memberId: String
     )
 
     data class Output(
-        val member : Member,
+        val member: Member,
         val univEmail: String,
         val univName: String,
         val major: String,

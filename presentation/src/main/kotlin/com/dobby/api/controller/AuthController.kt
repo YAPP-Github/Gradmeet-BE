@@ -11,7 +11,11 @@ import com.dobby.service.AuthService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "인증 API - /v1/auth ")
 @RestController
@@ -22,8 +26,9 @@ class AuthController(
     @PostMapping("/login/google")
     @Operation(summary = "Google OAuth 로그인 API", description = "Google OAuth 로그인 후 인증 정보를 반환합니다")
     fun signInWithGoogle(
-        @RequestParam role : RoleType,
-        @RequestBody @Valid request: GoogleOauthLoginRequest
+        @RequestParam role: RoleType,
+        @RequestBody @Valid
+        request: GoogleOauthLoginRequest
     ): OauthLoginResponse {
         val input = AuthMapper.toGoogleOauthLoginInput(request, role)
         val output = authService.getGoogleUserInfo(input)
@@ -33,8 +38,9 @@ class AuthController(
     @PostMapping("/login/naver")
     @Operation(summary = "Naver OAuth 로그인 API", description = "Naver OAuth 로그인 후 인증 정보를 반환합니다")
     fun signInWithNaver(
-        @RequestParam role : RoleType,
-        @RequestBody @Valid request: NaverOauthLoginRequest
+        @RequestParam role: RoleType,
+        @RequestBody @Valid
+        request: NaverOauthLoginRequest
     ): OauthLoginResponse {
         val input = AuthMapper.toNaverOauthLoginInput(request, role)
         val output = authService.getNaverUserInfo(input)
@@ -54,7 +60,8 @@ class AuthController(
     @Operation(summary = "토큰 갱신 요청", description = "리프레시 토큰으로 기존 토큰을 갱신합니다")
     @PostMapping("/refresh")
     fun signInWithRefreshToken(
-        @RequestBody @Valid request: MemberRefreshTokenRequest,
+        @RequestBody @Valid
+        request: MemberRefreshTokenRequest
     ): OauthLoginResponse {
         val input = AuthMapper.toSignInWithRefreshTokenInput(request)
         val output = authService.signInWithRefreshToken(input)

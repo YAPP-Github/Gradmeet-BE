@@ -1,17 +1,17 @@
 package com.dobby.usecase.member
 
-import com.dobby.util.IdGenerator
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.member.GenderType
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.gateway.auth.TokenGateway
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.ParticipantGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.MemberConsent
 import com.dobby.model.member.Participant
-import com.dobby.enums.member.GenderType
-import com.dobby.enums.member.ProviderType
-import com.dobby.enums.member.RoleType
-import com.dobby.enums.areaInfo.Area
-import com.dobby.enums.areaInfo.Region
+import com.dobby.util.IdGenerator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -19,7 +19,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import java.time.LocalDate
 
-class CreateParticipantUseCaseTest: BehaviorSpec ({
+class CreateParticipantUseCaseTest : BehaviorSpec({
 
     val participantGateway: ParticipantGateway = mockk()
     val memberConsentGateway: MemberConsentGateway = mockk()
@@ -76,9 +76,8 @@ class CreateParticipantUseCaseTest: BehaviorSpec ({
         val memberConsent = MemberConsent.newConsent(
             memberId = member.id,
             adConsent = input.adConsent,
-            matchConsent = input.matchConsent,
+            matchConsent = input.matchConsent
         )
-
 
         val savedParticipant = participant.copy(member = member.copy(id = "1"))
         val accessToken = "mock-access-token"

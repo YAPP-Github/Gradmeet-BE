@@ -1,11 +1,18 @@
 package com.dobby.persistence.entity.member
 
-import com.dobby.model.member.Member
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.model.member.Member
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 import java.time.LocalDateTime
 
 @Entity

@@ -18,7 +18,7 @@ class MemberConsentGatewayImpl(
 
     override fun findByMemberId(memberId: String): MemberConsent? {
         return memberConsentRepository
-                .findByMemberId(memberId)?.toDomain()
+            .findByMemberId(memberId)?.toDomain()
     }
 
     override fun updateMatchConsent(memberId: String, matchConsent: Boolean): MemberConsent {

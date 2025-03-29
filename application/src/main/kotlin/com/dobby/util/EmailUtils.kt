@@ -5,9 +5,9 @@ import java.util.*
 import javax.naming.directory.Attributes
 import javax.naming.directory.InitialDirContext
 
-object EmailUtils{
-    fun extractDomain(email:String): String {
-        if(!email.contains("@")) throw EmailFormatInvalidException
+object EmailUtils {
+    fun extractDomain(email: String): String {
+        if (!email.contains("@")) throw EmailFormatInvalidException
         return email.substringAfter("@")
     }
     fun isDomainExists(email: String): Boolean {

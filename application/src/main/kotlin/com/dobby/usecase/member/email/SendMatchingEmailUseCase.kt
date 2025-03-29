@@ -21,7 +21,7 @@ class SendMatchingEmailUseCase(
     private val memberGateway: MemberGateway,
     private val memberConsentGateway: MemberConsentGateway,
     private val emailTemplateLoader: EmailTemplateLoader
-): UseCase<SendMatchingEmailUseCase.Input, SendMatchingEmailUseCase.Output>{
+) : UseCase<SendMatchingEmailUseCase.Input, SendMatchingEmailUseCase.Output> {
 
     data class Input(
         val contactEmail: String,
@@ -56,8 +56,8 @@ class SendMatchingEmailUseCase(
         }
     }
 
-    private fun validateEmail(email : String){
-        if(!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
+    private fun validateEmail(email: String) {
+        if (!EmailUtils.isDomainExists(email)) throw EmailDomainNotFoundException
     }
 
     private fun getEmailTitle(memberName: String): String {

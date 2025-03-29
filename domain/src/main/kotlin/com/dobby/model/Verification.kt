@@ -8,7 +8,7 @@ data class Verification(
     val univEmail: String,
     var status: VerificationStatus = VerificationStatus.HOLD,
     val createdAt: LocalDateTime? = null,
-    var updatedAt: LocalDateTime? = null,
+    var updatedAt: LocalDateTime? = null
 ) {
     fun complete(): Verification {
         return this.copy(status = VerificationStatus.VERIFIED)
@@ -20,8 +20,8 @@ data class Verification(
 
     companion object {
         fun newVerification(
-            id : String,
-            univEmail: String,
+            id: String,
+            univEmail: String
         ) = Verification(
             id = id,
             univEmail = univEmail,

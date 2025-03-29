@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
     name = "google-auth-feign-client",
-    url = "https://oauth2.googleapis.com/token",
+    url = "https://oauth2.googleapis.com/token"
 )
 interface GoogleAuthFeignClient {
     @PostMapping
@@ -16,6 +16,6 @@ interface GoogleAuthFeignClient {
         @RequestParam(name = "client_id") clientId: String,
         @RequestParam(name = "client_secret") clientSecret: String,
         @RequestParam(name = "redirect_uri") redirectUri: String,
-        @RequestParam(name = "grant_type") grantType: String,
+        @RequestParam(name = "grant_type") grantType: String
     ): GoogleTokenResponse
 }

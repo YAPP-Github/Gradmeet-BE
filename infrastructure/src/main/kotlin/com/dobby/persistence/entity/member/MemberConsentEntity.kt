@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "member_consent")
-class MemberConsentEntity (
+class MemberConsentEntity(
     @Id
     @Column(name = "member_id", columnDefinition = "CHAR(13)")
     val memberId: String,
@@ -33,8 +33,8 @@ class MemberConsentEntity (
     val createdAt: LocalDateTime,
 
     @Column(name = "updated_at", nullable = false)
-    val updatedAt: LocalDateTime,
-){
+    val updatedAt: LocalDateTime
+) {
 
     fun toDomain() = MemberConsent(
         memberId = memberId,

@@ -13,6 +13,6 @@ class UrlGeneratorGatewayImpl(
     }
 
     override fun getExperimentPostUrl(postId: String): String {
-        return urlProperties.baseUrl+"/post/"+postId
+        return urlProperties.baseUrl + "/post/" + postId
     }
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 class GetMatchingExperimentPostsUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetMatchingExperimentPostsUseCase.Input, GetMatchingExperimentPostsUseCase.Output> {
+) : UseCase<GetMatchingExperimentPostsUseCase.Input, GetMatchingExperimentPostsUseCase.Output> {
 
     data class Input(
         val requestTime: LocalDateTime
@@ -17,7 +17,7 @@ class GetMatchingExperimentPostsUseCase(
         val matchingPosts: Map<String, List<ExperimentPost>>
     )
 
-    override fun execute(input : Input): Output {
+    override fun execute(input: Input): Output {
         val result = experimentPostGateway.findMatchingExperimentPosts()
         return Output(matchingPosts = result)
     }

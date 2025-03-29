@@ -1,17 +1,42 @@
 package com.dobby.api.mapper
 
 import com.dobby.api.dto.request.PreSignedUrlRequest
-import com.dobby.api.dto.request.experiment.*
+import com.dobby.api.dto.request.experiment.ApplyMethodInfo
+import com.dobby.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.api.dto.request.experiment.ImageListInfo
+import com.dobby.api.dto.request.experiment.TargetGroupInfo
+import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.api.dto.response.PaginatedResponse
 import com.dobby.api.dto.response.PreSignedUrlResponse
-import com.dobby.api.dto.response.experiment.*
+import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
+import com.dobby.api.dto.response.experiment.DataCount
+import com.dobby.api.dto.response.experiment.DurationInfo
+import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostResponse
+import com.dobby.api.dto.response.experiment.PostInfo
+import com.dobby.api.dto.response.experiment.UpdateExperimentPostResponse
 import com.dobby.api.dto.response.member.MyExperimentPostResponse
-import com.dobby.usecase.experiment.*
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
+import com.dobby.usecase.experiment.CreateExperimentPostUseCase
+import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
+import com.dobby.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
+import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
+import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
+import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
+import com.dobby.usecase.experiment.GetExperimentPostDetailForUpdateUseCase
+import com.dobby.usecase.experiment.GetExperimentPostDetailUseCase
+import com.dobby.usecase.experiment.GetExperimentPostTotalCountByCustomFilterUseCase
+import com.dobby.usecase.experiment.GetExperimentPostsUseCase
+import com.dobby.usecase.experiment.GetMyExperimentPostTotalCountUseCase
+import com.dobby.usecase.experiment.GetMyExperimentPostsUseCase
+import com.dobby.usecase.experiment.UpdateExperimentPostRecruitStatusUseCase
+import com.dobby.usecase.experiment.UpdateExperimentPostUseCase
 import com.dobby.util.getCurrentMemberId
 import com.dobby.util.getCurrentMemberIdOrNull
 
@@ -35,10 +60,9 @@ object ExperimentPostMapper {
             endDate = request.endDate,
             matchType = request.matchType,
             detailedAddress = request.detailedAddress,
-            leadResearcher = request.leadResearcher,
+            leadResearcher = request.leadResearcher
         )
     }
-
 
     private fun toCreateApplyMethodInfo(dto: ApplyMethodInfo): CreateExperimentPostUseCase.ApplyMethodInfo {
         return CreateExperimentPostUseCase.ApplyMethodInfo(
@@ -59,7 +83,7 @@ object ExperimentPostMapper {
 
     private fun toCreateImageListInfo(dto: ImageListInfo): CreateExperimentPostUseCase.ImageListInfo {
         return CreateExperimentPostUseCase.ImageListInfo(
-            images = dto.images?: emptyList()
+            images = dto.images ?: emptyList()
         )
     }
 
@@ -83,7 +107,6 @@ object ExperimentPostMapper {
         )
     }
 
-
     private fun toUpdateApplyMethodInfo(dto: ApplyMethodInfo): UpdateExperimentPostUseCase.ApplyMethodInfo {
         return UpdateExperimentPostUseCase.ApplyMethodInfo(
             content = dto.content,
@@ -103,12 +126,11 @@ object ExperimentPostMapper {
 
     private fun toUpdateImageListInfo(dto: ImageListInfo): UpdateExperimentPostUseCase.ImageListInfo {
         return UpdateExperimentPostUseCase.ImageListInfo(
-            images = dto.images?: emptyList()
+            images = dto.images ?: emptyList()
         )
     }
 
-
-    private fun toUpdatePostInfo(input: UpdateExperimentPostUseCase.PostInfo): PostInfo{
+    private fun toUpdatePostInfo(input: UpdateExperimentPostUseCase.PostInfo): PostInfo {
         return PostInfo(
             experimentPostId = input.postId,
             title = input.title,
@@ -341,7 +363,7 @@ object ExperimentPostMapper {
         page: Int,
         count: Int,
         order: String
-    ) : GetExperimentPostsUseCase.PaginationInput {
+    ): GetExperimentPostsUseCase.PaginationInput {
         return GetExperimentPostsUseCase.PaginationInput(
             page = page,
             count = count,
@@ -358,7 +380,6 @@ object ExperimentPostMapper {
             pagination = pagination
         )
     }
-
 
     fun toGetExperimentPostsResponse(
         output: List<GetExperimentPostsUseCase.Output>,
@@ -479,7 +500,6 @@ object ExperimentPostMapper {
         )
     }
 
-
     fun toGetTotalMyExperimentPostCountUseCaseInput(): GetMyExperimentPostTotalCountUseCase.Input {
         return GetMyExperimentPostTotalCountUseCase.Input(
             memberId = getCurrentMemberId()
@@ -487,8 +507,10 @@ object ExperimentPostMapper {
     }
 
     fun toGetMyExperimentPostsUseCasePagination(
-        page: Int, count: Int, order: String
-    ) : GetMyExperimentPostsUseCase.PaginationInput {
+        page: Int,
+        count: Int,
+        order: String
+    ): GetMyExperimentPostsUseCase.PaginationInput {
         return GetMyExperimentPostsUseCase.PaginationInput(
             page = page,
             count = count,

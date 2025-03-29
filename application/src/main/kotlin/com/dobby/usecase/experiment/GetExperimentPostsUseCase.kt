@@ -1,46 +1,46 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
-import com.dobby.gateway.experiment.ExperimentPostGateway
-import com.dobby.model.experiment.CustomFilter
-import com.dobby.model.experiment.LocationTarget
-import com.dobby.model.experiment.StudyTarget
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.CustomFilter
+import com.dobby.model.experiment.LocationTarget
+import com.dobby.model.experiment.StudyTarget
+import com.dobby.usecase.UseCase
 import java.time.LocalDate
 
-class GetExperimentPostsUseCase (
+class GetExperimentPostsUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<GetExperimentPostsUseCase.Input, List<GetExperimentPostsUseCase.Output>>{
-    data class Input (
+) : UseCase<GetExperimentPostsUseCase.Input, List<GetExperimentPostsUseCase.Output>> {
+    data class Input(
         val customFilter: CustomFilterInput,
         val pagination: PaginationInput
     )
 
     data class CustomFilterInput(
-        val matchType : MatchType?,
+        val matchType: MatchType?,
         val studyTarget: StudyTargetInput?,
         val locationTarget: LocationTargetInput?,
-        val recruitStatus: RecruitStatus,
+        val recruitStatus: RecruitStatus
     )
 
     data class StudyTargetInput(
-        val gender : GenderType?,
+        val gender: GenderType?,
         val age: Int?
     )
 
     data class LocationTargetInput(
         val region: Region?,
-        val areas: List<Area>?,
+        val areas: List<Area>?
     )
 
     data class PaginationInput(
         val page: Int = 1,
         val count: Int = 6,
-        val order : String = "DESC"
+        val order: String = "DESC"
     )
 
     data class Output(
@@ -62,7 +62,7 @@ class GetExperimentPostsUseCase (
         val endDate: LocalDate?
     )
 
-    override fun execute(input: Input) : List<Output> {
+    override fun execute(input: Input): List<Output> {
         val domainFilter = CustomFilter.newCustomFilter(
             input.customFilter.matchType,
             studyTarget = input.customFilter.studyTarget?.let { StudyTarget(it.gender, it.age) },

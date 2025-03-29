@@ -7,8 +7,8 @@ data class PostInfo(
     val views: Int,
     val place: String?,
     val reward: String?,
-    val durationInfo: DurationInfo,
- )
+    val durationInfo: DurationInfo
+)
 
 data class DurationInfo(
     val startDate: LocalDate?,

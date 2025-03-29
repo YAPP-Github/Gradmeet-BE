@@ -1,13 +1,20 @@
 package com.dobby.persistence.entity.member
 
 import com.dobby.model.member.Researcher
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.OneToOne
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "researcher")
-class ResearcherEntity (
+class ResearcherEntity(
     @Id
-    @Column(name= "researcher_id", columnDefinition = "CHAR(13)")
+    @Column(name = "researcher_id", columnDefinition = "CHAR(13)")
     val id: String,
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
@@ -15,19 +22,19 @@ class ResearcherEntity (
     val member: MemberEntity,
 
     @Column(name = "univ_email", length = 100, nullable = false)
-    val univEmail : String,
+    val univEmail: String,
 
     @Column(name = "email_verified", nullable = false)
     var emailVerified: Boolean = false,
 
     @Column(name = "univ_name", length = 100, nullable = false)
-    val univName : String,
+    val univName: String,
 
     @Column(name = "major", length = 10, nullable = false)
-    val major : String,
+    val major: String,
 
     @Column(name = "lab_info", length = 100, nullable = true)
-    val labInfo : String?,
+    val labInfo: String?
 ) {
     companion object {
         fun fromDomain(researcher: Researcher): ResearcherEntity {
@@ -50,7 +57,7 @@ class ResearcherEntity (
             emailVerified = this.emailVerified,
             univName = this.univName,
             major = this.major,
-            labInfo = this.labInfo,
+            labInfo = this.labInfo
         )
     }
 }

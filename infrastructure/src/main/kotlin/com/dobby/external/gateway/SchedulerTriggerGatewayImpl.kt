@@ -1,8 +1,8 @@
 package com.dobby.external.gateway
 
 import com.dobby.gateway.SchedulerTriggerGateway
-import org.quartz.Scheduler
 import org.quartz.JobKey
+import org.quartz.Scheduler
 import org.springframework.stereotype.Component
 
 @Component
@@ -18,4 +18,3 @@ class SchedulerTriggerGatewayImpl(
         }
     }
 }
-

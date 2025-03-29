@@ -2,7 +2,6 @@ package com.dobby.model.member
 
 import com.dobby.policy.ResearcherMaskingPolicy
 import com.dobby.util.TimeProvider
-import java.time.LocalDateTime
 
 data class Researcher(
     val id: String,
