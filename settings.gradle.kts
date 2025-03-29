@@ -1,7 +1,3 @@
-rootProject.name = "dobby-backend"
-
-include("domain", "application", "presentation", "infrastructure", "common")
-
 pluginManagement {
     plugins {
         id("org.jetbrains.kotlin.jvm") version "1.9.25"
@@ -17,3 +13,7 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+rootProject.name = "dobby-backend"
+
+include("domain", "application", "presentation", "infrastructure", "common")
