@@ -1,16 +1,14 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
 import com.dobby.exception.ExperimentPostNotFoundException
 import com.dobby.exception.ExperimentPostRecruitStatusException
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ExperimentPost
-import com.dobby.util.TimeProvider
-import java.time.LocalDateTime
+import com.dobby.usecase.UseCase
 
 class UpdateExperimentPostRecruitStatusUseCase(
     private val experimentPostGateway: ExperimentPostGateway
-): UseCase<UpdateExperimentPostRecruitStatusUseCase.Input, UpdateExperimentPostRecruitStatusUseCase.Output> {
+) : UseCase<UpdateExperimentPostRecruitStatusUseCase.Input, UpdateExperimentPostRecruitStatusUseCase.Output> {
 
     data class Input(
         val memberId: String,

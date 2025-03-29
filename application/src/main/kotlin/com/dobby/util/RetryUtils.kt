@@ -1,7 +1,6 @@
 package com.dobby.util
 
 import com.dobby.exception.EmailAlreadyVerifiedException
-
 import org.slf4j.LoggerFactory
 import kotlin.math.pow
 import kotlin.random.Random
@@ -16,7 +15,7 @@ object RetryUtils {
         block: () -> T
     ): T {
         var curAttempt = 1
-        while(true){
+        while (true) {
             try {
                 return block()
             } catch (e: EmailAlreadyVerifiedException) {
@@ -29,7 +28,7 @@ object RetryUtils {
                 val backOffTime = calculateBackOff(curAttempt, defaultDelay, maxJitter)
                 logger.warn("Retrying... Current Attempt: $curAttempt, Waiting: ${backOffTime}ms")
                 Thread.sleep(backOffTime)
-                curAttempt +=1
+                curAttempt += 1
             }
         }
     }

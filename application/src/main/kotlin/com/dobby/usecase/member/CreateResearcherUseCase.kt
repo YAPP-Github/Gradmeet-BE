@@ -1,17 +1,17 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
-import com.dobby.util.IdGenerator
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.gateway.member.ResearcherGateway
-import com.dobby.gateway.auth.TokenGateway
-import com.dobby.gateway.member.MemberConsentGateway
-import com.dobby.model.member.Member
-import com.dobby.model.member.MemberConsent
-import com.dobby.model.member.Researcher
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.gateway.member.ResearcherGateway
+import com.dobby.model.member.Member
+import com.dobby.model.member.MemberConsent
+import com.dobby.model.member.Researcher
+import com.dobby.usecase.UseCase
+import com.dobby.util.IdGenerator
 
 class CreateResearcherUseCase(
     private val memberGateway: MemberGateway,
@@ -24,12 +24,12 @@ class CreateResearcherUseCase(
         val oauthEmail: String,
         val provider: ProviderType,
         val contactEmail: String,
-        val univEmail : String,
+        val univEmail: String,
         val univName: String,
-        val name : String,
+        val name: String,
         val major: String,
-        val labInfo : String?,
-        var adConsent: Boolean,
+        val labInfo: String?,
+        var adConsent: Boolean
     )
 
     data class Output(
@@ -43,7 +43,7 @@ class CreateResearcherUseCase(
         val oauthEmail: String?,
         val provider: ProviderType?,
         val contactEmail: String?,
-        val role: RoleType?,
+        val role: RoleType?
     )
 
     override fun execute(input: Input): Output {
@@ -76,7 +76,7 @@ class CreateResearcherUseCase(
             contactEmail = input.contactEmail,
             provider = input.provider,
             role = RoleType.RESEARCHER,
-            name = input.name,
+            name = input.name
         )
 
         val researcher = Researcher.newResearcher(
@@ -99,5 +99,4 @@ class CreateResearcherUseCase(
 
         return researcher
     }
-
 }

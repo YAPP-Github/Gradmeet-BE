@@ -7,5 +7,5 @@ data class EmailVerificationResponse(
     val isSuccess: Boolean,
 
     @Schema(description = "인증 코드 인증 성공 메시지 입니다.")
-    val message : String
+    val message: String
 )

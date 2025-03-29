@@ -1,5 +1,8 @@
 package com.dobby.usecase.member
 
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.exception.ContactEmailDuplicateException
 import com.dobby.exception.ResearcherNotFoundException
 import com.dobby.gateway.member.MemberConsentGateway
@@ -7,12 +10,9 @@ import com.dobby.gateway.member.MemberGateway
 import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.Researcher
-import com.dobby.enums.member.MemberStatus
-import com.dobby.enums.member.ProviderType
-import com.dobby.enums.member.RoleType
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

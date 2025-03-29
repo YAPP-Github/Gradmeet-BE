@@ -1,5 +1,5 @@
 package com.dobby.api.dto.response.experiment
 
-data class UpdateExperimentPostResponse (
+data class UpdateExperimentPostResponse(
     val postInfo: PostInfo
 )

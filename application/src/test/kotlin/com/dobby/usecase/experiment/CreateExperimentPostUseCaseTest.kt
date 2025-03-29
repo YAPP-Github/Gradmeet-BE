@@ -1,13 +1,6 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.exception.ExperimentPostInvalidOnlineRequestException
-import com.dobby.exception.PermissionDeniedException
-import com.dobby.util.IdGenerator
 import com.dobby.enums.MatchType
-import com.dobby.gateway.experiment.ExperimentPostGateway
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.model.experiment.ExperimentPost
-import com.dobby.model.member.Member
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.TimeSlot
@@ -15,6 +8,13 @@ import com.dobby.enums.member.GenderType
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.exception.ExperimentPostInvalidOnlineRequestException
+import com.dobby.exception.PermissionDeniedException
+import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.member.Member
+import com.dobby.util.IdGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -23,7 +23,7 @@ import io.mockk.mockk
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class CreateExperimentPostUseCaseTest: BehaviorSpec ({
+class CreateExperimentPostUseCaseTest : BehaviorSpec({
     val experimentPostGateway: ExperimentPostGateway = mockk(relaxed = true)
     val memberGateway: MemberGateway = mockk()
     val idGenerator: IdGenerator = mockk()
@@ -47,7 +47,10 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         val validInput = CreateExperimentPostUseCase.Input(
             memberId = "1",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
-                startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
+                startAge = 20,
+                endAge = 30,
+                genderType = GenderType.MALE,
+                otherCondition = "야뿌이셨던 남성분"
             ),
             applyMethodInfo = CreateExperimentPostUseCase.ApplyMethodInfo(
                 content = "구글폼 보고 참여해주세요 :)",
@@ -93,7 +96,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
     }
 
     given("연구자가 아닌 사용자가 게시글을 생성하려고 하면") {
-        val invalidMember =  Member(
+        val invalidMember = Member(
             id = "0",
             role = RoleType.PARTICIPANT,
             contactEmail = "christer10@naver.com",
@@ -109,7 +112,10 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         val invalidInput = CreateExperimentPostUseCase.Input(
             memberId = "0",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
-                startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
+                startAge = 20,
+                endAge = 30,
+                genderType = GenderType.MALE,
+                otherCondition = "야뿌이셨던 남성분"
             ),
             applyMethodInfo = CreateExperimentPostUseCase.ApplyMethodInfo(
                 content = "구글폼 보고 참여해주세요 :)",
@@ -163,7 +169,10 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
         val invalidInput = CreateExperimentPostUseCase.Input(
             memberId = "3",
             targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
-                startAge = 20, endAge = 30, genderType = GenderType.MALE, otherCondition = "야뿌이셨던 남성분"
+                startAge = 20,
+                endAge = 30,
+                genderType = GenderType.MALE,
+                otherCondition = "야뿌이셨던 남성분"
             ),
             applyMethodInfo = CreateExperimentPostUseCase.ApplyMethodInfo(
                 content = "구글폼 보고 참여해주세요 :)",
@@ -175,7 +184,7 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             ),
             startDate = LocalDate.of(2025, 2, 3),
             endDate = LocalDate.of(2025, 2, 10),
-            matchType = MatchType.ONLINE, //온라인 매칭설정
+            matchType = MatchType.ONLINE, // 온라인 매칭설정
             count = 35,
             timeRequired = TimeSlot.LESS_30M,
             leadResearcher = "야뿌 랩실 서버 25기 신수정",
@@ -200,5 +209,4 @@ class CreateExperimentPostUseCaseTest: BehaviorSpec ({
             }
         }
     }
-
 })

@@ -1,16 +1,16 @@
 package com.dobby.usecase.auth
 
-import com.dobby.usecase.UseCase
-import com.dobby.gateway.member.MemberGateway
 import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.member.Member
+import com.dobby.usecase.UseCase
 
 class GenerateTokenWithRefreshTokenUseCase(
     private val tokenGateway: TokenGateway,
-    private val memberGateway: MemberGateway,
+    private val memberGateway: MemberGateway
 ) : UseCase<GenerateTokenWithRefreshTokenUseCase.Input, GenerateTokenWithRefreshTokenUseCase.Output> {
     data class Input(
-        val refreshToken: String,
+        val refreshToken: String
     )
 
     data class Output(

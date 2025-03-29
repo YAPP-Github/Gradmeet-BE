@@ -4,7 +4,12 @@ import com.dobby.config.properties.SESProperties
 import com.dobby.gateway.email.EmailGateway
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.ses.SesAsyncClient
-import software.amazon.awssdk.services.ses.model.*
+import software.amazon.awssdk.services.ses.model.Body
+import software.amazon.awssdk.services.ses.model.Content
+import software.amazon.awssdk.services.ses.model.Destination
+import software.amazon.awssdk.services.ses.model.Message
+import software.amazon.awssdk.services.ses.model.SendEmailRequest
+import software.amazon.awssdk.services.ses.model.SesException
 
 @Component
 class EmailGatewayImpl(
@@ -13,7 +18,7 @@ class EmailGatewayImpl(
 ) : EmailGateway {
 
     override fun sendEmail(to: String, subject: String, content: String, isHtml: Boolean) {
-        val body = if(isHtml) {
+        val body = if (isHtml) {
             Body.builder().html(Content.builder().data(content).build()).build()
         } else {
             Body.builder().text(Content.builder().data(content).build()).build()
@@ -32,9 +37,10 @@ class EmailGatewayImpl(
 
         sesAsyncClient.sendEmail(request)
             .whenComplete { _, ex ->
-                when(ex){
+                when (ex) {
                     is SesException -> throw IllegalStateException("AWS SES 오류 발생: ${ex.awsErrorDetails()?.errorMessage()}")
-                    is Exception -> throw IllegalStateException("이메일 전송 실패: ${ex.message}")                }
+                    is Exception -> throw IllegalStateException("이메일 전송 실패: ${ex.message}")
+                }
             }
     }
 }

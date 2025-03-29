@@ -1,14 +1,14 @@
 package com.dobby.usecase.auth
 
-import com.dobby.usecase.UseCase
 import com.dobby.exception.MemberNotFoundException
-import com.dobby.gateway.member.MemberGateway
 import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.member.Member
+import com.dobby.usecase.UseCase
 
 class GenerateTestTokenUseCase(
     private val tokenGateway: TokenGateway,
-    private val memberGateway: MemberGateway,
+    private val memberGateway: MemberGateway
 ) : UseCase<GenerateTestTokenUseCase.Input, GenerateTestTokenUseCase.Output> {
     data class Input(
         val memberId: String

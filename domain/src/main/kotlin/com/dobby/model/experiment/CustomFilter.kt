@@ -1,10 +1,10 @@
 package com.dobby.model.experiment
 
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
 
 data class CustomFilter(
     val matchType: MatchType?,
@@ -31,5 +31,3 @@ data class LocationTarget(
     val region: Region?,
     val areas: List<Area>?
 )
-
-

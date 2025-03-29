@@ -1,12 +1,22 @@
 package com.dobby.persistence.entity.experiment
 
-import com.dobby.model.experiment.ExperimentPost
-import com.dobby.persistence.entity.member.MemberEntity
 import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
-import jakarta.persistence.*
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.persistence.entity.member.MemberEntity
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -20,11 +30,11 @@ class ExperimentPostEntity(
     @JoinColumn(name = "member_id")
     val member: MemberEntity,
 
-    @OneToOne(fetch = FetchType.LAZY,  cascade = [CascadeType.ALL])
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "target_group_id")
     val targetGroup: TargetGroupEntity,
 
-    @OneToOne(fetch = FetchType.LAZY,  cascade = [CascadeType.ALL])
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "apply_method_id")
     val applyMethod: ApplyMethodEntity,
 
@@ -98,7 +108,6 @@ class ExperimentPostEntity(
         _images.add(image)
     }
 
-
     fun removeImage(image: ExperimentImageEntity) {
         val removed = _images.removeIf {
             val shouldRemove = it.id == image.id
@@ -113,7 +122,6 @@ class ExperimentPostEntity(
         _images.addAll(newImages)
         updatedAt = LocalDateTime.now()
     }
-
 
     fun toDomain(): ExperimentPost = ExperimentPost(
         id = id,

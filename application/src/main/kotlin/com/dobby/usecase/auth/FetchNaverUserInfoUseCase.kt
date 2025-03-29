@@ -1,13 +1,13 @@
 package com.dobby.usecase.auth
 
-import com.dobby.usecase.UseCase
-import com.dobby.exception.MemberRoleMismatchException
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.gateway.auth.NaverAuthGateway
-import com.dobby.gateway.auth.TokenGateway
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.exception.MemberRoleMismatchException
+import com.dobby.gateway.auth.NaverAuthGateway
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.usecase.UseCase
 
 class FetchNaverUserInfoUseCase(
     private val naverAuthGateway: NaverAuthGateway,
@@ -43,8 +43,9 @@ class FetchNaverUserInfoUseCase(
             val jwtAccessToken = jwtTokenGateway.generateAccessToken(member)
             val jwtRefreshToken = jwtTokenGateway.generateRefreshToken(member)
 
-            if(member.role != input.role)
+            if (member.role != input.role) {
                 throw MemberRoleMismatchException(member.role.toString())
+            }
 
             Output(
                 isRegistered = true,

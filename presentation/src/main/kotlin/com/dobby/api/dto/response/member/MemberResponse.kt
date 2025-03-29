@@ -1,8 +1,8 @@
 package com.dobby.api.dto.response.member
 
-import com.dobby.model.member.Member
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.model.member.Member
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "사용자 DTO")
@@ -23,7 +23,7 @@ data class MemberResponse(
     val contactEmail: String?,
 
     @Schema(description = "역할", example = "RESEARCHER")
-    val role: RoleType?,
+    val role: RoleType?
 ) {
 
     companion object {

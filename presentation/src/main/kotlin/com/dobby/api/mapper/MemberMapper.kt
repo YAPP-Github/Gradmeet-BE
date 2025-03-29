@@ -1,16 +1,34 @@
 package com.dobby.api.mapper
 
-import com.dobby.api.dto.request.member.*
-import com.dobby.api.dto.response.member.*
-import com.dobby.usecase.member.*
-import com.dobby.model.member.Participant
+import com.dobby.api.dto.request.member.DeleteMemberRequest
+import com.dobby.api.dto.request.member.ParticipantSignupRequest
+import com.dobby.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.api.dto.request.member.UpdateParticipantInfoRequest
+import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
+import com.dobby.api.dto.response.member.AddressInfoResponse
+import com.dobby.api.dto.response.member.DefaultResponse
+import com.dobby.api.dto.response.member.MemberResponse
+import com.dobby.api.dto.response.member.ParticipantInfoResponse
+import com.dobby.api.dto.response.member.ResearcherInfoResponse
+import com.dobby.api.dto.response.member.SignUpResponse
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.RoleType
+import com.dobby.model.member.Participant
+import com.dobby.usecase.member.CreateParticipantUseCase
+import com.dobby.usecase.member.CreateResearcherUseCase
+import com.dobby.usecase.member.DeleteParticipantUseCase
+import com.dobby.usecase.member.DeleteResearcherUseCase
+import com.dobby.usecase.member.GetParticipantInfoUseCase
+import com.dobby.usecase.member.GetResearcherInfoUseCase
+import com.dobby.usecase.member.UpdateParticipantInfoUseCase
+import com.dobby.usecase.member.UpdateResearcherInfoUseCase
+import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
+import com.dobby.usecase.member.ValidateContactEmailForUpdateUseCase
 import com.dobby.util.getCurrentMemberId
 
 object MemberMapper {
-    fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
+    fun toCreateResearcherInput(req: ResearcherSignupRequest): CreateResearcherUseCase.Input {
         return CreateResearcherUseCase.Input(
             oauthEmail = req.oauthEmail,
             provider = req.provider,
@@ -20,7 +38,7 @@ object MemberMapper {
             name = req.name,
             major = req.major,
             labInfo = req.labInfo,
-            adConsent = req.adConsent,
+            adConsent = req.adConsent
         )
     }
 
@@ -62,13 +80,13 @@ object MemberMapper {
         )
     }
 
-    fun toValidateContactEmailForSignUpInput(contactEmail: String): ValidateContactEmailForSignUpUseCase.Input{
+    fun toValidateContactEmailForSignUpInput(contactEmail: String): ValidateContactEmailForSignUpUseCase.Input {
         return ValidateContactEmailForSignUpUseCase.Input(
             contactEmail = contactEmail
         )
     }
 
-    fun toValidateContactEmailForSignUpResponse(output: ValidateContactEmailForSignUpUseCase.Output): DefaultResponse{
+    fun toValidateContactEmailForSignUpResponse(output: ValidateContactEmailForSignUpUseCase.Output): DefaultResponse {
         return DefaultResponse(
             success = output.success
         )
@@ -198,7 +216,7 @@ object MemberMapper {
         )
     }
 
-    fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse{
+    fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse {
         return DefaultResponse(
             success = output.success
         )

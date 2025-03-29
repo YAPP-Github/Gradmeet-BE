@@ -1,14 +1,14 @@
 package com.dobby.external.gateway.experiment
 
 import com.dobby.dto.Pagination
-import com.dobby.model.experiment.CustomFilter
-import com.dobby.model.experiment.ExperimentPost
 import com.dobby.enums.areaInfo.Region
 import com.dobby.gateway.experiment.ExperimentPostGateway
+import com.dobby.model.experiment.CustomFilter
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.experiment.ExperimentPostStats
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import com.dobby.persistence.repository.ExperimentPostCustomRepository
 import com.dobby.persistence.repository.ExperimentPostRepository
-import com.dobby.model.experiment.ExperimentPostStats
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
@@ -16,7 +16,7 @@ import java.time.LocalDate
 class ExperimentPostGatewayImpl(
     private val experimentPostRepository: ExperimentPostRepository,
     private val experimentPostCustomRepository: ExperimentPostCustomRepository
-): ExperimentPostGateway {
+) : ExperimentPostGateway {
     override fun save(experimentPost: ExperimentPost): ExperimentPost {
         val savedEntity = experimentPostRepository
             .save(ExperimentPostEntity.fromDomain(experimentPost))
@@ -34,7 +34,7 @@ class ExperimentPostGatewayImpl(
             customFilter,
             pagination,
             order
-        )?.map{ it.toDomain()}
+        )?.map { it.toDomain() }
     }
 
     override fun findById(experimentPostId: String): ExperimentPost? {
@@ -78,8 +78,6 @@ class ExperimentPostGatewayImpl(
                 )
             }
     }
-
-
 
     override fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<ExperimentPostStats> {
         return experimentPostRepository.countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus)

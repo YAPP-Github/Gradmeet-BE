@@ -1,9 +1,9 @@
 package com.dobby.persistence.repository
 
-import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import com.dobby.dto.Pagination
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
+import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -15,7 +15,7 @@ interface ExperimentPostCustomRepository {
         order: String
     ): List<ExperimentPostEntity>?
 
-    fun updateExperimentPostStatus(currentDate : LocalDate): Long
+    fun updateExperimentPostStatus(currentDate: LocalDate): Long
 
     fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
 

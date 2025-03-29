@@ -1,9 +1,9 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
+import com.dobby.enums.VerificationStatus
 import com.dobby.exception.EmailNotValidateException
 import com.dobby.gateway.email.VerificationGateway
-import com.dobby.enums.VerificationStatus
+import com.dobby.usecase.UseCase
 
 class VerifyResearcherEmailUseCase(
     private val verificationGateway: VerificationGateway
@@ -14,5 +14,4 @@ class VerifyResearcherEmailUseCase(
             ?: throw EmailNotValidateException
         return
     }
-
 }

@@ -1,11 +1,10 @@
 package com.dobby.api.dto.response.experiment
 
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
-import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.member.GenderType
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 

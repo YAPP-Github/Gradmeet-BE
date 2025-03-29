@@ -1,11 +1,11 @@
 package com.dobby.usecase.auth
 
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.gateway.auth.TokenGateway
-import com.dobby.model.member.Member
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
+import com.dobby.gateway.auth.TokenGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.member.Member
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -19,9 +19,11 @@ class GenerateTokenWithRefreshTokenUseCaseTest : BehaviorSpec({
 
     given("유효한 리프레시 토큰이 주어졌을 때") {
         val validRefreshToken = "validRefreshToken"
-        val member = Member(id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
+        val member = Member(
+            id = "1", oauthEmail = "dlawotn3@naver.com", contactEmail = "dlawotn3@naver.com",
             provider = ProviderType.NAVER, role = RoleType.PARTICIPANT, name = "dobby",
-            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null)
+            status = MemberStatus.ACTIVE, createdAt = LocalDateTime.now(), updatedAt = LocalDateTime.now(), deletedAt = null
+        )
         val accessToken = "newAccessToken"
         val newRefreshToken = "newRefreshToken"
 

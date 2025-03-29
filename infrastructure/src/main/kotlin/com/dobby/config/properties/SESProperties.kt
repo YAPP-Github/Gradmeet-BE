@@ -3,7 +3,7 @@ package com.dobby.config.properties
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "aws.ses")
-data class SESProperties (
+data class SESProperties(
     val email: Email,
     val region: Region,
     val credentials: Credentials
