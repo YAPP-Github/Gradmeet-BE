@@ -1,7 +1,7 @@
 package com.dobby.persistence.entity.experiment
 
-import com.dobby.model.experiment.TargetGroup
 import com.dobby.enums.member.GenderType
+import com.dobby.model.experiment.TargetGroup
 import jakarta.persistence.*
 
 @Entity(name = "target_group")
@@ -21,7 +21,7 @@ class TargetGroupEntity(
     var genderType: GenderType,
 
     @Column(name = "other_condition", length = 300)
-    var otherCondition: String?,
+    var otherCondition: String?
 ) {
 
     fun toDomain(): TargetGroup = TargetGroup(

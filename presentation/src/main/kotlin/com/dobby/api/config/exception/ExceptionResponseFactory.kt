@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExceptionResponseFactory(
-    private val exceptionHandler: DobbyExceptionHandler,
+    private val exceptionHandler: DobbyExceptionHandler
 ) {
     /**
      * DobbyException을 받아 ResponseEntity<ExceptionResponse> 형태로 변환

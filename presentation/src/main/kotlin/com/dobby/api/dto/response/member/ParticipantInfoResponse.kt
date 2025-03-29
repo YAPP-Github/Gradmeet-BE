@@ -1,7 +1,7 @@
 package com.dobby.api.dto.response.member
 
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
+import com.dobby.enums.member.GenderType
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDate
 

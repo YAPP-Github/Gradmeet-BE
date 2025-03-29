@@ -1,7 +1,7 @@
 package com.dobby.persistence.entity.member
 
-import com.dobby.model.member.MemberWithdrawal
 import com.dobby.enums.member.WithdrawalReasonType
+import com.dobby.model.member.MemberWithdrawal
 import jakarta.persistence.*
 import java.time.LocalDateTime
 

@@ -7,10 +7,13 @@ data class ApplyMethod(
     var content: String
 ) {
     fun update(
-        phoneNum: String?, formUrl: String?, content: String?
+        phoneNum: String?,
+        formUrl: String?,
+        content: String?
     ): ApplyMethod {
-        if(phoneNum == this.phoneNum && formUrl == this.formUrl && content == this.content)
+        if (phoneNum == this.phoneNum && formUrl == this.formUrl && content == this.content) {
             return this
+        }
 
         return this.copy(
             phoneNum = phoneNum,
@@ -32,5 +35,4 @@ data class ApplyMethod(
             content = content
         )
     }
-
 }

@@ -13,7 +13,7 @@ class GoogleAuthGatewayImpl(
     private val googleAuthProperties: GoogleAuthProperties,
     private val googleAuthFeignClient: GoogleAuthFeignClient,
     private val googleUserInfoFeignClient: GoogleUserInfoFeginClient
-): GoogleAuthGateway {
+) : GoogleAuthGateway {
 
     override fun getAccessToken(code: String): GoogleToken {
         return googleAuthFeignClient.getAccessToken(

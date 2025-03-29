@@ -2,15 +2,15 @@ package com.dobby.api.mapper
 
 import com.dobby.api.dto.request.member.*
 import com.dobby.api.dto.response.member.*
-import com.dobby.usecase.member.*
-import com.dobby.model.member.Participant
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.member.RoleType
+import com.dobby.model.member.Participant
+import com.dobby.usecase.member.*
 import com.dobby.util.getCurrentMemberId
 
 object MemberMapper {
-    fun toCreateResearcherInput(req: ResearcherSignupRequest) : CreateResearcherUseCase.Input{
+    fun toCreateResearcherInput(req: ResearcherSignupRequest): CreateResearcherUseCase.Input {
         return CreateResearcherUseCase.Input(
             oauthEmail = req.oauthEmail,
             provider = req.provider,
@@ -20,7 +20,7 @@ object MemberMapper {
             name = req.name,
             major = req.major,
             labInfo = req.labInfo,
-            adConsent = req.adConsent,
+            adConsent = req.adConsent
         )
     }
 
@@ -62,13 +62,13 @@ object MemberMapper {
         )
     }
 
-    fun toValidateContactEmailForSignUpInput(contactEmail: String): ValidateContactEmailForSignUpUseCase.Input{
+    fun toValidateContactEmailForSignUpInput(contactEmail: String): ValidateContactEmailForSignUpUseCase.Input {
         return ValidateContactEmailForSignUpUseCase.Input(
             contactEmail = contactEmail
         )
     }
 
-    fun toValidateContactEmailForSignUpResponse(output: ValidateContactEmailForSignUpUseCase.Output): DefaultResponse{
+    fun toValidateContactEmailForSignUpResponse(output: ValidateContactEmailForSignUpUseCase.Output): DefaultResponse {
         return DefaultResponse(
             success = output.success
         )
@@ -198,7 +198,7 @@ object MemberMapper {
         )
     }
 
-    fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse{
+    fun toValidateContactEmailForUpdateResponse(output: ValidateContactEmailForUpdateUseCase.Output): DefaultResponse {
         return DefaultResponse(
             success = output.success
         )

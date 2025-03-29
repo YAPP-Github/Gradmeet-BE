@@ -1,12 +1,12 @@
 package com.dobby.service
 
-import com.dobby.usecase.experiment.*
+import com.dobby.enums.areaInfo.Area
+import com.dobby.enums.experiment.RecruitStatus
 import com.dobby.exception.ExperimentAreaInCorrectException
 import com.dobby.exception.ExperimentAreaOverflowException
 import com.dobby.exception.InvalidRequestValueException
 import com.dobby.gateway.CacheGateway
-import com.dobby.enums.areaInfo.Area
-import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.usecase.experiment.*
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -27,7 +27,7 @@ class ExperimentPostService(
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
-    private val cacheGateway: CacheGateway,
+    private val cacheGateway: CacheGateway
 ) {
     @Transactional
     fun createNewExperimentPost(input: CreateExperimentPostUseCase.Input): CreateExperimentPostUseCase.Output {
@@ -36,7 +36,7 @@ class ExperimentPostService(
     }
 
     @Transactional
-    fun updateExperimentPost(input: UpdateExperimentPostUseCase.Input): UpdateExperimentPostUseCase.Output{
+    fun updateExperimentPost(input: UpdateExperimentPostUseCase.Input): UpdateExperimentPostUseCase.Output {
         return updateExperimentPostUseCase.execute(input)
     }
 
@@ -63,7 +63,7 @@ class ExperimentPostService(
     }
 
     @Transactional
-    fun updateExpiredExperimentPosts(input: UpdateExpiredExperimentPostUseCase.Input): UpdateExpiredExperimentPostUseCase.Output  {
+    fun updateExpiredExperimentPosts(input: UpdateExpiredExperimentPostUseCase.Input): UpdateExpiredExperimentPostUseCase.Output {
         return updateExpiredExperimentPostUseCase.execute(input)
     }
 
@@ -111,11 +111,11 @@ class ExperimentPostService(
         if (areas.size > 5) throw ExperimentAreaOverflowException
     }
 
-    private fun validateRegion(locationInfo: GetExperimentPostsUseCase.LocationTargetInput){
-        val region = locationInfo.region?: return
+    private fun validateRegion(locationInfo: GetExperimentPostsUseCase.LocationTargetInput) {
+        val region = locationInfo.region ?: return
         val validAreas = Area.findByRegion(region).map { it.name }
 
-        if(locationInfo.areas?.map {it.name }?.any {it !in validAreas } == true) {
+        if (locationInfo.areas?.map { it.name }?.any { it !in validAreas } == true) {
             throw ExperimentAreaInCorrectException
         }
     }

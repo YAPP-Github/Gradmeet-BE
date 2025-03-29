@@ -1,12 +1,12 @@
 package com.dobby.api.dto.request.experiment
 
 import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.TimeSlot
 import java.time.LocalDate
 
-data class UpdateExperimentPostRequest (
+data class UpdateExperimentPostRequest(
     val targetGroupInfo: TargetGroupInfo,
     val applyMethodInfo: ApplyMethodInfo,
     val imageListInfo: ImageListInfo,
@@ -27,5 +27,5 @@ data class UpdateExperimentPostRequest (
 
     val reward: String?,
     val title: String?,
-    val content: String?,
+    val content: String?
 )

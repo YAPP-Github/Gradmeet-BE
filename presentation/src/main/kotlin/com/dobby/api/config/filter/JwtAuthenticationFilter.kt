@@ -16,19 +16,21 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 
 class JwtAuthenticationFilter(
     private val securityManager: SecurityManager,
-    private val handlerExceptionResolver: HandlerExceptionResolver,
+    private val handlerExceptionResolver: HandlerExceptionResolver
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain,
+        filterChain: FilterChain
     ) {
         try {
             val authenticationHeader =
                 request.getHeader("Authorization") ?: throw AuthenticationTokenNotFoundException
-            val accessToken = if (authenticationHeader.startsWith("Bearer "))
+            val accessToken = if (authenticationHeader.startsWith("Bearer ")) {
                 authenticationHeader.substring(7)
-            else throw AuthenticationTokenNotValidException
+            } else {
+                throw AuthenticationTokenNotValidException
+            }
 
             val securityUser = securityManager.parseAuthentication(accessToken)
             val authentication = createAuthentication(securityUser)

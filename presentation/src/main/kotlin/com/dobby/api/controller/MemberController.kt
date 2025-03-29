@@ -6,8 +6,8 @@ import com.dobby.api.dto.response.member.ParticipantInfoResponse
 import com.dobby.api.dto.response.member.ResearcherInfoResponse
 import com.dobby.api.dto.response.member.SignUpResponse
 import com.dobby.api.mapper.MemberMapper
-import com.dobby.util.getCurrentMemberId
 import com.dobby.service.MemberService
+import com.dobby.util.getCurrentMemberId
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/members")
 class MemberController(
-    private val memberService: MemberService,
+    private val memberService: MemberService
 ) {
     @PostMapping("/signup/participant")
     @Operation(
@@ -26,7 +26,8 @@ class MemberController(
         description = "참여자 OAuth 로그인 실패 시, 리다이렉팅하여 참여자 회원가입하는 API입니다."
     )
     fun signUpParticipant(
-        @RequestBody @Valid req: ParticipantSignupRequest
+        @RequestBody @Valid
+        req: ParticipantSignupRequest
     ): SignUpResponse {
         val input = MemberMapper.toCreateParticipantInput(req)
         val output = memberService.signUpParticipant(input)
@@ -42,7 +43,8 @@ class MemberController(
             """
     )
     fun signUpResearcher(
-        @RequestBody @Valid req: ResearcherSignupRequest
+        @RequestBody @Valid
+        req: ResearcherSignupRequest
     ): SignUpResponse {
         val input = MemberMapper.toCreateResearcherInput(req)
         val output = memberService.signUpResearcher(input)
@@ -56,7 +58,7 @@ class MemberController(
     )
     fun validateContactEmailForSignUp(
         @RequestParam contactEmail: String
-    ) : DefaultResponse {
+    ): DefaultResponse {
         val input = MemberMapper.toValidateContactEmailForSignUpInput(contactEmail)
         val output = memberService.validateContactEmailForSignUp(input)
         return MemberMapper.toValidateContactEmailForSignUpResponse(output)
@@ -81,7 +83,8 @@ class MemberController(
         description = "연구자의 회원 정보를 수정합니다."
     )
     fun updateResearcherInfo(
-        @RequestBody @Valid request: UpdateResearcherInfoRequest
+        @RequestBody @Valid
+        request: UpdateResearcherInfoRequest
     ): ResearcherInfoResponse {
         val input = MemberMapper.toUpdateResearcherInfoUseCaseInput(request)
         val output = memberService.updateResearcherInfo(input)
@@ -107,7 +110,8 @@ class MemberController(
         description = "참여자의 회원 정보를 수정합니다."
     )
     fun updateParticipantInfo(
-        @RequestBody @Valid request: UpdateParticipantInfoRequest
+        @RequestBody @Valid
+        request: UpdateParticipantInfoRequest
     ): ParticipantInfoResponse {
         val input = MemberMapper.toUpdateParticipantInfoUseCaseInput(request)
         val output = memberService.updateParticipantInfo(input)
@@ -133,7 +137,8 @@ class MemberController(
         description = "회원 탈퇴 API입니다."
     )
     fun deleteMember(
-        @RequestBody @Valid request: DeleteMemberRequest
+        @RequestBody @Valid
+        request: DeleteMemberRequest
     ): DefaultResponse {
         val memberId = getCurrentMemberId()
         val roleType = memberService.getMemberRole(memberId)

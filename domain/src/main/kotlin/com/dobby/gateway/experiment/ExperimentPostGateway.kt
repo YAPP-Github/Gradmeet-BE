@@ -1,8 +1,8 @@
 package com.dobby.gateway.experiment
 
+import com.dobby.enums.areaInfo.Region
 import com.dobby.model.experiment.CustomFilter
 import com.dobby.model.experiment.ExperimentPost
-import com.dobby.enums.areaInfo.Region
 import com.dobby.model.experiment.ExperimentPostStats
 import java.time.LocalDate
 
@@ -19,7 +19,7 @@ interface ExperimentPostGateway {
     fun countExperimentPostByRegionAndRecruitStatusGroupedByArea(region: Region, recruitStatus: Boolean): List<ExperimentPostStats>
     fun countExperimentPostGroupedByRegion(): List<ExperimentPostStats>
     fun countExperimentPostsByRecruitStatusGroupedByRegion(recruitStatus: Boolean): List<ExperimentPostStats>
-    fun updateExperimentPostStatus(currentDate : LocalDate) : Long
+    fun updateExperimentPostStatus(currentDate: LocalDate): Long
     fun findExperimentPostsByMemberIdWithPagination(memberId: String, page: Int, count: Int, order: String): List<ExperimentPost>?
     fun countExperimentPostsByMemberId(memberId: String): Int
     fun findExperimentPostByMemberIdAndPostId(memberId: String, postId: String): ExperimentPost?

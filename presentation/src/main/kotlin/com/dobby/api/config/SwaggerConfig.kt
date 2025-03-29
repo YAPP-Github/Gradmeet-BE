@@ -11,10 +11,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @OpenAPIDefinition(
-    servers = [Server(
-        url = "\${swagger.server-url}",
-        description = "Default Server URL"
-    )],
+    servers = [
+        Server(
+            url = "\${swagger.server-url}",
+            description = "Default Server URL"
+        )
+    ],
     info = Info(
         title = "그라밋 백엔드 API 명세",
         description = "그라밋 Swagger 문서입니다.",

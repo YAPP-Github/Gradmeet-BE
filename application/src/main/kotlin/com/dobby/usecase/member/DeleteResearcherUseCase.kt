@@ -1,12 +1,12 @@
 package com.dobby.usecase.member
 
-import com.dobby.usecase.UseCase
+import com.dobby.enums.member.WithdrawalReasonType
 import com.dobby.exception.MemberNotFoundException
 import com.dobby.gateway.email.VerificationGateway
 import com.dobby.gateway.member.MemberWithdrawalGateway
 import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.MemberWithdrawal
-import com.dobby.enums.member.WithdrawalReasonType
+import com.dobby.usecase.UseCase
 
 class DeleteResearcherUseCase(
     private val researcherGateway: ResearcherGateway,

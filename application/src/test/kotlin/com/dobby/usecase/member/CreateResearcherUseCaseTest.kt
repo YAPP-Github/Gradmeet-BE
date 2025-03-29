@@ -1,6 +1,8 @@
 package com.dobby.usecase.member
 
-import com.dobby.util.IdGenerator
+import com.dobby.enums.member.MemberStatus
+import com.dobby.enums.member.ProviderType
+import com.dobby.enums.member.RoleType
 import com.dobby.gateway.auth.TokenGateway
 import com.dobby.gateway.member.MemberConsentGateway
 import com.dobby.gateway.member.MemberGateway
@@ -8,9 +10,7 @@ import com.dobby.gateway.member.ResearcherGateway
 import com.dobby.model.member.Member
 import com.dobby.model.member.MemberConsent
 import com.dobby.model.member.Researcher
-import com.dobby.enums.member.MemberStatus
-import com.dobby.enums.member.ProviderType
-import com.dobby.enums.member.RoleType
+import com.dobby.util.IdGenerator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -62,7 +62,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
         val memberConsent = MemberConsent.newConsent(
             memberId = member.id,
             adConsent = input.adConsent,
-            matchConsent = false,
+            matchConsent = false
         )
 
         val savedMember = member.copy(id = "1", status = MemberStatus.ACTIVE)
@@ -92,7 +92,7 @@ class CreateResearcherUseCaseTest : BehaviorSpec({
             then("회원 정보가 올바르게 반환되어야 한다") {
                 output.memberInfo.memberId shouldBe savedMember.id
                 output.memberInfo.name shouldBe savedMember.name
-                output.memberInfo.oauthEmail shouldBe  savedMember.oauthEmail
+                output.memberInfo.oauthEmail shouldBe savedMember.oauthEmail
                 output.memberInfo.provider shouldBe savedMember.provider
                 output.memberInfo.role shouldBe savedMember.role
             }

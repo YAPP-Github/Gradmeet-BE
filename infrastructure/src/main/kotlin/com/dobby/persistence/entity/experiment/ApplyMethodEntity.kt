@@ -4,7 +4,7 @@ import com.dobby.model.experiment.ApplyMethod
 import jakarta.persistence.*
 
 @Entity(name = "apply_method")
-class ApplyMethodEntity (
+class ApplyMethodEntity(
     @Id
     @Column(name = "apply_method_id", columnDefinition = "CHAR(13)")
     val id: String,
@@ -16,7 +16,7 @@ class ApplyMethodEntity (
     var formUrl: String?,
 
     @Column(name = "content", nullable = false, length = 200)
-    var content: String,
+    var content: String
 ) {
     fun toDomain(): ApplyMethod = ApplyMethod(
         id = id,

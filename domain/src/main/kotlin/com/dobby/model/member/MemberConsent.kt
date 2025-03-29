@@ -11,7 +11,7 @@ data class MemberConsent(
     val adConsentedAt: LocalDate?,
     val matchConsentedAt: LocalDate?,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
+    val updatedAt: LocalDateTime
 ) {
     companion object {
         fun newConsent(
@@ -19,7 +19,7 @@ data class MemberConsent(
             adConsent: Boolean,
             matchConsent: Boolean,
             createdAt: LocalDateTime = TimeProvider.currentDateTime()
-        ) : MemberConsent {
+        ): MemberConsent {
             val nowDate = createdAt.toLocalDate()
 
             return MemberConsent(

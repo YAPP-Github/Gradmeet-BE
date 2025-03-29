@@ -1,8 +1,8 @@
 package com.dobby.api.config.exception
 
 import com.dobby.api.dto.response.ExceptionResponse
-import com.dobby.gateway.AlertGateway
 import com.dobby.exception.*
+import com.dobby.gateway.AlertGateway
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.Logger
@@ -25,7 +25,7 @@ typealias ExceptionResponseEntity = ResponseEntity<ExceptionResponse>
 class WebExceptionHandler(
     private val alertGateway: AlertGateway,
     private val environment: Environment,
-    private val responseFactory: ExceptionResponseFactory,
+    private val responseFactory: ExceptionResponseFactory
 ) {
     private val log: Logger = LoggerFactory.getLogger(WebExceptionHandler::class.java)
 

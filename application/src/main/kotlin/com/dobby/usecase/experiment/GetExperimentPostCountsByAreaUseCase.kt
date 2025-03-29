@@ -1,11 +1,11 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
-import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ExperimentPostStats
+import com.dobby.usecase.UseCase
 
 class GetExperimentPostCountsByAreaUseCase(
     private val experimentPostGateway: ExperimentPostGateway

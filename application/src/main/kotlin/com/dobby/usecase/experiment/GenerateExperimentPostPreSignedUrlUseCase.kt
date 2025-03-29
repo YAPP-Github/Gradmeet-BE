@@ -1,11 +1,11 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.usecase.UseCase
 import com.dobby.gateway.S3Gateway
+import com.dobby.usecase.UseCase
 
 class GenerateExperimentPostPreSignedUrlUseCase(
     private val s3Gateway: S3Gateway
-): UseCase<GenerateExperimentPostPreSignedUrlUseCase.Input, GenerateExperimentPostPreSignedUrlUseCase.Output> {
+) : UseCase<GenerateExperimentPostPreSignedUrlUseCase.Input, GenerateExperimentPostPreSignedUrlUseCase.Output> {
     data class Input(
         val fileName: String
     )

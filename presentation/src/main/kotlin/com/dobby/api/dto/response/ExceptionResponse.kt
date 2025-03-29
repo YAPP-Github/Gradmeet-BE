@@ -11,5 +11,5 @@ data class ExceptionResponse(
     val message: String,
 
     @Schema(description = "관련 데이터")
-    val data: Any? = null,
+    val data: Any? = null
 )

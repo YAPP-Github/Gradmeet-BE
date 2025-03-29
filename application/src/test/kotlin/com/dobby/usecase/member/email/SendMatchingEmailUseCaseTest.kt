@@ -2,25 +2,25 @@ package com.dobby.usecase.member.email
 
 import com.dobby.EmailTemplateLoader
 import com.dobby.enums.MatchType
-import com.dobby.model.experiment.ApplyMethod
-import com.dobby.model.experiment.TargetGroup
-import com.dobby.model.member.Member
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
-import com.dobby.gateway.UrlGeneratorGateway
-import com.dobby.gateway.email.EmailGateway
-import com.dobby.gateway.member.MemberConsentGateway
-import com.dobby.gateway.member.MemberGateway
-import com.dobby.model.experiment.ExperimentPost
 import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.member.GenderType
 import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
 import com.dobby.exception.EmailDomainNotFoundException
+import com.dobby.gateway.UrlGeneratorGateway
+import com.dobby.gateway.email.EmailGateway
+import com.dobby.gateway.member.MemberConsentGateway
+import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.experiment.ApplyMethod
+import com.dobby.model.experiment.ExperimentPost
+import com.dobby.model.experiment.TargetGroup
+import com.dobby.model.member.Member
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -95,11 +95,12 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
 
             coEvery { emailGateway.sendEmail(any(), any(), any(), true) } just Runs
 
-            then("이메일 전송이 성공해야 한다")  {
+            then("이메일 전송이 성공해야 한다") {
                 runTest {
                     val output = sendMatchingEmailUseCase.execute(input)
                     output.isSuccess shouldBe true
-                    coVerify(exactly = 1) { emailGateway.sendEmail(contactEmail, any(), any(), true)
+                    coVerify(exactly = 1) {
+                        emailGateway.sendEmail(contactEmail, any(), any(), true)
                     }
                 }
             }

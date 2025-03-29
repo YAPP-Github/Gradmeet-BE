@@ -1,16 +1,16 @@
 package com.dobby.external.gateway.member
 
 import com.dobby.enums.member.MemberStatus
-import com.dobby.model.member.Member
 import com.dobby.enums.member.RoleType
 import com.dobby.gateway.member.MemberGateway
+import com.dobby.model.member.Member
 import com.dobby.persistence.entity.member.MemberEntity
 import com.dobby.persistence.repository.MemberRepository
 import org.springframework.stereotype.Component
 
 @Component
 class MemberGatewayImpl(
-    private val memberRepository: MemberRepository,
+    private val memberRepository: MemberRepository
 ) : MemberGateway {
     override fun getById(memberId: String): Member {
         return memberRepository
@@ -37,7 +37,7 @@ class MemberGatewayImpl(
     }
 
     override fun save(savedMember: Member): Member {
-        val savedEntity= memberRepository
+        val savedEntity = memberRepository
             .save(MemberEntity.fromDomain(savedMember))
         return savedEntity.toDomain()
     }

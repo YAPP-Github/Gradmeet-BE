@@ -1,18 +1,18 @@
 package com.dobby.persistence.entity.member
 
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.member.GenderType
 import com.dobby.model.member.Participant
 import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
 @Table(name = "participant")
-class ParticipantEntity (
+class ParticipantEntity(
     @Id
-    @Column(name= "participant_id", columnDefinition = "CHAR(13)")
+    @Column(name = "participant_id", columnDefinition = "CHAR(13)")
     val id: String,
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
@@ -24,7 +24,7 @@ class ParticipantEntity (
     val gender: GenderType,
 
     @Column(name = "birth_date", nullable = false)
-    val birthDate : LocalDate,
+    val birthDate: LocalDate,
 
     @Embedded
     @AttributeOverrides(
@@ -42,7 +42,7 @@ class ParticipantEntity (
 
     @Column(name = "match_type", nullable = true)
     @Enumerated(EnumType.STRING)
-    var matchType: MatchType?,
+    var matchType: MatchType?
 ) {
 
     fun toDomain() = Participant(

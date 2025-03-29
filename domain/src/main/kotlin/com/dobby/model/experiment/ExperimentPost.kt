@@ -1,12 +1,12 @@
 package com.dobby.model.experiment
 
-import com.dobby.util.IdGenerator
-import com.dobby.model.member.Member
 import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
+import com.dobby.enums.experiment.TimeSlot
 import com.dobby.exception.*
+import com.dobby.model.member.Member
+import com.dobby.util.IdGenerator
 import com.dobby.util.TimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -36,7 +36,6 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
-
 
     fun incrementViews() {
         this.views += 1
@@ -77,7 +76,7 @@ data class ExperimentPost(
 
         validate(title, reward, content, leadResearcher, matchType, place, region, area, count, newImages)
 
-        val updatedImages = if(currentImages == newImages) {
+        val updatedImages = if (currentImages == newImages) {
             this.images
         } else {
             newImages.map { imageUrl ->
@@ -92,13 +91,13 @@ data class ExperimentPost(
         return this.copy(
             targetGroup = targetGroup?.let { this.targetGroup.update(it.startAge, it.endAge, it.genderType, it.otherCondition) } ?: this.targetGroup,
             applyMethod = applyMethod?.let { this.applyMethod.update(it.phoneNum, it.formUrl, it.content) } ?: this.applyMethod,
-            title = title?: this.title,
-            reward = reward?: this.reward,
-            startDate = startDate?: this.startDate,
-            endDate = endDate?: this.endDate,
-            content = content?: this.content,
-            count = count?: this.count,
-            leadResearcher = leadResearcher?: this.leadResearcher,
+            title = title ?: this.title,
+            reward = reward ?: this.reward,
+            startDate = startDate ?: this.startDate,
+            endDate = endDate ?: this.endDate,
+            content = content ?: this.content,
+            count = count ?: this.count,
+            leadResearcher = leadResearcher ?: this.leadResearcher,
             detailedAddress = detailedAddress,
             matchType = matchType ?: this.matchType,
             timeRequired = timeRequired ?: this.timeRequired,
@@ -112,14 +111,13 @@ data class ExperimentPost(
     }
 
     fun updateImages(newImages: List<ExperimentImage>) {
-        if(newImages.size > 3) {
+        if (newImages.size > 3) {
             throw ExperimentPostImageSizeException
         }
         images.clear()
         images.addAll(newImages)
         updatedAt = TimeProvider.currentDateTime()
     }
-
 
     companion object {
         fun newExperimentPost(
@@ -142,7 +140,7 @@ data class ExperimentPost(
             detailedAddress: String?,
             alarmAgree: Boolean,
             recruitStatus: Boolean,
-            images: List<ExperimentImage> = listOf(),
+            images: List<ExperimentImage> = listOf()
         ): ExperimentPost {
             validate(title, reward, content, leadResearcher, matchType, place, region, area, count, images = images.map { it.imageUrl })
 

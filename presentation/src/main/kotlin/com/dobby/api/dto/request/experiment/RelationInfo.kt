@@ -2,23 +2,23 @@ package com.dobby.api.dto.request.experiment
 
 import com.dobby.enums.member.GenderType
 
-data class RelationInfo (
+data class RelationInfo(
     val targetGroupInfo: TargetGroupInfo,
     val applyMethodInfo: ApplyMethodInfo,
-    val imageListInfo: ImageListInfo,
+    val imageListInfo: ImageListInfo
 )
 
 data class TargetGroupInfo(
     val startAge: Int?,
     val endAge: Int?,
     val genderType: GenderType,
-    val otherCondition: String?,
+    val otherCondition: String?
 )
 
 data class ApplyMethodInfo(
     val content: String,
     val formUrl: String?,
-    val phoneNum: String?,
+    val phoneNum: String?
 )
 
 data class ImageListInfo(

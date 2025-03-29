@@ -9,11 +9,11 @@ import com.dobby.api.dto.response.experiment.*
 import com.dobby.api.dto.response.member.DefaultResponse
 import com.dobby.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.api.mapper.ExperimentPostMapper
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.member.GenderType
 import com.dobby.service.ExperimentPostService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "실험 공고 API - /v1/experiment-posts")
 @RestController
 @RequestMapping("/v1/experiment-posts")
-class ExperimentPostController (
+class ExperimentPostController(
     private val experimentPostService: ExperimentPostService
-){
+) {
     @PreAuthorize("hasRole('RESEARCHER')")
     @PostMapping
     @Operation(
@@ -34,7 +34,8 @@ class ExperimentPostController (
         description = "연구자가 실험자를 모집하는 공고를 등록합니다."
     )
     fun createExperimentPost(
-        @RequestBody @Valid request: CreateExperimentPostRequest
+        @RequestBody @Valid
+        request: CreateExperimentPostRequest
     ): CreateExperimentPostResponse {
         val input = ExperimentPostMapper.toCreatePostUseCaseInput(request)
         val output = experimentPostService.createNewExperimentPost(input)
@@ -76,8 +77,9 @@ class ExperimentPostController (
         description = "연구자가 본인이 올린 공고 글을 수정합니다."
     )
     fun updateExperimentPost(
-        @RequestBody @Valid request: UpdateExperimentPostRequest
-        , @PathVariable postId: String
+        @RequestBody @Valid
+        request: UpdateExperimentPostRequest,
+        @PathVariable postId: String
     ): UpdateExperimentPostResponse {
         val input = ExperimentPostMapper.toUpdateExperimentPostInput(request, postId)
         val output = experimentPostService.updateExperimentPost(input)
@@ -105,7 +107,8 @@ class ExperimentPostController (
         description = "S3 Presigned Url을 요청합니다."
     )
     fun requestPreSignedUrl(
-        @RequestBody @Valid request: PreSignedUrlRequest
+        @RequestBody @Valid
+        request: PreSignedUrlRequest
     ): PreSignedUrlResponse {
         val input = ExperimentPostMapper.toGeneratePreSignedUrlUseCaseInput(request)
         val output = experimentPostService.generatePreSignedUrl(input)
@@ -154,7 +157,7 @@ class ExperimentPostController (
 
     @GetMapping("/search")
     @Operation(
-        summary = "공고 전체 조회 API - 필터링 + 페이지네이션 적용" ,
+        summary = "공고 전체 조회 API - 필터링 + 페이지네이션 적용",
         description = "사용자가 필터링한 조건에 맞는 공고 목록들을 조회합니다"
     )
     fun getExperimentPosts(

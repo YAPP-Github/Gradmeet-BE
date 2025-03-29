@@ -1,10 +1,10 @@
 package com.dobby.usecase.member.email
 
+import com.dobby.enums.VerificationStatus
 import com.dobby.exception.CodeNotCorrectException
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.VerificationGateway
 import com.dobby.model.Verification
-import com.dobby.enums.VerificationStatus
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -55,6 +55,3 @@ class VerifyEmailUseCaseTest : BehaviorSpec({
         }
     }
 })
-
-
-

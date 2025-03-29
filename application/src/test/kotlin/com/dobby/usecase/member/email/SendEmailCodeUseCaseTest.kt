@@ -1,14 +1,14 @@
 package com.dobby.usecase.member.email
 
 import com.dobby.EmailTemplateLoader
-import com.dobby.util.IdGenerator
 import com.dobby.enums.VerificationStatus
+import com.dobby.exception.*
 import com.dobby.gateway.CacheGateway
 import com.dobby.gateway.email.EmailGateway
 import com.dobby.gateway.email.VerificationGateway
 import com.dobby.gateway.member.ResearcherGateway
-import com.dobby.exception.*
 import com.dobby.util.EmailUtils
+import com.dobby.util.IdGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.*
@@ -107,5 +107,3 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         }
     }
 })
-
-
