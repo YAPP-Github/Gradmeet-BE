@@ -1,0 +1,22 @@
+name: ktlint-code-quality-check
+
+on:
+    pull_request:
+        branches:
+            - dev
+
+jobs:
+    ktlint:
+        name: Check Code Quality
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Clone repo
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 1
+            - name: ktlint
+              uses: ScaCap/action-ktlint@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  reporter: github-pr-check
