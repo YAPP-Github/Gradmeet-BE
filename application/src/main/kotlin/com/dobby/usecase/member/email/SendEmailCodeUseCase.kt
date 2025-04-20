@@ -31,7 +31,8 @@ class SendEmailCodeUseCase(
     )
     data class Output(
         val isSuccess: Boolean,
-        val message: String
+        val message: String,
+        val requestCount: Int,
     )
     override fun execute(input: Input): Output {
         validateEmail(input.univEmail)
@@ -52,7 +53,8 @@ class SendEmailCodeUseCase(
 
         return Output(
             isSuccess = true,
-            message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요."
+            message = "학교 이메일로 코드가 전송되었습니다. 10분 이내로 인증을 완료해주세요.",
+            requestCount = cacheGateway.get(requestCountKey)?.toIntOrNull() ?: 0,
         )
     }
 
