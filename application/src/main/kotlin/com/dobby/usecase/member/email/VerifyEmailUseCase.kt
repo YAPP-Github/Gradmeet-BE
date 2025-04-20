@@ -43,6 +43,7 @@ class VerifyEmailUseCase(
         verificationGateway.save(updatedVerification)
 
         cacheGateway.evict("verification:${input.univEmail}")
+        cacheGateway.evict("request_count:${input.univEmail}")
 
         return Output(
             isSuccess = true,
