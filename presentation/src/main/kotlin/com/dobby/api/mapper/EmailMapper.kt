@@ -19,7 +19,7 @@ object EmailMapper {
         return EmailSendResponse(
             isSuccess = output.isSuccess,
             message = output.message,
-            requestCount = output.requestCount
+            requestCount = output.requestCount,
         )
     }
 
