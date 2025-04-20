@@ -7,5 +7,8 @@ data class EmailSendResponse(
     val isSuccess: Boolean,
 
     @Schema(description = "반환 성공 메시지 입니다.")
-    val message: String
+    val message: String,
+
+    @Schema(description = "하루 이메일 전송 코드 요청 횟수 입니다.")
+    val requestCount: Int
 )
