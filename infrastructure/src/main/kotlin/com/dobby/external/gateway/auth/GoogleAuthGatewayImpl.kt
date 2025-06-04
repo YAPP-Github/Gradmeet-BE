@@ -15,10 +15,10 @@ class GoogleAuthGatewayImpl(
     private val googleUserInfoFeignClient: GoogleUserInfoFeginClient
 ) : GoogleAuthGateway {
 
-    override fun getAccessToken(code: String): GoogleToken {
+    override fun getAccessToken(code: String, redirectUri: String): GoogleToken {
         return googleAuthFeignClient.getAccessToken(
             clientId = googleAuthProperties.clientId,
-            redirectUri = googleAuthProperties.redirectUri,
+            redirectUri = redirectUri,
             code = code,
             clientSecret = googleAuthProperties.clientSecret,
             grantType = googleAuthProperties.grantType
