@@ -28,7 +28,8 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
     )
 
     given("Google OAuth 요청이 들어왔을 때") {
-        val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code", role = RoleType.PARTICIPANT)
+        val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code", role = RoleType.PARTICIPANT,
+            redirectUri = "http://localhost:8080/auth/google/callback")
         val mockMember = Member(
             id = "1",
             oauthEmail = "test@example.com",
@@ -44,7 +45,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
 
         val mockEmptyMember = null
         val mockGoogleTokenResponse = GoogleToken("mock-access-token")
-        every { googleAuthGateway.getAccessToken(any()) } returns mockGoogleTokenResponse
+        every { googleAuthGateway.getAccessToken(any(), any()) } returns mockGoogleTokenResponse
         every { googleAuthGateway.getUserInfo("mock-access-token") } returns mockk {
             every { email } returns "test@example.com"
         }
