@@ -17,7 +17,7 @@ object AuthMapper {
         return FetchGoogleUserInfoUseCase.Input(
             authorizationCode = request.authorizationCode,
             role = role,
-            redirectUri = request.redirectUri
+            redirectUri = request.redirectUri,
         )
     }
 

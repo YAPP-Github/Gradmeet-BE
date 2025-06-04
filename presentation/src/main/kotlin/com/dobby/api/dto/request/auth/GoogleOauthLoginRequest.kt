@@ -7,5 +7,5 @@ data class GoogleOauthLoginRequest(
     val authorizationCode: String,
 
     @NotBlank(message = "redirectUri는 공백일 수 없습니다.")
-    val redirectUri: String
+    val redirectUri: String,
 )

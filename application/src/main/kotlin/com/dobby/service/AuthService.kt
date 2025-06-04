@@ -15,7 +15,7 @@ class AuthService(
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
     private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
     private val generateTestTokenUseCase: GenerateTestTokenUseCase,
-    private val redirectUriValidator: RedirectUriValidator
+    private val redirectUriValidator: RedirectUriValidator,
 ) {
     fun getGoogleUserInfo(input: FetchGoogleUserInfoUseCase.Input): FetchGoogleUserInfoUseCase.Output {
         validateGoogleRedirectUri(input.redirectUri)
