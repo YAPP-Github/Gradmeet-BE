@@ -87,3 +87,8 @@ cors:
 
 swagger:
   server-url: http://localhost:8080
+
+oauth:
+  google:
+    redirectUris:
+      - "http://localhost:8080/oauth2/callback/google"

@@ -1,11 +1,11 @@
 package com.dobby.service
 
+import com.dobby.auth.RedirectUriValidator
 import com.dobby.exception.InvalidRedirectUriException
 import com.dobby.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.usecase.auth.GenerateTestTokenUseCase
 import com.dobby.usecase.auth.GenerateTokenWithRefreshTokenUseCase
-import com.dobby.validator.RedirectUriValidator
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

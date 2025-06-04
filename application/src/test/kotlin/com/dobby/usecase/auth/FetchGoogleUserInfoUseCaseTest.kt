@@ -28,8 +28,11 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
     )
 
     given("Google OAuth 요청이 들어왔을 때") {
-        val input = FetchGoogleUserInfoUseCase.Input(authorizationCode = "valid-auth-code", role = RoleType.PARTICIPANT,
-            redirectUri = "http://localhost:8080/auth/google/callback")
+        val input = FetchGoogleUserInfoUseCase.Input(
+            authorizationCode = "valid-auth-code",
+            role = RoleType.PARTICIPANT,
+            redirectUri = "http://localhost:8080/auth/google/callback"
+        )
         val mockMember = Member(
             id = "1",
             oauthEmail = "test@example.com",
