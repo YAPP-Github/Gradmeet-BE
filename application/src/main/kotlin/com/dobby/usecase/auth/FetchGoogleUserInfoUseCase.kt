@@ -18,7 +18,7 @@ class FetchGoogleUserInfoUseCase(
     data class Input(
         val authorizationCode: String,
         val role: RoleType,
-        val redirectUri: String,
+        val redirectUri: String
     )
 
     data class Output(

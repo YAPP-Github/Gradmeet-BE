@@ -29,7 +29,6 @@ data object AuthenticationTokenNotValidException : ClientException("AU0002", "Au
 data object AuthenticationTokenExpiredException : ClientException("AU0003", "Authentication token has expired.")
 data object InvalidTokenTypeException : ClientException("AU0004", "Invalid token type")
 data object InvalidTokenValueException : ClientException("AU0005", "Invalid token value")
-
 data object InvalidRedirectUriException : ClientException("AU0006", "Invalid redirect URI")
 
 /**

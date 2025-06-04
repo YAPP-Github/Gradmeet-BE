@@ -31,7 +31,7 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         val input = FetchGoogleUserInfoUseCase.Input(
             authorizationCode = "valid-auth-code",
             role = RoleType.PARTICIPANT,
-            redirectUri = "http://localhost:8080/auth/google/callback",
+            redirectUri = "http://localhost:8080/auth/google/callback"
         )
         val mockMember = Member(
             id = "1",
