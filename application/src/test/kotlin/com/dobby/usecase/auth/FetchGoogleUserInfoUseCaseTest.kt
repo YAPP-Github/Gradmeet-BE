@@ -72,7 +72,12 @@ class FetchGoogleUserInfoUseCaseTest : BehaviorSpec({
         }
 
         // 테스트 2: 등록된 멤버가 없는 경우
-        every { memberGateway.findByOauthEmailAndStatus("test@example.com", MemberStatus.ACTIVE) } returns mockEmptyMember
+        every {
+            memberGateway.findByOauthEmailAndStatus(
+                "test@example.com",
+                MemberStatus.ACTIVE
+            )
+        } returns mockEmptyMember
 
         `when`("등록되지 않은 유저가 있는 경우") {
             val result: FetchGoogleUserInfoUseCase.Output = fetchGoogleUserInfoUseCase.execute(input)

@@ -6,7 +6,5 @@ import org.springframework.stereotype.Component
 class RedirectUriValidator(
     private val properties: GoogleRedirectUriProperties
 ) {
-    fun isValidGoogleRedirectUri(uri: String): Boolean {
-        return properties.redirectUris.contains(uri)
-    }
+    fun isValidGoogleRedirectUri(uri: String): Boolean = properties.redirectUris.contains(uri)
 }
