@@ -44,12 +44,12 @@ class GetExperimentPostCountsByAreaUseCase(
     }
 
     private fun getAreaCounts(region: Region, regionData: List<ExperimentPostStats>): List<PostCountsByArea> {
+        val subAreas = Area.values().filter {
+            it.region == region && !it.displayName.endsWith("_ALL")
+        }
         return region.getAreas().map { area ->
             val count = if (area.displayName.endsWith("_ALL")) {
                 // "_ALL"이면 같은 region의 하위 area를 합산
-                val subAreas = Area.values().filter {
-                    it.region == region && !it.displayName.endsWith("_ALL")
-                }
                 subAreas.sumOf { subArea -> findAreaCount(regionData, subArea) }
             } else {
                 findAreaCount(regionData, area)
