@@ -20,8 +20,8 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
         val region = Region.fromDisplayName(regionName)
 
         val regionData = listOf(
-            ExperimentPostStats(regionName = regionName, areaName = "SEOUL_ALL", count = 5L),
-            ExperimentPostStats(regionName = regionName, areaName = "GEUMCHEONGU", count = 10L)
+            ExperimentPostStats(regionName = regionName, areaName = "GEUMCHEONGU", count = 10L),
+            ExperimentPostStats(regionName = regionName, areaName = "GANGNAMGU", count = 5L)
         )
 
         every { experimentPostGateway.countExperimentPostsByRegion(region) } returns 15
@@ -37,10 +37,9 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
 
             then("지역별 공고 개수가 반환된다") {
                 result.area.size shouldBe 26
-                result.area[0].name shouldBe Area.SEOUL_ALL.displayName
-                result.area[0].count shouldBe 5
-                result.area[1].name shouldBe Area.GEUMCHEONGU.displayName
-                result.area[1].count shouldBe 10
+                result.area.find { it.name == Area.SEOUL_ALL.displayName }?.count shouldBe 15
+                result.area.find { it.name == Area.GEUMCHEONGU.displayName }?.count shouldBe 10
+                result.area.find { it.name == Area.GANGNAMGU.displayName }?.count shouldBe 5
             }
         }
 
@@ -57,10 +56,9 @@ class GetExperimentPostCountsByAreaUseCaseTest : BehaviorSpec({
 
             then("지역별 공고 개수가 반환된다") {
                 result.area.size shouldBe 26
-                result.area[0].name shouldBe Area.SEOUL_ALL.displayName
-                result.area[0].count shouldBe 5
-                result.area[1].name shouldBe Area.GEUMCHEONGU.displayName
-                result.area[1].count shouldBe 10
+                result.area.find { it.name == Area.SEOUL_ALL.displayName }?.count shouldBe 15
+                result.area.find { it.name == Area.GEUMCHEONGU.displayName }?.count shouldBe 10
+                result.area.find { it.name == Area.GANGNAMGU.displayName }?.count shouldBe 5
             }
         }
     }

@@ -42,7 +42,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
-            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
+            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.GEUMCHEONGU),
             additionalAddressInfo = Participant.AddressInfo(Region.INCHEON, Area.SEOGU),
             matchType = MatchType.OFFLINE
         )
@@ -98,7 +98,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
                 memberId = memberId,
                 contactEmail = "test@example.com",
                 name = "테스트",
-                basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
+                basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.GEUMCHEONGU),
                 additionalAddressInfo = null,
                 matchType = null,
                 adConsent = true,
@@ -128,7 +128,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
-            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
+            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.GEUMCHEONGU),
             additionalAddressInfo = Participant.AddressInfo(Region.INCHEON, Area.SEOGU),
             matchType = MatchType.OFFLINE
         )
@@ -176,7 +176,7 @@ class UpdateParticipantInfoUseCaseTest : BehaviorSpec({
             ),
             gender = GenderType.MALE,
             birthDate = LocalDate.of(1998, 5, 10),
-            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.SEOUL_ALL),
+            basicAddressInfo = Participant.AddressInfo(Region.SEOUL, Area.GEUMCHEONGU),
             additionalAddressInfo = Participant.AddressInfo(Region.INCHEON, Area.SEOGU),
             matchType = MatchType.OFFLINE
         )

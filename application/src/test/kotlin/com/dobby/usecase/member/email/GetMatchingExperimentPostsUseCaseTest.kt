@@ -78,7 +78,7 @@ class GetMatchingExperimentPostsUseCaseTest : BehaviorSpec({
                     leadResearcher = "야뿌 랩실 서버 25기 신수정",
                     place = "이화여자대학교",
                     region = Region.SEOUL,
-                    area = Area.SEOUL_ALL,
+                    area = Area.GEUMCHEONGU,
                     detailedAddress = "ECC B123호",
                     reward = "얍 지각면제권 100장",
                     alarmAgree = true,
