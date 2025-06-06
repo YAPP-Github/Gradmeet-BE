@@ -18,7 +18,8 @@ object EmailMapper {
     fun toEmailSendResponse(output: SendEmailCodeUseCase.Output): EmailSendResponse {
         return EmailSendResponse(
             isSuccess = output.isSuccess,
-            message = output.message
+            message = output.message,
+            requestCount = output.requestCount
         )
     }
 
