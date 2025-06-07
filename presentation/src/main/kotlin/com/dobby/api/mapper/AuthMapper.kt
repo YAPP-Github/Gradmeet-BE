@@ -16,7 +16,8 @@ object AuthMapper {
     fun toGoogleOauthLoginInput(request: GoogleOauthLoginRequest, role: RoleType): FetchGoogleUserInfoUseCase.Input {
         return FetchGoogleUserInfoUseCase.Input(
             authorizationCode = request.authorizationCode,
-            role = role
+            role = role,
+            redirectUri = request.redirectUri
         )
     }
 
