@@ -59,8 +59,3 @@ aws:
 
 discord:
   webhook-url: test
-
-oauth:
-  google:
-    redirectUris:
-      - "http://localhost:8080/oauth2/callback/google"

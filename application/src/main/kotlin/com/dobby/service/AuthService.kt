@@ -1,7 +1,5 @@
 package com.dobby.service
 
-import com.dobby.auth.RedirectUriValidator
-import com.dobby.exception.InvalidRedirectUriException
 import com.dobby.usecase.auth.FetchGoogleUserInfoUseCase
 import com.dobby.usecase.auth.FetchNaverUserInfoUseCase
 import com.dobby.usecase.auth.GenerateTestTokenUseCase
@@ -14,18 +12,10 @@ class AuthService(
     private val fetchGoogleUserInfoUseCase: FetchGoogleUserInfoUseCase,
     private val fetchNaverUserInfoUseCase: FetchNaverUserInfoUseCase,
     private val generateTokenWithRefreshTokenUseCase: GenerateTokenWithRefreshTokenUseCase,
-    private val generateTestTokenUseCase: GenerateTestTokenUseCase,
-    private val redirectUriValidator: RedirectUriValidator
+    private val generateTestTokenUseCase: GenerateTestTokenUseCase
 ) {
     fun getGoogleUserInfo(input: FetchGoogleUserInfoUseCase.Input): FetchGoogleUserInfoUseCase.Output {
-        validateGoogleRedirectUri(input.redirectUri)
         return fetchGoogleUserInfoUseCase.execute(input)
-    }
-
-    private fun validateGoogleRedirectUri(uri: String) {
-        if (!redirectUriValidator.isValidGoogleRedirectUri(uri)) {
-            throw InvalidRedirectUriException
-        }
     }
 
     fun getNaverUserInfo(input: FetchNaverUserInfoUseCase.Input): FetchNaverUserInfoUseCase.Output {

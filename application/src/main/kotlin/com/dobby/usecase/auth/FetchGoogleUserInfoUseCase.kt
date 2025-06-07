@@ -17,8 +17,7 @@ class FetchGoogleUserInfoUseCase(
 
     data class Input(
         val authorizationCode: String,
-        val role: RoleType,
-        val redirectUri: String
+        val role: RoleType
     )
 
     data class Output(
@@ -34,7 +33,7 @@ class FetchGoogleUserInfoUseCase(
     )
 
     override fun execute(input: Input): Output {
-        val oauthToken = googleAuthGateway.getAccessToken(input.authorizationCode, input.redirectUri).accessToken
+        val oauthToken = googleAuthGateway.getAccessToken(input.authorizationCode).accessToken
         val userInfo = googleAuthGateway.getUserInfo(oauthToken)
         val email = userInfo.email
         val member = email.let { memberGateway.findByOauthEmailAndStatus(email, MemberStatus.ACTIVE) }
