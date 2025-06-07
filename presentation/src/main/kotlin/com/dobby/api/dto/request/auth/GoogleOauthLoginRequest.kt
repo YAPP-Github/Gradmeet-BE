@@ -4,8 +4,5 @@ import jakarta.validation.constraints.NotBlank
 
 data class GoogleOauthLoginRequest(
     @NotBlank(message = "authorizationCode는 공백일 수 없습니다.")
-    val authorizationCode: String,
-
-    @NotBlank(message = "redirectUri는 공백일 수 없습니다.")
-    val redirectUri: String
+    val authorizationCode: String
 )
