@@ -167,7 +167,7 @@ class MemberController(
         description = "학교명 자동완성 API입니다."
     )
     fun autoComplete(
-        request: SearchAutoCompleteRequest
+        @Valid request: SearchAutoCompleteRequest
     ): AutoCompleteResponse {
         val input = MemberMapper.toSearchUniversityAutoCompleteUseCaseInput(request)
         val output = memberService.getAutoCompleteListForUniversities(input)
