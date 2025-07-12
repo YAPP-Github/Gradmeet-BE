@@ -22,8 +22,14 @@ import com.dobby.util.EmailUtils
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import java.time.LocalDate
@@ -115,7 +121,6 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 }
             }
         }
-
 
         `when`("유효하지 않은 이메일 도메인이 입력되면") {
             val invalidEmail = "invalid-email@unknown.com"

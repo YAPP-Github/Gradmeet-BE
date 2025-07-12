@@ -16,7 +16,11 @@ import com.dobby.util.IdGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import kotlinx.coroutines.test.runTest
 
 class SendEmailCodeUseCaseTest : BehaviorSpec({
@@ -72,7 +76,6 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         every { researcherGateway.existsByUnivEmail(overseasEmail) } returns false
         every { verificationGateway.findByUnivEmailAndStatus(overseasEmail, VerificationStatus.VERIFIED) } returns null
         every { cacheGateway.get("request_count:$overseasEmail") } returns null
-
 
         `when`("이메일 인증 코드 전송을 실행하면") {
             then("예외 없이 정상 동작해야 한다") {
