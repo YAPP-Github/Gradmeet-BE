@@ -26,11 +26,11 @@ object EmailUtils {
 
     fun isUnivMail(email: String): Boolean {
         val univDomainExcpetions = setOf(
-            "ewhain.net",
+            "ewhain.net"
         )
         return email.endsWith(".ac.kr") ||
             email.endsWith(".edu") ||
-            email.endsWith("edu.uk") ||
+            email.endsWith("ac.uk") ||
             email.endsWith(".edu.au") ||
             univDomainExcpetions.any { email.endsWith(it) }
     }
