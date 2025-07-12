@@ -319,9 +319,10 @@ enum class University(
                 if (ch in '가'..'힣') {
                     val index = (ch.code - '가'.code) / 588
                     initialConsonants[index]
-                } else null
+                } else {
+                    null
+                }
             }.joinToString("")
         }
     }
-
 }
