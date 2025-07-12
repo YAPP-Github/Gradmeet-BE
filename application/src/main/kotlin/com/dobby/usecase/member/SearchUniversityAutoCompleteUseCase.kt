@@ -14,7 +14,6 @@ class SearchUniversityAutoCompleteUseCase(
         val output: List<University>
     )
 
-    @Override
     override fun execute(input: Input): Output {
         return Output(
             output = University.match(input.query)
