@@ -15,10 +15,9 @@ import com.dobby.util.EmailUtils
 import com.dobby.util.IdGenerator
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
+import io.kotest.matchers.shouldBe
+import io.mockk.*
+import kotlinx.coroutines.test.runTest
 
 class SendEmailCodeUseCaseTest : BehaviorSpec({
 
@@ -65,6 +64,30 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
             }
         }
     }
+
+    given("해외 대학 이메일 도메인이 주어졌을 때") {
+        val overseasEmail = "dobby-socks@griffithuni.edu.au"
+        every { EmailUtils.isDomainExists(overseasEmail) } returns true
+        every { EmailUtils.isUnivMail(overseasEmail) } returns true
+        every { researcherGateway.existsByUnivEmail(overseasEmail) } returns false
+        every { verificationGateway.findByUnivEmailAndStatus(overseasEmail, VerificationStatus.VERIFIED) } returns null
+        every { cacheGateway.get("request_count:$overseasEmail") } returns null 
+
+
+        `when`("이메일 인증 코드 전송을 실행하면") {
+            then("예외 없이 정상 동작해야 한다") {
+                runTest {
+                    val input = SendEmailCodeUseCase.Input(overseasEmail)
+                    val output = sendEmailCodeUseCase.execute(input)
+                    output.isSuccess shouldBe true
+                    coVerify(exactly = 1) {
+                        emailGateway.sendEmail(overseasEmail, any(), any(), true)
+                    }
+                }
+            }
+        }
+    }
+
 
     given("이미 가입된 대학 이메일이 주어졌을 때") {
         val duplicateEmail = "christer10@ewhain.net"
