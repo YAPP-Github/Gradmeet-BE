@@ -18,14 +18,12 @@ import com.dobby.model.experiment.ApplyMethod
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.model.experiment.TargetGroup
 import com.dobby.model.member.Member
+import com.dobby.util.EmailUtils
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.just
-import io.mockk.mockk
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import java.time.LocalDate
@@ -39,6 +37,14 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
     val memberConsentGateway = mockk<MemberConsentGateway>(relaxed = true)
     val emailTemplateLoader = mockk<EmailTemplateLoader>(relaxed = true)
     val sendMatchingEmailUseCase = SendMatchingEmailUseCase(emailGateway, urlGeneratorGateway, memberGateway, memberConsentGateway, emailTemplateLoader)
+
+    beforeSpec {
+        mockkObject(EmailUtils)
+    }
+
+    afterSpec {
+        unmockkObject(EmailUtils)
+    }
 
     given("이메일 매칭 발송을 실행할 때") {
 
@@ -110,6 +116,7 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
             }
         }
 
+
         `when`("유효하지 않은 이메일 도메인이 입력되면") {
             val invalidEmail = "invalid-email@unknown.com"
             val validMember = Member(
@@ -164,6 +171,7 @@ class SendMatchingEmailUseCaseTest : BehaviorSpec({
                 )
             )
             val input = SendMatchingEmailUseCase.Input(invalidEmail, experimentPosts, LocalDateTime.now())
+            every { EmailUtils.isDomainExists(invalidEmail) } returns false
 
             then("EmailDomainNotFoundException 예외가 발생해야 한다") {
                 runTest {

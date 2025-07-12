@@ -71,7 +71,7 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
         every { EmailUtils.isUnivMail(overseasEmail) } returns true
         every { researcherGateway.existsByUnivEmail(overseasEmail) } returns false
         every { verificationGateway.findByUnivEmailAndStatus(overseasEmail, VerificationStatus.VERIFIED) } returns null
-        every { cacheGateway.get("request_count:$overseasEmail") } returns null 
+        every { cacheGateway.get("request_count:$overseasEmail") } returns null
 
 
         `when`("이메일 인증 코드 전송을 실행하면") {
@@ -87,7 +87,6 @@ class SendEmailCodeUseCaseTest : BehaviorSpec({
             }
         }
     }
-
 
     given("이미 가입된 대학 이메일이 주어졌을 때") {
         val duplicateEmail = "christer10@ewhain.net"
