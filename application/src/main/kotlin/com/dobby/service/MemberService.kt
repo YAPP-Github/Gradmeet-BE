@@ -5,17 +5,7 @@ import com.dobby.enums.member.RoleType
 import com.dobby.exception.MemberNotFoundException
 import com.dobby.exception.SignupOauthEmailDuplicateException
 import com.dobby.gateway.member.MemberGateway
-import com.dobby.usecase.member.CreateParticipantUseCase
-import com.dobby.usecase.member.CreateResearcherUseCase
-import com.dobby.usecase.member.DeleteParticipantUseCase
-import com.dobby.usecase.member.DeleteResearcherUseCase
-import com.dobby.usecase.member.GetParticipantInfoUseCase
-import com.dobby.usecase.member.GetResearcherInfoUseCase
-import com.dobby.usecase.member.UpdateParticipantInfoUseCase
-import com.dobby.usecase.member.UpdateResearcherInfoUseCase
-import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
-import com.dobby.usecase.member.ValidateContactEmailForUpdateUseCase
-import com.dobby.usecase.member.VerifyResearcherEmailUseCase
+import com.dobby.usecase.member.*
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -32,7 +22,8 @@ class MemberService(
     private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase,
     private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase,
     private val deleteParticipantUseCase: DeleteParticipantUseCase,
-    private val deleteResearcherUseCase: DeleteResearcherUseCase
+    private val deleteResearcherUseCase: DeleteResearcherUseCase,
+    private val searchUniversityAutoCompleteUseCase: SearchUniversityAutoCompleteUseCase
 ) {
     @Transactional
     fun signUpParticipant(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -79,6 +70,10 @@ class MemberService(
         return validateContactEmailForUpdateUseCase.execute(input)
     }
 
+    fun getAutoCompleteListForUniversities(input: SearchUniversityAutoCompleteUseCase.Input): SearchUniversityAutoCompleteUseCase.Output {
+        return searchUniversityAutoCompleteUseCase.execute(input)
+    }
+
     @Transactional
     fun deleteMember(input: Any): Any {
         return when (input) {
@@ -92,4 +87,5 @@ class MemberService(
         return memberGateway.findRoleByIdAndDeletedAtIsNull(memberId)
             ?: throw MemberNotFoundException
     }
+
 }
