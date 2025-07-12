@@ -1,14 +1,7 @@
 package com.dobby.api.controller
 
-import com.dobby.api.dto.request.member.DeleteMemberRequest
-import com.dobby.api.dto.request.member.ParticipantSignupRequest
-import com.dobby.api.dto.request.member.ResearcherSignupRequest
-import com.dobby.api.dto.request.member.UpdateParticipantInfoRequest
-import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
-import com.dobby.api.dto.response.member.DefaultResponse
-import com.dobby.api.dto.response.member.ParticipantInfoResponse
-import com.dobby.api.dto.response.member.ResearcherInfoResponse
-import com.dobby.api.dto.response.member.SignUpResponse
+import com.dobby.api.dto.request.member.*
+import com.dobby.api.dto.response.member.*
 import com.dobby.api.mapper.MemberMapper
 import com.dobby.service.MemberService
 import com.dobby.util.getCurrentMemberId
@@ -157,5 +150,18 @@ class MemberController(
         val input = MemberMapper.toDeleteMemberUseCaseInput(request, roleType)
         memberService.deleteMember(input)
         return DefaultResponse(true)
+    }
+
+    @GetMapping("/universities/search")
+    @Operation(
+        summary = "학교명 자동완성 API",
+        description = "학교명 자동완성 API입니다."
+    )
+    fun autoComplete(
+        request: SearchAutoCompleteRequest
+    ): AutoCompleteResponse {
+        val input = MemberMapper.toSearchUniversityAutoCompleteUseCaseInput(request)
+        val output = memberService.getAutoCompleteListForUniversities(input)
+        return MemberMapper.toAutoCompleteResponse(output)
     }
 }
