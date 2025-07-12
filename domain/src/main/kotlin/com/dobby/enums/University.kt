@@ -280,11 +280,48 @@ enum class University(
     JEJU_NATIONAL_UNIV_SARA("제주대학교 사라캠퍼스")
     ;
 
+    val initial: String by lazy { extractInitial(displayName) }
+
     companion object {
+        private val suffixes = listOf("대학교", "캠퍼스")
+
+        private fun String.clean(): String {
+            var cleaned = this
+            suffixes.forEach { suffix ->
+                if (cleaned.endsWith(suffix)) {
+                    cleaned = cleaned.removeSuffix(suffix)
+                }
+            }
+            return cleaned
+        }
+
         fun match(keyword: String): List<String> {
-            return entries
-                .filter { it.displayName.contains(keyword, ignoreCase = true) }
-                .map { it.displayName }
+            return entries.filter {
+                val cleaned = it.displayName.clean()
+                when {
+                    keyword.length == 1 -> it.initial.startsWith(keyword)
+                    else -> cleaned.contains(keyword, ignoreCase = true) || it.initial.contains(keyword)
+                }
+            }.map { it.displayName }
+        }
+
+        /**
+         * 초성 검색 기능을 위한 초성 추출 함수
+         */
+        private fun extractInitial(input: String): String {
+            val initialConsonants = listOf(
+                'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ',
+                'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ',
+                'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+            )
+
+            return input.mapNotNull { ch ->
+                if (ch in '가'..'힣') {
+                    val index = (ch.code - '가'.code) / 588
+                    initialConsonants[index]
+                } else null
+            }.joinToString("")
         }
     }
+
 }
