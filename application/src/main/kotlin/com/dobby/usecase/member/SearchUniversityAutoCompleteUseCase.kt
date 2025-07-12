@@ -11,7 +11,7 @@ class SearchUniversityAutoCompleteUseCase(
     )
 
     data class Output(
-        val output: List<University>
+        val output: List<String>
     )
 
     override fun execute(input: Input): Output {

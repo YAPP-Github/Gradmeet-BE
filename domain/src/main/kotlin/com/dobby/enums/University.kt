@@ -281,10 +281,10 @@ enum class University(
     ;
 
     companion object {
-        fun match(keyword: String): List<University> {
-            return entries.filter {
-                it.displayName.contains(keyword, ignoreCase = true)
-            }
+        fun match(keyword: String): List<String> {
+            return entries
+                .filter { it.displayName.contains(keyword, ignoreCase = true) }
+                .map { it.displayName }
         }
     }
 }
