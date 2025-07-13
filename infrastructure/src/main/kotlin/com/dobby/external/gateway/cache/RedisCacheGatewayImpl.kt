@@ -3,6 +3,7 @@ package com.dobby.external.gateway.cache
 import com.dobby.gateway.CacheGateway
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
@@ -15,6 +16,7 @@ class RedisCacheGatewayImpl(
 ) : CacheGateway {
 
     private val objectMapper = jacksonObjectMapper()
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     private val cacheTimeout = 240L
     private val codeTimeout = 10L
@@ -32,8 +34,13 @@ class RedisCacheGatewayImpl(
     }
 
     override fun getAutoComplete(key: String): List<String>? {
-        return get(key)?.let { json ->
-            objectMapper.readValue(json, object : TypeReference<List<String>>() {})
+        return try {
+            get(key)?.let { json ->
+                objectMapper.readValue(json, object : TypeReference<List<String>>() {})
+            }
+        } catch (e: Exception) {
+            logger.warn("Failed to get autoComplete cache for key=$key", e)
+            null
         }
     }
 
@@ -51,9 +58,12 @@ class RedisCacheGatewayImpl(
     }
 
     override fun setAutoComplete(key: String, value: List<String>) {
-        val json = objectMapper.writeValueAsString(value)
-        redisTemplate.opsForValue()
-            .set(getCacheKey(key), json, autoCompleteTimeout, TimeUnit.MINUTES)
+        try {
+            val json = objectMapper.writeValueAsString(value)
+            redisTemplate.opsForValue().set(getCacheKey(key), json, autoCompleteTimeout, TimeUnit.MINUTES)
+        } catch (e: Exception) {
+            logger.warn("Failed to set autoComplete cache for key=$key", e)
+        }
     }
 
     override fun evict(key: String) {
