@@ -37,7 +37,8 @@ class WebSecurityConfig {
             "/v1/scheduler/**",
             "/v1/experiment-posts/counts",
             "/v1/experiment-posts/search",
-            "/v1/experiment-posts/{postId}/apply-method"
+            "/v1/experiment-posts/{postId}/apply-method",
+            "/v1/members/universities/search"
         )
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
@@ -52,7 +53,8 @@ class WebSecurityConfig {
                 "/v1/scheduler/**",
                 "/v1/experiment-posts/counts",
                 "/v1/experiment-posts/search",
-                "/v1/experiment-posts/{postId}/apply-method"
+                "/v1/experiment-posts/{postId}/apply-method",
+                "/v1/members/universities/search"
             ).permitAll()
             it.anyRequest().authenticated()
         }

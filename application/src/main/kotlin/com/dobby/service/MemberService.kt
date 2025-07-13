@@ -11,6 +11,7 @@ import com.dobby.usecase.member.DeleteParticipantUseCase
 import com.dobby.usecase.member.DeleteResearcherUseCase
 import com.dobby.usecase.member.GetParticipantInfoUseCase
 import com.dobby.usecase.member.GetResearcherInfoUseCase
+import com.dobby.usecase.member.SearchUniversityAutoCompleteUseCase
 import com.dobby.usecase.member.UpdateParticipantInfoUseCase
 import com.dobby.usecase.member.UpdateResearcherInfoUseCase
 import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
@@ -32,7 +33,8 @@ class MemberService(
     private val updateParticipantInfoUseCase: UpdateParticipantInfoUseCase,
     private val validateContactEmailForUpdateUseCase: ValidateContactEmailForUpdateUseCase,
     private val deleteParticipantUseCase: DeleteParticipantUseCase,
-    private val deleteResearcherUseCase: DeleteResearcherUseCase
+    private val deleteResearcherUseCase: DeleteResearcherUseCase,
+    private val searchUniversityAutoCompleteUseCase: SearchUniversityAutoCompleteUseCase
 ) {
     @Transactional
     fun signUpParticipant(input: CreateParticipantUseCase.Input): CreateParticipantUseCase.Output {
@@ -77,6 +79,10 @@ class MemberService(
 
     fun validateContactEmailForUpdate(input: ValidateContactEmailForUpdateUseCase.Input): ValidateContactEmailForUpdateUseCase.Output {
         return validateContactEmailForUpdateUseCase.execute(input)
+    }
+
+    fun getAutoCompleteListForUniversities(input: SearchUniversityAutoCompleteUseCase.Input): SearchUniversityAutoCompleteUseCase.Output {
+        return searchUniversityAutoCompleteUseCase.execute(input)
     }
 
     @Transactional
