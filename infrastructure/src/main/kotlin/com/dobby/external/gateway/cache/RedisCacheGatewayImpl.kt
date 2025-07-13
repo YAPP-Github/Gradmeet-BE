@@ -6,7 +6,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.core.env.Environment
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 @Component
@@ -34,7 +33,7 @@ class RedisCacheGatewayImpl(
 
     override fun getAutoComplete(key: String): List<String>? {
         return get(key)?.let { json ->
-            objectMapper.readValue(json, object: TypeReference<List<String>>() {})
+            objectMapper.readValue(json, object : TypeReference<List<String>>() {})
         }
     }
 
