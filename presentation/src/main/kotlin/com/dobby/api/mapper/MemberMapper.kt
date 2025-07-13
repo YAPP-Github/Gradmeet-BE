@@ -3,9 +3,11 @@ package com.dobby.api.mapper
 import com.dobby.api.dto.request.member.DeleteMemberRequest
 import com.dobby.api.dto.request.member.ParticipantSignupRequest
 import com.dobby.api.dto.request.member.ResearcherSignupRequest
+import com.dobby.api.dto.request.member.SearchAutoCompleteRequest
 import com.dobby.api.dto.request.member.UpdateParticipantInfoRequest
 import com.dobby.api.dto.request.member.UpdateResearcherInfoRequest
 import com.dobby.api.dto.response.member.AddressInfoResponse
+import com.dobby.api.dto.response.member.AutoCompleteResponse
 import com.dobby.api.dto.response.member.DefaultResponse
 import com.dobby.api.dto.response.member.MemberResponse
 import com.dobby.api.dto.response.member.ParticipantInfoResponse
@@ -21,6 +23,7 @@ import com.dobby.usecase.member.DeleteParticipantUseCase
 import com.dobby.usecase.member.DeleteResearcherUseCase
 import com.dobby.usecase.member.GetParticipantInfoUseCase
 import com.dobby.usecase.member.GetResearcherInfoUseCase
+import com.dobby.usecase.member.SearchUniversityAutoCompleteUseCase
 import com.dobby.usecase.member.UpdateParticipantInfoUseCase
 import com.dobby.usecase.member.UpdateResearcherInfoUseCase
 import com.dobby.usecase.member.ValidateContactEmailForSignUpUseCase
@@ -235,5 +238,17 @@ object MemberMapper {
                 reason = request.reason
             )
         }
+    }
+
+    fun toSearchUniversityAutoCompleteUseCaseInput(request: SearchAutoCompleteRequest): SearchUniversityAutoCompleteUseCase.Input {
+        return SearchUniversityAutoCompleteUseCase.Input(
+            query = request.query
+        )
+    }
+
+    fun toAutoCompleteResponse(output: SearchUniversityAutoCompleteUseCase.Output): AutoCompleteResponse {
+        return AutoCompleteResponse(
+            result = output.output
+        )
     }
 }
