@@ -15,7 +15,7 @@ enum class University(
     MYEONGJI_UNIV("명지대학교"),
     SAMYOOK_UNIV("삼육대학교"),
     SANGMYEONG_UNIV("상명대학교"),
-    SEOGANG_UNV("서강대학교"),
+    SOGANG_UNIV("서강대학교"),
     SEOGYEONG_UNIV("서경대학교"),
     SEOUL_TECH_UNIV("서울과학기술대학교"),
     SEOUL_NATIONAL_UNIV("서울대학교"),
@@ -165,7 +165,6 @@ enum class University(
     DAEGU_CATHOLIC_UNIV("대구가톨릭대학교"),
     DAEGU_UNIV("대구대학교"),
     DAEGU_HANUI_UNIV("대구한의대학교"),
-    YEUNGNAM_UNIV("영남대학교"),
 
     KYUNGPOOK_NATIONAL_UNIV_SANGJU("경북대학교 상주캠퍼스"),
     KYUNGWOON_UNIV("경운대학교"),
@@ -286,13 +285,12 @@ enum class University(
         private val suffixes = listOf("대학교", "캠퍼스")
 
         private fun String.clean(): String {
-            var cleaned = this
-            suffixes.forEach { suffix ->
-                if (cleaned.endsWith(suffix)) {
-                    cleaned = cleaned.removeSuffix(suffix)
+            for (suffix in suffixes) {
+                if (this.endsWith(suffix)) {
+                    return this.removeSuffix(suffix)
                 }
             }
-            return cleaned
+            return this
         }
 
         fun match(keyword: String): List<String> {
