@@ -282,23 +282,12 @@ enum class University(
     val initial: String by lazy { extractInitial(displayName) }
 
     companion object {
-        private val suffixes = listOf("대학교", "캠퍼스")
-
-        private fun String.clean(): String {
-            for (suffix in suffixes) {
-                if (this.endsWith(suffix)) {
-                    return this.removeSuffix(suffix)
-                }
-            }
-            return this
-        }
 
         fun match(keyword: String): List<String> {
             return entries.filter {
-                val cleaned = it.displayName.clean()
                 when {
                     keyword.length == 1 -> it.initial.startsWith(keyword)
-                    else -> cleaned.contains(keyword, ignoreCase = true) || it.initial.contains(keyword)
+                    else -> it.displayName.contains(keyword, ignoreCase = true) || it.initial.contains(keyword)
                 }
             }.map { it.displayName }
         }
