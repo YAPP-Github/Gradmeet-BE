@@ -19,12 +19,13 @@ class ExperimentKeywordExtractionGatewayImpl(
     private val mapper: ExperimentPostKeywordMapper
 ) : ExperimentKeywordExtractionGateway {
 
+    private val objectMapper = jacksonObjectMapper()
+
     private val promptTemplate: PromptTemplate by lazy {
         promptTemplateLoader.loadPrompt("prompts/keyword_extraction_prompt.json")
     }
 
     override fun extractKeywords(text: String): ExperimentPostKeyword {
-        val objectMapper = jacksonObjectMapper()
         val promptJson = objectMapper.writeValueAsString(promptTemplate)
         val prompt = promptJson.replace("{{text}}", text)
 
