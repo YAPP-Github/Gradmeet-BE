@@ -1,8 +1,8 @@
 package com.dobby.external.prompt
 
-import com.dobby.enums.member.GenderType
 import com.dobby.enums.MatchType
 import com.dobby.enums.experiment.TimeSlot
+import com.dobby.enums.member.GenderType
 import com.dobby.model.experiment.keyword.ApplyMethodKeyword
 import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.dobby.model.experiment.keyword.TargetGroupKeyword
@@ -18,7 +18,7 @@ class ExperimentPostKeywordMapper {
                     startAge = targetGroupDto.startAge ?: 0,
                     endAge = targetGroupDto.endAge ?: 0,
                     genderType = targetGroupDto.genderType?.let { genderStr ->
-                        when(genderStr) {
+                        when (genderStr) {
                             "MALE" -> GenderType.MALE
                             "FEMALE" -> GenderType.FEMALE
                             "ALL" -> GenderType.ALL

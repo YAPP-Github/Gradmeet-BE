@@ -1,7 +1,5 @@
 package com.dobby.external.prompt
 
-import com.dobby.enums.MatchType
-import com.dobby.enums.experiment.TimeSlot
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ExperimentPostKeywordDto(
