@@ -20,7 +20,7 @@ class ExperimentKeywordExtractionGatewayImpl(
 ) : ExperimentKeywordExtractionGateway {
 
     private val promptTemplate: PromptTemplate by lazy {
-        promptTemplateLoader.loadPrompt("prompts/experiment_info_extraction_prompt.json")
+        promptTemplateLoader.loadPrompt("prompts/keyword_extraction_prompt.json")
     }
 
     override fun extractKeywords(text: String): ExperimentPostKeyword {
@@ -43,10 +43,23 @@ class ExperimentKeywordExtractionGatewayImpl(
             ?: throw IllegalStateException("OpenAI 응답 없음")
 
         return try {
-            val dto = objectMapper.readValue<ExperimentPostKeywordDto>(content)
+            // 마크다운 코드 블록 제거 및 JSON 정리
+            val cleanedContent = cleanJsonResponse(content)
+            val dto = objectMapper.readValue<ExperimentPostKeywordDto>(cleanedContent)
             mapper.toDomain(dto)
         } catch (e: Exception) {
             throw IllegalStateException("응답 파싱 실패: $content", e)
         }
+    }
+
+    private fun cleanJsonResponse(content: String): String {
+        return content.trim()
+            // 마크다운 코드 블록 제거
+            .replace(Regex("^```json\\s*"), "")
+            .replace(Regex("```\\s*$"), "")
+            // 시작/끝 백틱 제거
+            .replace(Regex("^`+"), "")
+            .replace(Regex("`+$"), "")
+            .trim()
     }
 }
