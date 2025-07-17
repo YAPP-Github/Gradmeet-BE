@@ -3,6 +3,9 @@ package com.dobby.external.prompt
 import com.dobby.enums.MatchType
 import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.member.GenderType
+import com.dobby.external.prompt.dto.ApplyMethodDto
+import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
+import com.dobby.external.prompt.dto.TargetGroupDto
 import com.dobby.model.experiment.keyword.ApplyMethodKeyword
 import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.dobby.model.experiment.keyword.TargetGroupKeyword

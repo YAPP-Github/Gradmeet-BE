@@ -1,4 +1,4 @@
-package com.dobby.external.prompt
+package com.dobby.external.prompt.dto
 
 data class TargetGroupDto(
     val startAge: Int? = null,
