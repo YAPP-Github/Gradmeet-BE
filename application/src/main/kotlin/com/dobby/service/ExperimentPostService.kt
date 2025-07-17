@@ -6,21 +6,7 @@ import com.dobby.exception.ExperimentAreaInCorrectException
 import com.dobby.exception.ExperimentAreaOverflowException
 import com.dobby.exception.InvalidRequestValueException
 import com.dobby.gateway.CacheGateway
-import com.dobby.usecase.experiment.CreateExperimentPostUseCase
-import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
-import com.dobby.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
-import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
-import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
-import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
-import com.dobby.usecase.experiment.GetExperimentPostDetailForUpdateUseCase
-import com.dobby.usecase.experiment.GetExperimentPostDetailUseCase
-import com.dobby.usecase.experiment.GetExperimentPostTotalCountByCustomFilterUseCase
-import com.dobby.usecase.experiment.GetExperimentPostsUseCase
-import com.dobby.usecase.experiment.GetMyExperimentPostTotalCountUseCase
-import com.dobby.usecase.experiment.GetMyExperimentPostsUseCase
-import com.dobby.usecase.experiment.UpdateExperimentPostRecruitStatusUseCase
-import com.dobby.usecase.experiment.UpdateExperimentPostUseCase
-import com.dobby.usecase.experiment.UpdateExpiredExperimentPostUseCase
+import com.dobby.usecase.experiment.*
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -41,6 +27,7 @@ class ExperimentPostService(
     private val getExperimentPostTotalCountByCustomFilterUseCase: GetExperimentPostTotalCountByCustomFilterUseCase,
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
+    private val extractExperimentPostKeywordsUseCase: ExtractExperimentPostKeywordsUseCase,
     private val cacheGateway: CacheGateway
 ) {
     @Transactional
@@ -163,6 +150,10 @@ class ExperimentPostService(
     fun deleteExperimentPost(input: DeleteExperimentPostUseCase.Input) {
         deleteExperimentPostUseCase.execute(input)
         evictExperimentPostCountsCaches()
+    }
+
+    fun extractExperimentPostKeywords(input: ExtractExperimentPostKeywordsUseCase.Input): ExtractExperimentPostKeywordsUseCase.Output {
+        return extractExperimentPostKeywordsUseCase.execute(input)
     }
 
     private fun evictExperimentPostCountsCaches() {

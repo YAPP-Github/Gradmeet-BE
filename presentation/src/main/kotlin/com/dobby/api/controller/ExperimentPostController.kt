@@ -2,15 +2,11 @@ package com.dobby.api.controller
 
 import com.dobby.api.dto.request.PreSignedUrlRequest
 import com.dobby.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.api.dto.request.experiment.ExtractKeywordRequest
 import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.api.dto.response.PaginatedResponse
 import com.dobby.api.dto.response.PreSignedUrlResponse
-import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
-import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
-import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
-import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
-import com.dobby.api.dto.response.experiment.ExperimentPostResponse
-import com.dobby.api.dto.response.experiment.UpdateExperimentPostResponse
+import com.dobby.api.dto.response.experiment.*
 import com.dobby.api.dto.response.member.DefaultResponse
 import com.dobby.api.dto.response.member.MyExperimentPostResponse
 import com.dobby.api.mapper.ExperimentPostMapper
@@ -215,5 +211,20 @@ class ExperimentPostController(
         val totalCount = experimentPostService.getMyExperimentPostsCount(totalCountInput).totalPostCount
         val isLast = totalCount <= count * page
         return ExperimentPostMapper.toGetMyExperimentPostsResponse(posts, page, totalCount, isLast)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @PostMapping("/extract-keywords")
+    @Operation(
+        summary = "실험 공고 키워드 추출 API",
+        description = "실험 공고 텍스트에서 키워드를 추출합니다."
+    )
+    fun extractExperimentPostKeywords(
+        @RequestBody @Valid
+        request: ExtractKeywordRequest
+    ): ExtractKeywordResponse {
+        val input = ExperimentPostMapper.toExtractKeywordUseCaseInput(request)
+        val output = experimentPostService.extractExperimentPostKeywords(input)
+        return ExperimentPostMapper.toExtractKeywordResponse(output)
     }
 }
