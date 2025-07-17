@@ -1,6 +1,6 @@
-package com.dobby.model.experiment.keyword
+package com.dobby.external.prompt
 
-data class ApplyMethodKeyword(
+data class ApplyMethodDto(
     val content: String?,
     val isFormUrl: Boolean,
     val formUrl: String?,
