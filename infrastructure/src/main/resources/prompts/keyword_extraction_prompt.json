@@ -1,0 +1,41 @@
+{
+    "description": "공고 게시글에서 실험 참여 관련 정보를 추출하여 JSON 형태로 반환하세요.",
+    "input": {
+        "text": "{{text}}"
+    },
+    "extract_items": [
+        "진행 방식 (대면 / 비대면 / 대면+비대면 중 선택)",
+        "참여 보상 (주관식)",
+        "실험에 참여하려면 어떻게 하나요? (주관식, URL 및 전화번호 포함 가능)",
+        "참여 대상 나이 (시작 나이 - 끝 나이)",
+        "참여 대상 성별 (남성 / 여성 / 무관)",
+        "참여 대상 기타 조건 (주관식)",
+        "참여 횟수 (숫자)",
+        "소요 시간 (예: 30분, 1시간, 1시간 30분, 등)"
+    ],
+    "output_format": {
+        "targetGroupInfo": {
+            "startAge": "시작 나이 (숫자)",
+            "endAge": "끝 나이 (숫자)",
+            "genderType": "MALE/FEMALE/ALL",
+            "otherCondition": "기타 조건 (문자열)"
+        },
+        "applyMethodInfo": {
+            "content": "참여 방법 설명 (문자열)",
+            "isFormUrl": "URL 포함 여부 (boolean)",
+            "formUrl": "신청 URL (문자열)",
+            "isPhoneNum": "전화번호 포함 여부 (boolean)",
+            "phoneNum": "전화번호 (문자열)"
+        },
+        "matchType": "OFFLINE/ONLINE/ALL",
+        "reward": "참여 보상 (문자열)",
+        "count": "참여 횟수 (숫자)",
+        "timeRequired": "LESS_30M/ABOUT_30M/ABOUT_1H/ABOUT_1H30M/ABOUT_2H/ABOUT_2H30M/ABOUT_3H/ABOUT_3H30M/ABOUT_4H"
+    },
+    "conditions": [
+        "공고 본문을 정확히 분석하여 각 항목에 맞는 정보를 추출한다.",
+        "추출된 정보는 반드시 output_format에 따라 JSON 형태로 출력한다.",
+        "정보가 명시되지 않은 경우 해당 필드는 빈 문자열(\"\") 또는 0으로 설정한다.",
+        "URL이나 전화번호가 포함된 경우 해당 boolean 값을 true로 설정한다."
+    ]
+}
