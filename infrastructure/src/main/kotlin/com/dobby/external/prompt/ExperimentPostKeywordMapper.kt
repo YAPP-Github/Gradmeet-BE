@@ -1,6 +1,8 @@
 package com.dobby.external.prompt
 
 import com.dobby.enums.member.GenderType
+import com.dobby.enums.MatchType
+import com.dobby.enums.experiment.TimeSlot
 import com.dobby.model.experiment.keyword.ApplyMethodKeyword
 import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.dobby.model.experiment.keyword.TargetGroupKeyword
@@ -11,60 +13,72 @@ class ExperimentPostKeywordMapper {
 
     fun toDomain(dto: ExperimentPostKeywordDto): ExperimentPostKeyword {
         return ExperimentPostKeyword(
-            targetGroup = dto.targetGroup?.let {
+            targetGroup = dto.targetGroup?.let { targetGroupDto ->
                 TargetGroupKeyword(
-                    startAge = it.startAge,
-                    endAge = it.endAge,
-                    genderType = it.genderType?.let { genderStr ->
+                    startAge = targetGroupDto.startAge ?: 0,
+                    endAge = targetGroupDto.endAge ?: 0,
+                    genderType = targetGroupDto.genderType?.let { genderStr ->
                         when(genderStr) {
                             "MALE" -> GenderType.MALE
                             "FEMALE" -> GenderType.FEMALE
                             "ALL" -> GenderType.ALL
-                            else -> null
+                            else -> GenderType.ALL
                         }
-                    },
-                    otherCondition = it.otherCondition
+                    } ?: GenderType.ALL,
+                    otherCondition = targetGroupDto.otherCondition
                 )
             },
-            applyMethod = dto.applyMethod?.let {
+            applyMethod = dto.applyMethod?.let { applyMethodDto ->
                 ApplyMethodKeyword(
-                    content = it.content,
-                    isFormUrl = it.isFormUrl,
-                    formUrl = it.formUrl,
-                    isPhoneNum = it.isPhoneNum,
-                    phoneNum = it.phoneNum
+                    content = applyMethodDto.content ?: "",
+                    isFormUrl = applyMethodDto.isFormUrl,
+                    formUrl = applyMethodDto.formUrl ?: "",
+                    isPhoneNum = applyMethodDto.isPhoneNum,
+                    phoneNum = applyMethodDto.phoneNum ?: ""
                 )
             },
-            matchType = dto.matchType,
-            reward = dto.reward,
-            count = dto.count,
-            timeRequired = dto.timeRequired
+            matchType = dto.matchType?.let { matchTypeStr ->
+                try {
+                    MatchType.valueOf(matchTypeStr)
+                } catch (e: IllegalArgumentException) {
+                    MatchType.ALL
+                }
+            } ?: MatchType.ALL,
+            reward = dto.reward ?: "",
+            count = dto.count ?: 0,
+            timeRequired = dto.timeRequired?.takeIf { it.isNotBlank() }?.let { timeSlotStr ->
+                try {
+                    TimeSlot.valueOf(timeSlotStr)
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+            }
         )
     }
 
     fun toDto(domain: ExperimentPostKeyword): ExperimentPostKeywordDto {
         return ExperimentPostKeywordDto(
-            targetGroup = domain.targetGroup?.let {
+            targetGroup = domain.targetGroup?.let { targetGroupDomain ->
                 TargetGroupDto(
-                    startAge = it.startAge,
-                    endAge = it.endAge,
-                    genderType = it.genderType?.name,
-                    otherCondition = it.otherCondition
+                    startAge = targetGroupDomain.startAge,
+                    endAge = targetGroupDomain.endAge,
+                    genderType = targetGroupDomain.genderType?.name,
+                    otherCondition = targetGroupDomain.otherCondition
                 )
             },
-            applyMethod = domain.applyMethod?.let {
+            applyMethod = domain.applyMethod?.let { applyMethodDomain ->
                 ApplyMethodDto(
-                    content = it.content,
-                    isFormUrl = it.isFormUrl,
-                    formUrl = it.formUrl,
-                    isPhoneNum = it.isPhoneNum,
-                    phoneNum = it.phoneNum
+                    content = applyMethodDomain.content,
+                    isFormUrl = applyMethodDomain.isFormUrl,
+                    formUrl = applyMethodDomain.formUrl,
+                    isPhoneNum = applyMethodDomain.isPhoneNum,
+                    phoneNum = applyMethodDomain.phoneNum
                 )
             },
-            matchType = domain.matchType,
+            matchType = domain.matchType?.name,
             reward = domain.reward,
             count = domain.count,
-            timeRequired = domain.timeRequired
+            timeRequired = domain.timeRequired?.name
         )
     }
 }

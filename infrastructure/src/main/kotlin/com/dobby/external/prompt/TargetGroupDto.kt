@@ -1,8 +1,8 @@
 package com.dobby.external.prompt
 
 data class TargetGroupDto(
-    val startAge: Int?,
-    val endAge: Int?,
-    val genderType: String?,
-    val otherCondition: String?
+    val startAge: Int? = null,
+    val endAge: Int? = null,
+    val genderType: String? = null,
+    val otherCondition: String? = null
 )

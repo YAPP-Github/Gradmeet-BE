@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ExperimentPostKeywordDto(
     @JsonProperty("targetGroupInfo")
-    val targetGroup: TargetGroupDto?,
+    val targetGroup: TargetGroupDto? = null,
     @JsonProperty("applyMethodInfo")
-    val applyMethod: ApplyMethodDto?,
-    val matchType: MatchType?,
-    val reward: String?,
-    val count: Int?,
-    val timeRequired: TimeSlot?
+    val applyMethod: ApplyMethodDto? = null,
+    val matchType: String? = null,
+    val reward: String? = null,
+    val count: Int? = null,
+    val timeRequired: String? = null
 )
