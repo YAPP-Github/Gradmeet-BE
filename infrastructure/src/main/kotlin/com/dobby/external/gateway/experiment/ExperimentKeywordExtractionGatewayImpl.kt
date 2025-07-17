@@ -3,10 +3,10 @@ package com.dobby.external.gateway.experiment
 import com.dobby.api.dto.request.OpenAiRequest
 import com.dobby.exception.CustomOpenAiCallException
 import com.dobby.external.feign.openAi.OpenAiFeignClient
-import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
 import com.dobby.external.prompt.ExperimentPostKeywordMapper
 import com.dobby.external.prompt.PromptTemplate
 import com.dobby.external.prompt.PromptTemplateLoader
+import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
 import com.dobby.gateway.experiment.ExperimentKeywordExtractionGateway
 import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
