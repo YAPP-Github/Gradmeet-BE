@@ -1,6 +1,7 @@
 package com.dobby.external.gateway.experiment
 
 import com.dobby.api.dto.request.OpenAiRequest
+import com.dobby.exception.CustomOpenAiCallException
 import com.dobby.external.feign.openAi.OpenAiFeignClient
 import com.dobby.external.prompt.ExperimentPostKeywordDto
 import com.dobby.external.prompt.ExperimentPostKeywordMapper
@@ -10,6 +11,7 @@ import com.dobby.gateway.experiment.ExperimentKeywordExtractionGateway
 import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import feign.FeignException
 import org.springframework.stereotype.Service
 
 @Service
@@ -27,8 +29,7 @@ class ExperimentKeywordExtractionGatewayImpl(
 
     override fun extractKeywords(text: String): ExperimentPostKeyword {
         val promptJson = objectMapper.writeValueAsString(promptTemplate)
-        val prompt = promptJson.replace("{{text}}", text)
-
+        val prompt = promptJson.replace("{{text}}", escapeJsonString(text))
         val messages = listOf(
             OpenAiRequest.Message(role = "user", content = prompt)
         )
@@ -39,26 +40,37 @@ class ExperimentKeywordExtractionGatewayImpl(
             messages = messages
         )
 
-        val response = openAiFeignClient.chatCompletion(request)
-        val content = response.choices.firstOrNull()?.message?.content
-            ?: throw IllegalStateException("OpenAI 응답 없음")
+        val content = try {
+            val response = openAiFeignClient.chatCompletion(request)
+            response.choices.firstOrNull()?.message?.content
+                ?: throw IllegalStateException("No response received from OpenAI")
+        } catch (e: FeignException) {
+            throw CustomOpenAiCallException("OpenAI API call failed (status=${e.status()})", e)
+        } catch (e: Exception) {
+            throw IllegalStateException("Unexpected error occurred during OpenAI API call", e)
+        }
 
         return try {
-            // 마크다운 코드 블록 제거 및 JSON 정리
             val cleanedContent = cleanJsonResponse(content)
             val dto = objectMapper.readValue<ExperimentPostKeywordDto>(cleanedContent)
             mapper.toDomain(dto)
         } catch (e: Exception) {
-            throw IllegalStateException("응답 파싱 실패: $content", e)
+            throw IllegalStateException("Failed to parse response: $content", e)
         }
+    }
+
+    private fun escapeJsonString(text: String): String {
+        return text.replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+            .replace("\t", "\\t")
     }
 
     private fun cleanJsonResponse(content: String): String {
         return content.trim()
-            // 마크다운 코드 블록 제거
             .replace(Regex("^```json\\s*"), "")
             .replace(Regex("```\\s*$"), "")
-            // 시작/끝 백틱 제거
             .replace(Regex("^`+"), "")
             .replace(Regex("`+$"), "")
             .trim()
