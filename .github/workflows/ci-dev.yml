@@ -28,7 +28,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test
+        run: ./gradlew clean test
         env:
           SPRING_REDIS_HOST: localhost
           SPRING_REDIS_PORT: 6379
