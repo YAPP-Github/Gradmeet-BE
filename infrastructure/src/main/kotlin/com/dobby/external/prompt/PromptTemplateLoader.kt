@@ -1,9 +1,9 @@
 package com.dobby.external.prompt
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 class PromptTemplateLoader {
 
     private val mapper = jacksonObjectMapper()

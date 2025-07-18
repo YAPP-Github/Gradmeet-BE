@@ -12,9 +12,9 @@ import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import feign.FeignException
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 class ExperimentKeywordExtractionGatewayImpl(
     private val openAiFeignClient: OpenAiFeignClient,
     private val promptTemplateLoader: PromptTemplateLoader,
