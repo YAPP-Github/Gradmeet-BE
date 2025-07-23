@@ -75,7 +75,7 @@ enum class Area(val region: Region, val displayName: String) {
     HWASEONGSI(Region.GYEONGGI, "HWASEONGSI"),
 
     // 인천광역시
-    INCHOEN_ALL(Region.INCHEON, "INCHOEN_ALL"),
+    INCHEON_ALL(Region.INCHEON, "INCHEON_ALL"),
     GANGHWAGUN(Region.INCHEON, "GANGHWAGUN"),
     GYEYANGGU(Region.INCHEON, "GYEYANGGU"),
     NAMDONGGU(Region.INCHEON, "NAMDONGGU"),
