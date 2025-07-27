@@ -1,11 +1,11 @@
 package com.dobby.usecase.experiment
 
 import com.dobby.exception.ExperimentPostKeywordsDailyLimitExceededException
-import com.dobby.gateway.experiment.ExperimentKeywordExtractionGateway
+import com.dobby.gateway.experiment.ExperimentPostKeywordsExtractionGateway
 import com.dobby.gateway.experiment.ExperimentPostKeywordsLogGateway
 import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.experiment.ExperimentPostKeywordsLog
-import com.dobby.model.experiment.keyword.ExperimentPostKeyword
+import com.dobby.model.experiment.keyword.ExperimentPostKeywords
 import com.dobby.model.member.Member
 import com.dobby.util.IdGenerator
 import com.dobby.util.TimeProvider
@@ -19,13 +19,13 @@ import io.mockk.unmockkAll
 import java.time.LocalDateTime
 
 class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
-    val experimentKeywordExtractionGateway = mockk<ExperimentKeywordExtractionGateway>()
+    val experimentPostKeywordsExtractionGateway = mockk<ExperimentPostKeywordsExtractionGateway>()
     val experimentPostKeywordsLogGateway = mockk<ExperimentPostKeywordsLogGateway>()
     val memberGateway = mockk<MemberGateway>()
     val idGenerator = mockk<IdGenerator>()
 
     val extractExperimentPostKeywordsUseCase = ExtractExperimentPostKeywordsUseCase(
-        experimentKeywordExtractionGateway,
+        experimentPostKeywordsExtractionGateway,
         experimentPostKeywordsLogGateway,
         memberGateway,
         idGenerator
@@ -45,14 +45,14 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
         val input = ExtractExperimentPostKeywordsUseCase.Input(memberId, inputText)
 
         val mockMember = mockk<Member>()
-        val mockExperimentPostKeyword = mockk<ExperimentPostKeyword>()
+        val mockExperimentPostKeywords = mockk<ExperimentPostKeywords>()
         val mockLog = mockk<ExperimentPostKeywordsLog>()
         val currentDateTime = LocalDateTime.of(2025, 1, 27, 10, 0, 0)
 
         every { TimeProvider.currentDateTime() } returns currentDateTime
         every { memberGateway.getById(memberId) } returns mockMember
         every { idGenerator.generateId() } returns "test_log_id"
-        every { experimentKeywordExtractionGateway.extractKeywords(inputText) } returns mockExperimentPostKeyword
+        every { experimentPostKeywordsExtractionGateway.extractKeywords(inputText) } returns mockExperimentPostKeywords
         every { experimentPostKeywordsLogGateway.save(any()) } returns mockLog
         every {
             experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(
@@ -66,7 +66,7 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
             val result = extractExperimentPostKeywordsUseCase.execute(input)
 
             then("추출된 키워드 정보를 반환해야 한다") {
-                result.experimentPostKeyword shouldBe mockExperimentPostKeyword
+                result.experimentPostKeywords shouldBe mockExperimentPostKeywords
             }
         }
     }

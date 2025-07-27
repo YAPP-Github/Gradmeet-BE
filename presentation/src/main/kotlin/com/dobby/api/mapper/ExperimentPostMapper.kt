@@ -530,7 +530,7 @@ object ExperimentPostMapper {
 
     fun toExtractKeywordResponse(output: ExtractExperimentPostKeywordsUseCase.Output): ExtractKeywordResponse {
         return ExtractKeywordResponse(
-            experimentPostKeyword = output.experimentPostKeyword
+            experimentPostKeywords = output.experimentPostKeywords
         )
     }
 }
