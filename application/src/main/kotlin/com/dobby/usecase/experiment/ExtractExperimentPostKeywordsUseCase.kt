@@ -1,7 +1,7 @@
 package com.dobby.usecase.experiment
 
 import com.dobby.exception.ExperimentPostKeywordsDailyLimitExceededException
-import com.dobby.gateway.experiment.ExperimentPostKeywordsExtractionGateway
+import com.dobby.gateway.OpenAiGateway
 import com.dobby.gateway.experiment.ExperimentPostKeywordsLogGateway
 import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.experiment.ExperimentPostKeywordsLog
@@ -11,7 +11,7 @@ import com.dobby.util.IdGenerator
 import com.dobby.util.TimeProvider
 
 class ExtractExperimentPostKeywordsUseCase(
-    private val experimentPostKeywordsExtractionGateway: ExperimentPostKeywordsExtractionGateway,
+    private val openAiGateway: OpenAiGateway,
     private val experimentPostKeywordsGateway: ExperimentPostKeywordsLogGateway,
     private val memberGateway: MemberGateway,
     private val idGenerator: IdGenerator
@@ -34,7 +34,7 @@ class ExtractExperimentPostKeywordsUseCase(
         val member = memberGateway.getById(input.memberId)
         validateDailyUsageLimit(input.memberId)
 
-        val experimentPostKeyword = experimentPostKeywordsExtractionGateway.extractKeywords(input.text)
+        val experimentPostKeyword = openAiGateway.extractKeywords(input.text)
         val log = ExperimentPostKeywordsLog.newExperimentPostKeywordsLog(
             id = idGenerator.generateId(),
             member = member,

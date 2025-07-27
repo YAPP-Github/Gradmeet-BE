@@ -1,7 +1,7 @@
 package com.dobby.usecase.experiment
 
 import com.dobby.exception.ExperimentPostKeywordsDailyLimitExceededException
-import com.dobby.gateway.experiment.ExperimentPostKeywordsExtractionGateway
+import com.dobby.gateway.OpenAiGateway
 import com.dobby.gateway.experiment.ExperimentPostKeywordsLogGateway
 import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.experiment.ExperimentPostKeywordsLog
@@ -19,13 +19,13 @@ import io.mockk.unmockkAll
 import java.time.LocalDateTime
 
 class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
-    val experimentPostKeywordsExtractionGateway = mockk<ExperimentPostKeywordsExtractionGateway>()
+    val openAiGateway = mockk<OpenAiGateway>()
     val experimentPostKeywordsLogGateway = mockk<ExperimentPostKeywordsLogGateway>()
     val memberGateway = mockk<MemberGateway>()
     val idGenerator = mockk<IdGenerator>()
 
     val extractExperimentPostKeywordsUseCase = ExtractExperimentPostKeywordsUseCase(
-        experimentPostKeywordsExtractionGateway,
+        openAiGateway,
         experimentPostKeywordsLogGateway,
         memberGateway,
         idGenerator
@@ -52,7 +52,7 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
         every { TimeProvider.currentDateTime() } returns currentDateTime
         every { memberGateway.getById(memberId) } returns mockMember
         every { idGenerator.generateId() } returns "test_log_id"
-        every { experimentPostKeywordsExtractionGateway.extractKeywords(inputText) } returns mockExperimentPostKeywords
+        every { openAiGateway.extractKeywords(inputText) } returns mockExperimentPostKeywords
         every { experimentPostKeywordsLogGateway.save(any()) } returns mockLog
         every {
             experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(

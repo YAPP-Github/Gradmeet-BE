@@ -1,7 +1,7 @@
-package com.dobby.gateway.experiment
+package com.dobby.gateway
 
 import com.dobby.model.experiment.keyword.ExperimentPostKeywords
 
-interface ExperimentPostKeywordsExtractionGateway {
+interface OpenAiGateway {
     fun extractKeywords(text: String): ExperimentPostKeywords
 }

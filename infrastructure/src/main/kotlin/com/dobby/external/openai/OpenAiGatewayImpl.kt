@@ -1,4 +1,4 @@
-package com.dobby.external.gateway.experiment
+package com.dobby.external.openai
 
 import com.dobby.api.dto.request.OpenAiRequest
 import com.dobby.exception.CustomOpenAiCallException
@@ -7,7 +7,7 @@ import com.dobby.external.prompt.ExperimentPostKeywordMapper
 import com.dobby.external.prompt.PromptTemplate
 import com.dobby.external.prompt.PromptTemplateLoader
 import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
-import com.dobby.gateway.experiment.ExperimentPostKeywordsExtractionGateway
+import com.dobby.gateway.OpenAiGateway
 import com.dobby.model.experiment.keyword.ExperimentPostKeywords
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -15,11 +15,11 @@ import feign.FeignException
 import org.springframework.stereotype.Component
 
 @Component
-class ExperimentPostKeywordsExtractionGatewayImpl(
+class OpenAiGatewayImpl(
     private val openAiFeignClient: OpenAiFeignClient,
     private val promptTemplateLoader: PromptTemplateLoader,
     private val mapper: ExperimentPostKeywordMapper
-) : ExperimentPostKeywordsExtractionGateway {
+) : OpenAiGateway {
 
     private val objectMapper = jacksonObjectMapper()
 
