@@ -38,7 +38,7 @@ class ExtractExperimentPostKeywordsUseCase(
         val log = ExperimentPostKeywordsLog.newExperimentPostKeywordsLog(
             id = idGenerator.generateId(),
             member = member,
-            response = experimentPostKeyword,
+            response = experimentPostKeyword
         )
 
         experimentPostKeywordsGateway.save(log)

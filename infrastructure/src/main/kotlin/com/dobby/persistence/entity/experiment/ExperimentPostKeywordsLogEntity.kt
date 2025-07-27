@@ -23,5 +23,5 @@ class ExperimentPostKeywordsLogEntity(
     val response: String,
 
     @Column(name = "created_at", nullable = false)
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime
 )
