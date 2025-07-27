@@ -523,6 +523,7 @@ object ExperimentPostMapper {
 
     fun toExtractKeywordUseCaseInput(request: ExtractKeywordRequest): ExtractExperimentPostKeywordsUseCase.Input {
         return ExtractExperimentPostKeywordsUseCase.Input(
+            memberId = getCurrentMemberId(),
             text = request.text
         )
     }
