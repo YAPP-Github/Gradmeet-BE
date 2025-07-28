@@ -3,6 +3,7 @@ package com.dobby.api.mapper
 import com.dobby.api.dto.request.PreSignedUrlRequest
 import com.dobby.api.dto.request.experiment.ApplyMethodInfo
 import com.dobby.api.dto.request.experiment.CreateExperimentPostRequest
+import com.dobby.api.dto.request.experiment.ExtractKeywordRequest
 import com.dobby.api.dto.request.experiment.ImageListInfo
 import com.dobby.api.dto.request.experiment.TargetGroupInfo
 import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
@@ -15,6 +16,7 @@ import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostResponse
+import com.dobby.api.dto.response.experiment.ExtractKeywordResponse
 import com.dobby.api.dto.response.experiment.PostInfo
 import com.dobby.api.dto.response.experiment.UpdateExperimentPostResponse
 import com.dobby.api.dto.response.member.MyExperimentPostResponse
@@ -25,6 +27,7 @@ import com.dobby.enums.experiment.RecruitStatus
 import com.dobby.enums.member.GenderType
 import com.dobby.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
+import com.dobby.usecase.experiment.ExtractExperimentPostKeywordsUseCase
 import com.dobby.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
 import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
@@ -515,6 +518,19 @@ object ExperimentPostMapper {
             page = page,
             count = count,
             order = order
+        )
+    }
+
+    fun toExtractKeywordUseCaseInput(request: ExtractKeywordRequest): ExtractExperimentPostKeywordsUseCase.Input {
+        return ExtractExperimentPostKeywordsUseCase.Input(
+            memberId = getCurrentMemberId(),
+            text = request.text
+        )
+    }
+
+    fun toExtractKeywordResponse(output: ExtractExperimentPostKeywordsUseCase.Output): ExtractKeywordResponse {
+        return ExtractKeywordResponse(
+            experimentPostKeywords = output.experimentPostKeywords
         )
     }
 }
