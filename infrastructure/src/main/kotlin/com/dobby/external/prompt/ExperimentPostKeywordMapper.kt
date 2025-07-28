@@ -7,15 +7,15 @@ import com.dobby.external.prompt.dto.ApplyMethodDto
 import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
 import com.dobby.external.prompt.dto.TargetGroupDto
 import com.dobby.model.experiment.keyword.ApplyMethodKeyword
-import com.dobby.model.experiment.keyword.ExperimentPostKeywords
+import com.dobby.model.experiment.keyword.ExperimentPostKeyword
 import com.dobby.model.experiment.keyword.TargetGroupKeyword
 import org.springframework.stereotype.Component
 
 @Component
 class ExperimentPostKeywordMapper {
 
-    fun toDomain(dto: ExperimentPostKeywordDto): ExperimentPostKeywords {
-        return ExperimentPostKeywords(
+    fun toDomain(dto: ExperimentPostKeywordDto): ExperimentPostKeyword {
+        return ExperimentPostKeyword(
             targetGroup = dto.targetGroup?.let { targetGroupDto ->
                 TargetGroupKeyword(
                     startAge = targetGroupDto.startAge ?: 0,
@@ -59,7 +59,7 @@ class ExperimentPostKeywordMapper {
         )
     }
 
-    fun toDto(domain: ExperimentPostKeywords): ExperimentPostKeywordDto {
+    fun toDto(domain: ExperimentPostKeyword): ExperimentPostKeywordDto {
         return ExperimentPostKeywordDto(
             targetGroup = domain.targetGroup?.let { targetGroupDomain ->
                 TargetGroupDto(
