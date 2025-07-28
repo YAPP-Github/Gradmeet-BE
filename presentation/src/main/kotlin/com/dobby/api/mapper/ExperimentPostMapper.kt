@@ -523,14 +523,13 @@ object ExperimentPostMapper {
 
     fun toExtractKeywordUseCaseInput(request: ExtractKeywordRequest): ExtractExperimentPostKeywordsUseCase.Input {
         return ExtractExperimentPostKeywordsUseCase.Input(
-            memberId = getCurrentMemberId(),
             text = request.text
         )
     }
 
     fun toExtractKeywordResponse(output: ExtractExperimentPostKeywordsUseCase.Output): ExtractKeywordResponse {
         return ExtractKeywordResponse(
-            experimentPostKeywords = output.experimentPostKeywords
+            experimentPostKeyword = output.experimentPostKeyword
         )
     }
 }
