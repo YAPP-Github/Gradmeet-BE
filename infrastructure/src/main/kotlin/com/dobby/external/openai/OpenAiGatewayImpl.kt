@@ -1,4 +1,4 @@
-package com.dobby.external.gateway.experiment
+package com.dobby.external.openai
 
 import com.dobby.api.dto.request.OpenAiRequest
 import com.dobby.exception.CustomOpenAiCallException
@@ -7,19 +7,19 @@ import com.dobby.external.prompt.ExperimentPostKeywordMapper
 import com.dobby.external.prompt.PromptTemplate
 import com.dobby.external.prompt.PromptTemplateLoader
 import com.dobby.external.prompt.dto.ExperimentPostKeywordDto
-import com.dobby.gateway.experiment.ExperimentKeywordExtractionGateway
-import com.dobby.model.experiment.keyword.ExperimentPostKeyword
+import com.dobby.gateway.OpenAiGateway
+import com.dobby.model.experiment.keyword.ExperimentPostKeywords
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import feign.FeignException
 import org.springframework.stereotype.Component
 
 @Component
-class ExperimentKeywordExtractionGatewayImpl(
+class OpenAiGatewayImpl(
     private val openAiFeignClient: OpenAiFeignClient,
     private val promptTemplateLoader: PromptTemplateLoader,
     private val mapper: ExperimentPostKeywordMapper
-) : ExperimentKeywordExtractionGateway {
+) : OpenAiGateway {
 
     private val objectMapper = jacksonObjectMapper()
 
@@ -27,7 +27,7 @@ class ExperimentKeywordExtractionGatewayImpl(
         promptTemplateLoader.loadPrompt("prompts/keyword_extraction_prompt.json")
     }
 
-    override fun extractKeywords(text: String): ExperimentPostKeyword {
+    override fun extractKeywords(text: String): ExperimentPostKeywords {
         val promptJson = objectMapper.writeValueAsString(promptTemplate)
         val prompt = promptJson.replace("{{text}}", escapeJsonString(text))
         val messages = listOf(
