@@ -77,8 +77,3 @@ data object ExperimentPostLeadResearcherException : ClientException("EP0013", "L
 sealed class ServerException(code: String, message: String, cause: Throwable? = null) : DobbyException(code, message, cause)
 
 data object UnknownServerErrorException : ServerException("DB0001", "An unknown error has occurred")
-
-/**
- * OpenAI API call specific exceptions
- */
-data class CustomOpenAiCallException(override val message: String, override val cause: Throwable? = null) : ServerException("AI0001", message, cause)
