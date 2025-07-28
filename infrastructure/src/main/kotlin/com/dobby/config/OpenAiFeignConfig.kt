@@ -3,9 +3,7 @@ package com.dobby.config
 import com.dobby.config.properties.OpenAiProperties
 import feign.RequestInterceptor
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 
-@Configuration
 class OpenAiFeignConfig(
     private val openAiProperties: OpenAiProperties
 ) {
