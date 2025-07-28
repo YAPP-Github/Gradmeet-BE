@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component
 @Component
 class ContentLengthRequestInterceptor : RequestInterceptor {
     override fun apply(requestTemplate: RequestTemplate) {
-        val length = if (requestTemplate.body() != null) requestTemplate.body().size else 0
-        if (length == 0 && requestTemplate.method() == "POST") {
-            requestTemplate.body("gradmeet")
-            requestTemplate.header(CONTENT_LENGTH_HEADER, "gradmeet".toByteArray().size.toString())
+        if (requestTemplate.feignTarget().url().contains("oauth2.googleapis.com")) {
+            requestTemplate.body("")
+            requestTemplate.header(CONTENT_LENGTH_HEADER, "0")
         }
     }
 
