@@ -68,6 +68,7 @@ data object ExperimentPostRewardException : ClientException("EP0010", "Reward ca
 data object ExperimentPostContentException : ClientException("EP0011", "Content cannot be null.")
 data object ExperimentPostCountException : ClientException("EP0012", "Count could be more than zero.")
 data object ExperimentPostLeadResearcherException : ClientException("EP0013", "Lead Researcher cannot be null.")
+data object ExperimentPostKeywordsDailyLimitExceededException : ClientException("EP0014", "Daily usage limit for experiment post keywords extraction has been exceeded.")
 
 /**
  * ServerException: Exceptions caused by internal server issues
