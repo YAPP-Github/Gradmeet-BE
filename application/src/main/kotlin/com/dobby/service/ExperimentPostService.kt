@@ -167,6 +167,7 @@ class ExperimentPostService(
         evictExperimentPostCountsCaches()
     }
 
+    @Transactional
     fun extractExperimentPostKeywords(input: ExtractExperimentPostKeywordsUseCase.Input): ExtractExperimentPostKeywordsUseCase.Output {
         return extractExperimentPostKeywordsUseCase.execute(input)
     }
