@@ -1,0 +1,1 @@
+DROP INDEX idx_experiment_keywords_log ON experiment_post_keywords_log;
