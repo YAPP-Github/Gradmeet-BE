@@ -32,7 +32,7 @@ class ExtractExperimentPostKeywordsUseCase(
 
     override fun execute(input: Input): Output {
         val member = memberGateway.getById(input.memberId)
-        validateDailyUsageLimit(input.memberId)
+        // validateDailyUsageLimit(input.memberId)
 
         val experimentPostKeyword = openAiGateway.extractKeywords(input.text)
         val log = ExperimentPostKeywordsLog.newExperimentPostKeywordsLog(
