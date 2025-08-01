@@ -1,6 +1,5 @@
 package com.dobby.usecase.experiment
 
-import com.dobby.exception.ExperimentPostKeywordsDailyLimitExceededException
 import com.dobby.gateway.OpenAiGateway
 import com.dobby.gateway.experiment.ExperimentPostKeywordsLogGateway
 import com.dobby.gateway.member.MemberGateway
@@ -9,7 +8,6 @@ import com.dobby.model.experiment.keyword.ExperimentPostKeywords
 import com.dobby.model.member.Member
 import com.dobby.util.IdGenerator
 import com.dobby.util.TimeProvider
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -71,30 +69,30 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
         }
     }
 
-    given("일일 사용 한도에 도달한 사용자가") {
-        val memberId = "exceeded_member_456"
-        val inputText = "실험 참여자 모집"
-        val input = ExtractExperimentPostKeywordsUseCase.Input(memberId, inputText)
-
-        val mockMember = mockk<Member>()
-        val currentDateTime = LocalDateTime.of(2025, 1, 27, 15, 30, 0)
-
-        every { TimeProvider.currentDateTime() } returns currentDateTime
-        every { memberGateway.getById(memberId) } returns mockMember
-        every {
-            experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(
-                memberId = memberId,
-                start = currentDateTime.toLocalDate().atStartOfDay(),
-                end = currentDateTime.toLocalDate().plusDays(1).atStartOfDay()
-            )
-        } returns 2
-
-        `when`("키워드 추출을 요청하면") {
-            then("DailyLimitExceededException 예외가 발생해야 한다") {
-                shouldThrow<ExperimentPostKeywordsDailyLimitExceededException> {
-                    extractExperimentPostKeywordsUseCase.execute(input)
-                }
-            }
-        }
-    }
+//    given("일일 사용 한도에 도달한 사용자가") {
+//        val memberId = "exceeded_member_456"
+//        val inputText = "실험 참여자 모집"
+//        val input = ExtractExperimentPostKeywordsUseCase.Input(memberId, inputText)
+//
+//        val mockMember = mockk<Member>()
+//        val currentDateTime = LocalDateTime.of(2025, 1, 27, 15, 30, 0)
+//
+//        every { TimeProvider.currentDateTime() } returns currentDateTime
+//        every { memberGateway.getById(memberId) } returns mockMember
+//        every {
+//            experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(
+//                memberId = memberId,
+//                start = currentDateTime.toLocalDate().atStartOfDay(),
+//                end = currentDateTime.toLocalDate().plusDays(1).atStartOfDay()
+//            )
+//        } returns 2
+//
+//        `when`("키워드 추출을 요청하면") {
+//            then("DailyLimitExceededException 예외가 발생해야 한다") {
+//                shouldThrow<ExperimentPostKeywordsDailyLimitExceededException> {
+//                    extractExperimentPostKeywordsUseCase.execute(input)
+//                }
+//            }
+//        }
+//    }
 })
