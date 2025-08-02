@@ -5,7 +5,6 @@ import com.dobby.mapper.ExperimentPostKeywordsLogMapper
 import com.dobby.model.experiment.ExperimentPostKeywordsLog
 import com.dobby.persistence.repository.ExperimentPostKeywordsLogRepository
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 
 @Component
 class ExperimentPostKeywordsLogGatewayImpl(
@@ -17,13 +16,5 @@ class ExperimentPostKeywordsLogGatewayImpl(
         val entity = mapper.fromDomain(experimentPostKeywordsLog)
         val savedEntity = experimentPostKeywordsLogRepository.save(entity)
         return mapper.toDomain(savedEntity)
-    }
-
-    override fun countByMemberIdAndCreatedAtBetween(
-        memberId: String,
-        start: LocalDateTime,
-        end: LocalDateTime
-    ): Int {
-        return experimentPostKeywordsLogRepository.countByMemberIdAndCreatedAtBetween(memberId, start, end)
     }
 }
