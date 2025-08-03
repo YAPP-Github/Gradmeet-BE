@@ -41,7 +41,7 @@ class ExperimentPostEntity(
     @Column(name = "views")
     var views: Int,
 
-    @Column(name = "title", nullable = false, length = 70)
+    @Column(name = "title", nullable = false, length = 150)
     var title: String,
 
     @Column(name = "content", nullable = false, length = 5000)
