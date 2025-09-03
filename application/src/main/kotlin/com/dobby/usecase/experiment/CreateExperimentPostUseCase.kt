@@ -37,6 +37,7 @@ class CreateExperimentPostUseCase(
         val timeRequired: TimeSlot?,
 
         val leadResearcher: String,
+        val isOnCampus: Boolean,
         val place: String?,
         val region: Region?,
         val area: Area?,
@@ -116,6 +117,7 @@ class CreateExperimentPostUseCase(
             timeRequired = input.timeRequired,
             count = input.count,
             matchType = input.matchType,
+            isOnCampus = input.isOnCampus,
             place = input.place,
             region = input.region,
             area = input.area,
