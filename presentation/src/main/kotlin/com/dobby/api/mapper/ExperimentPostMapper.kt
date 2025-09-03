@@ -53,6 +53,7 @@ object ExperimentPostMapper {
             title = request.title,
             content = request.content,
             alarmAgree = request.alarmAgree,
+            isOnCampus = request.isOnCampus,
             place = request.place,
             count = request.count,
             region = request.region,
