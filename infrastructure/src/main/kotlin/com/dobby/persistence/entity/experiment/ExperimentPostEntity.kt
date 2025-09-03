@@ -70,6 +70,9 @@ class ExperimentPostEntity(
     @Column(name = "match_type", nullable = false)
     var matchType: MatchType,
 
+    @Column(name = "is_on_campus")
+    var isOnCampus: Boolean?,
+
     @Column(name = "place", length = 100)
     var place: String?,
 
@@ -138,6 +141,7 @@ class ExperimentPostEntity(
         timeRequired = timeRequired,
         count = count,
         matchType = matchType,
+        isOnCampus = isOnCampus,
         place = place,
         region = region,
         area = area,
@@ -166,6 +170,7 @@ class ExperimentPostEntity(
                 timeRequired = experimentPost.timeRequired,
                 count = experimentPost.count,
                 matchType = experimentPost.matchType,
+                isOnCampus = experimentPost.isOnCampus,
                 place = experimentPost.place,
                 region = experimentPost.region,
                 area = experimentPost.area,
