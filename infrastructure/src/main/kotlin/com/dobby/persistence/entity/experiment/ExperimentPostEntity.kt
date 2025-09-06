@@ -71,7 +71,7 @@ class ExperimentPostEntity(
     var matchType: MatchType,
 
     @Column(name = "is_on_campus")
-    var isOnCampus: Boolean?,
+    var isOnCampus: Boolean,
 
     @Column(name = "place", length = 100)
     var place: String?,

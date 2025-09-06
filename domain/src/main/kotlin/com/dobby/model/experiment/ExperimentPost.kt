@@ -32,7 +32,7 @@ data class ExperimentPost(
     var timeRequired: TimeSlot?,
     var count: Int,
     var matchType: MatchType,
-    var isOnCampus: Boolean?,
+    var isOnCampus: Boolean,
     var place: String?,
     var region: Region?,
     var area: Area?,
