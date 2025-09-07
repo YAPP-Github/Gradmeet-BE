@@ -1,1 +1,1 @@
-ALTER TABLE experiment_post ADD COLUMN is_on_campus TINYINT(1) NOT NULL DEFAULT 1;
+ALTER TABLE experiment_post ADD COLUMN IF NOT EXISTS is_on_campus TINYINT(1) NOT NULL DEFAULT 1 COMMENT '교내 실험 여부';
