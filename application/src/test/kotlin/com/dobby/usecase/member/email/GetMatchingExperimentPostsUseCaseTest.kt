@@ -76,6 +76,7 @@ class GetMatchingExperimentPostsUseCaseTest : BehaviorSpec({
                     count = 35,
                     timeRequired = TimeSlot.LESS_30M,
                     leadResearcher = "야뿌 랩실 서버 25기 신수정",
+                    isOnCampus = true,
                     place = "이화여자대학교",
                     region = Region.SEOUL,
                     area = Area.GEUMCHEONGU,
