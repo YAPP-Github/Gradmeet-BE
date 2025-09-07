@@ -53,6 +53,7 @@ object ExperimentPostMapper {
             title = request.title,
             content = request.content,
             alarmAgree = request.alarmAgree,
+            isOnCampus = request.isOnCampus,
             place = request.place,
             count = request.count,
             region = request.region,
@@ -101,6 +102,7 @@ object ExperimentPostMapper {
             experimentPostId = input.postId,
             title = input.title,
             views = input.views,
+            isOnCampus = input.isOnCampus,
             durationInfo = DurationInfo(
                 startDate = input.durationInfo?.startDate,
                 endDate = input.durationInfo?.endDate
@@ -142,6 +144,7 @@ object ExperimentPostMapper {
                 startDate = input.durationInfo?.startDate,
                 endDate = input.durationInfo?.endDate
             ),
+            isOnCampus = input.isOnCampus,
             reward = input.reward,
             place = input.place
         )
@@ -156,6 +159,7 @@ object ExperimentPostMapper {
             imageListInfo = toUpdateImageListInfo(request.imageListInfo),
             title = request.title,
             content = request.content,
+            isOnCampus = request.isOnCampus,
             place = request.place,
             count = request.count,
             region = request.region,
@@ -397,6 +401,7 @@ object ExperimentPostMapper {
                         experimentPostId = post.postInfo.experimentPostId,
                         title = post.postInfo.title,
                         views = post.postInfo.views,
+                        isOnCampus = post.postInfo.isOnCampus,
                         place = post.postInfo.place,
                         reward = post.postInfo.reward,
                         durationInfo = DurationInfo(

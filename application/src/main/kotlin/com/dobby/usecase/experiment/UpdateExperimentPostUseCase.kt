@@ -33,6 +33,7 @@ class UpdateExperimentPostUseCase(
         val timeRequired: TimeSlot?,
 
         val leadResearcher: String?,
+        val isOnCampus: Boolean,
         val place: String?,
         val region: Region?,
         val area: Area?,
@@ -69,6 +70,7 @@ class UpdateExperimentPostUseCase(
         val postId: String,
         val title: String,
         val views: Int,
+        val isOnCampus: Boolean,
         val place: String?,
         val reward: String?,
         val durationInfo: DurationInfo?
@@ -122,6 +124,7 @@ class UpdateExperimentPostUseCase(
                 postId = updatedPost.id,
                 title = updatedPost.title,
                 views = updatedPost.views,
+                isOnCampus = updatedPost.isOnCampus,
                 place = updatedPost.place,
                 reward = updatedPost.reward,
                 durationInfo = DurationInfo(
