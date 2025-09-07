@@ -1,0 +1,1 @@
+ALTER TABLE experiment_post ADD COLUMN is_on_campus TINYINT(1) NOT NULL DEFAULT 1;
