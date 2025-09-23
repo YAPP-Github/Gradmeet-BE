@@ -93,6 +93,9 @@ data class ExperimentPostDetailResponse(
 
     @Schema(description = "주소 응답 DTO")
     data class AddressResponse(
+        @Schema(description = "교내 실험 여부", example = "true")
+        val isOnCampus: Boolean,
+
         @Schema(description = "장소", example = "건국대학교 1층")
         val place: String?,
 
