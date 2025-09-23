@@ -59,6 +59,7 @@ class GetExperimentPostDetailUseCase(
         )
 
         data class Address(
+            val isOnCampus: Boolean,
             val place: String?,
             val region: Region?,
             val area: Area?,
@@ -120,6 +121,7 @@ fun TargetGroup.toTargetGroup(): GetExperimentPostDetailUseCase.ExperimentPostDe
 
 fun ExperimentPost.toAddress(): GetExperimentPostDetailUseCase.ExperimentPostDetail.Address {
     return GetExperimentPostDetailUseCase.ExperimentPostDetail.Address(
+        isOnCampus = this.isOnCampus,
         place = this.place,
         region = this.region,
         area = this.area,
