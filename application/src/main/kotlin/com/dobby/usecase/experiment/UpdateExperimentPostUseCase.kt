@@ -109,6 +109,7 @@ class UpdateExperimentPostUseCase(
             leadResearcher = input.leadResearcher,
             detailedAddress = input.detailedAddress,
             matchType = input.matchType,
+            isOnCampus = input.isOnCampus,
             place = input.place,
             region = input.region,
             area = input.area,
