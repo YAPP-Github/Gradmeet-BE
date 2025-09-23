@@ -76,7 +76,8 @@ data class ExperimentPost(
         timeRequired: TimeSlot?,
         imageListInfo: List<String>?,
         recruitStatus: Boolean?,
-        idGenerator: IdGenerator
+        idGenerator: IdGenerator,
+        isOnCampus: Boolean
     ): ExperimentPost {
         val currentImages = this.images.map { it.imageUrl }.toSet()
         val newImages = imageListInfo?.takeIf { it.isNotEmpty() } ?: emptyList()
