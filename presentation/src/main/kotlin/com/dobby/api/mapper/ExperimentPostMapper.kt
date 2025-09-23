@@ -230,6 +230,7 @@ object ExperimentPostMapper {
 
     private fun GetExperimentPostDetailForUpdateUseCase.ExperimentPostDetailForUpdate.Address.toResponse(): ExperimentPostDetailResponse.AddressResponse {
         return ExperimentPostDetailResponse.AddressResponse(
+            isOnCampus = this.isOnCampus,
             place = this.place,
             region = this.region,
             area = this.area,
@@ -286,6 +287,7 @@ object ExperimentPostMapper {
 
     private fun GetExperimentPostDetailUseCase.ExperimentPostDetail.Address.toResponse(): ExperimentPostDetailResponse.AddressResponse {
         return ExperimentPostDetailResponse.AddressResponse(
+            isOnCampus = this.isOnCampus,
             place = this.place,
             region = this.region,
             area = this.area,
