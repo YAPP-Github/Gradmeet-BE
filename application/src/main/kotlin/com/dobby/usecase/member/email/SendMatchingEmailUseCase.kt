@@ -11,6 +11,7 @@ import com.dobby.model.experiment.ExperimentPost
 import com.dobby.usecase.UseCase
 import com.dobby.util.EmailUtils
 import com.dobby.util.RetryUtils
+import com.dobby.util.UtmLinkUtils
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -70,13 +71,15 @@ class SendMatchingEmailUseCase(
         return groupedPosts.flatMap { (place, posts) ->
             val sortedPosts = posts.sortedBy { it.createdAt }
             sortedPosts.mapIndexed { index, post ->
-                val postUrl = urlGeneratorGateway.getExperimentPostUrl(post.id)
+                val baseUrl = urlGeneratorGateway.getExperimentPostUrl(post.id)
+                val postUrlWithUtm = UtmLinkUtils.add(baseUrl)
+
                 mapOf(
                     "title" to post.title,
                     "place" to if (index == 0) place else "",
                     "uploadDate" to LocalDate.now().toString(),
                     "reward" to post.reward,
-                    "postUrl" to postUrl
+                    "postUrl" to postUrlWithUtm
                 )
             }
         }
