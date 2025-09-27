@@ -109,6 +109,7 @@ data class ExperimentPost(
             detailedAddress = detailedAddress,
             matchType = matchType ?: this.matchType,
             timeRequired = timeRequired ?: this.timeRequired,
+            isOnCampus = isOnCampus,
             place = place,
             region = region,
             area = area,
