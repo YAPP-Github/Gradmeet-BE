@@ -1,0 +1,1 @@
+ALTER TABLE experiment_post MODIFY COLUMN title VARCHAR(250);
