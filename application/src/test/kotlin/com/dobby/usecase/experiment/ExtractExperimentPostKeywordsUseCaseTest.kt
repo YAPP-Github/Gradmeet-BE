@@ -1,6 +1,7 @@
 package com.dobby.usecase.experiment
 
 import com.dobby.gateway.OpenAiGateway
+import com.dobby.gateway.UsageLimitGateway
 import com.dobby.gateway.experiment.ExperimentPostKeywordsLogGateway
 import com.dobby.gateway.member.MemberGateway
 import com.dobby.model.experiment.ExperimentPostKeywordsLog
@@ -20,12 +21,14 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
     val openAiGateway = mockk<OpenAiGateway>()
     val experimentPostKeywordsLogGateway = mockk<ExperimentPostKeywordsLogGateway>()
     val memberGateway = mockk<MemberGateway>()
+    val usageLimitGateway = mockk<UsageLimitGateway>()
     val idGenerator = mockk<IdGenerator>()
 
     val extractExperimentPostKeywordsUseCase = ExtractExperimentPostKeywordsUseCase(
         openAiGateway,
         experimentPostKeywordsLogGateway,
         memberGateway,
+        usageLimitGateway,
         idGenerator
     )
 
@@ -49,16 +52,10 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
 
         every { TimeProvider.currentDateTime() } returns currentDateTime
         every { memberGateway.getById(memberId) } returns mockMember
+        every { usageLimitGateway.incrementAndCheckLimit(memberId, any()) } returns true
         every { idGenerator.generateId() } returns "test_log_id"
         every { openAiGateway.extractKeywords(inputText) } returns mockExperimentPostKeywords
         every { experimentPostKeywordsLogGateway.save(any()) } returns mockLog
-        every {
-            experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(
-                memberId = memberId,
-                start = currentDateTime.toLocalDate().atStartOfDay(),
-                end = currentDateTime.toLocalDate().plusDays(1).atStartOfDay()
-            )
-        } returns 1
 
         `when`("키워드 추출을 요청하면") {
             val result = extractExperimentPostKeywordsUseCase.execute(input)
@@ -79,13 +76,7 @@ class ExtractExperimentPostKeywordsUseCaseTest : BehaviorSpec({
 //
 //        every { TimeProvider.currentDateTime() } returns currentDateTime
 //        every { memberGateway.getById(memberId) } returns mockMember
-//        every {
-//            experimentPostKeywordsLogGateway.countByMemberIdAndCreatedAtBetween(
-//                memberId = memberId,
-//                start = currentDateTime.toLocalDate().atStartOfDay(),
-//                end = currentDateTime.toLocalDate().plusDays(1).atStartOfDay()
-//            )
-//        } returns 2
+//        every { usageLimitGateway.incrementAndCheckLimit(memberId, any()) } returns false
 //
 //        `when`("키워드 추출을 요청하면") {
 //            then("DailyLimitExceededException 예외가 발생해야 한다") {
