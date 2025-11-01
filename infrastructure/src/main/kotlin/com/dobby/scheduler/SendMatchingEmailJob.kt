@@ -65,14 +65,17 @@ class SendMatchingEmailJob(
         val took = Duration.between(start, end).toSeconds()
 
         val windowStart = MDC.get("match.windowStart") ?: start.toString()
-        val windowEnd= MDC.get("match.windowEnd")   ?: end.toString()
-        val todayCount= MDC.get("match.todayPosts")?.toIntOrNull() ?: 0
-        val consentParticipants= MDC.get("match.consentParticipants")?.toIntOrNull() ?: 0
-        val matchedRecipients  = MDC.get("match.matchedRecipients")?.toIntOrNull() ?: matchingExperimentPosts.size
+        val windowEnd = MDC.get("match.windowEnd") ?: end.toString()
+        val todayCount = MDC.get("match.todayPosts")?.toIntOrNull() ?: 0
+        val consentParticipants = MDC.get("match.consentParticipants")?.toIntOrNull() ?: 0
+        val matchedRecipients = MDC.get("match.matchedRecipients")?.toIntOrNull() ?: matchingExperimentPosts.size
 
         listOf(
-            "match.windowStart","match.windowEnd","match.todayPosts",
-            "match.consentParticipants","match.matchedRecipients"
+            "match.windowStart",
+            "match.windowEnd",
+            "match.todayPosts",
+            "match.consentParticipants",
+            "match.matchedRecipients"
         ).forEach { MDC.remove(it) }
 
         logger.info("SendMatchingEmailJob completed. Success=$successCount, Failures=$failureCount, Took=${took}s")
@@ -90,7 +93,7 @@ class SendMatchingEmailJob(
             ---
             ✅ **발송 성공**: **$successCount** 건
             ❌ **발송 실패**: **$failureCount** 건
-            ⏰ **실행 시간**: ${took} 초
+            ⏰ **실행 시간**: $took 초
             🕒 **완료 시각**: $end
             """.trimIndent(),
             content = "@here"

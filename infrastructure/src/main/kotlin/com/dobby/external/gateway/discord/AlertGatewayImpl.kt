@@ -82,7 +82,6 @@ class AlertGatewayImpl(
         )
     }
 
-
     private fun getStackTrace(e: Exception): String {
         val stringWriter = StringWriter()
         e.printStackTrace(PrintWriter(stringWriter))
