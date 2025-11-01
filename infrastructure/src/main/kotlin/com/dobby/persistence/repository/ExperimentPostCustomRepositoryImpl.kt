@@ -30,10 +30,12 @@ import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
+import java.time.format.DateTimeFormatter
 
 @Repository
 class ExperimentPostCustomRepositoryImpl(
@@ -43,6 +45,9 @@ class ExperimentPostCustomRepositoryImpl(
     private lateinit var entityManager: EntityManager
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
+    companion object {
+        private val LOG_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    }
 
     override fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
@@ -263,7 +268,7 @@ class ExperimentPostCustomRepositoryImpl(
             )
             .fetch()
 
-        logger.info("[쿼리 결과] participants count: {}", participants.size)
+        logger.info("[쿼리 결과] 알림 수신에 동의한 participants count: {}", participants.size)
 
         participants.take(10).forEachIndexed { index, tuple ->
             val participantEntity = tuple.get(participant)
@@ -306,6 +311,12 @@ class ExperimentPostCustomRepositoryImpl(
                 if (matchedPosts.isNotEmpty()) Pair(it, matchedPosts) else null
             }
         }.toMap()
+
+        MDC.put("match.windowStart", lastProcessedTime.format(LOG_TIME_FORMATTER))
+        MDC.put("match.windowEnd", currentTime.format(LOG_TIME_FORMATTER))
+        MDC.put("match.todayPosts", todayPosts.size.toString())
+        MDC.put("match.consentParticipants", participants.size.toString())
+        MDC.put("match.matchedRecipients", resultMap.size.toString())
 
         logger.info("[최종 결과] 이메일을 받을 대상자 수: {}", resultMap.size)
 

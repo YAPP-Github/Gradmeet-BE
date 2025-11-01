@@ -81,7 +81,13 @@ cloud:
       secret-key: ${S3_SECRET_KEY}
 
 discord:
-  webhook-url: ${DISCORD_WEBHOOK_URL}
+    webhooks:
+        errors:
+            id: ${DISCORD_ERRORS_ID}
+            token: ${DISCORD_ERRORS_TOKEN}
+        notify:
+            id: ${DISCORD_NOTIFY_ID}
+            token: ${DISCORD_NOTIFY_TOKEN}
 
 cors:
   allowed-origins:
