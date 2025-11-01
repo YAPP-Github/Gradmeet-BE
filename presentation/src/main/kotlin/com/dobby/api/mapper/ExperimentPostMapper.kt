@@ -10,6 +10,7 @@ import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.api.dto.response.PaginatedResponse
 import com.dobby.api.dto.response.PreSignedUrlResponse
 import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
+import com.dobby.api.dto.response.experiment.DailyUsageSnapshotResponse
 import com.dobby.api.dto.response.experiment.DataCount
 import com.dobby.api.dto.response.experiment.DurationInfo
 import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
@@ -29,6 +30,7 @@ import com.dobby.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
 import com.dobby.usecase.experiment.ExtractExperimentPostKeywordsUseCase
 import com.dobby.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
+import com.dobby.usecase.experiment.GetDailyLimitForExtractUseCase
 import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
@@ -538,6 +540,21 @@ object ExperimentPostMapper {
     fun toExtractKeywordResponse(output: ExtractExperimentPostKeywordsUseCase.Output): ExtractKeywordResponse {
         return ExtractKeywordResponse(
             experimentPostKeywords = output.experimentPostKeywords
+        )
+    }
+
+    fun toDailyUsageSnapshotInput(): GetDailyLimitForExtractUseCase.Input {
+        return GetDailyLimitForExtractUseCase.Input(
+            memberId = getCurrentMemberId()
+        )
+    }
+
+    fun toDailyUsageSnapshotResponse(output: GetDailyLimitForExtractUseCase.Output): DailyUsageSnapshotResponse {
+        return DailyUsageSnapshotResponse(
+            count = output.count,
+            limit = output.limit,
+            remainingCount = output.remainingCount,
+            resetsAt = output.resetsAt
         )
     }
 }

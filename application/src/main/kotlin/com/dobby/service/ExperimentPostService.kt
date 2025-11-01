@@ -10,6 +10,7 @@ import com.dobby.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
 import com.dobby.usecase.experiment.ExtractExperimentPostKeywordsUseCase
 import com.dobby.usecase.experiment.GenerateExperimentPostPreSignedUrlUseCase
+import com.dobby.usecase.experiment.GetDailyLimitForExtractUseCase
 import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
@@ -43,6 +44,7 @@ class ExperimentPostService(
     private val getMyExperimentPostsUseCase: GetMyExperimentPostsUseCase,
     private val getMyExperimentPostTotalCountUseCase: GetMyExperimentPostTotalCountUseCase,
     private val extractExperimentPostKeywordsUseCase: ExtractExperimentPostKeywordsUseCase,
+    private val getDailyLimitForExtractUseCase: GetDailyLimitForExtractUseCase,
     private val cacheGateway: CacheGateway
 ) {
     @Transactional
@@ -152,6 +154,11 @@ class ExperimentPostService(
 
     fun getMyExperimentPostsCount(input: GetMyExperimentPostTotalCountUseCase.Input): GetMyExperimentPostTotalCountUseCase.Output {
         return getMyExperimentPostTotalCountUseCase.execute(GetMyExperimentPostTotalCountUseCase.Input(input.memberId))
+    }
+
+    @Transactional
+    fun getMyDailyUsageLimit(input: GetDailyLimitForExtractUseCase.Input): GetDailyLimitForExtractUseCase.Output {
+        return getDailyLimitForExtractUseCase.execute(input)
     }
 
     private fun validateSortOrder(sortOrder: String): String {

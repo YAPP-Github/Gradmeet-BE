@@ -7,6 +7,7 @@ import com.dobby.api.dto.request.experiment.UpdateExperimentPostRequest
 import com.dobby.api.dto.response.PaginatedResponse
 import com.dobby.api.dto.response.PreSignedUrlResponse
 import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
+import com.dobby.api.dto.response.experiment.DailyUsageSnapshotResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
@@ -232,5 +233,17 @@ class ExperimentPostController(
         val input = ExperimentPostMapper.toExtractKeywordUseCaseInput(request)
         val output = experimentPostService.extractExperimentPostKeywords(input)
         return ExperimentPostMapper.toExtractKeywordResponse(output)
+    }
+
+    @PreAuthorize("hasRole('RESEARCHER')")
+    @GetMapping("/usage-limit")
+    @Operation(
+        summary = "실험 공고 키워드 추출 일일 사용량 조회 API",
+        description = "실험 공고 키워드 추출의 남은 일일 사용량 및 정보를 조회합니다."
+    )
+    fun getDailyUsageForExtract(): DailyUsageSnapshotResponse {
+        val input = ExperimentPostMapper.toDailyUsageSnapshotInput()
+        val output = experimentPostService.getMyDailyUsageLimit(input)
+        return ExperimentPostMapper.toDailyUsageSnapshotResponse(output)
     }
 }
