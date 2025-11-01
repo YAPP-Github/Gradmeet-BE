@@ -13,6 +13,7 @@ import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Component
 class SendMatchingEmailJob(
@@ -61,11 +62,13 @@ class SendMatchingEmailJob(
             }
         }
 
-        val end = TimeProvider.currentDateTime()
-        val took = Duration.between(start, end).toSeconds()
+        val rawEnd = TimeProvider.currentDateTime()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val end = rawEnd.format(formatter)
+        val took = Duration.between(start, rawEnd).toSeconds()
 
         val windowStart = MDC.get("match.windowStart") ?: start.toString()
-        val windowEnd = MDC.get("match.windowEnd") ?: end.toString()
+        val windowEnd = MDC.get("match.windowEnd") ?: rawEnd.toString()
         val todayCount = MDC.get("match.todayPosts")?.toIntOrNull() ?: 0
         val consentParticipants = MDC.get("match.consentParticipants")?.toIntOrNull() ?: 0
         val matchedRecipients = MDC.get("match.matchedRecipients")?.toIntOrNull() ?: matchingExperimentPosts.size
