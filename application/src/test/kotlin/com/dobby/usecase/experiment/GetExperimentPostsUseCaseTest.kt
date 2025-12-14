@@ -114,6 +114,8 @@ class GetExperimentPostsUseCaseTest : BehaviorSpec({
                 result.first().postInfo.title shouldBe "야뿌 피자 먹방 테스트"
                 result.first().postInfo.place shouldBe "야뿌 대학교"
                 result.first().postInfo.reward shouldBe "스타벅스 1만원권 쿠폰"
+                result.first().postInfo.timeRequired shouldBe TimeSlot.ABOUT_1H
+                result.first().postInfo.count shouldBe 10
                 result.first().postInfo.recruitStatus shouldBe false
             }
         }

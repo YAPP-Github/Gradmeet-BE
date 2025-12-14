@@ -1,6 +1,5 @@
 package com.dobby.api.dto.response.experiment
 import com.dobby.enums.experiment.TimeSlot
-
 import java.time.LocalDate
 data class PostInfo(
     val experimentPostId: String,

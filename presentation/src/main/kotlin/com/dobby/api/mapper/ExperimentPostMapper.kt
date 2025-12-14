@@ -25,7 +25,6 @@ import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
-import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.member.GenderType
 import com.dobby.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
@@ -105,6 +104,8 @@ object ExperimentPostMapper {
             experimentPostId = input.postId,
             title = input.title,
             views = input.views,
+            timeRequired = input.timeRequired,
+            count = input.count,
             isOnCampus = input.isOnCampus,
             durationInfo = DurationInfo(
                 startDate = input.durationInfo?.startDate,
@@ -143,6 +144,8 @@ object ExperimentPostMapper {
             experimentPostId = input.postId,
             title = input.title,
             views = input.views,
+            timeRequired = input.timeRequired,
+            count = input.count,
             durationInfo = DurationInfo(
                 startDate = input.durationInfo?.startDate,
                 endDate = input.durationInfo?.endDate
