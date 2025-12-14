@@ -74,6 +74,8 @@ class CreateExperimentPostUseCase(
         val postId: String,
         val title: String,
         val views: Int,
+        val timeRequired: TimeSlot?,
+        val count: Int?,
         val isOnCampus: Boolean,
         val place: String?,
         val reward: String?,
@@ -143,6 +145,8 @@ class CreateExperimentPostUseCase(
                 postId = savedExperimentPost.id,
                 title = savedExperimentPost.title,
                 views = savedExperimentPost.views,
+                timeRequired = savedExperimentPost.timeRequired,
+                count = savedExperimentPost.count,
                 isOnCampus = savedExperimentPost.isOnCampus,
                 place = savedExperimentPost.place,
                 durationInfo = DurationInfo(
