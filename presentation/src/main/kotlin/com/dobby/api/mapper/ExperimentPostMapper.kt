@@ -104,6 +104,8 @@ object ExperimentPostMapper {
             experimentPostId = input.postId,
             title = input.title,
             views = input.views,
+            timeRequired = input.timeRequired,
+            count = input.count,
             isOnCampus = input.isOnCampus,
             durationInfo = DurationInfo(
                 startDate = input.durationInfo?.startDate,
@@ -142,6 +144,8 @@ object ExperimentPostMapper {
             experimentPostId = input.postId,
             title = input.title,
             views = input.views,
+            timeRequired = input.timeRequired,
+            count = input.count,
             durationInfo = DurationInfo(
                 startDate = input.durationInfo?.startDate,
                 endDate = input.durationInfo?.endDate
@@ -405,6 +409,8 @@ object ExperimentPostMapper {
                         experimentPostId = post.postInfo.experimentPostId,
                         title = post.postInfo.title,
                         views = post.postInfo.views,
+                        count = post.postInfo.count,
+                        timeRequired = post.postInfo.timeRequired,
                         isOnCampus = post.postInfo.isOnCampus,
                         place = post.postInfo.place,
                         reward = post.postInfo.reward,
