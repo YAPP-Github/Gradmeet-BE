@@ -25,6 +25,7 @@ import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.member.GenderType
 import com.dobby.usecase.experiment.CreateExperimentPostUseCase
 import com.dobby.usecase.experiment.DeleteExperimentPostUseCase
