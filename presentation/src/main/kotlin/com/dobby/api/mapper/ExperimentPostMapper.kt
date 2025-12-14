@@ -405,6 +405,8 @@ object ExperimentPostMapper {
                         experimentPostId = post.postInfo.experimentPostId,
                         title = post.postInfo.title,
                         views = post.postInfo.views,
+                        count = post.postInfo.count,
+                        timeRequired = post.postInfo.timeRequired,
                         isOnCampus = post.postInfo.isOnCampus,
                         place = post.postInfo.place,
                         reward = post.postInfo.reward,

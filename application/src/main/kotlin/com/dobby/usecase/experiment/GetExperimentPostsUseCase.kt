@@ -4,6 +4,7 @@ import com.dobby.enums.MatchType
 import com.dobby.enums.areaInfo.Area
 import com.dobby.enums.areaInfo.Region
 import com.dobby.enums.experiment.RecruitStatus
+import com.dobby.enums.experiment.TimeSlot
 import com.dobby.enums.member.GenderType
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.CustomFilter
@@ -51,6 +52,8 @@ class GetExperimentPostsUseCase(
         val experimentPostId: String,
         val title: String,
         val views: Int,
+        val count: Int?,
+        val timeRequired: TimeSlot?,
         val isOnCampus: Boolean,
         val place: String?,
         val reward: String,
@@ -83,6 +86,8 @@ class GetExperimentPostsUseCase(
                     experimentPostId = post.id,
                     title = post.title,
                     views = post.views,
+                    count = post.count,
+                    timeRequired = post.timeRequired,
                     isOnCampus = post.isOnCampus,
                     place = post.place,
                     reward = post.reward,
