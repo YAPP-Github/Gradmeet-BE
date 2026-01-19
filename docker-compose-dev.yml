@@ -11,6 +11,10 @@ services:
       - TZ=Asia/Seoul
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
   green:
     container_name: green
     image: gradmeet/dobby:dev
@@ -22,3 +26,12 @@ services:
       - TZ=Asia/Seoul
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+  redis:
+      container_name: dobby-redis
+      image: redis:7-alpine
+      command: [ "redis-server", "--appendonly", "yes" ]
+      restart: unless-stopped
