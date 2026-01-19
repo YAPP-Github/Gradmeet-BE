@@ -10,7 +10,7 @@ spring:
       auto-commit: false
       pool-name: dobby-db-pool
       minimum-idle: 10
-      maximum-pool-size: 30
+      maximum-pool-size: 10
       connection-timeout: 60000
   jpa:
     hibernate:
