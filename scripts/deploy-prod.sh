@@ -1,4 +1,14 @@
 #!/bin/bash
+set -e
+
+# full dump from rds import
+if [ ! -f /home/ubuntu/.db_imported ]; then
+  echo ">>> importing dump into mariadb (one-time)"
+  docker exec -i dobby-mariadb mariadb -u root -p"$DB_ROOT_PASSWORD" < /home/ubuntu/dobby_prod_dump.sql
+  touch /home/ubuntu/.db_imported
+  echo ">>> dump import done"
+fi
+# --- end DB bootstrap ---
 
 IS_GREEN_EXIST=$(docker ps | grep green)
 

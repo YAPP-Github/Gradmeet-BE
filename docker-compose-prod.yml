@@ -13,8 +13,14 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dobby_prod
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     depends_on:
-      - redis
+        mariadb:
+            condition: service_healthy
+        redis:
+            condition: service_started
   green:
     container_name: green
     image: gradmeet/dobby:prod
@@ -28,10 +34,36 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/dobby_prod
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     depends_on:
-      -  redis
+        mariadb:
+            condition: service_healthy
+        redis:
+            condition: service_started
   redis:
       container_name: dobby-redis
       image: redis:7-alpine
       command: ["redis-server", "--appendonly", "yes"]
       restart: unless-stopped
+  mariadb:
+     container_name: dobby-mariadb
+     image: mariadb:11
+     restart: unless-stopped
+     environment:
+        - TZ=Asia/Seoul
+        - MARIADB_DATABASE=dobby_prod
+        - MARIADB_USER=${DB_USERNAME}
+        - MARIADB_PASSWORD=${DB_PASSWORD}
+        - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+     volumes:
+        - mariadb-data:/var/lib/mysql
+     healthcheck:
+        test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -p$${MARIADB_ROOT_PASSWORD} --silent"]
+        interval: 10s
+        timeout: 5s
+        retries: 12
+volumes:
+    mariadb-data:
+    redis-data:

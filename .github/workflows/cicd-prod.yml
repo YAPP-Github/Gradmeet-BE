@@ -74,6 +74,9 @@ jobs:
           script: |
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:prod
+            export DB_USERNAME='${{ secrets.DB_USERNAME }}'
+            export DB_PASSWORD='${{ secrets.DB_PASSWORD }}'
+            export DB_ROOT_PASSWORD='${{ secrets.DB_ROOT_PASSWORD }}'
             chmod 777 ./scripts/deploy-prod.sh
             cp ./scripts/deploy-prod.sh ./deploy-prod.sh
             ./deploy-prod.sh
