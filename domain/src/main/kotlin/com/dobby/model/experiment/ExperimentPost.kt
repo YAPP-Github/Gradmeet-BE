@@ -43,12 +43,6 @@ data class ExperimentPost(
     var createdAt: LocalDateTime,
     var updatedAt: LocalDateTime
 ) {
-
-    fun incrementViews() {
-        this.views += 1
-        this.updatedAt = TimeProvider.currentDateTime()
-    }
-
     fun updateRecruitStatus(
         recruitStatus: Boolean = this.recruitStatus
     ): ExperimentPost {

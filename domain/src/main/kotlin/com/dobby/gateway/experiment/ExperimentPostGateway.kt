@@ -10,6 +10,7 @@ interface ExperimentPostGateway {
     fun save(experimentPost: ExperimentPost): ExperimentPost
     fun updateExperimentPost(experimentPost: ExperimentPost): ExperimentPost
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, page: Int, count: Int, order: String): List<ExperimentPost>?
+    fun incrementViews(experimentPostId: String)
     fun findById(experimentPostId: String): ExperimentPost?
     fun countExperimentPostsByRegion(region: Region): Int
     fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
