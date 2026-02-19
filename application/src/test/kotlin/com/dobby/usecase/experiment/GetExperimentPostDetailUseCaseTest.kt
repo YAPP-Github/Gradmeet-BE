@@ -13,8 +13,12 @@ import com.dobby.model.experiment.TargetGroup
 import com.dobby.model.member.Member
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.clearMocks
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.verify
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -70,52 +74,102 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             images = mutableListOf()
         )
 
-        every { experimentPostGateway.findById(experimentPostId) } returns experimentPost
-        every { experimentPostGateway.save(experimentPost) } returns experimentPost
+        beforeEach {
+            clearMocks(experimentPostGateway, answers = false)
+            every { experimentPostGateway.findById(experimentPostId) } returns experimentPost
+            every { experimentPostGateway.incrementViews(experimentPostId) } just runs
+        }
 
         `when`("내가 작성한 공고를 대상으로 execute가 호출되면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = member.id)
             val initialViews = experimentPost.views
-            val result = getExperimentPostDetailUseCase.execute(input)
+            lateinit var result: GetExperimentPostDetailUseCase.Output
+
+            beforeTest {
+                result = getExperimentPostDetailUseCase.execute(input)
+            }
 
             then("isAuthor가 true인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe true
             }
 
-            then("views가 증가했는지 확인한다") {
-                experimentPost.views shouldBe (initialViews + 1)
+            then("반환된 views가 1 증가해서 내려온다") {
+                result.experimentPostDetail.views shouldBe (initialViews + 1)
+            }
+
+            then("incrementViews가 호출된다") {
+                verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
             }
         }
 
         `when`("다른 사람이 작성한 공고를 대상으로 execute가 호출되면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = "2")
-            val result = getExperimentPostDetailUseCase.execute(input)
+            val initialViews = experimentPost.views
+            lateinit var result: GetExperimentPostDetailUseCase.Output
+
+            beforeTest {
+                result = getExperimentPostDetailUseCase.execute(input)
+            }
 
             then("isAuthor가 false인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe false
             }
+
+            then("반환된 views가 1 증가해서 내려온다") {
+                result.experimentPostDetail.views shouldBe (initialViews + 1)
+            }
+
+            then("incrementViews가 호출된다") {
+                verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
+            }
         }
 
         `when`("로그인하지 않은 사람이 execute가 호출하면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
-            val result = getExperimentPostDetailUseCase.execute(input)
+            val initialViews = experimentPost.views
+            lateinit var result: GetExperimentPostDetailUseCase.Output
+
+            beforeTest {
+                result = getExperimentPostDetailUseCase.execute(input)
+            }
 
             then("isAuthor가 false인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe false
+            }
+
+            then("반환된 views가 1 증가해서 내려온다") {
+                result.experimentPostDetail.views shouldBe (initialViews + 1)
+            }
+
+            then("incrementViews가 호출된다") {
+                verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
             }
         }
 
         `when`("탈퇴한 회원이 작성한 게시글인 경우") {
             every { member.deletedAt } returns LocalDateTime.now()
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
-            val result = getExperimentPostDetailUseCase.execute(input)
+            val initialViews = experimentPost.views
+            lateinit var result: GetExperimentPostDetailUseCase.Output
+
+            beforeTest {
+                result = getExperimentPostDetailUseCase.execute(input)
+            }
 
             then("isAuthor가 false인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe false
+            }
+
+            then("반환된 views가 1 증가해서 내려온다") {
+                result.experimentPostDetail.views shouldBe (initialViews + 1)
+            }
+
+            then("incrementViews가 호출된다") {
+                verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
             }
         }
     }
