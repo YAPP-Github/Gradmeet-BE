@@ -9,6 +9,7 @@ import com.dobby.model.experiment.ExperimentPostStats
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import com.dobby.persistence.repository.ExperimentPostCustomRepository
 import com.dobby.persistence.repository.ExperimentPostRepository
+import com.dobby.util.TimeProvider
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
@@ -35,6 +36,13 @@ class ExperimentPostGatewayImpl(
             pagination,
             order
         )?.map { it.toDomain() }
+    }
+
+    override fun incrementViews(experimentPostId: String) {
+        val updated = experimentPostRepository.incrementViews(
+            id = experimentPostId,
+            now = TimeProvider.currentDateTime()
+        )
     }
 
     override fun findById(experimentPostId: String): ExperimentPost? {
