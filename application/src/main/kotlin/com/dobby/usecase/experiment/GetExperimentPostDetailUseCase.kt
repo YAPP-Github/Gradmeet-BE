@@ -10,7 +10,6 @@ import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.model.experiment.ExperimentPost
 import com.dobby.model.experiment.TargetGroup
 import com.dobby.usecase.UseCase
-import com.dobby.util.TimeProvider
 import java.time.LocalDate
 
 class GetExperimentPostDetailUseCase(
@@ -69,7 +68,6 @@ class GetExperimentPostDetailUseCase(
     }
 
     override fun execute(input: Input): Output {
-
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException
 
