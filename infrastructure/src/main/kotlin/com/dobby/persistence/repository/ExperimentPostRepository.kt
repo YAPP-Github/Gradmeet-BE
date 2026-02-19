@@ -4,13 +4,14 @@ import com.dobby.enums.areaInfo.Region
 import com.dobby.model.experiment.ExperimentPostStats
 import com.dobby.persistence.entity.experiment.ExperimentPostEntity
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.time.LocalDateTime
 
 interface ExperimentPostRepository : JpaRepository<ExperimentPostEntity, String> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("update ExperimentPostEntity p set p.views = p.views + 1, p.updatedAt = :now where p.id = :id")
+    @Query("update experiment_post p set p.views = p.views + 1, p.updatedAt = :now where p.id = :id")
     fun incrementViews(@Param("id") id: String, @Param("now") now: LocalDateTime): Int
 
     fun countByRegion(region: Region): Int
