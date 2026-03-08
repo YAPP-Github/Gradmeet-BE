@@ -15,6 +15,7 @@ import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
 import com.dobby.usecase.experiment.GetExperimentPostDetailForUpdateUseCase
+import com.dobby.usecase.experiment.GetExperimentPostDetailRelatedUseCase
 import com.dobby.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.usecase.experiment.GetExperimentPostTotalCountByCustomFilterUseCase
 import com.dobby.usecase.experiment.GetExperimentPostsUseCase
@@ -32,6 +33,7 @@ class ExperimentPostService(
     private val updateExperimentPostUseCase: UpdateExperimentPostUseCase,
     private val getExperimentPostsUseCase: GetExperimentPostsUseCase,
     private val getExperimentPostDetailUseCase: GetExperimentPostDetailUseCase,
+    private val getExperimentPostDetailRelatedUseCase: GetExperimentPostDetailRelatedUseCase,
     private val getExperimentPostCountsByRegionUseCase: GetExperimentPostCountsByRegionUseCase,
     private val getExperimentPostCountsByAreaUseCase: GetExperimentPostCountsByAreaUseCase,
     private val getExperimentPostApplyMethodUseCase: GetExperimentPostApplyMethodUseCase,
@@ -73,6 +75,11 @@ class ExperimentPostService(
     @Transactional
     fun getExperimentPostDetail(input: GetExperimentPostDetailUseCase.Input): GetExperimentPostDetailUseCase.Output {
         return getExperimentPostDetailUseCase.execute(input)
+    }
+
+    @Transactional
+    fun getExperimentPostDetailRelated(input: GetExperimentPostDetailRelatedUseCase.Input): GetExperimentPostDetailRelatedUseCase.Output {
+        return getExperimentPostDetailRelatedUseCase.execute(input)
     }
 
     @Transactional
