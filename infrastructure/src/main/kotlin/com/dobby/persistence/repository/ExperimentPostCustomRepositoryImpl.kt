@@ -25,6 +25,7 @@ import com.dobby.persistence.entity.member.QParticipantEntity
 import com.dobby.util.TimeProvider
 import com.querydsl.core.types.OrderSpecifier
 import com.querydsl.core.types.dsl.BooleanExpression
+import com.querydsl.jpa.JPAExpressions
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
@@ -47,6 +48,44 @@ class ExperimentPostCustomRepositoryImpl(
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
     companion object {
         private val LOG_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    }
+
+    override fun findNextPost(postId: String): ExperimentPostEntity? {
+        val post = QExperimentPostEntity.experimentPostEntity
+        val subPost = QExperimentPostEntity("subPost")
+
+        return jpaQueryFactory.selectFrom(post)
+            .where(
+                post.createdAt.gt(
+                    JPAExpressions
+                        .select(subPost.createdAt)
+                        .from(subPost)
+                        .where(subPost.id.eq(postId))
+                ),
+                post.recruitStatus.isTrue
+            )
+            .orderBy(post.createdAt.asc())
+            .limit(1)
+            .fetchOne()
+    }
+
+    override fun findPrevPosts(postId: String, limit: Int): List<ExperimentPostEntity> {
+        val post = QExperimentPostEntity.experimentPostEntity
+        val subPost = QExperimentPostEntity("subPost")
+
+        return jpaQueryFactory.selectFrom(post)
+            .where(
+                post.createdAt.lt(
+                    JPAExpressions
+                        .select(subPost.createdAt)
+                        .from(subPost)
+                        .where(subPost.id.eq(postId))
+                ),
+                post.recruitStatus.isTrue
+            )
+            .orderBy(post.createdAt.desc())
+            .limit(limit.toLong())
+            .fetch()
     }
 
     override fun findExperimentPostsByCustomFilter(
