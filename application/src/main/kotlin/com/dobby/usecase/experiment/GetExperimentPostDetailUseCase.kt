@@ -68,13 +68,13 @@ class GetExperimentPostDetailUseCase(
     }
 
     override fun execute(input: Input): Output {
+        experimentPostGateway.incrementViews(input.experimentPostId)
+
         val experimentPost = experimentPostGateway.findById(input.experimentPostId)
             ?: throw ExperimentPostNotFoundException
 
-        experimentPostGateway.incrementViews(input.experimentPostId)
-
         return Output(
-            experimentPostDetail = experimentPost.copy(views = experimentPost.views + 1).toExperimentPostDetail(input.memberId)
+            experimentPostDetail = experimentPost.toExperimentPostDetail(input.memberId)
         )
     }
 }

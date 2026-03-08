@@ -82,7 +82,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
         `when`("내가 작성한 공고를 대상으로 execute가 호출되면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = member.id)
-            val initialViews = experimentPost.views
             lateinit var result: GetExperimentPostDetailUseCase.Output
 
             beforeTest {
@@ -94,10 +93,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
                 result.experimentPostDetail.isAuthor shouldBe true
             }
 
-            then("반환된 views가 1 증가해서 내려온다") {
-                result.experimentPostDetail.views shouldBe (initialViews + 1)
-            }
-
             then("incrementViews가 호출된다") {
                 verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
             }
@@ -105,7 +100,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
         `when`("다른 사람이 작성한 공고를 대상으로 execute가 호출되면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = "2")
-            val initialViews = experimentPost.views
             lateinit var result: GetExperimentPostDetailUseCase.Output
 
             beforeTest {
@@ -115,10 +109,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             then("isAuthor가 false인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe false
-            }
-
-            then("반환된 views가 1 증가해서 내려온다") {
-                result.experimentPostDetail.views shouldBe (initialViews + 1)
             }
 
             then("incrementViews가 호출된다") {
@@ -128,7 +118,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
         `when`("로그인하지 않은 사람이 execute가 호출하면") {
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
-            val initialViews = experimentPost.views
             lateinit var result: GetExperimentPostDetailUseCase.Output
 
             beforeTest {
@@ -138,10 +127,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
             then("isAuthor가 false인 experimentPostDetail이 반환된다") {
                 result.experimentPostDetail.title shouldBe experimentPost.title
                 result.experimentPostDetail.isAuthor shouldBe false
-            }
-
-            then("반환된 views가 1 증가해서 내려온다") {
-                result.experimentPostDetail.views shouldBe (initialViews + 1)
             }
 
             then("incrementViews가 호출된다") {
@@ -152,7 +137,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
         `when`("탈퇴한 회원이 작성한 게시글인 경우") {
             every { member.deletedAt } returns LocalDateTime.now()
             val input = GetExperimentPostDetailUseCase.Input(experimentPostId = experimentPostId, memberId = null)
-            val initialViews = experimentPost.views
             lateinit var result: GetExperimentPostDetailUseCase.Output
 
             beforeTest {
@@ -164,10 +148,6 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
                 result.experimentPostDetail.isAuthor shouldBe false
             }
 
-            then("반환된 views가 1 증가해서 내려온다") {
-                result.experimentPostDetail.views shouldBe (initialViews + 1)
-            }
-
             then("incrementViews가 호출된다") {
                 verify(exactly = 1) { experimentPostGateway.incrementViews(experimentPostId) }
             }
@@ -176,6 +156,7 @@ class GetExperimentPostDetailUseCaseTest : BehaviorSpec({
 
     given("유효하지 않은 experimentPostId가 주어졌을 때") {
         val invalidExperimentPostId = "999"
+        every { experimentPostGateway.incrementViews(invalidExperimentPostId) } just runs
         every { experimentPostGateway.findById(invalidExperimentPostId) } returns null
 
         `when`("execute가 호출되면") {
