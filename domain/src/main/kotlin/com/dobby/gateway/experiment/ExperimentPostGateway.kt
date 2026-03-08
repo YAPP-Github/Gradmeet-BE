@@ -12,6 +12,8 @@ interface ExperimentPostGateway {
     fun findExperimentPostsByCustomFilter(customFilter: CustomFilter, page: Int, count: Int, order: String): List<ExperimentPost>?
     fun incrementViews(experimentPostId: String)
     fun findById(experimentPostId: String): ExperimentPost?
+    fun findNextPost(experimentPostId: String): ExperimentPost?
+    fun findPrevPosts(experimentPostId: String, limit: Int): List<ExperimentPost>
     fun countExperimentPostsByRegion(region: Region): Int
     fun countExperimentPostsByRegionAndRecruitStatus(region: Region, recruitStatus: Boolean): Int
     fun countExperimentPosts(): Int
