@@ -52,6 +52,14 @@ class ExperimentPostGatewayImpl(
             ?.let(ExperimentPostEntity::toDomain)
     }
 
+    override fun findNextPost(experimentPostId: String): ExperimentPost? {
+        return experimentPostCustomRepository.findNextPost(experimentPostId)?.toDomain()
+    }
+
+    override fun findPrevPosts(experimentPostId: String, limit: Int): List<ExperimentPost> {
+        return experimentPostCustomRepository.findPrevPosts(experimentPostId, limit).map { it.toDomain() }
+    }
+
     override fun countExperimentPostsByRegion(region: Region): Int {
         return experimentPostRepository.countByRegion(region)
     }

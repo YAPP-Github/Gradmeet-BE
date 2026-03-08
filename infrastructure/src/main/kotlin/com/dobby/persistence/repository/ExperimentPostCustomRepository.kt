@@ -9,6 +9,10 @@ import java.time.LocalDate
 
 @Repository
 interface ExperimentPostCustomRepository {
+    fun findNextPost(experimentPostId: String): ExperimentPostEntity?
+
+    fun findPrevPosts(experimentPostId: String, limit: Int): List<ExperimentPostEntity>
+
     fun findExperimentPostsByCustomFilter(
         customFilter: CustomFilter,
         pagination: Pagination,
