@@ -15,6 +15,7 @@ import com.dobby.api.dto.response.experiment.DataCount
 import com.dobby.api.dto.response.experiment.DurationInfo
 import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostDetailRelatedResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostResponse
 import com.dobby.api.dto.response.experiment.ExtractKeywordResponse
@@ -35,6 +36,7 @@ import com.dobby.usecase.experiment.GetExperimentPostApplyMethodUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByAreaUseCase
 import com.dobby.usecase.experiment.GetExperimentPostCountsByRegionUseCase
 import com.dobby.usecase.experiment.GetExperimentPostDetailForUpdateUseCase
+import com.dobby.usecase.experiment.GetExperimentPostDetailRelatedUseCase
 import com.dobby.usecase.experiment.GetExperimentPostDetailUseCase
 import com.dobby.usecase.experiment.GetExperimentPostTotalCountByCustomFilterUseCase
 import com.dobby.usecase.experiment.GetExperimentPostsUseCase
@@ -298,6 +300,33 @@ object ExperimentPostMapper {
             region = this.region,
             area = this.area,
             detailedAddress = this.detailedAddress
+        )
+    }
+
+    fun toGetExperimentPostDetailRelatedUseCaseInput(experimentPostId: String): GetExperimentPostDetailRelatedUseCase.Input {
+        return GetExperimentPostDetailRelatedUseCase.Input(
+            experimentPostId = experimentPostId
+        )
+    }
+
+    fun toExperimentPostDetailRelatedResponse(output: GetExperimentPostDetailRelatedUseCase.Output): ExperimentPostDetailRelatedResponse {
+        return ExperimentPostDetailRelatedResponse(
+            relatedPosts = output.postInfo.map { post ->
+                PostInfo(
+                    experimentPostId = post.experimentPostId,
+                    title = post.title,
+                    views = post.views,
+                    count = post.count,
+                    timeRequired = post.timeRequired,
+                    isOnCampus = post.isOnCampus,
+                    place = post.place,
+                    reward = post.reward,
+                    durationInfo = DurationInfo(
+                        startDate = post.durationInfo.startDate,
+                        endDate = post.durationInfo.endDate
+                    )
+                )
+            }
         )
     }
 

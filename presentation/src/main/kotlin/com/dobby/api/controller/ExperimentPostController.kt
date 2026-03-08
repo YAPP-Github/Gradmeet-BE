@@ -10,6 +10,7 @@ import com.dobby.api.dto.response.experiment.CreateExperimentPostResponse
 import com.dobby.api.dto.response.experiment.DailyUsageSnapshotResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostApplyMethodResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostCountsResponse
+import com.dobby.api.dto.response.experiment.ExperimentPostDetailRelatedResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostDetailResponse
 import com.dobby.api.dto.response.experiment.ExperimentPostResponse
 import com.dobby.api.dto.response.experiment.ExtractKeywordResponse
@@ -143,6 +144,19 @@ class ExperimentPostController(
         val input = ExperimentPostMapper.toGetExperimentPostDetailUseCaseInput(postId)
         val output = experimentPostService.getExperimentPostDetail(input)
         return ExperimentPostMapper.toGetExperimentPostDetailResponse(output)
+    }
+
+    @GetMapping("/{postId}/details/related")
+    @Operation(
+        summary = "특정 공고 상세 - 둘러보기 API",
+        description = "특정 공고 상세 화면의 하단에 해당하는 추천 공고 2개를 노출합니다"
+    )
+    fun getExperimentPostDetailRecommendations(
+        @PathVariable postId: String
+    ): ExperimentPostDetailRelatedResponse {
+        val input = ExperimentPostMapper.toGetExperimentPostDetailRelatedUseCaseInput(postId)
+        val output = experimentPostService.getExperimentPostDetailRelated(input)
+        return ExperimentPostMapper.toExperimentPostDetailRelatedResponse(output)
     }
 
     @GetMapping("/counts")
