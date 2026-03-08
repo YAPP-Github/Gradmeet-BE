@@ -71,14 +71,20 @@ class WebSecurityConfig {
         securityManager: SecurityManager,
         handlerExceptionResolver: HandlerExceptionResolver
     ): SecurityFilterChain = httpSecurity
-        .securityMatcher("/v1/experiment-posts/{postId}/details")
+        .securityMatcher(
+            "/v1/experiment-posts/{postId}/details",
+            "/v1/experiment-posts/{postId}/details/related"
+        )
         .csrf { it.disable() }
         .cors(Customizer.withDefaults())
         .sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/v1/experiment-posts/{postId}/details").permitAll()
+            it.requestMatchers(
+                "/v1/experiment-posts/{postId}/details",
+                "/v1/experiment-posts/{postId}/details/related"
+            ).permitAll()
         }
         .addFilterBefore(
             JwtOptionalAuthenticationFilter(securityManager, handlerExceptionResolver),
