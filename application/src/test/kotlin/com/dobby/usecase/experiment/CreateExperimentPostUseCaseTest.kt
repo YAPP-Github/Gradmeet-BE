@@ -9,6 +9,7 @@ import com.dobby.enums.member.MemberStatus
 import com.dobby.enums.member.ProviderType
 import com.dobby.enums.member.RoleType
 import com.dobby.exception.ExperimentPostInvalidOnlineRequestException
+import com.dobby.exception.ExperimentPostTargetGroupAgeException
 import com.dobby.exception.PermissionDeniedException
 import com.dobby.gateway.experiment.ExperimentPostGateway
 import com.dobby.gateway.member.MemberGateway
@@ -208,6 +209,73 @@ class CreateExperimentPostUseCaseTest : BehaviorSpec({
             then("ExperimentPostInvalidOnlineRequestException 예외가 발생해야 한다") {
                 shouldThrow<ExperimentPostInvalidOnlineRequestException> {
                     createExperimentPostUseCase.execute(invalidInput)
+                }
+            }
+        }
+    }
+
+    given("타겟 그룹의 나이 범위가 유효하지 않은 경우") {
+        val validMember = Member(
+            id = "4",
+            role = RoleType.RESEARCHER,
+            contactEmail = "christer10@naver.com",
+            oauthEmail = "christer10@naver.com",
+            name = "신수정",
+            provider = ProviderType.NAVER,
+            status = MemberStatus.ACTIVE,
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now(),
+            deletedAt = null
+        )
+
+        fun buildInput(startAge: Int?, endAge: Int?) = CreateExperimentPostUseCase.Input(
+            memberId = "4",
+            targetGroupInfo = CreateExperimentPostUseCase.TargetGroupInfo(
+                startAge = startAge,
+                endAge = endAge,
+                genderType = GenderType.MALE,
+                otherCondition = "야뿌이셨던 남성분"
+            ),
+            applyMethodInfo = CreateExperimentPostUseCase.ApplyMethodInfo(
+                content = "구글폼 보고 참여해주세요 :)",
+                formUrl = "google.form.co.kr",
+                phoneNum = "010-5729-7754"
+            ),
+            imageListInfo = CreateExperimentPostUseCase.ImageListInfo(
+                images = listOf("이미지1")
+            ),
+            startDate = LocalDate.of(2025, 2, 3),
+            endDate = LocalDate.of(2025, 2, 10),
+            matchType = MatchType.OFFLINE,
+            count = 35,
+            timeRequired = TimeSlot.LESS_30M,
+            leadResearcher = "야뿌 랩실 서버 25기 신수정",
+            isOnCampus = true,
+            place = "이화여자대학교",
+            region = Region.SEOUL,
+            area = Area.GEUMCHEONGU,
+            detailedAddress = "ECC B123호",
+            reward = "얍 지각면제권 100장",
+            title = "야뿌 최고 먹짱 실험자 모집합니다",
+            content = "YAPP에서 가장 치킨 잘 먹는 사람",
+            alarmAgree = true
+        )
+
+        every { memberGateway.getById("4") } returns validMember
+        every { idGenerator.generateId() } returns "1"
+
+        `when`("endAge가 startAge보다 작으면") {
+            then("ExperimentPostTargetGroupAgeException 예외가 발생해야 한다") {
+                shouldThrow<ExperimentPostTargetGroupAgeException> {
+                    createExperimentPostUseCase.execute(buildInput(startAge = 30, endAge = 20))
+                }
+            }
+        }
+
+        `when`("startAge가 음수이면") {
+            then("ExperimentPostTargetGroupAgeException 예외가 발생해야 한다") {
+                shouldThrow<ExperimentPostTargetGroupAgeException> {
+                    createExperimentPostUseCase.execute(buildInput(startAge = -1, endAge = 20))
                 }
             }
         }
