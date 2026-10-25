@@ -25,14 +25,15 @@ object EmailUtils {
     }
 
     fun isUnivMail(email: String): Boolean {
-        val univDomainExcpetions = setOf(
-            "ewhain.net"
+        val univDomainExceptions = setOf(
+            "ewhain.net",
+            "sangmyung.kr"
         )
         return email.endsWith(".ac.kr") ||
             email.endsWith(".edu") ||
             email.endsWith("ac.uk") ||
             email.endsWith(".edu.au") ||
-            univDomainExcpetions.any { email.endsWith(it) }
+            univDomainExceptions.any { email.endsWith(it) }
     }
 
     fun generateCode(): String {
