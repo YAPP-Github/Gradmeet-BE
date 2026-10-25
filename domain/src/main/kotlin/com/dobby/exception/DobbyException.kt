@@ -84,3 +84,8 @@ data object UnknownServerErrorException : ServerException("DB0001", "An unknown 
  * OpenAI API call specific exceptions
  */
 data class CustomOpenAiCallException(override val message: String, override val cause: Throwable? = null) : ServerException("AI0001", message, cause)
+
+/**
+ * Email sending specific exceptions
+ */
+data class EmailSendFailedException(override val message: String, override val cause: Throwable? = null) : ServerException("EM0001", message, cause)
